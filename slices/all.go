@@ -1,7 +1,11 @@
 package slices
 
 func All[T comparable](xs []T, v T) []T {
-	return AllFn(xs, v, func(x, y T) bool { return x == y })
+	fn := func(x, y T) bool {
+		return x == y
+	}
+
+	return AllFn(xs, v, fn)
 }
 
 func AllFn[T comparable](xs []T, v T, fn func(T, T) bool) []T {

@@ -1,7 +1,11 @@
 package slices
 
 func Contains[T comparable](xs []T, v T) bool {
-	return ContainsFn(xs, v, func(x, y T) bool { return x == y })
+	fn := func(x, y T) bool {
+		return x == y
+	}
+
+	return ContainsFn(xs, v, fn)
 }
 
 func ContainsFn[T comparable](xs []T, v T, fn func(T, T) bool) bool {

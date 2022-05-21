@@ -19,7 +19,7 @@ func OrElse[T ~string](s, d T) T {
 }
 
 func DefaultIfEmpty[T ~string](s, d T) T {
-	return OrElse[T](s, d)
+	return OrElse(s, d)
 }
 
 func IsEmpty[T ~string](s T) bool {
@@ -31,7 +31,7 @@ func IsEmpty[T ~string](s T) bool {
 }
 
 func IsBlank[T ~string](s T) bool {
-	return IsEmpty[T](s)
+	return IsEmpty(s)
 }
 
 func Abbreviate[T ~string](s T, w int) T {
@@ -47,10 +47,10 @@ func AbbreviateWith[T ~string](s T, w int, m string) T {
 
 	ml := len(m)
 
-	if sl + ml <= w {
+	if sl+ml <= w {
 		return s
 	}
-	
+
 	sub := s[:w-ml] + T(m)
 
 	return sub
