@@ -20,7 +20,7 @@ func SubEnvironmentVars(s string) string {
 	for _, env := range os.Environ() {
 		comps := strings.Split(env, "=")
 
-		if len(comps) == 2 {
+		if len(comps) != 2 {
 			continue
 		}
 
