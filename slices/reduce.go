@@ -1,6 +1,10 @@
 package slices
 
-func Reduce[V any, A any](vs []V, fn func(V, A) A, s A) A {
+func Reduce[V any, A any](s A, vs []V, fn func(V, A) A) A {
+	if len(vs) == 0 {
+		return s
+	}
+
 	c := s
 
 	for _, v := range vs {
