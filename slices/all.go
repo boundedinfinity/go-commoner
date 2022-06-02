@@ -1,21 +1,27 @@
 package slices
 
-func All[T comparable](xs []T, v T) []T {
-	fn := func(x T) bool {
+func All[T comparable](x T, vs []T) bool {
+	fn := func(v T) bool {
 		return v == x
 	}
 
-	return AllFn(xs, fn)
+	return AllFn(fn, vs)
 }
 
-func AllFn[T comparable](xs []T, fn func(T) bool) []T {
-	var os []T
+func AllV[T comparable](x T, vs ...T) bool {
+	return All(x, vs)
+}
 
-	for _, x := range xs {
-		if fn(x) {
-			os = append(os, x)
+func AllFn[T comparable](fn func(T) bool, vs []T) bool {
+	for _, v := range vs {
+		if !fn(v) {
+			return false
 		}
 	}
 
-	return os
+	return true
+}
+
+func AllFnV[T comparable](fn func(T) bool, vs ...T) bool {
+	return AllFn(fn, vs)
 }
