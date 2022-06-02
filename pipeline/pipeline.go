@@ -1,19 +1,43 @@
 package pipeline
 
-func New() *Pipeline {
-	return &Pipeline{}
+import (
+	"fmt"
+)
+
+type StepFn[T any] func(T) (T, error)
+
+func New[T any]() *Pipeline[T] {
+	return &Pipeline[T]{
+		steps: []StepFn[T]{},
+	}
 }
 
-type Pipeline struct {
+type Pipeline[T any] struct {
+	initial T
+	steps   []StepFn[T]
 }
 
-// type Mapper[I any, O any] interface {
-// 	Run(I) (O, error)
-// }
+func (t *Pipeline[T]) Step(fn StepFn[T]) *Pipeline[T] {
+	t.steps = append(t.steps, fn)
+	return t
+}
 
-// // type MapFn func[I any, O any](I) (O, error)
-// // type WalkFunc func(path string, info fs.FileInfo, err error) error
+func (t *Pipeline[T]) Run(in T) (T, error) {
+	next := in
 
-// func (t *Pipeline) Map(mapper Mapper) {
+	for i, step := range t.steps {
+		if step == nil {
+			return next, fmt.Errorf("step %v is nil", i)
+		}
 
-// }
+		n, err := step(next)
+
+		if err != nil {
+			return next, fmt.Errorf("failed on step %v: %w", i, err)
+		}
+
+		next = n
+	}
+
+	return next, nil
+}
