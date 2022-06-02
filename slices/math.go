@@ -36,17 +36,17 @@ func Min[V Numeric](vs []V) V {
 		}
 	}
 
-	return Reduce(Head(vs...), vs, fn)
+	return Reduce(Head(vs), vs, fn)
 }
 
 func Max[V Numeric](vs []V) V {
 	fn := func(a V, v V) V {
-		if v < a {
+		if v > a {
 			return v
 		} else {
 			return a
 		}
 	}
 
-	return Reduce(Head(vs...), vs, fn)
+	return Reduce(Head(vs), vs, fn)
 }

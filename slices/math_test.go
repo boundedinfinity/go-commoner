@@ -8,7 +8,7 @@ import (
 )
 
 func Test_Min(t *testing.T) {
-	expected := 5
+	expected := 1
 
 	input := []int{1, 2, 3, 4, 5}
 	actual := slices.Min(input)
