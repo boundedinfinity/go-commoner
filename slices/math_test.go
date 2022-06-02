@@ -11,7 +11,7 @@ func Test_Min(t *testing.T) {
 	expected := 5
 
 	input := []int{1, 2, 3, 4, 5}
-	actual := slices.Min(input...)
+	actual := slices.Min(input)
 
 	assert.Equal(t, expected, actual)
 }
@@ -20,7 +20,7 @@ func Test_Max(t *testing.T) {
 	expected := 5
 
 	input := []int{1, 2, 3, 4, 5}
-	actual := slices.Max(input...)
+	actual := slices.Max(input)
 
 	assert.Equal(t, expected, actual)
 }

@@ -6,28 +6,28 @@ type Numeric interface {
 		float32 | float64
 }
 
-func Sum[V Numeric](vs ...V) V {
-	adder := func(a V, v V) V {
+func Sum[V Numeric](vs []V) V {
+	fn := func(a V, v V) V {
 		return a + v
 	}
 
-	return Reduce(0, vs, adder)
+	return Reduce(0, vs, fn)
 }
 
-func Mean[V Numeric](vs ...V) V {
+func Mean[V Numeric](vs []V) V {
 	l := len(vs)
 
 	if l == 0 {
 		return 0
 	}
 
-	sum := Sum(vs...)
+	sum := Sum(vs)
 	mean := sum / V(l)
 
 	return mean
 }
 
-func Min[V Numeric](vs ...V) V {
+func Min[V Numeric](vs []V) V {
 	fn := func(a V, v V) V {
 		if v < a {
 			return v
@@ -39,7 +39,7 @@ func Min[V Numeric](vs ...V) V {
 	return Reduce(Head(vs...), vs, fn)
 }
 
-func Max[V Numeric](vs ...V) V {
+func Max[V Numeric](vs []V) V {
 	fn := func(a V, v V) V {
 		if v < a {
 			return v
