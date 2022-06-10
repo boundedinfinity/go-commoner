@@ -1,59 +1,45 @@
 package strings_test
 
 import (
+	"testing"
+
 	"github.com/boundedinfinity/commons/strings"
-	. "github.com/onsi/ginkgo/v2"
-	. "github.com/onsi/gomega"
+	"github.com/stretchr/testify/assert"
 )
 
-var _ = Describe("Strings", func() {
-	Context("IsBlank()", func() {
-		It("should find empty from normal string", func() {
-			Expect(strings.IsBlank("")).To(BeTrue())
-		})
+func Test_String_IsBlank(t *testing.T) {
+	assert.Equal(t, strings.IsBlank(""), true)
 
-		It("should find empty from typed string", func() {
-			type MyString string
-			var ms MyString = ""
-			Expect(strings.IsBlank(ms)).To(BeTrue())
-		})
-	})
+	type MyString string
+	var ms MyString = ""
+	assert.Equal(t, strings.IsBlank(ms), true)
+}
 
-	Context("IsEmpty()", func() {
-		It("should find empty from normal string", func() {
-			Expect(strings.IsEmpty("")).To(BeTrue())
-		})
+func Test_String_IsEmpty(t *testing.T) {
+	assert.Equal(t, strings.IsEmpty(""), true)
 
-		It("should find empty from typed string", func() {
-			type MyString string
-			var ms MyString = ""
-			Expect(strings.IsEmpty(ms)).To(BeTrue())
-		})
-	})
+	type MyString string
+	var ms MyString = ""
+	assert.Equal(t, strings.IsBlank(ms), true)
+}
 
-	Context("Abbreviate()", func() {
-		It("a string that is too long", func() {
-			input := "a test string that is too long"
-			expected := "a test string..."
-			actual := strings.Abbreviate(input, 16)
+func Test_String_Abbreviate(t *testing.T) {
+	input := "a test string that is too long"
+	expected := "a test string..."
+	actual := strings.Abbreviate(input, 16)
+	assert.Equal(t, actual, expected)
+}
 
-			Expect(actual).To(Equal(expected))
-		})
+func Test_String_Abbreviate_shorter(t *testing.T) {
+	input := "a test string"
+	expected := "a test string"
+	actual := strings.Abbreviate(input, 16)
+	assert.Equal(t, actual, expected)
+}
 
-		It("not a string that is shorter", func() {
-			input := "a test string"
-			expected := "a test string"
-			actual := strings.Abbreviate(input, 16)
-
-			Expect(actual).To(Equal(expected))
-		})
-
-		It("not a string that is equal to the width", func() {
-			input := "a test string"
-			expected := "a test ..."
-			actual := strings.Abbreviate(input, len(input)-3)
-
-			Expect(actual).To(Equal(expected))
-		})
-	})
-})
+func Test_String_Abbreviate_equal_length(t *testing.T) {
+	input := "a test string"
+	expected := "a test ..."
+	actual := strings.Abbreviate(input, len(input)-3)
+	assert.Equal(t, actual, expected)
+}

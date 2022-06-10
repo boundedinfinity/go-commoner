@@ -1,55 +1,43 @@
 package strings_test
 
 import (
+	"testing"
+
 	"github.com/boundedinfinity/commons/strings"
-	. "github.com/onsi/ginkgo/v2"
-	. "github.com/onsi/gomega"
+	"github.com/stretchr/testify/assert"
 )
 
-var _ = Describe("Strings", func() {
-	Context("Trim()", func() {
-		It("trim normal string with one space", func() {
-			input := " a string "
-			expected := "a string"
-			actual := strings.TrimSpace(input)
+func Test_String_Trim_one_space(t *testing.T) {
+	input := " a string "
+	expected := "a string"
+	actual := strings.TrimSpace(input)
+	assert.Equal(t, expected, actual)
+}
 
-			Expect(actual).To(Equal(expected))
-		})
+func Test_String_Trim_multiple_space(t *testing.T) {
+	input := "   a string   "
+	expected := "a string"
+	actual := strings.TrimSpace(input)
+	assert.Equal(t, expected, actual)
+}
 
-		It("trim normal string with multiple spaces", func() {
-			input := "   a string   "
-			expected := "a string"
-			actual := strings.TrimSpace(input)
+func Test_String_Trim_other_characters(t *testing.T) {
+	input := "!^a string^!"
+	expected := "a string"
+	actual := strings.Trim(input, "!^")
+	assert.Equal(t, expected, actual)
+}
 
-			Expect(actual).To(Equal(expected))
-		})
-	})
+func Test_String_TrimFn_one_space(t *testing.T) {
+	input := " a string "
+	expected := "a string"
+	actual := strings.TrimFunc(input, func(x rune) bool { return x == ' ' })
+	assert.Equal(t, expected, actual)
+}
 
-	Context("Trim()", func() {
-		It("trim normal string of ! and ^", func() {
-			input := "!^a string^!"
-			expected := "a string"
-			actual := strings.Trim(input, "!^")
-
-			Expect(actual).To(Equal(expected))
-		})
-	})
-
-	Context("TrimFn()", func() {
-		It("trim normal string with one space", func() {
-			input := " a string "
-			expected := "a string"
-			actual := strings.TrimFunc(input, func(x rune) bool { return x == ' ' })
-
-			Expect(actual).To(Equal(expected))
-		})
-
-		It("trim normal string with multiple spaces", func() {
-			input := "   a string   "
-			expected := "a string"
-			actual := strings.TrimFunc(input, func(x rune) bool { return x == ' ' })
-
-			Expect(actual).To(Equal(expected))
-		})
-	})
-})
+func Test_String_TrimFn_multiple_space(t *testing.T) {
+	input := "   a string   "
+	expected := "a string"
+	actual := strings.TrimFunc(input, func(x rune) bool { return x == ' ' })
+	assert.Equal(t, expected, actual)
+}

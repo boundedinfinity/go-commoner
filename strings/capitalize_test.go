@@ -1,28 +1,25 @@
 package strings_test
 
 import (
+	"testing"
+
 	"github.com/boundedinfinity/commons/strings"
-	. "github.com/onsi/ginkgo/v2"
-	. "github.com/onsi/gomega"
+	"github.com/stretchr/testify/assert"
 )
 
-var _ = Describe("Strings", func() {
-	Context("Uppercase()", func() {
-		It("a normal string", func() {
-			input := "string"
-			expected := "STRING"
-			actual := strings.Uppercase(input)
+func Test_Uppercase_Normal_String(t *testing.T) {
+	input := "string"
+	expected := "STRING"
+	actual := strings.Uppercase(input)
 
-			Expect(actual).To(Equal(expected))
-		})
+	assert.Equal(t, expected, actual)
+}
 
-		It("a typed string", func() {
-			type MyString string
-			var input MyString = "string"
-			var expected MyString = "STRING"
-			actual := strings.Uppercase(input)
+func Test_Uppercase_Typed_String(t *testing.T) {
+	type MyString string
+	var input MyString = "string"
+	var expected MyString = "STRING"
+	actual := strings.Uppercase(input)
 
-			Expect(actual).To(Equal(expected))
-		})
-	})
-})
+	assert.Equal(t, expected, actual)
+}
