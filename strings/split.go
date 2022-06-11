@@ -19,7 +19,7 @@ func SplitAny[T ~string](s T, cs ...rune) []T {
 func SplitFn[T ~string](s T, fn func(rune) bool) []T {
 	var o []T
 	start := 0
-	
+
 	for i, x := range s {
 		if fn(x) {
 			o = append(o, s[start:i])
@@ -28,21 +28,6 @@ func SplitFn[T ~string](s T, fn func(rune) bool) []T {
 	}
 
 	o = append(o, s[start:])
-
-	return o
-}
-
-
-func Join[T ~string](s []T, j T) T {
-	var o T
-
-	for i, x := range s {
-		o += x
-
-		if i != len(s) {
-			o += j
-		}
-	}
 
 	return o
 }
