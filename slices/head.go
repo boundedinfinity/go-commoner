@@ -15,7 +15,7 @@ func HeadV[V any](vs ...V) V {
 	return Head(vs)
 }
 
-func HeadO[V any](vs []V) optioner.Optioner[V] {
+func HeadO[V any](vs []V) optioner.Option[V] {
 	if len(vs) > 0 {
 		return optioner.Some(vs[0])
 	}
@@ -23,7 +23,7 @@ func HeadO[V any](vs []V) optioner.Optioner[V] {
 	return optioner.None[V]()
 }
 
-func HeadVO[V any](vs ...V) optioner.Optioner[V] {
+func HeadVO[V any](vs ...V) optioner.Option[V] {
 	return HeadO(vs)
 }
 
@@ -42,7 +42,7 @@ func TailV[V any](vs ...V) V {
 	return Tail(vs)
 }
 
-func TailO[V any](vs []V) optioner.Optioner[V] {
+func TailO[V any](vs []V) optioner.Option[V] {
 	l := len(vs)
 
 	if l > 0 {
@@ -52,6 +52,6 @@ func TailO[V any](vs []V) optioner.Optioner[V] {
 	}
 }
 
-func TailVO[V any](vs ...V) optioner.Optioner[V] {
+func TailVO[V any](vs ...V) optioner.Option[V] {
 	return TailO(vs)
 }
