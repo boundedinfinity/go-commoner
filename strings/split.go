@@ -1,13 +1,13 @@
 package strings
 
-func Split[T ~string](s T) []T {
-	return SplitAny[T](s, ' ')
+func Split[T ~string](s T, sep string) []string {
+	return SplitAny(s, sep)
 }
 
-func SplitAny[T ~string](s T, cs ...rune) []T {
-	return SplitFn[T](s, func(x rune) bool {
+func SplitAny[T ~string](s T, cs ...string) []string {
+	return SplitFn(s, func(x string) bool {
 		for _, c := range cs {
-			if c == x {
+			if c == string(x) {
 				return true
 			}
 		}
@@ -16,18 +16,18 @@ func SplitAny[T ~string](s T, cs ...rune) []T {
 	})
 }
 
-func SplitFn[T ~string](s T, fn func(rune) bool) []T {
-	var o []T
+func SplitFn[T ~string](s T, fn func(string) bool) []string {
+	var o []string
 	start := 0
 
 	for i, x := range s {
-		if fn(x) {
-			o = append(o, s[start:i])
+		if fn(string(x)) {
+			o = append(o, string(s[start:i]))
 			start = i + 1
 		}
 	}
 
-	o = append(o, s[start:])
+	o = append(o, string(s[start:]))
 
 	return o
 }

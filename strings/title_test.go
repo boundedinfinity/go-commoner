@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_Uppercase_Normal_String(t *testing.T) {
+func Test_Title_Normal_String(t *testing.T) {
 	input := "string"
 	expected := "STRING"
 	actual := strings.Uppercase(input)
@@ -15,10 +15,10 @@ func Test_Uppercase_Normal_String(t *testing.T) {
 	assert.Equal(t, expected, actual)
 }
 
-func Test_Uppercase_Typed_String(t *testing.T) {
+func Test_Title_Typed_String(t *testing.T) {
 	type MyString string
 	var input MyString = "string"
-	var expected MyString = "STRING"
+	var expected string = "STRING"
 	actual := strings.Uppercase(input)
 
 	assert.Equal(t, expected, actual)
