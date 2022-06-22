@@ -5,13 +5,13 @@ import (
 
 	"github.com/boundedinfinity/commons/pipeline"
 	"github.com/boundedinfinity/commons/strings"
-	"github.com/boundedinfinity/commons/try"
+	"github.com/boundedinfinity/go-trier"
 	"github.com/stretchr/testify/assert"
 )
 
 func Test_Pipeline_Try(t *testing.T) {
-	step1 := func(s string) try.Try[string] {
-		return try.Success(strings.Capitalize(s))
+	step1 := func(s string) trier.Try[string] {
+		return trier.Success(strings.Capitalize(s))
 	}
 
 	excepted := "S"

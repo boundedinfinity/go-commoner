@@ -1,10 +1,10 @@
 package pipeline
 
 import (
-	"github.com/boundedinfinity/commons/try"
+	"github.com/boundedinfinity/go-trier"
 )
 
-type StepTryFn[T any] func(T) try.Try[T]
+type StepTryFn[T any] func(T) trier.Try[T]
 
 func NewTry[T any]() *PipelineTry[T] {
 	return &PipelineTry[T]{
@@ -22,12 +22,12 @@ func (t *PipelineTry[T]) Step(fn StepTryFn[T]) *PipelineTry[T] {
 	return t
 }
 
-func (t *PipelineTry[T]) Run(in T) try.Try[T] {
+func (t *PipelineTry[T]) Run(in T) trier.Try[T] {
 	next := in
 
 	for i, step := range t.steps {
 		if step == nil {
-			return try.Failuref[T]("step %v is nil", i)
+			return trier.Failuref[T]("step %v is nil", i)
 		}
 
 		n := step(next)
@@ -39,5 +39,5 @@ func (t *PipelineTry[T]) Run(in T) try.Try[T] {
 		next = n.Result
 	}
 
-	return try.Success(next)
+	return trier.Success(next)
 }

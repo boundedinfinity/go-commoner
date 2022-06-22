@@ -1,0 +1,1 @@
+{"buildTargets":["bootstrap","build","init","list","process","publish","purge","test"],"launchTargets":[],"customConfigurationProvider":{"workspaceBrowse":{"browsePath":[],"compilerArgs":[]},"fileIndex":[]}}
