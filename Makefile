@@ -23,3 +23,4 @@ publish:
 	git push origin master
 	git tag -a $(tag) -m "$(tag)"
 	git push origin $(tag)
+
