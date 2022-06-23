@@ -8,18 +8,19 @@ list:
 process: purge
 	go generate ./...
 
+purge:
+	rm -rf file_extention/*.gen.go
+	rm -rf file_extention/*.enum.go
+	rm -rf mime_type/*.gen.go	
+	rm -rf mime_type/*.enum.go
+
 test: process
 	go test ./...
 
-commit:
+publish:
 	git add . || true
-	git commit -m "$(m)"
+	git commit -m "$(tag)"
 	git push origin master
-
-tag:
 	git tag -a $(tag) -m "$(tag)"
 	git push origin $(tag)
 
-publish:
-	make commit -m $(tag)
-	make tag -tag $(tag)
