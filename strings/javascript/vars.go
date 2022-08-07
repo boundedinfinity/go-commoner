@@ -1,6 +1,9 @@
 package javascript
 
-import "github.com/boundedinfinity/commons/slices"
+import (
+	"github.com/boundedinfinity/commons/runes"
+	"github.com/boundedinfinity/commons/strings"
+)
 
 var (
 	Keywords = []string{
@@ -19,8 +22,16 @@ var (
 		"native", "throws", "boolean", "abstract",
 		"volatile", "transient", "synchronized", "var",
 	}
+
+	valid_first_chars    = []rune{}
+	valid_nonfirst_chars = []rune{}
 )
 
-func IsKeyword(s string) bool {
-	return slices.Contains(Keywords, s)
+func init() {
+	valid_first_chars = append(valid_first_chars, strings.UppercaseLetters...)
+	valid_first_chars = append(valid_first_chars, strings.LowercaseLetters...)
+	valid_first_chars = append(valid_first_chars, runes.UNDERSCORE)
+
+	valid_nonfirst_chars = append(valid_nonfirst_chars, valid_first_chars...)
+	valid_nonfirst_chars = append(valid_nonfirst_chars, strings.Numbers...)
 }

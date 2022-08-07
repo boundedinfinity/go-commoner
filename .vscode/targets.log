@@ -1,16 +1,14 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-# GNU Make 3.81
-# Copyright (C) 2006  Free Software Foundation, Inc.
-# This is free software; see the source for copying conditions.
-# There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
-# PARTICULAR PURPOSE.
+make: *** No rule to make target 'all'.  Stop.
 
-# This program built for i386-apple-darwin11.3.0
- 
-make: *** No rule to make target `all'.  Stop.
+# GNU Make 4.2.1
+# Built for x86_64-pc-linux-gnu
+# Copyright (C) 1988-2016 Free Software Foundation, Inc.
+# License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+# This is free software: you are free to change and redistribute it.
+# There is NO WARRANTY, to the extent permitted by law.
 
-
-# Make data base, printed on Wed Jun 22 14:05:31 2022
+# Make data base, printed on Sat Aug  6 23:34:14 2022
 
 # Variables
 
@@ -19,144 +17,211 @@ make: *** No rule to make target `all'.  Stop.
 # automatic
 ?F = $(notdir $?)
 # environment
-LC_CTYPE = en_US.UTF-8
+PAPERSIZE = letter
 # environment
-VSCODE_LOG_NATIVE = false
+DESKTOP_SESSION = pantheon
+# default
+.SHELLFLAGS := -c
+# environment
+XDG_SESSION_CLASS = user
+# environment
+XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
 @D = $(patsubst %/,%,$(dir $@))
-# automatic
-@F = $(notdir $@)
+# environment
+XAUTHORITY = /home/bbabb/.Xauthority
+# environment
+GDMSESSION = pantheon
+# environment
+XMODIFIERS = @im=ibus
 # makefile
-CURDIR := /Users/bbabb200/Documents/dev/github.com/commons
+CURDIR := /home/bbabb/Documents/git/commons
 # makefile
 SHELL = /bin/sh
 # environment
+GDM_LANG = en_US
+# environment
 VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
 # environment
-_ = /usr/bin/make
-# makefile (from `Makefile', line 1)
+XDG_CONFIG_DIRS = /etc/xdg/xdg-pantheon:/etc/xdg
+# makefile (from 'Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
+# automatic
+@F = $(notdir $@)
+# environment
+GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
+# 'override' directive
+GNUMAKEFLAGS := 
+# environment
+MAKELEVEL := 0
+# environment
+XDG_DATA_DIRS = /usr/share/gnome:/usr/share/pantheon:/home/bbabb/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share:/var/lib/snapd/desktop
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
-VSCODE_VERBOSE_LOGGING = true
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # environment
-__CFBundleIdentifier = com.microsoft.VSCode
+LC_NAME = en_US.UTF-8
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/0w/0fbmj4lx1y13d17x6x4qrhgh0000gq/T/vscode-ipc-d4835fba-df5f-4afb-8816-66c558673d52.sock
-# environment
-VSCODE_CWD = /
+VSCODE_CWD = /home/bbabb
 # environment
 GOPROXY = https://proxy.golang.org,direct
 # environment
-PATH = /usr/local/opt/python@3.10/bin:/Users/bbabb200/.config/mercury/bin:/Users/bbabb200/go/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/VMware Fusion.app/Contents/Public:/Applications/Wireshark.app/Contents/MacOS:/Users/bbabb200/go/bin
-# makefile (from `Makefile', line 1)
-makefile_dir := /Users/bbabb200/Documents/dev/github.com/commons
+QT_STYLE_OVERRIDE = adwaita
 # environment
-GOPATH = /Users/bbabb200/go
+FLUTTERPATH = /home/bbabb/snap/flutter/common/flutter
 # environment
-VSCODE_LOG_STACK = false
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session0
+# environment
+ANDROID_SDK = /home/bbabb/Android/Sdk
+# default
+MAKE_HOST := x86_64-pc-linux-gnu
+# environment
+PATH = /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/bbabb/go/bin:/home/bbabb/snap/flutter/common/flutter/bin:/home/bbabb/Android/Sdk/tools/bin
+# makefile (from 'Makefile', line 1)
+makefile_dir := /home/bbabb/Documents/git/commons
+# environment
+GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
+# environment
+SESSION_MANAGER = local/B450IAORUSPROWIFI77d641bf:@/tmp/.ICE-unix/3693,unix/B450IAORUSPROWIFI77d641bf:/tmp/.ICE-unix/3693
+# environment
+XDG_RUNTIME_DIR = /run/user/1000
+# environment
+GOPATH = /home/bbabb/go
+# environment
+XDG_MENU_PREFIX = gnome-
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # default
-.FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.4yJZfPjq0U/Listeners
+XDG_GREETER_DATA_DIR = /var/lib/lightdm-data/bbabb
+# environment
+XDG_SESSION_DESKTOP = pantheon
+# environment
+SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
+# environment
+GIO_LAUNCHED_DESKTOP_FILE_PID = 6470
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_PIPE_LOGGING = true
+DISPLAY = :0
 # environment
-PWD = /Users/bbabb200/Documents/dev/github.com/commons
+PWD = /home/bbabb/Documents/git/commons
 # environment
-ORIGINAL_XDG_CURRENT_DESKTOP = undefined
-# environment
-GOMODCACHE = /Users/bbabb200/go/pkg/mod
-# environment
-HOME = /Users/bbabb200
+QT_QPA_PLATFORMTHEME = gtk3
 # default
-MAKEFILEPATH = $(shell /usr/bin/xcode-select -print-path 2>/dev/null || echo /Developer)/Makefiles
+.LOADED := 
  
 # environment
-VSCODE_CODE_CACHE_PATH = /Users/bbabb200/Library/Application Support/Code/CachedData/30d9c6cd9483b2cc586687151bcbcd635f373630
+SSH_AGENT_PID = 3792
 # environment
-LOGNAME = bbabb200
+ORIGINAL_XDG_CURRENT_DESKTOP = Pantheon
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+GTK_MODULES = gail:atk-bridge
+# environment
+GOMODCACHE = /home/bbabb/go/pkg/mod
+# environment
+HOME = /home/bbabb
+# environment
+VSCODE_CODE_CACHE_PATH = /home/bbabb/.config/Code/CachedData/3b889b090b5ad5793f524b5d1d39fda662b96a2a
+# environment
+LOGNAME = bbabb
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+# automatic
++F = $(notdir $+)
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# environment
+GNOME_DESKTOP_SESSION_ID = this-is-deprecated
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
 # environment
-XPC_FLAGS = 0x0
+LC_TIME = en_US.UTF-8
 # default
 MAKE = $(MAKE_COMMAND)
 # default
 MAKECMDGOALS := all
 # environment
-SHLVL = 2
-# default
-MAKE_VERSION := 3.81
+QT_IM_MODULE = ibus
 # environment
-USER = bbabb200
+SHLVL = 1
+# default
+MAKE_VERSION := 4.2.1
+# environment
+USER = bbabb
+# environment
+LC_MONETARY = en_US.UTF-8
 # makefile
 .DEFAULT_GOAL := list
+# environment
+XDG_CURRENT_DESKTOP = Unity
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
+# environment
+LC_TELEPHONE = en_US.UTF-8
 # default
-MAKE_COMMAND := /Library/Developer/CommandLineTools/usr/bin/make
+MAKE_COMMAND := make
 # default
 .VARIABLES := 
-# environment
-TMPDIR = /var/folders/0w/0fbmj4lx1y13d17x6x4qrhgh0000gq/T/
 # automatic
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /Users/bbabb200/Library/Application Support/Code/1.68.1-main.sock
-# makefile
-MAKEFLAGS = Rrqp
+LANGUAGE = en_US
 # environment
-MFLAGS = -Rrqp
+XDG_SEAT_PATH = /org/freedesktop/DisplayManager/Seat0
+# environment
+VSCODE_IPC_HOOK = /run/user/1000/vscode-3eedf267-1.69.2-main.sock
+# makefile
+MAKEFLAGS = pqrR
+# environment
+MFLAGS = -pqrR
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
-# environment
-XPC_SERVICE_NAME = application.com.microsoft.VSCode.44313995.44314001
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
-# automatic
-+F = $(notdir $+)
 # environment
-__CF_USER_TEXT_ENCODING = 0x1F7:0x0:0x0
+GDK_BACKEND = x11
 # environment
-COMMAND_MODE = unix2003
+LC_PAPER = en_US.UTF-8
+# environment
+QT_ACCESSIBILITY = 1
+ 
+# 'override' directive
+.SHELLSTATUS := 0
 # default
 MAKEFILES := 
+# environment
+LC_NUMERIC = en_US.UTF-8
 # automatic
 <F = $(notdir $<)
 # environment
-GOPRIVATE = github.comcast.com
-# environment
-EDITOR = code -w
+LC_MEASUREMENT = en_US.UTF-8
 # environment
 LC_ALL = C
 # automatic
 ^F = $(notdir $^)
 # default
 SUFFIXES := 
-# default
-.INCLUDE_DIRS = /usr/local/include
 # environment
-MAKELEVEL := 0
+CHROME_DESKTOP = code-url-handler.desktop
+# default
+.INCLUDE_DIRS = /usr/include /usr/local/include /usr/include
+# environment
+LC_IDENTIFICATION = en_US.UTF-8
+# default
+.RECIPEPREFIX := 
+# environment
+LC_ADDRESS = en_US.UTF-8
 # environment
 LANG = C
 # environment
-VSCODE_PID = 34261
-# environment
-VAULT_ADDR = https://or.vault.comcast.com
+VSCODE_PID = 6470
 # variable set hash-table stats:
-# Load=70/1024=7%, Rehash=0, Collisions=3/96=3%
+# Load=103/1024=10%, Rehash=0, Collisions=10/131=8%
 
 # Pattern-specific Variable Values
 
@@ -164,9 +229,9 @@ VAULT_ADDR = https://or.vault.comcast.com
 
 # Directories
 
-# . (device 16777221, inode 41233521): 16 files, no impossibilities.
+# . (device 64768, inode 41163579): 17 files, no impossibilities.
 
-# 16 files, no impossibilities in 1 directories.
+# 17 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -176,41 +241,39 @@ VAULT_ADDR = https://or.vault.comcast.com
 
 # Not a target:
 all:
-#  Command-line target.
+#  Command line target.
 #  Implicit rule search has been done.
 #  File does not exist.
 #  File has not been updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 .PHONY: list bootstrap init build
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
-process: purge
+process:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 9):
- 
+#  recipe to execute (from 'Makefile', line 9):
 	go generate ./...
-	
 
-# Not a target:
-.SUFFIXES:
+commit:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+#  recipe to execute (from 'Makefile', line 15):
+	git add . || true
+	git commit -m "$(m)"
+	git push origin master
 
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-22 14:05:25
+#  Last modified 2022-06-23 17:58:22.190425715
 #  File has been updated.
+ 
 #  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 bootstrap:
 #  Phony target (prerequisite of .PHONY).
@@ -222,9 +285,8 @@ test: process
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 18):
+#  recipe to execute (from 'Makefile', line 12):
 	go test ./...
-	
 
 build:
 #  Phony target (prerequisite of .PHONY).
@@ -232,16 +294,13 @@ build:
 #  File does not exist.
 #  File has not been updated.
 
-purge:
+tag:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 12):
-	rm -rf file_extention/*.gen.go
-	rm -rf file_extention/*.enum.go
-	rm -rf mime_type/*.gen.go	
-	rm -rf mime_type/*.enum.go
-	
+#  recipe to execute (from 'Makefile', line 20):
+	git tag -a $(tag) -m "$(tag)"
+	git push origin $(tag)
 
 # Not a target:
 .DEFAULT:
@@ -249,46 +308,43 @@ purge:
 #  Modification time never checked.
 #  File has not been updated.
 
-publish:
+publish: process
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 21):
-	git add . || true
-	git commit -m "$(tag)"
-	git push origin master
-	git tag -a $(tag) -m "$(tag)"
-	git push origin $(tag)
-	
+#  recipe to execute (from 'Makefile', line 24):
+	make commit -m $(tag)
+	make tag -tag $(tag)
 
 list:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 6):
+#  recipe to execute (from 'Makefile', line 6):
 	@grep '^[^#[:space:]].*:' Makefile | grep -v ':=' | grep -v '^\.' | sed 's/:.*//g' | sed 's/://g' | sort
-	
 
 init:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
+ 
 
 # files hash-table stats:
-# Load=13/1024=1%, Rehash=0, Collisions=0/31=0%
+# Load=14/1024=1%, Rehash=0, Collisions=0/31=0%
 # VPATH Search Paths
 
-# No `vpath' search paths.
+# No 'vpath' search paths.
 
-# No general (`VPATH' variable) search path.
+# No general ('VPATH' variable) search path.
 
-# # of strings in strcache: 1
-# # of strcache buffers: 1
-# strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
-# strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
+# strcache buffers: 1 (0) / strings = 32 / storage = 240 B / avg = 7 B
+# current buf: size = 8162 B / used = 240 B / count = 32 / avg = 7 B
 
-# Finished Make data base on Wed Jun 22 14:05:31 2022
+# strcache performance: lookups = 46 / hit rate = 30%
+# hash-table stats:
+# Load=32/8192=0%, Rehash=0, Collisions=1/46=2%
+# Finished Make data base on Sat Aug  6 23:34:14 2022
 
  
