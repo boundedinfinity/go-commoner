@@ -21,5 +21,5 @@ tag:
 	git push origin $(tag)
 
 publish: process
-	make commit -m $(tag)
-	make tag -tag $(tag)
+	make commit m=$(tag)
+	make tag tag=$(tag)
