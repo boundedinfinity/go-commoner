@@ -3,7 +3,7 @@ package javascript_test
 import (
 	"testing"
 
-	"github.com/boundedinfinity/commons/strings/golang"
+	"github.com/boundedinfinity/go-commoner/strings/golang"
 	"github.com/stretchr/testify/assert"
 )
 

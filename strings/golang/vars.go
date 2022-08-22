@@ -1,8 +1,8 @@
 package golang
 
 import (
-	"github.com/boundedinfinity/commons/runes"
-	"github.com/boundedinfinity/commons/strings"
+	"github.com/boundedinfinity/go-commoner/runes"
+	"github.com/boundedinfinity/go-commoner/strings"
 )
 
 var (

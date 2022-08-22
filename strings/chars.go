@@ -1,8 +1,8 @@
 package strings
 
 import (
-	"github.com/boundedinfinity/commons/runes"
-	"github.com/boundedinfinity/commons/slices"
+	"github.com/boundedinfinity/go-commoner/runes"
+	"github.com/boundedinfinity/go-commoner/slices"
 )
 
 var (

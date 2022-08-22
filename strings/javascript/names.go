@@ -5,8 +5,8 @@ package javascript
 import (
 	gostrings "strings"
 
-	"github.com/boundedinfinity/commons/runes"
-	"github.com/boundedinfinity/commons/slices"
+	"github.com/boundedinfinity/go-commoner/runes"
+	"github.com/boundedinfinity/go-commoner/slices"
 )
 
 type NameConfig struct {
