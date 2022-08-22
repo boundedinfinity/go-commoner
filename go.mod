@@ -1,4 +1,4 @@
-module github.com/boundedinfinity/commons
+module github.com/boundedinfinity/go-commoner
 
 go 1.18
 

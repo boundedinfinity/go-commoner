@@ -3,7 +3,7 @@ package strings_test
 import (
 	"testing"
 
-	"github.com/boundedinfinity/commons/strings"
+	"github.com/boundedinfinity/go-commoner/strings"
 	"github.com/stretchr/testify/assert"
 )
 

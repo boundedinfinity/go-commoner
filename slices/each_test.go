@@ -3,8 +3,8 @@ package slices_test
 import (
 	"testing"
 
-	"github.com/boundedinfinity/commons/slices"
-	"github.com/boundedinfinity/commons/strings"
+	"github.com/boundedinfinity/go-commoner/slices"
+	"github.com/boundedinfinity/go-commoner/strings"
 	"github.com/stretchr/testify/assert"
 )
 

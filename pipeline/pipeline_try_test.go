@@ -3,8 +3,8 @@ package pipeline_test
 import (
 	"testing"
 
-	"github.com/boundedinfinity/commons/pipeline"
-	"github.com/boundedinfinity/commons/strings"
+	"github.com/boundedinfinity/go-commoner/pipeline"
+	"github.com/boundedinfinity/go-commoner/strings"
 	"github.com/boundedinfinity/go-trier"
 	"github.com/stretchr/testify/assert"
 )

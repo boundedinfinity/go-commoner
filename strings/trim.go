@@ -1,8 +1,9 @@
 package strings
 
 import (
-	 "strings"
-	 "github.com/boundedinfinity/commons/slices"
+	"strings"
+
+	"github.com/boundedinfinity/go-commoner/slices"
 )
 
 func TrimSpace[T ~string](s T) T {
@@ -35,7 +36,7 @@ func string2Runes(s string) []rune {
 	var rs []rune
 
 	for _, r := range s {
-		rs =append(rs, r)
+		rs = append(rs, r)
 	}
 
 	return rs
@@ -75,12 +76,12 @@ func TrimFunc[T ~string](s T, fn func(rune) bool) T {
 
 func TrimFuncLeft[T ~string](s T, fn func(rune) bool) T {
 	start := 0
-	
+
 	for i, x := range s {
 		if !fn(rune(x)) {
 			start = i
 			break
-		}		
+		}
 	}
 
 	return s[start:]

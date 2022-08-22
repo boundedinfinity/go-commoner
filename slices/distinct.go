@@ -1,6 +1,6 @@
 package slices
 
-import "github.com/boundedinfinity/commons/maps"
+import "github.com/boundedinfinity/go-commoner/maps"
 
 func Distinct[T comparable](xs []T) []T {
 	m := map[T]int{}

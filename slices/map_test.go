@@ -4,7 +4,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/boundedinfinity/commons/slices"
+	"github.com/boundedinfinity/go-commoner/slices"
 	"github.com/stretchr/testify/assert"
 )
 
