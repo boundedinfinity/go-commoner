@@ -46,34 +46,34 @@ func Test_serialize(t *testing.T) {
 	}
 }
 
-func Test_deserialize(t *testing.T) {
-	testCases := []struct {
-		name     string
-		input    string
-		expected o.Option[any]
-		err      error
-	}{
-		{
-			name:     "some string",
-			input:    `"s"`,
-			expected: o.Some("s"),
-		},
-	}
+// func Test_deserialize(t *testing.T) {
+// 	testCases := []struct {
+// 		name     string
+// 		input    string
+// 		expected o.Option[any]
+// 		err      error
+// 	}{
+// 		{
+// 			name:     "some string",
+// 			input:    `"s"`,
+// 			expected: o.Some("s"),
+// 		},
+// 	}
 
-	for _, tc := range testCases {
-		t.Run(tc.name, func(tt *testing.T) {
-			input := []byte(tc.input)
-			var actual o.Option[any]
-			err := json.Unmarshal(input, &actual)
+// 	for _, tc := range testCases {
+// 		t.Run(tc.name, func(tt *testing.T) {
+// 			input := []byte(tc.input)
+// 			var actual o.Option[any]
+// 			err := json.Unmarshal(input, &actual)
 
-			assert.Equal(tt, tc.err, err)
-			assert.Equal(tt, tc.expected.Get(), actual.Get())
-			assert.Equal(tt, tc.expected.Empty(), actual.Empty())
-			assert.Equal(tt, tc.expected.Defined(), actual.Defined())
+// 			assert.Equal(tt, tc.err, err)
+// 			assert.Equal(tt, tc.expected.Get(), actual.Get())
+// 			assert.Equal(tt, tc.expected.Empty(), actual.Empty())
+// 			assert.Equal(tt, tc.expected.Defined(), actual.Defined())
 
-		})
-	}
-}
+// 		})
+// 	}
+// }
 
 // func Test_JSON_deserialize_string(t *testing.T) {
 // 	input := []byte(`"s"`)
