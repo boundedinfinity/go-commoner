@@ -1,4 +1,4 @@
-package option
+package optioner
 
 func ToFlatMapFunc[A any, B any](fn func(A) B) func(A) Option[B] {
 	return func(a A) Option[B] {

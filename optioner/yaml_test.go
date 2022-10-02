@@ -1,15 +1,15 @@
-package option_test
+package optioner_test
 
 import (
 	"testing"
 
-	"github.com/boundedinfinity/go-commoner/option"
+	"github.com/boundedinfinity/go-commoner/optioner"
 	"github.com/stretchr/testify/assert"
 	"gopkg.in/yaml.v2"
 )
 
 func Test_YAML_serialize_string(t *testing.T) {
-	input := option.Some("s")
+	input := optioner.Some("s")
 	expected := []byte("s\n")
 	actual, err := yaml.Marshal(input)
 
@@ -18,7 +18,7 @@ func Test_YAML_serialize_string(t *testing.T) {
 }
 
 func Test_YAML_serialize_empty_string(t *testing.T) {
-	input := option.None[string]()
+	input := optioner.None[string]()
 	expected := []byte("null\n")
 	actual, err := yaml.Marshal(input)
 	assert.Nil(t, err)
@@ -27,8 +27,8 @@ func Test_YAML_serialize_empty_string(t *testing.T) {
 
 func Test_YAML_deserialize_string(t *testing.T) {
 	input := []byte("s\n")
-	expected := option.Some("s")
-	var actual option.Option[string]
+	expected := optioner.Some("s")
+	var actual optioner.Option[string]
 
 	err := yaml.Unmarshal(input, &actual)
 
@@ -40,8 +40,8 @@ func Test_YAML_deserialize_string(t *testing.T) {
 
 func Test_YAML_deserialize_nil_string(t *testing.T) {
 	input := []byte("null\n")
-	expected := option.None[string]()
-	var actual option.Option[string]
+	expected := optioner.None[string]()
+	var actual optioner.Option[string]
 
 	err := yaml.Unmarshal(input, &actual)
 
@@ -52,7 +52,7 @@ func Test_YAML_deserialize_nil_string(t *testing.T) {
 }
 
 func Test_YAML_serialize_int(t *testing.T) {
-	input := option.Some(1)
+	input := optioner.Some(1)
 	expected := []byte("1\n")
 	actual, err := yaml.Marshal(input)
 
@@ -61,7 +61,7 @@ func Test_YAML_serialize_int(t *testing.T) {
 }
 
 func Test_YAML_serialize_int_empty(t *testing.T) {
-	input := option.None[int]()
+	input := optioner.None[int]()
 	expected := []byte("null\n")
 	actual, err := yaml.Marshal(input)
 
@@ -71,8 +71,8 @@ func Test_YAML_serialize_int_empty(t *testing.T) {
 
 func Test_YAML_deserialize_int(t *testing.T) {
 	input := []byte("1\n")
-	expected := option.Some(1)
-	var actual option.Option[int]
+	expected := optioner.Some(1)
+	var actual optioner.Option[int]
 
 	err := yaml.Unmarshal(input, &actual)
 
@@ -84,8 +84,8 @@ func Test_YAML_deserialize_int(t *testing.T) {
 
 func Test_YAML_deserialize_int_empty(t *testing.T) {
 	input := []byte("null\n")
-	expected := option.None[int]()
-	var actual option.Option[int]
+	expected := optioner.None[int]()
+	var actual optioner.Option[int]
 
 	err := yaml.Unmarshal(input, &actual)
 

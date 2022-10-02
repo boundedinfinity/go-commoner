@@ -1,4 +1,4 @@
-package option
+package optioner
 
 // MarshalYAML implements the gopkg.in/yaml.v2#Marshal interface
 func (t Option[T]) MarshalYAML() (interface{}, error) {

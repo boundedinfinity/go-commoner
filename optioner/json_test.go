@@ -1,10 +1,10 @@
-package option_test
+package optioner_test
 
 import (
 	"encoding/json"
 	"testing"
 
-	o "github.com/boundedinfinity/go-commoner/option"
+	o "github.com/boundedinfinity/go-commoner/optioner"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -50,7 +50,7 @@ func Test_deserialize(t *testing.T) {
 	testCases := []struct {
 		name     string
 		input    string
-		expected o.Option[any]
+		expected o.Option[string]
 		err      error
 	}{
 		{
@@ -58,12 +58,17 @@ func Test_deserialize(t *testing.T) {
 			input:    `"s"`,
 			expected: o.Some("s"),
 		},
+		{
+			name:     "no string",
+			input:    `null`,
+			expected: o.None[string](),
+		},
 	}
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
 			input := []byte(tc.input)
-			var actual o.Option[any]
+			var actual o.Option[string]
 			err := json.Unmarshal(input, &actual)
 
 			assert.Equal(tt, tc.err, err)
@@ -77,8 +82,8 @@ func Test_deserialize(t *testing.T) {
 
 // func Test_JSON_deserialize_string(t *testing.T) {
 // 	input := []byte(`"s"`)
-// 	expected := option.Some("s")
-// 	var actual option.Option[string]
+// 	expected := optioner.Some("s")
+// 	var actual optioner.Option[string]
 // 	err := json.Unmarshal(input, &actual)
 
 // 	assert.Nil(t, err)
@@ -89,8 +94,8 @@ func Test_deserialize(t *testing.T) {
 
 // func Test_JSON_deserialize_nil_string(t *testing.T) {
 // 	input := []byte(`null`)
-// 	expected := option.None[string]()
-// 	var actual option.Option[string]
+// 	expected := optioner.None[string]()
+// 	var actual optioner.Option[string]
 // 	err := json.Unmarshal(input, &actual)
 
 // 	assert.Nil(t, err)
@@ -101,8 +106,8 @@ func Test_deserialize(t *testing.T) {
 
 // func Test_JSON_deserialize_int(t *testing.T) {
 // 	input := []byte(`null`)
-// 	expected := option.None[string]()
-// 	var actual option.Option[string]
+// 	expected := optioner.None[string]()
+// 	var actual optioner.Option[string]
 // 	err := json.Unmarshal(input, &actual)
 
 // 	assert.Nil(t, err)
@@ -113,8 +118,8 @@ func Test_deserialize(t *testing.T) {
 
 // func Test_JSON_deserialize_int_empty(t *testing.T) {
 // 	input := []byte(`null`)
-// 	expected := option.None[string]()
-// 	var actual option.Option[string]
+// 	expected := optioner.None[string]()
+// 	var actual optioner.Option[string]
 // 	err := json.Unmarshal(input, &actual)
 
 // 	assert.Nil(t, err)
@@ -125,8 +130,8 @@ func Test_deserialize(t *testing.T) {
 
 // func Test_JSON_deserialize_nil_int(t *testing.T) {
 // 	input := []byte(`null`)
-// 	expected := option.None[int]()
-// 	var actual option.Option[int]
+// 	expected := optioner.None[int]()
+// 	var actual optioner.Option[int]
 // 	err := json.Unmarshal(input, &actual)
 
 // 	assert.Nil(t, err)
@@ -146,14 +151,14 @@ func Test_deserialize(t *testing.T) {
 // 		S: "s",
 // 	}
 
-// 	input1 := option.Some(s1)
+// 	input1 := optioner.Some(s1)
 // 	expected1 := []byte(`{"I":1,"S":"s"}`)
 // 	actual1, err := json.Marshal(input1)
 
 // 	assert.Nil(t, err)
 // 	assert.Equal(t, string(expected1), string(actual1))
 
-// 	input2 := option.None[Struct1]()
+// 	input2 := optioner.None[Struct1]()
 // 	expected2 := []byte(`null`)
 // 	actual2, err := json.Marshal(input2)
 
@@ -161,13 +166,13 @@ func Test_deserialize(t *testing.T) {
 // 	assert.Equal(t, string(expected2), string(actual2))
 
 // 	type Struct2 struct {
-// 		I option.Option[int]
-// 		S option.Option[string]
+// 		I optioner.Option[int]
+// 		S optioner.Option[string]
 // 	}
 
 // 	input3 := Struct2{
-// 		I: option.None[int](),
-// 		S: option.None[string](),
+// 		I: optioner.None[int](),
+// 		S: optioner.None[string](),
 // 	}
 
 // 	expected3 := []byte(`{"I":null,"S":null}`)
@@ -179,8 +184,8 @@ func Test_deserialize(t *testing.T) {
 
 // func Test_JSON_deserialize_struct(t *testing.T) {
 // 	input := []byte(`null`)
-// 	expected := option.None[int]()
-// 	var actual option.Option[int]
+// 	expected := optioner.None[int]()
+// 	var actual optioner.Option[int]
 // 	err := json.Unmarshal(input, &actual)
 
 // 	assert.Nil(t, err)

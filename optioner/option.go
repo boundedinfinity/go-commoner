@@ -1,4 +1,4 @@
-package option
+package optioner
 
 // Option[T] is a container for zero or one element of a given type.
 type Option[T any] struct {
@@ -34,14 +34,20 @@ func (t Option[T]) Get() T {
 // OrElse returns the contained value if Defined() is true or returns
 // the provided argument.
 func (t Option[T]) OrElse(v T) T {
-	if t.Empty() {
-		return v
+	if t.Defined() {
+		return *t.v
 	}
 
-	return *t.v
+	return v
 }
 
+// OrFirst returns the contained value if Defined() is true or returns
+// the first item from the provided list which is Defined().
 func (t Option[T]) OrFirst(vs ...Option[T]) Option[T] {
+	if t.Defined() {
+		return t
+	}
+
 	for _, v := range vs {
 		if v.Defined() {
 			return v
@@ -51,7 +57,14 @@ func (t Option[T]) OrFirst(vs ...Option[T]) Option[T] {
 	return t
 }
 
+// OrLast returns the contained value if Defined() is true or returns
+// the first item from the provided list which is Defined() starting
+// from the last value in the provided list.
 func (t Option[T]) OrLast(vs ...Option[T]) Option[T] {
+	if t.Defined() {
+		return t
+	}
+
 	for i := len(vs) - 1; i >= 0; i-- {
 		if vs[i].Defined() {
 			return vs[i]
