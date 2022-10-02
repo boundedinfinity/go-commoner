@@ -4,7 +4,7 @@ import (
 	"errors"
 	"os"
 
-	"github.com/boundedinfinity/go-commoner/try"
+	"github.com/boundedinfinity/go-commoner/trier"
 )
 
 func IsFileErr(path string) (bool, error) {
@@ -41,6 +41,6 @@ func PathExistsErr(path string) (bool, error) {
 	return true, nil
 }
 
-func PathExistsTry(path string) try.Try[bool] {
-	return try.Complete(PathExistsErr(path))
+func PathExistsTry(path string) trier.Try[bool] {
+	return trier.Complete(PathExistsErr(path))
 }

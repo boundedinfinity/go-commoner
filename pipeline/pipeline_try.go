@@ -1,7 +1,7 @@
 package pipeline
 
 import (
-	"github.com/boundedinfinity/go-commoner/try"
+	"github.com/boundedinfinity/go-commoner/trier"
 )
 
 func NewTry[T any]() *PipelineTry[T] {
@@ -24,12 +24,12 @@ func (t *PipelineTry[T]) Prepend(fn StepWithErrFn[T]) *PipelineTry[T] {
 	return t
 }
 
-func (t *PipelineTry[T]) Run(in T) try.Try[T] {
+func (t *PipelineTry[T]) Run(in T) trier.Try[T] {
 	res, err := t.pipeline.Run(in)
 
 	if err != nil {
-		return try.Complete(res, err)
+		return trier.Complete(res, err)
 	}
 
-	return try.Success(res)
+	return trier.Success(res)
 }

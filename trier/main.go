@@ -1,9 +1,9 @@
-package try
+package trier
 
 import (
 	"fmt"
 
-	"github.com/boundedinfinity/go-commoner/errutil"
+	"github.com/boundedinfinity/go-commoner/errorer"
 )
 
 type Try[T any] struct {
@@ -35,7 +35,7 @@ func Failuref[T any](format string, a ...any) Try[T] {
 }
 
 func Complete[T any](result T, err error) Try[T] {
-	err2 := errutil.Err(err)
+	err2 := errorer.Err(err)
 	return Try[T]{
 		Result: result,
 		Error:  &err2,

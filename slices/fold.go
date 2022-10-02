@@ -1,7 +1,7 @@
 package slices
 
 import (
-	"github.com/boundedinfinity/go-commoner/try"
+	"github.com/boundedinfinity/go-commoner/trier"
 )
 
 func Fold[I any, O any](initial O, vs []I, fn func(O, I) O) O {
@@ -51,18 +51,18 @@ func FoldLeftErr[I any, O any](initial O, vs []I, fn func(O, I) (O, error)) (O, 
 	return curr, nil
 }
 
-func FoldTry[I any, O any](initial O, vs []I, fn func(O, I) (O, error)) try.Try[O] {
+func FoldTry[I any, O any](initial O, vs []I, fn func(O, I) (O, error)) trier.Try[O] {
 	return FoldLeftTry(initial, vs, fn)
 }
 
-func FoldLeftTry[I any, O any](initial O, vs []I, fn func(O, I) (O, error)) try.Try[O] {
+func FoldLeftTry[I any, O any](initial O, vs []I, fn func(O, I) (O, error)) trier.Try[O] {
 	curr, err := FoldLeftErr(initial, vs, fn)
 
 	if err != nil {
-		try.Complete(curr, err)
+		trier.Complete(curr, err)
 	}
 
-	return try.Success(curr)
+	return trier.Success(curr)
 }
 
 func FoldRight[I any, O any](initial O, vs []I, fn func(O, I) O) O {
@@ -100,7 +100,7 @@ func FoldRightErr[I any, O any](initial O, vs []I, fn func(O, I) (O, error)) (O,
 	return curr, nil
 }
 
-func FoldRightTry[I any, O any](initial O, vs []I, fn func(O, I) (O, error)) try.Try[O] {
+func FoldRightTry[I any, O any](initial O, vs []I, fn func(O, I) (O, error)) trier.Try[O] {
 	curr, err := FoldRightErr(initial, vs, fn)
-	return try.Complete(curr, err)
+	return trier.Complete(curr, err)
 }

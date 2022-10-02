@@ -1,8 +1,6 @@
 package slices
 
-import (
-	"github.com/boundedinfinity/go-commoner/try"
-)
+import "github.com/boundedinfinity/go-commoner/trier"
 
 func Reduce[V any, A any](initial A, vs []V, fn func(V, A) A) A {
 	if len(vs) == 0 {
@@ -32,7 +30,7 @@ func ReduceErr[V any, A any](vs []V, fn func(V, A) (A, error), s A) (A, error) {
 	return c, nil
 }
 
-func ReduceTry[V any, A any](vs []V, fn func(V, A) (A, error), initial A) try.Try[A] {
+func ReduceTry[V any, A any](vs []V, fn func(V, A) (A, error), initial A) trier.Try[A] {
 	agg := initial
 
 	for _, v := range vs {
@@ -40,9 +38,9 @@ func ReduceTry[V any, A any](vs []V, fn func(V, A) (A, error), initial A) try.Tr
 		agg = a
 
 		if err != nil {
-			return try.Complete(agg, err)
+			return trier.Complete(agg, err)
 		}
 	}
 
-	return try.Success(agg)
+	return trier.Success(agg)
 }
