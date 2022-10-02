@@ -1,10 +1,10 @@
 package slices
 
-func Flatten[T any](vss ...[]T) []T {
+func Flatten[T any](items ...[]T) []T {
 	var o []T
 
-	for _, vs := range vss {
-		o = append(o, vs...)
+	for _, item := range items {
+		o = append(o, item...)
 	}
 
 	return o

@@ -3,7 +3,6 @@ module github.com/boundedinfinity/go-commoner
 go 1.18
 
 require (
-	github.com/boundedinfinity/go-trier v1.0.1
 	github.com/stretchr/testify v1.7.4
 	gopkg.in/yaml.v2 v2.4.0
 )

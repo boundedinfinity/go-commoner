@@ -1,43 +1,35 @@
 package pipeline
 
 import (
-	"github.com/boundedinfinity/go-trier"
+	"github.com/boundedinfinity/go-commoner/try"
 )
-
-type StepTryFn[T any] func(T) trier.Try[T]
 
 func NewTry[T any]() *PipelineTry[T] {
 	return &PipelineTry[T]{
-		steps: []StepTryFn[T]{},
+		pipeline: NewWithError[T](),
 	}
 }
 
 type PipelineTry[T any] struct {
-	initial T
-	steps   []StepTryFn[T]
+	pipeline *PipelineWithErr[T]
 }
 
-func (t *PipelineTry[T]) Step(fn StepTryFn[T]) *PipelineTry[T] {
-	t.steps = append(t.steps, fn)
+func (t *PipelineTry[T]) Append(fn StepWithErrFn[T]) *PipelineTry[T] {
+	t.pipeline.Append(fn)
 	return t
 }
 
-func (t *PipelineTry[T]) Run(in T) trier.Try[T] {
-	next := in
+func (t *PipelineTry[T]) Prepend(fn StepWithErrFn[T]) *PipelineTry[T] {
+	t.pipeline.Prepend(fn)
+	return t
+}
 
-	for i, step := range t.steps {
-		if step == nil {
-			return trier.Failuref[T]("step %v is nil", i)
-		}
+func (t *PipelineTry[T]) Run(in T) try.Try[T] {
+	res, err := t.pipeline.Run(in)
 
-		n := step(next)
-
-		if n.Failure() {
-			return n
-		}
-
-		next = n.Result
+	if err != nil {
+		return try.Complete(res, err)
 	}
 
-	return trier.Success(next)
+	return try.Success(res)
 }

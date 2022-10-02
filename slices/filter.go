@@ -1,6 +1,8 @@
 package slices
 
-import "github.com/boundedinfinity/go-trier"
+import (
+	"github.com/boundedinfinity/go-commoner/try"
+)
 
 type FilterFn[T any] func(T) bool
 
@@ -36,14 +38,14 @@ func FilterErr[T any](xs []T, fn FilterErrFn[T]) ([]T, error) {
 	return os, nil
 }
 
-func FilterTry[T any](xs []T, fn FilterErrFn[T]) trier.Try[[]T] {
+func FilterTry[T any](xs []T, fn FilterErrFn[T]) try.Try[[]T] {
 	var os []T
 
 	for _, x := range xs {
 		ok, err := fn(x)
 
 		if err != nil {
-			return trier.FailureR(os, err)
+			return try.Complete(os, err)
 		}
 
 		if ok {
@@ -51,5 +53,5 @@ func FilterTry[T any](xs []T, fn FilterErrFn[T]) trier.Try[[]T] {
 		}
 	}
 
-	return trier.Success(os)
+	return try.Success(os)
 }

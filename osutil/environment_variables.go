@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/boundedinfinity/go-commoner/stringer"
 )
 
 var (
@@ -18,7 +20,7 @@ func SubEnvironmentVars(s string) string {
 	o := s
 
 	for _, env := range os.Environ() {
-		comps := strings.Split(env, "=")
+		comps := stringer.Split(env, "=")
 
 		if len(comps) != 2 {
 			continue

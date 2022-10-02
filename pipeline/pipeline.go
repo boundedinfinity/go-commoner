@@ -1,10 +1,8 @@
 package pipeline
 
-import (
-	"fmt"
-)
+import "github.com/boundedinfinity/go-commoner/slices"
 
-type StepFn[T any] func(T) (T, error)
+type StepFn[T any] func(T) T
 
 func New[T any]() *Pipeline[T] {
 	return &Pipeline[T]{
@@ -13,31 +11,31 @@ func New[T any]() *Pipeline[T] {
 }
 
 type Pipeline[T any] struct {
-	initial T
-	steps   []StepFn[T]
+	steps []StepFn[T]
 }
 
-func (t *Pipeline[T]) Step(fn StepFn[T]) *Pipeline[T] {
+func (t *Pipeline[T]) Append(fn StepFn[T]) *Pipeline[T] {
 	t.steps = append(t.steps, fn)
 	return t
 }
 
-func (t *Pipeline[T]) Run(in T) (T, error) {
-	next := in
+func (t *Pipeline[T]) Prepend(fn StepFn[T]) *Pipeline[T] {
+	t.steps = append([]StepFn[T]{fn}, t.steps...)
+	return t
+}
 
-	for i, step := range t.steps {
-		if step == nil {
-			return next, fmt.Errorf("step %v is nil", i)
-		}
+func (t *Pipeline[T]) RunSingle(item T) T {
+	items := []T{item}
+	results := t.RunList(items)
+	return results[0]
+}
 
-		n, err := step(next)
+func (t *Pipeline[T]) RunList(items []T) []T {
+	results := items
 
-		if err != nil {
-			return next, fmt.Errorf("failed on step %v: %w", i, err)
-		}
-
-		next = n
+	for _, step := range t.steps {
+		results = slices.Map(results, step)
 	}
 
-	return next, nil
+	return results
 }

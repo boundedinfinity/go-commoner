@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/boundedinfinity/go-commoner/slices"
-	"github.com/boundedinfinity/go-commoner/strings"
+	"github.com/boundedinfinity/go-commoner/stringer"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -19,7 +19,7 @@ func Test_Each(t *testing.T) {
 
 	slices.Each(input, func(t1 Type1) {
 		actual = append(actual, Type1{
-			thing: strings.Capitalize(t1.thing),
+			thing: stringer.Capitalize(t1.thing),
 		})
 	})
 

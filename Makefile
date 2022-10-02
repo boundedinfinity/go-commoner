@@ -5,10 +5,10 @@ makefile_dir		:= $(abspath $(shell pwd))
 list:
 	@grep '^[^#[:space:]].*:' Makefile | grep -v ':=' | grep -v '^\.' | sed 's/:.*//g' | sed 's/://g' | sort
 
-process:
+generate:
 	go generate ./...
 
-test: process
+test: generate
 	go test ./...
 
 commit:
@@ -20,6 +20,6 @@ tag:
 	git tag -a $(tag) -m "$(tag)"
 	git push origin $(tag)
 
-publish: process
+publish: generate
 	make commit m=$(tag)
 	make tag tag=$(tag)

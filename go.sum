@@ -1,5 +1,3 @@
-github.com/boundedinfinity/go-trier v1.0.1 h1:38WkKsL9NEoi8hlZy8RyI6xjgS4GLvqr0dXJQ0oYqn4=
-github.com/boundedinfinity/go-trier v1.0.1/go.mod h1:XmkIbcEA+ks9eBmxm7LqgVR+ogWs6lzI026K2v4DDu8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
