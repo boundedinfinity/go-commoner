@@ -1,4 +1,4 @@
-package fileutil
+package pather
 
 import (
 	"errors"
@@ -6,6 +6,21 @@ import (
 
 	"github.com/boundedinfinity/go-commoner/try"
 )
+
+func IsFileErr(path string) (bool, error) {
+	info, err := os.Stat(path)
+
+	if err != nil {
+		return false, err
+	}
+
+	return info.Mode().IsRegular(), nil
+}
+
+func IsFile(path string) bool {
+	ok, _ := IsFileErr(path)
+	return ok
+}
 
 func PathExists(path string) bool {
 	exist, _ := PathExistsErr(path)

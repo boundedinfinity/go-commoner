@@ -1,4 +1,4 @@
-package fileutil
+package pather
 
 import (
 	"path/filepath"
@@ -14,16 +14,16 @@ func NormalizeExt(ext string) string {
 }
 
 func SwapExt(path, oldExt, newExt string) string {
-	oldExt2 := NormalizeExt(oldExt)
+	normOldExt := NormalizeExt(oldExt)
 
 	if !strings.HasSuffix(path, oldExt) {
 		return path
 	}
 
-	newExt2 := NormalizeExt(newExt)
+	normNewExt := NormalizeExt(newExt)
 	dir := filepath.Dir(path)
 	filename := filepath.Base(path)
-	filename = strings.ReplaceAll(filename, oldExt2, newExt2)
+	filename = strings.ReplaceAll(filename, normOldExt, normNewExt)
 	newPath := filepath.Join(dir, filename)
 	return newPath
 }
