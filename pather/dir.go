@@ -1,6 +1,9 @@
 package pather
 
-import "os"
+import (
+	"io/fs"
+	"os"
+)
 
 type DirConfig struct {
 	Perm  os.FileMode
@@ -45,4 +48,29 @@ func IsDirErr(path string) (bool, error) {
 func IsDir(path string) bool {
 	ok, _ := IsDirErr(path)
 	return ok
+}
+
+func WalkDirs(root string, filterFn func(string, fs.FileInfo) bool, processFn func(string, fs.FileInfo) error) error {
+	filterFn2 := func(path string, info fs.FileInfo) bool {
+		return info.IsDir() && filterFn(path, info)
+	}
+
+	return WalkPaths(root, filterFn2, processFn)
+}
+
+func GetDirs(root string) ([]string, error) {
+	out := make([]string, 0)
+
+	filterFn := func(path string, info os.FileInfo) bool {
+		return true
+	}
+
+	processFn := func(path string, info os.FileInfo) error {
+		out = append(out, path)
+		return nil
+	}
+
+	err := WalkDirs(root, filterFn, processFn)
+
+	return out, err
 }
