@@ -5,6 +5,10 @@ import (
 	"strings"
 )
 
+func Ext(path string) string {
+	return filepath.Ext(path)
+}
+
 func NormalizeExt(ext string) string {
 	if strings.HasPrefix(ext, ".") {
 		return ext

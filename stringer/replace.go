@@ -12,7 +12,7 @@ func Replace[T ~string](s T, old, new string) string {
 }
 
 func ReplaceInList[T ~string](s T, olds []string, new string) string {
-	return slices.Fold(string(s), olds, func(current, old string) string {
+	return slices.FoldLeft(string(s), olds, func(current, old string) string {
 		return Replace(current, old, new)
 	})
 }

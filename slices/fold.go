@@ -1,13 +1,5 @@
 package slices
 
-import (
-	"github.com/boundedinfinity/go-commoner/trier"
-)
-
-func Fold[I any, O any](initial O, vs []I, fn func(O, I) O) O {
-	return FoldLeft(initial, vs, fn)
-}
-
 func FoldLeft[I any, O any](initial O, vs []I, fn func(O, I) O) O {
 	curr := initial
 
@@ -51,20 +43,6 @@ func FoldLeftErr[I any, O any](initial O, vs []I, fn func(O, I) (O, error)) (O, 
 	return curr, nil
 }
 
-func FoldTry[I any, O any](initial O, vs []I, fn func(O, I) (O, error)) trier.Try[O] {
-	return FoldLeftTry(initial, vs, fn)
-}
-
-func FoldLeftTry[I any, O any](initial O, vs []I, fn func(O, I) (O, error)) trier.Try[O] {
-	curr, err := FoldLeftErr(initial, vs, fn)
-
-	if err != nil {
-		trier.Complete(curr, err)
-	}
-
-	return trier.Success(curr)
-}
-
 func FoldRight[I any, O any](initial O, vs []I, fn func(O, I) O) O {
 	curr := initial
 
@@ -75,22 +53,22 @@ func FoldRight[I any, O any](initial O, vs []I, fn func(O, I) O) O {
 	return curr
 }
 
-func FoldRightIndexed[I any, O any](initial O, vs []I, fn func(int, O, I) O) O {
+func FoldRightIndexed[I any, O any](initial O, items []I, fn func(int, O, I) O) O {
 	curr := initial
 
-	for i := len(vs) - 1; i >= 0; i-- {
-		curr = fn(i, curr, vs[i])
+	for i := len(items) - 1; i >= 0; i-- {
+		curr = fn(i, curr, items[i])
 	}
 
 	return curr
 }
 
-func FoldRightErr[I any, O any](initial O, vs []I, fn func(O, I) (O, error)) (O, error) {
+func FoldRightErr[I any, O any](initial O, items []I, fn func(O, I) (O, error)) (O, error) {
 	curr := initial
 	var err error
 
-	for i := len(vs) - 1; i >= 0; i-- {
-		curr, err = fn(curr, vs[i])
+	for i := len(items) - 1; i >= 0; i-- {
+		curr, err = fn(curr, items[i])
 
 		if err != nil {
 			return curr, err
@@ -98,9 +76,4 @@ func FoldRightErr[I any, O any](initial O, vs []I, fn func(O, I) (O, error)) (O,
 	}
 
 	return curr, nil
-}
-
-func FoldRightTry[I any, O any](initial O, vs []I, fn func(O, I) (O, error)) trier.Try[O] {
-	curr, err := FoldRightErr(initial, vs, fn)
-	return trier.Complete(curr, err)
 }
