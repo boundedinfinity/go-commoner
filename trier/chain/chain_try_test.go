@@ -1,20 +1,20 @@
-package pipeline_test
+package chain_test
 
 import (
 	"testing"
 
-	"github.com/boundedinfinity/go-commoner/pipeline"
 	"github.com/boundedinfinity/go-commoner/stringer"
+	"github.com/boundedinfinity/go-commoner/trier/chain"
 	"github.com/stretchr/testify/assert"
 )
 
 func Test_Pipeline_Try(t *testing.T) {
-	step1 := pipeline.SimpleStep(func(s string) string {
+	step1 := func(s string) string {
 		return stringer.Capitalize(s)
-	})
+	}
 
 	excepted := "S"
-	p := pipeline.NewTry[string]().Append(step1)
+	p := chain.New[string]().AppendNoError(step1)
 	actual := p.Run("s")
 
 	assert.False(t, actual.Failure())
