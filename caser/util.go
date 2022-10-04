@@ -3,7 +3,7 @@ package caser
 import (
 	"regexp"
 
-	"github.com/boundedinfinity/go-commoner/slices"
+	"github.com/boundedinfinity/go-commoner/slicer"
 	"github.com/boundedinfinity/go-commoner/stringer"
 	"github.com/boundedinfinity/go-commoner/utf8"
 )
@@ -14,7 +14,7 @@ var (
 
 func splitMapJoin(v string, splitFn func(v string) []string, mapFn func(string) string, joinFn func([]string) string) string {
 	s := splitFn(v)
-	m := slices.Map(s, mapFn)
+	m := slicer.Map(s, mapFn)
 	j := joinFn(m)
 	return j
 }

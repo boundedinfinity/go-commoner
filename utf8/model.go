@@ -1,6 +1,6 @@
 package utf8
 
-import "github.com/boundedinfinity/go-commoner/slices"
+import "github.com/boundedinfinity/go-commoner/slicer"
 
 var (
 	UPPERCASE = []Utf8Char{
@@ -128,8 +128,8 @@ var (
 )
 
 func init() {
-	LETTERS = slices.Flatten(UPPERCASE, LOWERCASE)
-	WORD_CHARACTERS = slices.Flatten(UPPERCASE, LOWERCASE, NUMBERS)
-	VISIBLE_CHARACTERS = slices.Flatten(UPPERCASE, LOWERCASE, NUMBERS, SYMBOLS)
-	PRINTABLE_CHARACTERS = slices.Flatten(UPPERCASE, LOWERCASE, NUMBERS, SYMBOLS, WHITESPACE)
+	LETTERS = slicer.Flatten(UPPERCASE, LOWERCASE)
+	WORD_CHARACTERS = slicer.Flatten(UPPERCASE, LOWERCASE, NUMBERS)
+	VISIBLE_CHARACTERS = slicer.Flatten(UPPERCASE, LOWERCASE, NUMBERS, SYMBOLS)
+	PRINTABLE_CHARACTERS = slicer.Flatten(UPPERCASE, LOWERCASE, NUMBERS, SYMBOLS, WHITESPACE)
 }

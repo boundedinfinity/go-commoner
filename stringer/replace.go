@@ -3,7 +3,7 @@ package stringer
 import (
 	"strings"
 
-	"github.com/boundedinfinity/go-commoner/slices"
+	"github.com/boundedinfinity/go-commoner/slicer"
 	"github.com/boundedinfinity/go-commoner/utf8"
 )
 
@@ -12,7 +12,7 @@ func Replace[T ~string](s T, old, new string) string {
 }
 
 func ReplaceInList[T ~string](s T, olds []string, new string) string {
-	return slices.FoldLeft(string(s), olds, func(current, old string) string {
+	return slicer.FoldLeft(string(s), olds, func(current, old string) string {
 		return Replace(current, old, new)
 	})
 }
@@ -21,7 +21,7 @@ func replaceNotInList[T ~string](s T, list []string, replacement string) string 
 	var n string
 
 	for _, r := range s {
-		if slices.Contains(list, string(r)) {
+		if slicer.Contains(list, string(r)) {
 			n += string(r)
 		} else {
 			n += replacement

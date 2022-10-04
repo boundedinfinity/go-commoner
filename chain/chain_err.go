@@ -1,8 +1,6 @@
 package chain
 
-import (
-	"github.com/boundedinfinity/go-commoner/slices"
-)
+import "github.com/boundedinfinity/go-commoner/slicer"
 
 type ChainErrFn[T any] func(T) (T, error)
 
@@ -47,7 +45,7 @@ func (t *ChainErr[T]) RunList(items []T) ([]T, error) {
 	results := items[:]
 
 	for _, step := range t.steps {
-		_results, err := slices.MapErr(results, step)
+		_results, err := slicer.MapErr(results, step)
 
 		if err != nil {
 			return _results, err

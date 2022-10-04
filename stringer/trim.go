@@ -3,7 +3,7 @@ package stringer
 import (
 	"strings"
 
-	"github.com/boundedinfinity/go-commoner/slices"
+	"github.com/boundedinfinity/go-commoner/slicer"
 )
 
 func TrimSpace[T ~string](s T) T {
@@ -59,7 +59,7 @@ func TrimRunesLeft[T ~string](s T, set ...rune) T {
 
 func containsRune(set []rune) func(rune) bool {
 	return func(r rune) bool {
-		return slices.Contains(set, r)
+		return slicer.Contains(set, r)
 	}
 }
 

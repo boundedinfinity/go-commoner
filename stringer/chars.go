@@ -2,7 +2,7 @@ package stringer
 
 import (
 	"github.com/boundedinfinity/go-commoner/runes"
-	"github.com/boundedinfinity/go-commoner/slices"
+	"github.com/boundedinfinity/go-commoner/slicer"
 )
 
 var (
@@ -38,7 +38,7 @@ func init() {
 
 func isFn(s string, rs []rune) bool {
 	for _, c := range s {
-		if !slices.Contains(rs, c) {
+		if !slicer.Contains(rs, c) {
 			return false
 		}
 	}

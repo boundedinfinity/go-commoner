@@ -1,11 +1,11 @@
 package slices
 
 import (
-	"github.com/boundedinfinity/go-commoner/slices"
+	"github.com/boundedinfinity/go-commoner/slicer"
 	"github.com/boundedinfinity/go-commoner/trier"
 )
 
-func FilterTry[T any](xs []T, fn slices.FilterErrFn[T]) trier.Try[[]T] {
+func FilterTry[T any](xs []T, fn slicer.FilterErrFn[T]) trier.Try[[]T] {
 	var os []T
 
 	for _, x := range xs {

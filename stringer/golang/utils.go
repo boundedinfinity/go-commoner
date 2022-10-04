@@ -1,7 +1,7 @@
 package golang
 
-import "github.com/boundedinfinity/go-commoner/slices"
+import "github.com/boundedinfinity/go-commoner/slicer"
 
 func IsKeyword(s string) bool {
-	return slices.Contains(Keywords, s)
+	return slicer.Contains(Keywords, s)
 }

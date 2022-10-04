@@ -7,7 +7,7 @@ import (
 	gostrings "strings"
 
 	"github.com/boundedinfinity/go-commoner/runes"
-	"github.com/boundedinfinity/go-commoner/slices"
+	"github.com/boundedinfinity/go-commoner/slicer"
 	strings "github.com/boundedinfinity/go-commoner/stringer"
 )
 
@@ -36,13 +36,13 @@ func NameWithConfig(s string, config NameConfig) string {
 
 	for i, r := range s {
 		if i == 0 {
-			if !slices.Contains(valid_first_chars, r) {
+			if !slicer.Contains(valid_first_chars, r) {
 				builder.WriteRune(config.ReplacementChar)
 			}
 
 			builder.WriteRune(r)
 		} else {
-			if slices.Contains(valid_nonfirst_chars, r) {
+			if slicer.Contains(valid_nonfirst_chars, r) {
 				builder.WriteRune(r)
 			} else {
 				builder.WriteRune(config.ReplacementChar)
