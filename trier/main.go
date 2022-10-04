@@ -35,9 +35,14 @@ func Failuref[T any](format string, a ...any) Try[T] {
 }
 
 func Complete[T any](result T, err error) Try[T] {
-	err2 := errorer.Err(err)
+	var werr error
+
+	if err != nil {
+		werr = errorer.Err(err)
+	}
+
 	return Try[T]{
 		Result: result,
-		Error:  &err2,
+		Error:  werr,
 	}
 }
