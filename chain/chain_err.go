@@ -1,7 +1,7 @@
 package chain
 
 import (
-	"fmt"
+	"github.com/boundedinfinity/go-commoner/slices"
 )
 
 type ChainErrFn[T any] func(T) (T, error)
@@ -38,22 +38,23 @@ func (t *ChainErr[T]) PrependNoErr(fn ChainFn[T]) *ChainErr[T] {
 	})
 }
 
-func (t *ChainErr[T]) Run(in T) (T, error) {
-	res := in
+func (t *ChainErr[T]) RunSingle(item T) (T, error) {
+	results, err := t.RunList([]T{item})
+	return results[0], err
+}
 
-	for i, step := range t.steps {
-		if step == nil {
-			return res, fmt.Errorf("step %v is nil", i)
-		}
+func (t *ChainErr[T]) RunList(items []T) ([]T, error) {
+	results := items[:]
 
-		n, err := step(res)
+	for _, step := range t.steps {
+		_results, err := slices.MapErr(results, step)
 
 		if err != nil {
-			return res, fmt.Errorf("failed on step %v: %w", i, err)
+			return _results, err
 		}
 
-		res = n
+		results = _results
 	}
 
-	return res, nil
+	return results, nil
 }

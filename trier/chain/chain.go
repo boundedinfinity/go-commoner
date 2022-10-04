@@ -30,12 +30,12 @@ func (t *Chain[T]) Prepend(fn chain.ChainErrFn[T]) *Chain[T] {
 	return t
 }
 
-func (t *Chain[T]) Run(in T) trier.Try[T] {
-	res, err := t.internal.Run(in)
+func (t *Chain[T]) RunList(items []T) trier.Try[[]T] {
+	res, err := t.internal.RunList(items)
+	return trier.Complete(res, err)
+}
 
-	if err != nil {
-		return trier.Complete(res, err)
-	}
-
-	return trier.Success(res)
+func (t *Chain[T]) RunSingle(item T) trier.Try[T] {
+	res := t.RunList([]T{item})
+	return trier.Complete(res.Result[0], res.Error)
 }

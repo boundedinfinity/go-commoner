@@ -9,13 +9,9 @@ import (
 )
 
 func Test_Pipeline_Try(t *testing.T) {
-	step1 := func(s string) string {
-		return stringer.Capitalize(s)
-	}
-
 	excepted := "S"
-	p := chain.New[string]().AppendNoError(step1)
-	actual := p.Run("s")
+	p := chain.New[string]().AppendNoError(stringer.Capitalize[string])
+	actual := p.RunSingle("s")
 
 	assert.False(t, actual.Failure())
 	assert.True(t, actual.Success())
