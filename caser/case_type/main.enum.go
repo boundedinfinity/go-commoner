@@ -13,7 +13,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/boundedinfinity/go-commoner/slices"
+	"github.com/boundedinfinity/go-commoner/slicer"
 )
 
 var (
@@ -34,7 +34,7 @@ func (t CaseType) String() string {
 }
 
 func Parse(v string) (CaseType, error) {
-	f, ok := slices.FindFn(All, func(x CaseType) bool {
+	f, ok := slicer.FindFn(All, func(x CaseType) bool {
 		return CaseType(v) == x
 	})
 
@@ -46,7 +46,7 @@ func Parse(v string) (CaseType, error) {
 }
 
 func Is(s string) bool {
-	return slices.ContainsFn(All, func(v CaseType) bool {
+	return slicer.ContainsFn(All, func(v CaseType) bool {
 		return string(v) == s
 	})
 }
@@ -56,7 +56,7 @@ var ErrInvalid = errors.New("invalid enumeration type")
 func ErrorV(v string) error {
 	return fmt.Errorf(
 		"%w '%v', must be one of %v",
-		ErrInvalid, v, slices.Join(All, ","),
+		ErrInvalid, v, slicer.Join(All, ","),
 	)
 }
 
