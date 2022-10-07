@@ -1,6 +1,6 @@
 package slicer
 
-import "github.com/boundedinfinity/go-commoner/maps"
+import "github.com/boundedinfinity/go-commoner/mapper"
 
 func Distinct[T comparable](xs []T) []T {
 	m := map[T]int{}
@@ -9,5 +9,5 @@ func Distinct[T comparable](xs []T) []T {
 		m[x]++
 	}
 
-	return maps.Keys(m)
+	return mapper.Keys(m)
 }

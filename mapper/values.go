@@ -1,4 +1,4 @@
-package maps
+package mapper
 
 func ValuesFiltered[K comparable, V any](m map[K]V, fn func(V) bool) []V {
 	var vs []V

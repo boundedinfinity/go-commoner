@@ -1,4 +1,4 @@
-package maps
+package mapper
 
 func EachErr[K comparable, V any](m map[K]V, fn func(K, V) error) error {
 	for k, v := range m {

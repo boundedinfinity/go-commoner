@@ -7,8 +7,8 @@ import (
 	"github.com/boundedinfinity/go-commoner/utf8"
 )
 
-func Replace[T ~string](s T, old, new string) string {
-	return strings.ReplaceAll(string(s), old, new)
+func Replace[T ~string, U ~string, V ~string](s T, old U, new V) string {
+	return strings.ReplaceAll(string(s), string(old), string(new))
 }
 
 func ReplaceInList[T ~string](s T, olds []string, new string) string {

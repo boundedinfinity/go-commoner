@@ -1,5 +1,5 @@
 package stringer
 
-func Remove[T ~string](s T, remove string) string {
-	return Replace(s, remove, "")
+func Remove[T ~string, U ~string](s T, remove U) string {
+	return Replace[T, U, string](s, remove, "")
 }
