@@ -20,6 +20,6 @@ tag:
 	git tag -a $(tag) -m "$(tag)"
 	git push origin $(tag)
 
-publish: generate
+publish: test
 	make commit m=$(m)
 	make tag tag=$(m)

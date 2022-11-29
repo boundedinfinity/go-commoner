@@ -6,7 +6,7 @@ import (
 )
 
 func IsDir(path string) trier.Try[bool] {
-	return trier.Complete(pather.IsDirErr(path))
+	return trier.Complete(pather.IsDir(path))
 }
 
 func GetDirs(path string) trier.Try[[]string] {

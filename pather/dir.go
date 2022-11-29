@@ -42,20 +42,6 @@ func DirEnsureWithConfig(path string, config DirConfig) error {
 	return nil
 }
 
-func IsDirErr[T ~string](path T) error {
-	info, err := os.Stat(string(path))
-
-	if err != nil {
-		return err
-	}
-
-	if !info.Mode().IsDir() {
-		return ErrNotDirv(path)
-	}
-
-	return nil
-}
-
 func IsDir[T ~string](path T) (bool, error) {
 	info, err := os.Stat(string(path))
 
