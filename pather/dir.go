@@ -3,6 +3,13 @@ package pather
 import (
 	"io/fs"
 	"os"
+
+	"github.com/boundedinfinity/go-commoner/errorer"
+)
+
+var (
+	ErrNotDir  = errorer.Errorf("not a directory")
+	ErrNotDirv = errorer.Errorfn(ErrNotDir)
 )
 
 type DirConfig struct {
@@ -35,19 +42,28 @@ func DirEnsureWithConfig(path string, config DirConfig) error {
 	return nil
 }
 
-func IsDirErr(path string) (bool, error) {
-	ok, err := IsFileErr(path)
+func IsDirErr[T ~string](path T) error {
+	info, err := os.Stat(string(path))
+
+	if err != nil {
+		return err
+	}
+
+	if !info.Mode().IsDir() {
+		return ErrNotDirv(path)
+	}
+
+	return nil
+}
+
+func IsDir[T ~string](path T) (bool, error) {
+	info, err := os.Stat(string(path))
 
 	if err != nil {
 		return false, err
 	}
 
-	return !ok, nil
-}
-
-func IsDir(path string) bool {
-	ok, _ := IsDirErr(path)
-	return ok
+	return info.Mode().IsDir(), nil
 }
 
 func WalkDirs(root string, filterFn func(string, fs.FileInfo) bool, processFn func(string, fs.FileInfo) error) error {

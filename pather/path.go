@@ -7,6 +7,14 @@ import (
 	"path/filepath"
 )
 
+func Base[T ~string](path T) string {
+	return filepath.Base(string(path))
+}
+
+func Dir[T ~string](path T) string {
+	return filepath.Dir(string(path))
+}
+
 func PathExists(path string) bool {
 	exist, _ := PathExistsErr(path)
 	return exist

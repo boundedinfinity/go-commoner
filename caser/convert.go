@@ -140,6 +140,14 @@ func KebabToSnakeUpper[V ~string](v V) string {
 	return Convert(v, case_type.Kebab, case_type.Snakeupper)
 }
 
+func KebabToCamel[V ~string](v V) string {
+	return Convert(v, case_type.Kebab, case_type.Camel)
+}
+
+func KebabToPascal[V ~string](v V) string {
+	return Convert(v, case_type.Kebab, case_type.Pascal)
+}
+
 func PhraseToCamel[V ~string](v V) string {
 	return Convert(v, case_type.Phrase, case_type.Camel)
 }

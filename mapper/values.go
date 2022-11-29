@@ -3,9 +3,11 @@ package mapper
 func ValuesFiltered[K comparable, V any](m map[K]V, fn func(V) bool) []V {
 	var vs []V
 
-	for _, v := range m {
-		if fn(v) {
-			vs = append(vs, v)
+	if m != nil {
+		for _, v := range m {
+			if fn(v) {
+				vs = append(vs, v)
+			}
 		}
 	}
 

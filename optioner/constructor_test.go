@@ -62,7 +62,7 @@ func Test_None_with_bool(t *testing.T) {
 }
 
 func Test_Option_with_nil_string(t *testing.T) {
-	actual := optioner.Of[string](nil)
+	actual := optioner.OfP[string](nil)
 
 	assert.Equal(t, actual.Empty(), true)
 	assert.Equal(t, actual.Defined(), false)
@@ -72,7 +72,7 @@ func Test_Option_with_nil_string(t *testing.T) {
 
 func Test_Option_with_string(t *testing.T) {
 	v := "s"
-	actual := optioner.Of(&v)
+	actual := optioner.OfP(&v)
 
 	assert.Equal(t, actual.Empty(), false)
 	assert.Equal(t, actual.Defined(), true)
@@ -81,7 +81,7 @@ func Test_Option_with_string(t *testing.T) {
 }
 
 func Test_Option_with_nil_int(t *testing.T) {
-	actual := optioner.Of[int](nil)
+	actual := optioner.OfP[int](nil)
 
 	assert.Equal(t, actual.Empty(), true)
 	assert.Equal(t, actual.Defined(), false)
@@ -91,7 +91,7 @@ func Test_Option_with_nil_int(t *testing.T) {
 
 func Test_Option_with_int(t *testing.T) {
 	v := 1
-	actual := optioner.Of(&v)
+	actual := optioner.OfP(&v)
 
 	assert.Equal(t, actual.Empty(), false)
 	assert.Equal(t, actual.Defined(), true)

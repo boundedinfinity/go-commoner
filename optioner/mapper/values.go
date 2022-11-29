@@ -6,13 +6,9 @@ import (
 )
 
 func ValuesFiltered[K comparable, V any](m map[K]V, fn func(V) bool) optioner.Option[[]V] {
-	if m == nil || len(m) <= 0 {
-		return optioner.None[[]V]()
-	}
-
 	res := mapper.ValuesFiltered(m, fn)
 
-	if res == nil || len(res) <= 0 {
+	if len(res) <= 0 {
 		return optioner.None[[]V]()
 	}
 

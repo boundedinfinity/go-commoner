@@ -40,36 +40,3 @@ func (t Option[T]) OrElse(v T) T {
 
 	return v
 }
-
-// OrFirst returns the contained value if Defined() is true or returns
-// the first item from the provided list which is Defined().
-func (t Option[T]) OrFirst(vs ...Option[T]) Option[T] {
-	if t.Defined() {
-		return t
-	}
-
-	for _, v := range vs {
-		if v.Defined() {
-			return v
-		}
-	}
-
-	return t
-}
-
-// OrLast returns the contained value if Defined() is true or returns
-// the first item from the provided list which is Defined() starting
-// from the last value in the provided list.
-func (t Option[T]) OrLast(vs ...Option[T]) Option[T] {
-	if t.Defined() {
-		return t
-	}
-
-	for i := len(vs) - 1; i >= 0; i-- {
-		if vs[i].Defined() {
-			return vs[i]
-		}
-	}
-
-	return t
-}
