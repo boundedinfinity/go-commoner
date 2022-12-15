@@ -63,12 +63,28 @@ func SubWithConfig(s string, config Config) string {
 	return o
 }
 
-func Sub(s string, args ...ConfigArg) string {
+func SubWithArgs(s string, args ...ConfigArg) string {
 	var config Config
+
+	if len(args) == 0 {
+		for _, p := range default_patterns {
+			args = append(args, Pattern(p))
+		}
+	}
 
 	for _, arg := range args {
 		arg(&config)
 	}
 
 	return SubWithConfig(s, config)
+}
+
+func Sub(s string) string {
+	args := make([]ConfigArg, 0)
+
+	for _, p := range default_patterns {
+		args = append(args, Pattern(p))
+	}
+
+	return SubWithArgs(s, args...)
 }
