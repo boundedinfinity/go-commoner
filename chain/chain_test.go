@@ -8,25 +8,27 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_Pipeline_with_string(t *testing.T) {
+func Test_Pipeline_with_single(t *testing.T) {
 	excepted := "CBA"
-	actual := chain.New[string]().
-		Append(stringer.Uppercase[string]).
-		Append(stringer.Reverse[string]).
-		Append(stringer.TrimSpace[string]).
-		RunSingle(" abc ")
+	actual, err := chain.
+		Then(stringer.Uppercase[string]).
+		Then(stringer.Reverse[string]).
+		Then(stringer.TrimSpace[string]).
+		Run(" abc ")
 
+	assert.Nil(t, err)
 	assert.Equal(t, excepted, actual)
 }
 
-func Test_Pipeline_with_slice(t *testing.T) {
-	excepted := []string{"A", "B", "C"}
+func Test_Pipeline_with_each(t *testing.T) {
+	excepted := []chain.ChainItem[string]{{"A", nil}, {"B", nil}, {"C", nil}}
 	input := []string{"a", "b", "c"}
 
-	actual := chain.New[string]().
-		Append(stringer.Uppercase[string]).
-		Append(stringer.Reverse[string]).
-		RunList(input)
+	actual := chain.
+		Then(stringer.Uppercase[string]).
+		Then(stringer.Reverse[string]).
+		Each(input)
 
-	assert.Equal(t, excepted, actual)
+	assert.Equal(t, len(excepted), len(actual))
+	assert.Equal(t, excepted[0].Result, actual[0].Result)
 }
