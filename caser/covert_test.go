@@ -17,62 +17,91 @@ var (
 	kababUpper = "SOME-TEST-4-THING"
 )
 
-func Test_Phrase_to_Camel(t *testing.T) {
-	actual := caser.PhraseToCamel(aPhrase)
-	assert.Equal(t, camel, actual)
-}
+func Test_Join(t *testing.T) {
+	tcs := []struct {
+		name     string
+		input    string
+		expected string
+		fn       func(string) string
+	}{
+		{
+			name:     "Phrase_to_Camel",
+			input:    aPhrase,
+			expected: camel,
+			fn:       caser.PhraseToCamel[string],
+		},
+		{
+			name:     "Phrase_to_Pascal",
+			input:    aPhrase,
+			expected: pascal,
+			fn:       caser.PhraseToPascal[string],
+		},
+		{
+			name:     "Phrase_to_Snake_Lower",
+			input:    aPhrase,
+			expected: snakeLower,
+			fn:       caser.PhraseToSnake[string],
+		},
+		{
+			name:     "Phrase_to_Snake_Upper",
+			input:    aPhrase,
+			expected: snakeUpper,
+			fn:       caser.PhraseToSnakeUpper[string],
+		},
+		{
+			name:     "Phrase_to_Kabab_Lower",
+			input:    aPhrase,
+			expected: kababLower,
+			fn:       caser.PhraseToKebab[string],
+		},
+		{
+			name:     "Phrase_to_Kabab_Upper",
+			input:    aPhrase,
+			expected: kababUpper,
+			fn:       caser.PhraseToKebabUpper[string],
+		},
+		{
+			name:     "Camel_to_Phrase",
+			input:    camel,
+			expected: aPhrase,
+			fn:       caser.CamelToPhrase[string],
+		},
+		{
+			name:     "Pascal_to_Phrase",
+			input:    pascal,
+			expected: aPhrase,
+			fn:       caser.PascalToPhrase[string],
+		},
+		{
+			name:     "Snake_Lower_to_Phrase",
+			input:    snakeLower,
+			expected: aPhrase,
+			fn:       caser.SnakeToPhrase[string],
+		},
+		{
+			name:     "Snake_Upper_to_Phrase",
+			input:    snakeUpper,
+			expected: aPhrase,
+			fn:       caser.SnakeToPhrase[string],
+		},
+		{
+			name:     "Kabab_Lower_to_Phrase",
+			input:    kababLower,
+			expected: aPhrase,
+			fn:       caser.KebabToPhrase[string],
+		},
+		{
+			name:     "Kabab_Upper_to_Phrase",
+			input:    kababUpper,
+			expected: aPhrase,
+			fn:       caser.KebabToPhrase[string],
+		},
+	}
 
-func Test_Phrase_to_Pascal(t *testing.T) {
-	actual := caser.PhraseToPascal(aPhrase)
-	assert.Equal(t, pascal, actual)
-}
-
-func Test_Phrase_to_Snake_Lower(t *testing.T) {
-	actual := caser.PhraseToSnake(aPhrase)
-	assert.Equal(t, snakeLower, actual)
-}
-
-func Test_Phrase_to_Snake_Upper(t *testing.T) {
-	actual := caser.PhraseToSnakeUpper(aPhrase)
-	assert.Equal(t, snakeUpper, actual)
-}
-
-func Test_Phrase_to_Kabab_Lower(t *testing.T) {
-	actual := caser.PhraseToKebab(aPhrase)
-	assert.Equal(t, kababLower, actual)
-}
-
-func Test_Phrase_to_Kabab_Upper(t *testing.T) {
-	actual := caser.PhraseToKebabUpper(aPhrase)
-	assert.Equal(t, kababUpper, actual)
-}
-
-func Test_Camel_to_Phrase(t *testing.T) {
-	actual := caser.CamelToPhrase(camel)
-	assert.Equal(t, aPhrase, actual)
-}
-
-func Test_Pascal_to_Phrase(t *testing.T) {
-	actual := caser.CamelToPhrase(pascal)
-	assert.Equal(t, aPhrase, actual)
-}
-
-func Test_Snake_Lower_to_Phrase(t *testing.T) {
-	actual := caser.SnakeToPhrase(snakeLower)
-	assert.Equal(t, aPhrase, actual)
-}
-
-func Test_Snake_Upper_to_Phrase(t *testing.T) {
-	actual := caser.SnakeToPhrase(snakeUpper)
-	assert.Equal(t, aPhrase, actual)
-}
-
-func Test_Kabab_Lower_to_Phrase(t *testing.T) {
-	actual := caser.KebabToPhrase(kababLower)
-	assert.Equal(t, aPhrase, actual)
-}
-
-func Test_Kabab_Upper_to_Phrase(t *testing.T) {
-	actual := caser.KebabToPhrase(kababUpper)
-	assert.Equal(t, aPhrase, actual)
+	for _, tc := range tcs {
+		t.Run(tc.name, func(tt *testing.T) {
+			actual := tc.fn(tc.input)
+			assert.Equal(t, actual, tc.expected)
+		})
+	}
 }

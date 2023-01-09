@@ -4,7 +4,7 @@ import (
 	"path/filepath"
 )
 
-func Join[T ~string](elems []T) string {
+func Join[T ~string](elems ...T) string {
 	var s []string
 
 	for _, elem := range elems {

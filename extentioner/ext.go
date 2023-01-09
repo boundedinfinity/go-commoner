@@ -11,7 +11,15 @@ func Ext(path string) string {
 }
 
 func ExtOnly(path string) string {
-	return strings.Replace(filepath.Ext(path), ".", "", 1)
+	ext := filepath.Ext(path)
+	ext = strings.Replace(ext, ".", "", 1)
+	return ext
+}
+
+func Join(path, ext string) string {
+	out := Normalize(ext)
+	out = path + out
+	return out
 }
 
 func Normalize(ext string) string {
@@ -24,7 +32,8 @@ func Normalize(ext string) string {
 
 func Strip(path string) string {
 	b := index(path)
-	return path[:b]
+	path = path[:b]
+	return path
 }
 
 func Swap(path, old, new string) string {

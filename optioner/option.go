@@ -40,3 +40,12 @@ func (t Option[T]) OrElse(v T) T {
 
 	return v
 }
+
+func (t Option[T]) Then(fn func(T) T) Option[T] {
+	if t.Defined() {
+		v := fn(t.Get())
+		return Some(v)
+	}
+
+	return None[T]()
+}
