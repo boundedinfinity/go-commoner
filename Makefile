@@ -5,7 +5,10 @@ makefile_dir		:= $(abspath $(shell pwd))
 list:
 	@grep '^[^#[:space:]].*:' Makefile | grep -v ':=' | grep -v '^\.' | sed 's/:.*//g' | sed 's/://g' | sort
 
-generate:
+purge:
+	find . -name '*.enum.go' -type f -delete
+
+generate: purge
 	go generate ./...
 
 test: generate
@@ -20,7 +23,11 @@ tag:
 	git tag -a $(tag) -m "$(tag)"
 	git push origin $(tag)
 
+<<<<<<< HEAD
 publish: test
+=======
+publish: generate test
+>>>>>>> 8448cdd (updates)
 	@if ack replace go.mod ;then echo 'Remove the "replace" line from the go.mod file'; exit 1; fi
 	make commit m=$(m)
 	make tag tag=$(m)

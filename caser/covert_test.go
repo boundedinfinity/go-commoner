@@ -1,6 +1,7 @@
 package caser_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/boundedinfinity/go-commoner/caser"
@@ -17,6 +18,7 @@ var (
 	kababUpper = "SOME-TEST-4-THING"
 )
 
+<<<<<<< HEAD
 func Test_Join(t *testing.T) {
 	tcs := []struct {
 		name     string
@@ -102,6 +104,82 @@ func Test_Join(t *testing.T) {
 		t.Run(tc.name, func(tt *testing.T) {
 			actual := tc.fn(tc.input)
 			assert.Equal(t, actual, tc.expected)
+=======
+func TestAll(t *testing.T) {
+
+	tests := []struct {
+		input    string
+		expected string
+		fn       func(string) string
+	}{
+		{
+			input:    aPhrase,
+			expected: camel,
+			fn:       caser.PhraseToCamel[string],
+		},
+		{
+			input:    aPhrase,
+			expected: pascal,
+			fn:       caser.PhraseToPascal[string],
+		},
+		{
+			input:    aPhrase,
+			expected: snakeLower,
+			fn:       caser.PhraseToSnake[string],
+		},
+		{
+			input:    aPhrase,
+			expected: snakeUpper,
+			fn:       caser.PhraseToSnakeUpper[string],
+		},
+		{
+			input:    aPhrase,
+			expected: kababLower,
+			fn:       caser.PhraseToKebab[string],
+		},
+		{
+			input:    aPhrase,
+			expected: kababUpper,
+			fn:       caser.PhraseToKebabUpper[string],
+		},
+		{
+			input:    camel,
+			expected: aPhrase,
+			fn:       caser.CamelToPhrase[string],
+		},
+		{
+			input:    pascal,
+			expected: aPhrase,
+			fn:       caser.CamelToPhrase[string],
+		},
+		{
+			input:    snakeLower,
+			expected: aPhrase,
+			fn:       caser.SnakeToPhrase[string],
+		},
+		{
+			input:    snakeUpper,
+			expected: aPhrase,
+			fn:       caser.SnakeToPhrase[string],
+		},
+		{
+			input:    kababLower,
+			expected: aPhrase,
+			fn:       caser.KebabToPhrase[string],
+		},
+		{
+			input:    kababUpper,
+			expected: aPhrase,
+			fn:       caser.KebabToPhrase[string],
+		},
+	}
+
+	for _, tc := range tests {
+		name := fmt.Sprintf(`"%v" to "%v"`, tc.input, tc.expected)
+		t.Run(name, func(t *testing.T) {
+			actual := tc.fn(tc.input)
+			assert.Equal(t, tc.expected, actual)
+>>>>>>> 8448cdd (updates)
 		})
 	}
 }
