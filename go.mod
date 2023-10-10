@@ -3,6 +3,7 @@ module github.com/boundedinfinity/go-commoner
 go 1.18
 
 require (
+	github.com/boundedinfinity/enumer v1.0.9
 	github.com/stretchr/testify v1.7.4
 	golang.org/x/exp v0.0.0-20231006140011-7918f672742d
 	gopkg.in/yaml.v2 v2.4.0
