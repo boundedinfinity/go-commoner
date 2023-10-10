@@ -1,7 +1,7 @@
 package slices
 
 import (
-	"github.com/boundedinfinity/go-commoner/slicer"
+	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
 	"github.com/boundedinfinity/go-commoner/trier"
 )
 

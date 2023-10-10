@@ -1,6 +1,6 @@
 package utf8
 
-import "github.com/boundedinfinity/go-commoner/slicer"
+import "github.com/boundedinfinity/go-commoner/idiomatic/slicer"
 
 var (
 	UPPERCASE = []Utf8Char{

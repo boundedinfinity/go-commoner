@@ -6,7 +6,7 @@
 //*                                                                                  *
 //************************************************************************************
 
-package math
+package caser
 
 import (
 	"database/sql/driver"
@@ -16,47 +16,47 @@ import (
 )
 
 // /////////////////////////////////////////////////////////////////
-//  AngleType Stringer implemenation
+//  CaseType Stringer implemenation
 // /////////////////////////////////////////////////////////////////
 
-func (t AngleType) String() string {
+func (t CaseType) String() string {
 	return string(t)
 }
 
 // /////////////////////////////////////////////////////////////////
-//  AngleType JSON marshal/unmarshal implemenation
+//  CaseType JSON marshal/unmarshal implemenation
 // /////////////////////////////////////////////////////////////////
 
-func (t AngleType) MarshalJSON() ([]byte, error) {
+func (t CaseType) MarshalJSON() ([]byte, error) {
 	return enumer.MarshalJSON(t)
 }
 
-func (t *AngleType) UnmarshalJSON(data []byte) error {
-	return enumer.UnmarshalJSON(data, t, AngleTypes.Parse)
+func (t *CaseType) UnmarshalJSON(data []byte) error {
+	return enumer.UnmarshalJSON(data, t, CaseTypes.Parse)
 }
 
 // /////////////////////////////////////////////////////////////////
-//  AngleType YAML marshal/unmarshal implemenation
+//  CaseType YAML marshal/unmarshal implemenation
 // /////////////////////////////////////////////////////////////////
 
-func (t AngleType) MarshalYAML() (interface{}, error) {
+func (t CaseType) MarshalYAML() (interface{}, error) {
 	return enumer.MarshalYAML(t)
 }
 
-func (t *AngleType) UnmarshalYAML(unmarshal func(interface{}) error) error {
-	return enumer.UnmarshalYAML(unmarshal, t, AngleTypes.Parse)
+func (t *CaseType) UnmarshalYAML(unmarshal func(interface{}) error) error {
+	return enumer.UnmarshalYAML(unmarshal, t, CaseTypes.Parse)
 }
 
 // /////////////////////////////////////////////////////////////////
-//  AngleType SQL Database marshal/unmarshal implemenation
+//  CaseType SQL Database marshal/unmarshal implemenation
 // /////////////////////////////////////////////////////////////////
 
-func (t AngleType) Value() (driver.Value, error) {
+func (t CaseType) Value() (driver.Value, error) {
 	return enumer.Value(t)
 }
 
-func (t *AngleType) Scan(value interface{}) error {
-	return enumer.Scan(value, t, AngleTypes.Parse)
+func (t *CaseType) Scan(value interface{}) error {
+	return enumer.Scan(value, t, CaseTypes.Parse)
 }
 
 // /////////////////////////////////////////////////////////////////
@@ -65,40 +65,52 @@ func (t *AngleType) Scan(value interface{}) error {
 //
 // /////////////////////////////////////////////////////////////////
 
-var AngleTypes = struct {
-	angleTypes
+var CaseTypes = struct {
+	caseTypes
 	Err    error
-	Values []AngleType
+	Values []CaseType
 }{
-	angleTypes: angleTypes{
-		Degrees: AngleType("Degrees"),
-		Radians: AngleType("Radians"),
+	caseTypes: caseTypes{
+		Camel:      CaseType("Camel"),
+		Kebab:      CaseType("Kebab"),
+		Kebabupper: CaseType("Kebabupper"),
+		Pascal:     CaseType("Pascal"),
+		Phrase:     CaseType("Phrase"),
+		Snake:      CaseType("Snake"),
+		Snakeupper: CaseType("Snakeupper"),
+		Unknown:    CaseType("Unknown"),
 	},
-	Err: fmt.Errorf("invalid AngleType"),
+	Err: fmt.Errorf("invalid CaseType"),
 }
 
 func init() {
-	AngleTypes.Values = []AngleType{
-		AngleTypes.Degrees,
-		AngleTypes.Radians,
+	CaseTypes.Values = []CaseType{
+		CaseTypes.Camel,
+		CaseTypes.Kebab,
+		CaseTypes.Kebabupper,
+		CaseTypes.Pascal,
+		CaseTypes.Phrase,
+		CaseTypes.Snake,
+		CaseTypes.Snakeupper,
+		CaseTypes.Unknown,
 	}
 }
 
-func (t angleTypes) newErr(a any, values ...AngleType) error {
+func (t caseTypes) newErr(a any, values ...CaseType) error {
 	return fmt.Errorf(
 		"invalid %w value '%v'. Must be one of %v",
-		AngleTypes.Err,
+		CaseTypes.Err,
 		a,
 		enumer.Join(values, ", "),
 	)
 }
 
-func (t angleTypes) ParseFrom(v string, values ...AngleType) (AngleType, error) {
-	var found AngleType
+func (t caseTypes) ParseFrom(v string, values ...CaseType) (CaseType, error) {
+	var found CaseType
 	var ok bool
 
 	for _, value := range values {
-		if enumer.IsEq[string, AngleType](v)(value) {
+		if enumer.IsEq[string, CaseType](v)(value) {
 			found = value
 			ok = true
 			break
@@ -112,19 +124,19 @@ func (t angleTypes) ParseFrom(v string, values ...AngleType) (AngleType, error) 
 	return found, nil
 }
 
-func (t angleTypes) Parse(v string) (AngleType, error) {
-	return t.ParseFrom(v, AngleTypes.Values...)
+func (t caseTypes) Parse(v string) (CaseType, error) {
+	return t.ParseFrom(v, CaseTypes.Values...)
 }
 
-func (t angleTypes) IsFrom(v string, values ...AngleType) bool {
+func (t caseTypes) IsFrom(v string, values ...CaseType) bool {
 	for _, value := range values {
-		if enumer.IsEq[string, AngleType](v)(value) {
+		if enumer.IsEq[string, CaseType](v)(value) {
 			return true
 		}
 	}
 	return false
 }
 
-func (t angleTypes) Is(v string) bool {
-	return t.IsFrom(v, AngleTypes.Values...)
+func (t caseTypes) Is(v string) bool {
+	return t.IsFrom(v, CaseTypes.Values...)
 }

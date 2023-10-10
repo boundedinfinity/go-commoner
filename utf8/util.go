@@ -1,7 +1,7 @@
 package utf8
 
 import (
-	"github.com/boundedinfinity/go-commoner/slicer"
+	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
 )
 
 func ToStrings(cs []Utf8Char) []string {

@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/boundedinfinity/go-commoner/chain"
-	"github.com/boundedinfinity/go-commoner/stringer"
+	"github.com/boundedinfinity/go-commoner/idiomatic/stringer"
 	"github.com/stretchr/testify/assert"
 )
 

@@ -4,7 +4,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/boundedinfinity/go-commoner/stringer"
+	"github.com/boundedinfinity/go-commoner/idiomatic/stringer"
 	"github.com/boundedinfinity/go-commoner/trier/chain"
 	"github.com/stretchr/testify/assert"
 )
