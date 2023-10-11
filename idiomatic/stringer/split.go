@@ -4,10 +4,10 @@ func Split[T ~string](s T, sep string) []string {
 	return SplitAny(s, sep)
 }
 
-func SplitAny[T ~string](s T, cs ...string) []string {
+func SplitAny[T ~string](s T, sepItems ...string) []string {
 	return SplitFn(s, func(x string) bool {
-		for _, c := range cs {
-			if c == string(x) {
+		for _, item := range sepItems {
+			if item == string(x) {
 				return true
 			}
 		}

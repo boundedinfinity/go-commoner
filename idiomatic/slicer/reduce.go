@@ -1,7 +1,5 @@
 package slicer
 
-import "github.com/boundedinfinity/go-commoner/trier"
-
 func Reduce[V any, A any](initial A, vs []V, fn func(V, A) A) A {
 	if len(vs) == 0 {
 		return initial
@@ -28,19 +26,4 @@ func ReduceErr[V any, A any](vs []V, fn func(V, A) (A, error), s A) (A, error) {
 	}
 
 	return c, nil
-}
-
-func ReduceTry[V any, A any](vs []V, fn func(V, A) (A, error), initial A) trier.Try[A] {
-	agg := initial
-
-	for _, v := range vs {
-		a, err := fn(v, agg)
-		agg = a
-
-		if err != nil {
-			return trier.Complete(agg, err)
-		}
-	}
-
-	return trier.Success(agg)
 }

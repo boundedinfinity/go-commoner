@@ -1,35 +1,13 @@
 package stringer
 
-func FirstNotEmpty[T ~string](ss ...T) T {
-	for _, s := range ss {
-		if !IsEmpty(s) {
-			return s
-		}
-	}
+import "github.com/boundedinfinity/go-commoner/idiomatic/slicer"
 
-	return ""
+func IsZero[T ~string](s T) bool {
+	return s == ""
 }
 
-func OrElse[T ~string](s, d T) T {
-	if s == "" {
-		return d
-	}
-
-	return s
-}
-
-func DefaultIfEmpty[T ~string](s, d T) T {
-	return OrElse(s, d)
-}
-
-func IsEmpty[T ~string](s T) bool {
-	if s == "" {
-		return true
-	}
-
-	return false
-}
-
-func IsBlank[T ~string](s T) bool {
-	return IsEmpty(s)
+func FindNonZero[T ~string](items ...T) (T, bool) {
+	return slicer.FindFn(items, func(item T) bool {
+		return !IsZero(item)
+	})
 }

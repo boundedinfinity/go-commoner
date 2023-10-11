@@ -5,6 +5,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/boundedinfinity/go-commoner/functional/optioner"
 	"github.com/boundedinfinity/go-commoner/idiomatic/stringer"
 )
 
@@ -26,18 +27,14 @@ func Patterns(ps []string) ConfigArg {
 	return func(c *Config) {
 		var patterns []string
 
-		if c.Patterns == nil {
-			patterns = make([]string, 0)
-		}
-
-		patterns = append(patterns, c.Patterns...)
+		patterns = append(c.Patterns.Get(), ps...)
 		patterns = append(patterns, ps...)
-		c.Patterns = patterns
+		c.Patterns = optioner.Some(patterns)
 	}
 }
 
 type Config struct {
-	Patterns []string
+	Patterns optioner.Option[[]string]
 }
 
 func SubWithConfig(s string, config Config) string {
@@ -53,7 +50,7 @@ func SubWithConfig(s string, config Config) string {
 		key := comps[0]
 		val := comps[1]
 
-		for _, format := range config.Patterns {
+		for _, format := range config.Patterns.Get() {
 			pattern := fmt.Sprintf(format, key)
 			o = strings.ReplaceAll(o, pattern, val)
 		}

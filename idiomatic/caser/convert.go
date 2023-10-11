@@ -1,12 +1,13 @@
 package caser
 
 import (
+	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
 	"github.com/boundedinfinity/go-commoner/idiomatic/stringer"
 )
 
 func Convert[V ~string](v V, from, to CaseType) string {
 	var splitFn func(string) []string
-	var mapFn func(string) string
+	var mapFn *slicer.Pipe[string]
 	var joinFn func([]string) string
 	var o string
 
@@ -27,25 +28,25 @@ func Convert[V ~string](v V, from, to CaseType) string {
 
 	switch to {
 	case CaseTypes.Camel:
-		mapFn = mapPipeline(stringer.ToLower[string], stringer.Title[string])
+		mapFn = slicer.NewPipe[string]().Then(stringer.ToLower[string]).Then(stringer.Title[string])
 		joinFn = joinWithNoSpace
 	case CaseTypes.Phrase:
-		mapFn = mapPipeline(stringer.ToLower[string], stringer.Title[string])
+		mapFn = slicer.NewPipe[string]().Then(stringer.ToLower[string]).Then(stringer.Title[string])
 		joinFn = joinWithSpace
 	case CaseTypes.Snake:
-		mapFn = stringer.ToLower[string]
+		mapFn = slicer.NewPipe[string]().Then(stringer.ToLower[string])
 		joinFn = joinWithUnderscore
 	case CaseTypes.Snakeupper:
-		mapFn = stringer.ToUpper[string]
+		mapFn = slicer.NewPipe[string]().Then(stringer.ToUpper[string])
 		joinFn = joinWithUnderscore
 	case CaseTypes.Pascal:
-		mapFn = mapPipeline(stringer.ToLower[string], stringer.Title[string])
+		mapFn = slicer.NewPipe[string]().Then(stringer.ToLower[string]).Then(stringer.Title[string])
 		joinFn = joinWithNoSpace
 	case CaseTypes.Kebab:
-		mapFn = stringer.ToLower[string]
+		mapFn = slicer.NewPipe[string]().Then(stringer.ToLower[string])
 		joinFn = joinWithDash
 	case CaseTypes.Kebabupper:
-		mapFn = stringer.ToUpper[string]
+		mapFn = slicer.NewPipe[string]().Then(stringer.ToUpper[string])
 		joinFn = joinWithDash
 	default:
 		o = string(v)

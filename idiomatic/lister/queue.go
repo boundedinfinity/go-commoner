@@ -1,33 +1,31 @@
 package lister
 
-import "github.com/boundedinfinity/go-commoner/optioner"
-
-type queue[T any] struct {
-	list *list[T]
+type Queue[T any] struct {
+	list *List[T]
 }
 
-func NewQueue[T any]() *stack[T] {
-	return &stack[T]{
+func NewQueue[T any]() *Queue[T] {
+	return &Queue[T]{
 		list: NewList[T](),
 	}
 }
 
-func (t *queue[T]) Empty() bool {
+func (t *Queue[T]) Empty() bool {
 	return t.list.Empty()
 }
 
-func (t *queue[T]) Len() int {
+func (t *Queue[T]) Len() int {
 	return t.list.Len()
 }
 
-func (t *queue[T]) Push(items ...T) {
+func (t *Queue[T]) Push(items ...T) {
 	t.list.PushB(items...)
 }
 
-func (t *queue[T]) Pop() optioner.Option[T] {
+func (t *Queue[T]) Pop() (T, bool) {
 	return t.list.PopF()
 }
 
-func (t *queue[T]) Peek() optioner.Option[T] {
+func (t *Queue[T]) Peek() (T, bool) {
 	return t.list.PeekF()
 }

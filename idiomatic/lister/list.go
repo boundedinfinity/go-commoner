@@ -1,75 +1,75 @@
 package lister
 
-import (
-	"github.com/boundedinfinity/go-commoner/optioner"
-)
-
-type list[T any] struct {
+type List[T any] struct {
 	items []T
 }
 
-func NewList[T any]() *list[T] {
-	s := &list[T]{
+func NewList[T any]() *List[T] {
+	s := &List[T]{
 		items: make([]T, 0),
 	}
 
 	return s
 }
 
-func (t *list[T]) Len() int {
+func (t *List[T]) Len() int {
 	return len(t.items)
 }
 
-func (t *list[T]) Empty() bool {
+func (t *List[T]) Empty() bool {
 	return len(t.items) > 0
 }
 
-func (t *list[T]) PushF(items ...T) {
+func (t *List[T]) PushF(items ...T) {
 	t.items = append(items, t.items...)
 }
 
-func (t *list[T]) PushB(items ...T) {
+func (t *List[T]) PushB(items ...T) {
 	t.items = append(t.items, items...)
 }
 
-func (t *list[T]) PeekB() optioner.Option[T] {
+func (t *List[T]) PeekB() (T, bool) {
 	l := len(t.items) - 1
 
 	if l > -1 {
-		return optioner.Some(t.items[l])
+		return t.items[l], true
 	}
 
-	return optioner.None[T]()
+	var zero T
+	return zero, false
 }
 
-func (t *list[T]) PopB() optioner.Option[T] {
+func (t *List[T]) PopB() (T, bool) {
 	l := len(t.items) - 1
 
 	if l > -1 {
 		item := t.items[l]
 		t.items = t.items[:l]
-		return optioner.Some(item)
+		return item, true
 	}
 
-	return optioner.None[T]()
+	var zero T
+	return zero, false
 }
 
-func (t *list[T]) PeekF() optioner.Option[T] {
+func (t *List[T]) PeekF() (T, bool) {
 	if len(t.items) > 0 {
-		return optioner.Some(t.items[0])
+		return t.items[0], true
 	}
 
-	return optioner.None[T]()
+	var zero T
+	return zero, false
 }
 
-func (t *list[T]) PopF() optioner.Option[T] {
+func (t *List[T]) PopF() (T, bool) {
 	l := len(t.items) - 1
 
 	if l > -1 {
 		item := t.items[0]
 		t.items = t.items[1:]
-		return optioner.Some(item)
+		return item, true
 	}
 
-	return optioner.None[T]()
+	var zero T
+	return zero, false
 }

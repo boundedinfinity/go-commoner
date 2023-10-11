@@ -1,0 +1,36 @@
+package lister
+
+import (
+	"github.com/boundedinfinity/go-commoner/functional/optioner"
+	"github.com/boundedinfinity/go-commoner/idiomatic/lister"
+)
+
+type Queue[T any] struct {
+	idiomatic *lister.Queue[T]
+}
+
+func NewQueue[T any]() *Queue[T] {
+	return &Queue[T]{
+		idiomatic: lister.NewQueue[T](),
+	}
+}
+
+func (t *Queue[T]) Empty() bool {
+	return t.idiomatic.Empty()
+}
+
+func (t *Queue[T]) Len() int {
+	return t.idiomatic.Len()
+}
+
+func (t *Queue[T]) Push(items ...T) {
+	t.idiomatic.Push(items...)
+}
+
+func (t *Queue[T]) Pop() optioner.Option[T] {
+	return optioner.OfI(t.idiomatic.Pop())
+}
+
+func (t *Queue[T]) Peek() optioner.Option[T] {
+	return optioner.OfI(t.idiomatic.Peek())
+}

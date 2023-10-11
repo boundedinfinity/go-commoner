@@ -1,20 +1,14 @@
 package caser
 
 import (
-	"regexp"
-
 	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
 	"github.com/boundedinfinity/go-commoner/idiomatic/stringer"
 	"github.com/boundedinfinity/go-commoner/utf8"
 )
 
-var (
-	re = regexp.MustCompile(`[A-Z][^A-Z]*`)
-)
-
-func splitMapJoin(v string, splitFn func(v string) []string, mapFn func(string) string, joinFn func([]string) string) string {
+func splitMapJoin(v string, splitFn func(v string) []string, mapFn *slicer.Pipe[string], joinFn func([]string) string) string {
 	s := splitFn(v)
-	m := slicer.Map(s, mapFn)
+	m := mapFn.Run(s...)
 	j := joinFn(m)
 	return j
 }
@@ -69,20 +63,4 @@ func splitOnCapitalOrNumber(v string) []string {
 	}
 
 	return os
-}
-
-func mapPipeline(fns ...func(string) string) func(string) string {
-	return func(v string) string {
-		o := v
-
-		for _, fn := range fns {
-			o = fn(o)
-		}
-
-		return o
-	}
-}
-
-func mapNoOp(v string) string {
-	return v
 }

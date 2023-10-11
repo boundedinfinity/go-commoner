@@ -11,19 +11,19 @@ func Test_List_PopB(t *testing.T) {
 	s := lister.NewList[int]()
 	s.PushB(1, 2)
 
-	actual := s.PopB()
-	assert.Equal(t, true, actual.Defined())
-	assert.Equal(t, 2, actual.Get())
+	actual1, ok1 := s.PopB()
+	assert.Equal(t, true, ok1)
+	assert.Equal(t, 2, actual1)
 	assert.Equal(t, 1, s.Len())
 
-	actual = s.PopB()
-	assert.Equal(t, true, actual.Defined())
-	assert.Equal(t, 1, actual.Get())
+	actual2, ok2 := s.PopB()
+	assert.Equal(t, true, ok2)
+	assert.Equal(t, 1, actual2)
 	assert.Equal(t, 0, s.Len())
 
-	actual = s.PopB()
-	assert.Equal(t, false, actual.Defined())
-	assert.Equal(t, 0, actual.Get())
+	actual3, ok3 := s.PopB()
+	assert.Equal(t, false, ok3)
+	assert.Equal(t, 0, actual3)
 	assert.Equal(t, 0, s.Len())
 }
 
@@ -31,18 +31,18 @@ func Test_List_PopF(t *testing.T) {
 	s := lister.NewList[int]()
 	s.PushB(1, 2)
 
-	actual := s.PopF()
-	assert.Equal(t, true, actual.Defined())
-	assert.Equal(t, 1, actual.Get())
+	actual1, ok1 := s.PopF()
+	assert.Equal(t, true, ok1)
+	assert.Equal(t, 1, actual1)
 	assert.Equal(t, 1, s.Len())
 
-	actual = s.PopF()
-	assert.Equal(t, true, actual.Defined())
-	assert.Equal(t, 2, actual.Get())
+	actual2, ok2 := s.PopF()
+	assert.Equal(t, true, ok2)
+	assert.Equal(t, 2, actual2)
 	assert.Equal(t, 0, s.Len())
 
-	actual = s.PopF()
-	assert.Equal(t, false, actual.Defined())
-	assert.Equal(t, 0, actual.Get())
+	actual3, ok3 := s.PopF()
+	assert.Equal(t, false, ok3)
+	assert.Equal(t, 0, actual3)
 	assert.Equal(t, 0, s.Len())
 }
