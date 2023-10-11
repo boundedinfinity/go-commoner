@@ -1,7 +1,9 @@
 package stringer
 
+import "strings"
+
 func Split[T ~string](s T, sep string) []string {
-	return SplitAny(s, sep)
+	return strings.Split(string(s), sep)
 }
 
 func SplitAny[T ~string](s T, sepItems ...string) []string {

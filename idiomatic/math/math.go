@@ -182,6 +182,10 @@ func Mod[T constraints.Float | constraints.Integer](x, y T) T {
 	return doubleToSingle(x, y, math.Mod)
 }
 
+func Modf[I constraints.Float | constraints.Integer, O constraints.Float | constraints.Integer](x I) (O, O) {
+	return singleToDouble[I, O](x, math.Modf)
+}
+
 func NaN() float64 {
 	return math.NaN()
 }
