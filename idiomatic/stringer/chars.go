@@ -38,7 +38,7 @@ func init() {
 
 func isFn(s string, rs []rune) bool {
 	for _, c := range s {
-		if !slicer.Contains(rs, c) {
+		if !slicer.Contains(c, rs...) {
 			return false
 		}
 	}

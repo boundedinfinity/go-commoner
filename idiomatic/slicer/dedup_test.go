@@ -10,7 +10,7 @@ import (
 func Test_Dedup(t *testing.T) {
 	expected := []int{1, 2, 3}
 	input := []int{1, 1, 2, 2, 3, 3}
-	actual := slicer.Dedup(input)
+	actual := slicer.Dedup(input...)
 
 	assert.Equal(t, expected, actual)
 }
@@ -36,9 +36,9 @@ func Test_DedupFn(t *testing.T) {
 		{K: "z", V: 300},
 	}
 
-	actual := slicer.DedupFn(input, func(item Thing) string {
+	actual := slicer.DedupFn(func(item Thing) string {
 		return item.K
-	})
+	}, input...)
 
 	assert.Equal(t, expected, actual)
 }

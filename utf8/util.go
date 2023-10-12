@@ -11,25 +11,25 @@ func ToStrings(cs []Utf8Char) []string {
 }
 
 func IsUpperCase[T ~byte](v T) bool {
-	return slicer.Contains(UPPERCASE, Utf8Char(v))
+	return slicer.Contains(Utf8Char(v), UPPERCASE...)
 }
 
 func IsLowerCase[T ~byte](v T) bool {
-	return slicer.Contains(LOWERCASE, Utf8Char(v))
+	return slicer.Contains(Utf8Char(v), LOWERCASE...)
 }
 
 func IsLetter[T ~byte](v T) bool {
-	return slicer.Contains(LETTERS, Utf8Char(v))
+	return slicer.Contains(Utf8Char(v), LETTERS...)
 }
 
 func IsNumber[T ~byte](v T) bool {
-	return slicer.Contains(NUMBERS, Utf8Char(v))
+	return slicer.Contains(Utf8Char(v), NUMBERS...)
 }
 
 func IsWhiteSpace[T ~byte](v T) bool {
-	return slicer.Contains(WHITESPACE, Utf8Char(v))
+	return slicer.Contains(Utf8Char(v), WHITESPACE...)
 }
 
 func IsSymbols[T ~byte](v T) bool {
-	return slicer.Contains(SYMBOLS, Utf8Char(v))
+	return slicer.Contains(Utf8Char(v), SYMBOLS...)
 }

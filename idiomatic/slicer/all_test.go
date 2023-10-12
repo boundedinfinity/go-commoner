@@ -8,10 +8,10 @@ import (
 )
 
 func Test_All_String(t *testing.T) {
-	actual1 := slicer.AllV("a", "a", "a", "a")
+	actual1 := slicer.All("a", "a", "a", "a")
 	assert.Equal(t, true, actual1)
 
-	actual2 := slicer.AllV("a", "b", "a", "a")
+	actual2 := slicer.All("a", "b", "a", "a")
 	assert.Equal(t, false, actual2)
 }
 

@@ -1,20 +1,36 @@
 package slicer
 
-func Find[T comparable](ss []T, t T) (T, bool) {
-	fn := func(s T) bool {
-		return s == t
+func Find[T comparable](match T, items ...T) (T, bool) {
+	fn := func(item T) bool {
+		return item == match
 	}
 
-	return FindFn(ss, fn)
+	return FindFn(fn, items...)
 }
 
-func FindFn[T any](ss []T, fn func(T) bool) (T, bool) {
-	for _, s := range ss {
-		if fn(s) {
-			return s, true
+func FindFn[T any](fn func(T) bool, items ...T) (T, bool) {
+	var ok bool
+	var item T
+
+	for _, item = range items {
+		if ok = fn(item); ok {
+			break
 		}
 	}
 
-	var zero T
-	return zero, false
+	return item, ok
+}
+
+func FindFnErr[T any](fn func(T) (bool, error), items ...T) (T, bool, error) {
+	var item T
+	var ok bool
+	var err error
+
+	for _, item = range items {
+		if ok, err = fn(item); ok || err != nil {
+			break
+		}
+	}
+
+	return item, ok, err
 }

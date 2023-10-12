@@ -21,7 +21,7 @@ func replaceNotInList[T ~string](s T, list []string, replacement string) string 
 	var n string
 
 	for _, r := range s {
-		if slicer.Contains(list, string(r)) {
+		if slicer.Contains(string(r), list...) {
 			n += string(r)
 		} else {
 			n += replacement
