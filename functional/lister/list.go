@@ -34,17 +34,17 @@ func (t *List[T]) PushB(items ...T) {
 }
 
 func (t *List[T]) PeekB() optioner.Option[T] {
-	return optioner.OfI(t.idiomatic.PeekB())
+	return optioner.OfOk(t.idiomatic.PeekB())
 }
 
 func (t *List[T]) PopB() optioner.Option[T] {
-	return optioner.OfI(t.idiomatic.PopB())
+	return optioner.OfOk(t.idiomatic.PopB())
 }
 
 func (t *List[T]) PeekF() optioner.Option[T] {
-	return optioner.OfI(t.idiomatic.PeekF())
+	return optioner.OfOk(t.idiomatic.PeekF())
 }
 
 func (t *List[T]) PopF() optioner.Option[T] {
-	return optioner.OfI(t.idiomatic.PopF())
+	return optioner.OfOk(t.idiomatic.PopF())
 }

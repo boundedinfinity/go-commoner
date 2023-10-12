@@ -16,5 +16,5 @@ func FindFn[T any](fn func(T) bool, items ...T) (T, bool) {
 
 func FindFnErr[T any](fn func(T) (bool, error), items ...T) trier.Try[optioner.Option[T]] {
 	t, ok, err := slicer.FindFnErr(fn, items...)
-	return trier.Complete(optioner.OfI(t, ok), err)
+	return trier.Complete(optioner.OfOk(t, ok), err)
 }

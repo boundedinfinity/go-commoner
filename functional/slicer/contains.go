@@ -5,14 +5,22 @@ import (
 	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
 )
 
-func Contains[T comparable](v T, xs ...T) bool {
-	return slicer.Contains(v, xs...)
+func Contains[T comparable](v T, items ...T) bool {
+	return slicer.Contains(v, items...)
 }
 
-func ContainsFn[T comparable](fn func(T) bool, xs ...T) bool {
-	return slicer.ContainsFn(fn, xs...)
+func ContainsFn[T comparable](fn func(T) bool, items ...T) bool {
+	return slicer.ContainsFn(fn, items...)
 }
 
-func ContainsFnErr[T comparable](fn func(T) (bool, error), xs ...T) trier.Try[bool] {
-	return trier.Complete(slicer.ContainsFnErr(fn, xs...))
+func ContainsFnI[T comparable](fn func(int, T) bool, items ...T) bool {
+	return slicer.ContainsFnI(fn, items...)
+}
+
+func ContainsFnErr[T comparable](fn func(T) (bool, error), items ...T) trier.Try[bool] {
+	return trier.Complete(slicer.ContainsFnErr(fn, items...))
+}
+
+func ContainsFnErrI[T comparable](fn func(int, T) (bool, error), items ...T) trier.Try[bool] {
+	return trier.Complete(slicer.ContainsFnErrI(fn, items...))
 }

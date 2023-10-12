@@ -28,9 +28,9 @@ func (t *Queue[T]) Push(items ...T) {
 }
 
 func (t *Queue[T]) Pop() optioner.Option[T] {
-	return optioner.OfI(t.idiomatic.Pop())
+	return optioner.OfOk(t.idiomatic.Pop())
 }
 
 func (t *Queue[T]) Peek() optioner.Option[T] {
-	return optioner.OfI(t.idiomatic.Peek())
+	return optioner.OfOk(t.idiomatic.Peek())
 }

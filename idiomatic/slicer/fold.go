@@ -1,6 +1,6 @@
 package slicer
 
-func FoldLeft[I any, O any](initial O, items []I, fn func(O, I) O) O {
+func FoldLeft[I any, O any](initial O, fn func(O, I) O, items ...I) O {
 	curr := initial
 
 	for _, item := range items {
@@ -10,11 +10,7 @@ func FoldLeft[I any, O any](initial O, items []I, fn func(O, I) O) O {
 	return curr
 }
 
-func FoldIndexed[I any, O any](initial O, items []I, fn func(int, O, I) O) O {
-	return FoldIndexed(initial, items, fn)
-}
-
-func FoldLeftIndexed[I any, O any](initial O, items []I, fn func(int, O, I) O) O {
+func FoldLeftI[I any, O any](initial O, fn func(int, O, I) O, items ...I) O {
 	curr := initial
 
 	for i, item := range items {
@@ -24,11 +20,7 @@ func FoldLeftIndexed[I any, O any](initial O, items []I, fn func(int, O, I) O) O
 	return curr
 }
 
-func FoldErr[I any, O any](initial O, items []I, fn func(O, I) (O, error)) (O, error) {
-	return FoldLeftErr(initial, items, fn)
-}
-
-func FoldLeftErr[I any, O any](initial O, items []I, fn func(O, I) (O, error)) (O, error) {
+func FoldLeftErr[I any, O any](initial O, fn func(O, I) (O, error), items ...I) (O, error) {
 	curr := initial
 	var err error
 
@@ -43,7 +35,22 @@ func FoldLeftErr[I any, O any](initial O, items []I, fn func(O, I) (O, error)) (
 	return curr, nil
 }
 
-func FoldRight[I any, O any](initial O, items []I, fn func(O, I) O) O {
+func FoldLeftErrI[I any, O any](initial O, fn func(int, O, I) (O, error), items ...I) (O, error) {
+	curr := initial
+	var err error
+
+	for i, item := range items {
+		curr, err = fn(i, curr, item)
+
+		if err != nil {
+			return curr, err
+		}
+	}
+
+	return curr, nil
+}
+
+func FoldRight[I any, O any](initial O, fn func(O, I) O, items ...I) O {
 	curr := initial
 
 	for i := len(items) - 1; i >= 0; i-- {
@@ -53,7 +60,7 @@ func FoldRight[I any, O any](initial O, items []I, fn func(O, I) O) O {
 	return curr
 }
 
-func FoldRightIndexed[I any, O any](initial O, items []I, fn func(int, O, I) O) O {
+func FoldRightI[I any, O any](initial O, fn func(int, O, I) O, items ...I) O {
 	curr := initial
 
 	for i := len(items) - 1; i >= 0; i-- {
@@ -63,17 +70,28 @@ func FoldRightIndexed[I any, O any](initial O, items []I, fn func(int, O, I) O) 
 	return curr
 }
 
-func FoldRightErr[I any, O any](initial O, items []I, fn func(O, I) (O, error)) (O, error) {
+func FoldRightErr[I any, O any](initial O, fn func(O, I) (O, error), items ...I) (O, error) {
 	curr := initial
 	var err error
 
 	for i := len(items) - 1; i >= 0; i-- {
-		curr, err = fn(curr, items[i])
-
-		if err != nil {
-			return curr, err
+		if curr, err = fn(curr, items[i]); err != nil {
+			break
 		}
 	}
 
-	return curr, nil
+	return curr, err
+}
+
+func FoldRightErrI[I any, O any](initial O, fn func(int, O, I) (O, error), items ...I) (O, error) {
+	curr := initial
+	var err error
+
+	for i := len(items) - 1; i >= 0; i-- {
+		if curr, err = fn(i, curr, items[i]); err != nil {
+			break
+		}
+	}
+
+	return curr, err
 }

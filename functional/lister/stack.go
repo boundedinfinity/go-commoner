@@ -28,9 +28,9 @@ func (t *Stack[T]) Push(items ...T) {
 }
 
 func (t *Stack[T]) Pop() optioner.Option[T] {
-	return optioner.OfI(t.idiomatic.Pop())
+	return optioner.OfOk(t.idiomatic.Pop())
 }
 
 func (t *Stack[T]) Peek() optioner.Option[T] {
-	return optioner.OfI(t.idiomatic.Peek())
+	return optioner.OfOk(t.idiomatic.Peek())
 }
