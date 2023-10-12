@@ -1,33 +1,29 @@
 package slicer
 
-type FilterFn[T any] func(T) bool
-
-func Filter[T any](xs []T, fn FilterFn[T]) []T {
+func Filter[T any](fn func(T) bool, items ...T) []T {
 	var os []T
 
-	for _, x := range xs {
-		if fn(x) {
-			os = append(os, x)
+	for _, item := range items {
+		if fn(item) {
+			os = append(os, item)
 		}
 	}
 
 	return os
 }
 
-type FilterErrFn[T any] func(T) (bool, error)
-
-func FilterErr[T any](xs []T, fn FilterErrFn[T]) ([]T, error) {
+func FilterErr[T any](fn func(T) (bool, error), items ...T) ([]T, error) {
 	var os []T
 
-	for _, x := range xs {
-		ok, err := fn(x)
+	for _, item := range items {
+		ok, err := fn(item)
 
 		if err != nil {
 			return os, err
 		}
 
 		if ok {
-			os = append(os, x)
+			os = append(os, item)
 		}
 	}
 

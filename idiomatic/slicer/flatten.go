@@ -10,13 +10,29 @@ func Flatten[T any](items ...[]T) []T {
 	return o
 }
 
-func FlattenFn[T any, U any](fn func(vs []T) []U, vss ...[]T) []U {
+func FlattenFn[T any, U any](fn func(vs []T) []U, items ...[]T) []U {
 	var o []U
 
-	for _, vs := range vss {
-		us := fn(vs)
+	for _, item := range items {
+		us := fn(item)
 		o = append(o, us...)
 	}
 
 	return o
+}
+
+func FlattenFnErr[T any, U any](fn func(vs []T) ([]U, error), items ...[]T) ([]U, error) {
+	var o []U
+
+	for _, item := range items {
+		us, err := fn(item)
+
+		if err != nil {
+			return o, err
+		}
+
+		o = append(o, us...)
+	}
+
+	return o, nil
 }

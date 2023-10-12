@@ -12,11 +12,10 @@ func DiffFn[T any](as, bs []T, fn func(T, T) bool) []T {
 	var d []T
 
 	for _, a := range as {
-		found := false
+		var found bool
 
 		for _, b := range bs {
-			if fn(a, b) {
-				found = true
+			if found = fn(a, b); found {
 				break
 			}
 		}
@@ -27,4 +26,25 @@ func DiffFn[T any](as, bs []T, fn func(T, T) bool) []T {
 	}
 
 	return d
+}
+
+func DiffFnErr[T any](as, bs []T, fn func(T, T) (bool, error)) ([]T, error) {
+	var d []T
+	var err error
+
+	for _, a := range as {
+		var found bool
+
+		for _, b := range bs {
+			if found, err = fn(a, b); found || err != nil {
+				break
+			}
+		}
+
+		if !found {
+			d = append(d, a)
+		}
+	}
+
+	return d, err
 }

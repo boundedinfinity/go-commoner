@@ -1,14 +1,14 @@
 package slicer
 
-func Each[T any](ts []T, fn func(T)) {
-	for _, t := range ts {
-		fn(t)
+func Each[T any](fn func(T), items ...T) {
+	for _, item := range items {
+		fn(item)
 	}
 }
 
-func EachErr[T any](ts []T, fn func(T) error) error {
-	for _, t := range ts {
-		if err := fn(t); err != nil {
+func EachErr[T any](fn func(T) error, items ...T) error {
+	for _, item := range items {
+		if err := fn(item); err != nil {
 			return err
 		}
 	}

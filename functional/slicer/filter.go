@@ -5,20 +5,10 @@ import (
 	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
 )
 
-func FilterTry[T any](xs []T, fn slicer.FilterErrFn[T]) trier.Try[[]T] {
-	var os []T
+func Filter[T any](fn func(T) bool, items ...T) []T {
+	return slicer.Filter(fn, items...)
+}
 
-	for _, x := range xs {
-		ok, err := fn(x)
-
-		if err != nil {
-			return trier.Complete(os, err)
-		}
-
-		if ok {
-			os = append(os, x)
-		}
-	}
-
-	return trier.Success(os)
+func FilterErr[T any](fn func(T) (bool, error), items ...T) trier.Try[[]T] {
+	return trier.Complete(slicer.FilterErr(fn, items...))
 }

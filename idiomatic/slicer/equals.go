@@ -23,3 +23,22 @@ func EqualsFn[T comparable](as, bs []T, fn func(T, T) bool) bool {
 
 	return true
 }
+
+func EqualsFnErr[T comparable](as, bs []T, fn func(T, T) (bool, error)) (bool, error) {
+	l := len(as)
+
+	if l != len(bs) {
+		return false, nil
+	}
+
+	var ok bool
+	var err error
+
+	for i := 0; i < l; i++ {
+		if ok, err = fn(as[i], bs[i]); ok || err != nil {
+			break
+		}
+	}
+
+	return ok, err
+}
