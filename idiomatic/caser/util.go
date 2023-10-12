@@ -8,7 +8,7 @@ import (
 
 func splitMapJoin(v string, splitFn func(v string) []string, mapFn *slicer.Pipe[string], joinFn func([]string) string) string {
 	s := splitFn(v)
-	m := mapFn.Run(s...)
+	m := mapFn.List(s...)
 	j := joinFn(m)
 	return j
 }

@@ -19,9 +19,9 @@ func Test_Map(t *testing.T) {
 
 	expected := []Type2{{thing: "a"}, {thing: "b"}}
 	input := []Type1{{thing: "a"}, {thing: "b"}}
-	actual := slicer.Map(input, func(t1 Type1) Type2 {
+	actual := slicer.Map(func(t1 Type1) Type2 {
 		return Type2{thing: t1.thing}
-	})
+	}, input...)
 
 	assert.ElementsMatch(t, expected, actual)
 }
@@ -37,9 +37,9 @@ func Test_MapErr_NoErr(t *testing.T) {
 
 	expected := []Type2{{thing: "a"}, {thing: "b"}}
 	input := []Type1{{thing: "a"}, {thing: "b"}}
-	actual, err := slicer.MapErr(input, func(t1 Type1) (Type2, error) {
+	actual, err := slicer.MapErr(func(t1 Type1) (Type2, error) {
 		return Type2{thing: t1.thing}, nil
-	})
+	}, input...)
 
 	assert.ElementsMatch(t, expected, actual)
 	assert.Nil(t, err)
@@ -56,9 +56,9 @@ func Test_MapErr_WithErr(t *testing.T) {
 
 	expected := []Type2{}
 	input := []Type1{{thing: "a"}, {thing: "b"}}
-	actual, err := slicer.MapErr(input, func(t1 Type1) (Type2, error) {
+	actual, err := slicer.MapErr(func(t1 Type1) (Type2, error) {
 		return Type2{}, errors.New("map error")
-	})
+	}, input...)
 
 	assert.ElementsMatch(t, expected, actual)
 	assert.NotNil(t, err)

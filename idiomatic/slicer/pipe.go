@@ -15,18 +15,18 @@ func (p *Pipe[T]) Then(fn func(T) T) *Pipe[T] {
 	return p
 }
 
-func (p *Pipe[T]) Run(items ...T) []T {
+func (p *Pipe[T]) List(items ...T) []T {
 	output := append([]T{}, items...)
 
 	for _, fn := range p.fns {
-		output = Map(output, fn)
+		output = Map(fn, output...)
 	}
 
 	return output
 }
 
-func (p *Pipe[T]) RunSingle(item T) T {
-	items := p.Run(item)
+func (p *Pipe[T]) Single(item T) T {
+	items := p.List(item)
 
 	if len(items) > 0 {
 		return items[0]
@@ -51,12 +51,12 @@ func (p *PipeErr[T]) Then(fn func(T) (T, error)) *PipeErr[T] {
 	return p
 }
 
-func (p *PipeErr[T]) Run(items ...T) ([]T, error) {
+func (p *PipeErr[T]) List(items ...T) ([]T, error) {
 	output := append([]T{}, items...)
 	var err error
 
 	for _, fn := range p.fns {
-		output, err = MapErr(output, fn)
+		output, err = MapErr(fn, output...)
 
 		if err != nil {
 			return output, err
@@ -66,8 +66,8 @@ func (p *PipeErr[T]) Run(items ...T) ([]T, error) {
 	return output, nil
 }
 
-func (p *PipeErr[T]) RunSingle(item T) (T, error) {
-	items, err := p.Run(item)
+func (p *PipeErr[T]) Single(item T) (T, error) {
+	items, err := p.List(item)
 
 	if len(items) > 0 {
 		return items[0], err

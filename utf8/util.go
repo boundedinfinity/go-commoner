@@ -5,9 +5,9 @@ import (
 )
 
 func ToStrings(cs []Utf8Char) []string {
-	return slicer.Map(cs, func(c Utf8Char) string {
+	return slicer.Map(func(c Utf8Char) string {
 		return string(c)
-	})
+	}, cs...)
 }
 
 func IsUpperCase[T ~byte](v T) bool {

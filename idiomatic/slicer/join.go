@@ -12,11 +12,11 @@ func Join[T any](items []T, sep string) string {
 }
 
 func JoinFn[T any](items []T, sep string, fn func(T) string) string {
-	return gstring.Join(Map(items, fn), sep)
+	return gstring.Join(Map(fn, items...), sep)
 }
 
 func JoinErrFn[T any](items []T, sep string, fn func(T) (string, error)) (string, error) {
-	res, err := MapErr(items, fn)
+	res, err := MapErr(fn, items...)
 
 	if err != nil {
 		return "", err
