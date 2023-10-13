@@ -7,38 +7,60 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_All_String(t *testing.T) {
-	actual1 := slicer.All("a", "a", "a", "a")
-	assert.Equal(t, true, actual1)
+func Test_All(t *testing.T) {
+	testCases := []struct {
+		name     string
+		match    string
+		list     []string
+		expected bool
+	}{
+		{
+			name:     "a to all a's",
+			match:    "a",
+			list:     []string{"a", "a", "a", "a"},
+			expected: true,
+		},
+		{
+			name:     "a to all a's and b's",
+			match:    "a",
+			list:     []string{"a", "b", "a", "a"},
+			expected: false,
+		},
+	}
 
-	actual2 := slicer.All("a", "b", "a", "a")
-	assert.Equal(t, false, actual2)
+	for _, tc := range testCases {
+		t.Run(tc.name, func(tt *testing.T) {
+			actual := slicer.All(tc.match, tc.list...)
+			assert.Equal(t, tc.expected, actual)
+		})
+	}
 }
 
-// func Test_All_UserDefined(t *testing.T) {
-// 	type Thing struct {
-// 		arg string
-// 	}
+func Test_AllFn(t *testing.T) {
+	testCases := []struct {
+		name     string
+		match    func(string) bool
+		list     []string
+		expected bool
+	}{
+		{
+			name:     "a to all a's",
+			match:    func(item string) bool { return item == "a" },
+			list:     []string{"a", "a", "a", "a"},
+			expected: true,
+		},
+		{
+			name:     "a to all a's and b's",
+			match:    func(item string) bool { return item == "a" },
+			list:     []string{"a", "b", "a", "a"},
+			expected: false,
+		},
+	}
 
-// 	expected := []Thing{{arg: "a"}, {arg: "a"}}
-// 	input := []Thing{{arg: "a"}, {arg: "b"}, {arg: "a"}}
-
-// 	actual := slices.All(input, Thing{arg: "a"})
-
-// 	assert.Equal(t, expected, actual)
-// }
-
-// func Test_AllFn_UserDefined(t *testing.T) {
-// 	type Thing struct {
-// 		arg string
-// 	}
-
-// 	expected := []Thing{{arg: "a"}, {arg: "a"}}
-// 	input := []Thing{{arg: "a"}, {arg: "b"}, {arg: "a"}}
-
-// 	actual := slices.AllFn(input, func(v Thing) bool {
-// 		return v.arg == "a"
-// 	})
-
-// 	assert.Equal(t, expected, actual)
-// }
+	for _, tc := range testCases {
+		t.Run(tc.name, func(tt *testing.T) {
+			actual := slicer.AllFn(tc.match, tc.list...)
+			assert.Equal(t, tc.expected, actual)
+		})
+	}
+}

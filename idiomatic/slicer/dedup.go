@@ -9,37 +9,40 @@ func Dedup[T comparable](items ...T) []T {
 }
 
 func DedupFn[T any, K comparable](fn func(T) K, items ...T) []T {
-	var o []T
-	m := make(map[K]bool)
-
-	for _, item := range items {
-		key := fn(item)
-
-		if ok := m[key]; !ok {
-			m[key] = true
-			o = append(o, item)
-		}
+	fn2 := func(item T) (K, error) {
+		k := fn(item)
+		return k, nil
 	}
 
-	return o
+	results, _ := DedupFnErr(fn2, items...)
+
+	return results
 }
 
 func DedupFnErr[T any, K comparable](fn func(T) (K, error), items ...T) ([]T, error) {
-	var o []T
-	m := make(map[K]bool)
+	m := make(map[K]T)
+	var err error
+	var key K
 
 	for _, item := range items {
-		key, err := fn(item)
-
-		if err != nil {
-			return o, err
-		}
-
-		if ok := m[key]; !ok {
-			m[key] = true
-			o = append(o, item)
+		if key, err = fn(item); err != nil {
+			break
+		} else {
+			if _, ok := m[key]; !ok {
+				m[key] = item
+			}
 		}
 	}
 
-	return o, nil
+	var results []T
+
+	if err != nil {
+		return results, err
+	}
+
+	for _, item := range m {
+		results = append(results, item)
+	}
+
+	return results, nil
 }

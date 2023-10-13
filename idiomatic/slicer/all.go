@@ -1,59 +1,49 @@
 package slicer
 
-func All[T comparable](x T, items ...T) bool {
-	fn := func(v T) bool {
-		return v == x
+func All[T comparable](match T, items ...T) bool {
+	fn := func(current bool, item T) bool {
+		return current && match == item
 	}
 
-	return AllFn(fn, items...)
+	return FoldLeft(true, fn, items...)
 }
 
 func AllFn[T comparable](fn func(T) bool, items ...T) bool {
-	for _, item := range items {
-		if !fn(item) {
-			return false
-		}
+	fn2 := func(current bool, item T) bool {
+		return current && fn(item)
 	}
 
-	return true
+	return FoldLeft(true, fn2, items...)
 }
 
 func AllFnI[T comparable](fn func(int, T) bool, items ...T) bool {
-	for i, item := range items {
-		if !fn(i, item) {
-			return false
-		}
+	fn2 := func(i int, current bool, item T) bool {
+		return current && fn(i, item)
 	}
 
-	return true
+	return FoldLeftI(true, fn2, items...)
 }
 
 func AllFnErr[T comparable](fn func(T) (bool, error), items ...T) (bool, error) {
-	ok := true
-	var err error
-
-	for _, item := range items {
-		ok, err = fn(item)
-
-		if !ok || err != nil {
-			break
+	fn2 := func(current bool, item T) (bool, error) {
+		if ok, err := fn(item); err != nil {
+			return current, err
+		} else {
+			return current && ok, nil
 		}
 	}
 
-	return ok, err
+	return FoldLeftErr(true, fn2, items...)
 }
 
 func AllFnErrI[T comparable](fn func(int, T) (bool, error), items ...T) (bool, error) {
-	ok := true
-	var err error
-
-	for i, item := range items {
-		ok, err = fn(i, item)
-
-		if !ok || err != nil {
-			break
+	fn2 := func(i int, current bool, item T) (bool, error) {
+		if ok, err := fn(i, item); err != nil {
+			return current, err
+		} else {
+			return current && ok, nil
 		}
 	}
 
-	return ok, err
+	return FoldLeftErrI(true, fn2, items...)
 }

@@ -1,21 +1,17 @@
 package slicer
 
 func Chunk[T comparable](size int, items ...T) [][]T {
-	os := [][]T{}
-	cur := []T{}
+	var buffer []T
 
-	for i := 0; i < len(items); i++ {
-		if i%size == 0 && i != 0 {
-			os = append(os, cur)
-			cur = []T{}
+	fn := func(current [][]T, item T) [][]T {
+		if len(buffer) >= size {
+			current = append(current, buffer)
+			buffer = []T{}
 		}
 
-		cur = append(cur, items[i])
+		buffer = append(buffer, item)
+		return current
 	}
 
-	if len(cur) > 0 {
-		os = append(os, cur)
-	}
-
-	return os
+	return append(FoldLeft([][]T{}, fn, items...), buffer)
 }
