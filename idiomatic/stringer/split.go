@@ -6,9 +6,9 @@ func Split[T ~string](s T, sep string) []string {
 	return strings.Split(string(s), sep)
 }
 
-func SplitAny[T ~string](s T, sepItems ...string) []string {
+func SplitAny[T ~string](s T, items ...string) []string {
 	return SplitFn(s, func(x string) bool {
-		for _, item := range sepItems {
+		for _, item := range items {
 			if item == string(x) {
 				return true
 			}

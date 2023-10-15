@@ -1,6 +1,6 @@
 makefile_dir		:= $(abspath $(shell pwd))
 
-.PHONY: list bootstrap init build
+.PHONY: list bootstrap init build clean
 
 list:
 	@grep '^[^#[:space:]].*:' Makefile | grep -v ':=' | grep -v '^\.' | sed 's/:.*//g' | sed 's/://g' | sort
