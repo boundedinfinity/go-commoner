@@ -53,3 +53,45 @@ func MapErrI[T any, U any](fn func(int, T) (U, error), items ...T) ([]U, error) 
 
 	return us, err
 }
+
+func MapPipe[T any, U any](fns []func(T) U, items ...T) []U {
+	var us []U
+
+	for _, fn := range fns {
+		us = Map(fn, items...)
+	}
+
+	return us
+}
+
+func MapPipeI[T any, U any](fns []func(int, T) U, items ...T) []U {
+	var us []U
+
+	for _, fn := range fns {
+		us = MapI(fn, items...)
+	}
+
+	return us
+}
+
+func MapPipeErr[T any, U any](fns []func(T) (U, error), items ...T) ([]U, error) {
+	var us []U
+	var err error
+
+	for _, fn := range fns {
+		us, err = MapErr(fn, items...)
+	}
+
+	return us, err
+}
+
+func MapPipeErrI[T any, U any](fns []func(int, T) (U, error), items ...T) ([]U, error) {
+	var us []U
+	var err error
+
+	for _, fn := range fns {
+		us, err = MapErrI(fn, items...)
+	}
+
+	return us, err
+}
