@@ -55,23 +55,35 @@ func OfOk[T any](v T, ok bool) Option[T] {
 	})
 }
 
-// OfS[[]T] creates a Option[[]T] that may or may not have a value.
+// OfSlice[[]T] creates a Option[[]T] that may or may not have a value.
 //
 // If len([]T) > 0  the returned Option[[]T] will contain the value v (equivalent to Some[[]T](v))
 //
 // Otherwise the returned Option[[]T] is empty, equivalent to None[[]T]().
-func OfS[T any](v []T) Option[[]T] {
+func OfSlice[T any](v []T) Option[[]T] {
 	return OfFn(v, func(v []T) bool {
 		return len(v) > 0
 	})
 }
 
-// OfM[map[K]V] creates a Option[map[K]V] that may or may not have a value.
+func OfOptions[T any](items ...Option[T]) Option[[]T] {
+	var realItems []T
+
+	for _, item := range items {
+		if item.Defined() {
+			realItems = append(realItems, item.Get())
+		}
+	}
+
+	return OfSlice(realItems)
+}
+
+// OfMap[map[K]V] creates a Option[map[K]V] that may or may not have a value.
 //
 // If len(map[K]V) > 0  the returned Option[map[K]V] will contain the value v, equivalent to Some[map[K]V](v)
 //
 // Otherwise the returned Option[map[K]V] is empty, equivalent to None[map[K]V]().
-func OfM[K comparable, V any](v map[K]V) Option[map[K]V] {
+func OfMap[K comparable, V any](v map[K]V) Option[map[K]V] {
 	return OfFn(v, func(v map[K]V) bool {
 		return len(v) > 0
 	})

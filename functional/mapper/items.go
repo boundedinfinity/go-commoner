@@ -18,5 +18,5 @@ func ItemsFiltered[K comparable, V any](m map[K]V, fn func(K, V) bool) optioner.
 		return Item[K, V]{K: item.K, V: item.V}
 	}, mapper.ItemsFiltered(m, fn)...)
 
-	return optioner.OfS(results)
+	return optioner.OfSlice(results)
 }

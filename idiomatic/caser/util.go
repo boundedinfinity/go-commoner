@@ -14,19 +14,19 @@ func splitMapJoin(v string, splitFn func(v string) []string, mapFn *slicer.Pipe[
 }
 
 func joinWithNoSpace(v []string) string {
-	return stringer.Join(v, "")
+	return stringer.Join("", v...)
 }
 
 func joinWithSpace(v []string) string {
-	return stringer.Join(v, " ")
+	return stringer.Join(" ", v...)
 }
 
 func joinWithUnderscore(v []string) string {
-	return stringer.Join(v, "_")
+	return stringer.Join("_", v...)
 }
 
 func joinWithDash(v []string) string {
-	return stringer.Join(v, "-")
+	return stringer.Join("-", v...)
 }
 
 func splitOnSpace(v string) []string {

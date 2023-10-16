@@ -1,13 +1,13 @@
 package stringer
 
-import gstring "strings"
+import "strings"
 
-func Join[T ~string](elems []T, sep string) string {
+func Join[T ~string](sep string, items ...T) string {
 	ss := []string{}
 
-	for _, elem := range elems {
-		ss = append(ss, string(elem))
+	for _, item := range items {
+		ss = append(ss, string(item))
 	}
 
-	return gstring.Join(ss, sep)
+	return strings.Join(ss, sep)
 }
