@@ -17,7 +17,7 @@ var (
 	}
 
 	theJson = `{
-        "name": "github.com/boundedinfinity/go-commoner/idiomatic/marshaler_test/aStruct",
+        "discriminator": "github.com/boundedinfinity/go-commoner/idiomatic/marshaler_test/aStruct",
         "instance": {
                 "stuff": "some stuff"
             }
@@ -25,10 +25,11 @@ var (
 )
 
 func Test_Marshal(t *testing.T) {
+	manager := marshaler.New()
 	input := theStruct
 	expected := theJson
 
-	actual, err := marshaler.MarshalIndent(input, "", "    ")
+	actual, err := manager.MarshalIndent(input, "", "    ")
 	assert.Nil(t, err)
 	assert.JSONEq(t, expected, string(actual))
 }

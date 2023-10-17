@@ -3,50 +3,80 @@ package marshaler
 import (
 	"encoding/json"
 	"fmt"
-	"reflect"
+	greflect "reflect"
+
+	"github.com/boundedinfinity/go-commoner/idiomatic/reflect"
 )
 
+type unmarshalWrapper struct {
+	Discriminator string          `json:"discriminator,omitempty"`
+	Instance      json.RawMessage `json:"instance,omitempty"`
+}
+
+type marshalWrapper struct {
+	Discriminator string `json:"discriminator,omitempty"`
+	Instance      any    `json:"instance,omitempty"`
+}
+
 type MashalerManager struct {
-	m map[string]reflect.Type
+	m map[string]greflect.Type
 }
 
 func New() *MashalerManager {
 	return &MashalerManager{
-		m: make(map[string]reflect.Type),
+		m: make(map[string]greflect.Type),
 	}
 }
 
 func (t *MashalerManager) Register(instance any) error {
-	name := fqpp(instance)
+	name := reflect.FullyQualifiedName(instance)
 
 	if _, ok := t.m[name]; !ok {
-		t.m[name] = reflect.TypeOf(instance)
+		t.m[name] = greflect.TypeOf(instance)
 	}
 
 	return nil
 }
 
+func (t MashalerManager) Marshal(instance any) ([]byte, error) {
+	wrapped := marshalWrapper{
+		Discriminator: reflect.FullyQualifiedName(instance),
+		Instance:      instance,
+	}
+
+	return json.Marshal(wrapped)
+}
+
+func (t MashalerManager) MarshalIndent(instance any, prefix, indent string) ([]byte, error) {
+	wrapped := marshalWrapper{
+		Discriminator: reflect.FullyQualifiedName(instance),
+		Instance:      instance,
+	}
+
+	return json.MarshalIndent(wrapped, prefix, indent)
+}
+
 func (t MashalerManager) Unmarshal(data []byte) (any, error) {
-	var w deserializationWrapper
+	var w unmarshalWrapper
 
 	if err := json.Unmarshal(data, &w); err != nil {
 		return nil, err
 	}
 
-	typ, ok := t.m[w.Name]
+	typ, ok := t.m[w.Discriminator]
 
 	if !ok {
-		return nil, fmt.Errorf("unkown type %v", w.Name)
+		return nil, fmt.Errorf("unkown type %v", w.Discriminator)
 	}
 
-	value := reflect.New(typ)
+	value := greflect.New(typ)
 	instancePtr := value.Interface()
 
 	if err := json.Unmarshal(w.Instance, instancePtr); err != nil {
 		return nil, err
 	}
 
-	instance := reflect.Indirect(value).Interface()
+	instance := greflect.Indirect(value).Interface()
 
 	return instance, nil
 }
@@ -68,33 +98,3 @@ func (t MashalerManager) Unmarshal(data []byte) (any, error) {
 
 // 	return *instance, nil
 // }
-
-type deserializationWrapper struct {
-	Name     string          `json:"name,omitempty"`
-	Instance json.RawMessage `json:"instance,omitempty"`
-}
-
-func Marshal(v any) ([]byte, error) {
-	return json.Marshal(wrap(v))
-}
-
-func MarshalIndent(v any, prefix, indent string) ([]byte, error) {
-	return json.MarshalIndent(wrap(v), prefix, indent)
-}
-
-type serializationWrapper struct {
-	Name     string `json:"name,omitempty"`
-	Instance any    `json:"instance,omitempty"`
-}
-
-func wrap(v any) serializationWrapper {
-	return serializationWrapper{
-		Name:     fqpp(v),
-		Instance: v,
-	}
-}
-
-func fqpp(instance any) string {
-	typ := reflect.TypeOf(instance)
-	return fmt.Sprintf("%v/%v", typ.PkgPath(), typ.Name())
-}

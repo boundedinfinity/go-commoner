@@ -1,6 +1,14 @@
 package stringer
 
-import "strings"
+import (
+	"strings"
+
+	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
+)
+
+func Contains[T ~string, S ~string](s S, substr T) bool {
+	return ContainsAny(s, substr)
+}
 
 func ContainsAny[T ~string, S ~string](s S, items ...T) bool {
 	ns := string(s)
@@ -19,15 +27,13 @@ func ContainsNone[T ~string, S ~string](s S, items ...T) bool {
 }
 
 func ContainsAnyIgnoreCase[T ~string, S ~string](s S, items ...T) bool {
-	ns := strings.ToLower(string(s))
-
-	for _, v := range items {
-		if strings.Contains(ns, strings.ToLower(string(v))) {
-			return true
-		}
-	}
-
-	return false
+	lowers := slicer.Map(
+		func(item T) string {
+			return ToLower(s)
+		},
+		items...,
+	)
+	return ContainsAny(ToLower(s), lowers...)
 }
 
 func ContainsNoneIgnoreCase[T ~string, S ~string](s S, items ...T) bool {
