@@ -39,13 +39,6 @@ func (t MashalerManager) Unmarshal(data []byte) (any, error) {
 		return nil, fmt.Errorf("unkown type %v", w.Name)
 	}
 
-	// instance := reflect.New(typ).Elem().Interface()
-	// instance := reflect.Indirect(reflect.New(typ)).Elem().Interface()
-	// instance := reflect.Indirect(reflect.New(typ)).Interface()
-	// instance := reflect.make
-	// instance := reflect.Zero(typ).Elem().Interface()
-	// instance := reflect.Zero(typ).Interface()
-
 	value := reflect.New(typ)
 	instancePtr := value.Interface()
 
