@@ -77,6 +77,10 @@ func TrimFunc[T ~string](s T, fn func(rune) bool) T {
 }
 
 func TrimFuncLeft[T ~string](s T, fn func(rune) bool) T {
+	if s == "" {
+		return s
+	}
+
 	start := 0
 
 	for i, x := range s {
@@ -90,6 +94,10 @@ func TrimFuncLeft[T ~string](s T, fn func(rune) bool) T {
 }
 
 func TrimFuncRight[T ~string](s T, fn func(rune) bool) T {
+	if s == "" {
+		return s
+	}
+
 	end := len(s) - 1
 
 	for i := len(s) - 1; i >= 0; i-- {
