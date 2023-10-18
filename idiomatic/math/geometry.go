@@ -2,21 +2,20 @@ package math
 
 import (
 	"github.com/boundedinfinity/go-commoner/math"
-	"golang.org/x/exp/constraints"
 )
 
-type CartesianCoordinate[T constraints.Float | constraints.Integer] struct {
+type CartesianCoordinate[T Numbers] struct {
 	X T
 	Y T
 }
 
-type PolarCoordinate[T constraints.Float | constraints.Integer] struct {
+type PolarCoordinate[T Numbers] struct {
 	Radius    T
 	Angle     T
 	AngleType math.AngleType
 }
 
-func CartesianToPolar[T constraints.Float | constraints.Integer](coordinate CartesianCoordinate[T]) PolarCoordinate[T] {
+func CartesianToPolar[T Numbers](coordinate CartesianCoordinate[T]) PolarCoordinate[T] {
 	return PolarCoordinate[T]{
 		Radius:    Sqrt(Pow(coordinate.X, 2) + Pow(coordinate.Y, 2)),
 		Angle:     Atan(coordinate.Y / coordinate.X),
@@ -24,7 +23,7 @@ func CartesianToPolar[T constraints.Float | constraints.Integer](coordinate Cart
 	}
 }
 
-func PolarToCartesian[T constraints.Float | constraints.Integer](coordinate PolarCoordinate[T]) CartesianCoordinate[T] {
+func PolarToCartesian[T Numbers](coordinate PolarCoordinate[T]) CartesianCoordinate[T] {
 	radians := coordinate.Angle
 
 	switch coordinate.AngleType {

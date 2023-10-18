@@ -9,7 +9,7 @@ import (
 // https://en.wikipedia.org/wiki/Euclidean_algorithm
 // https://www.youtube.com/watch?v=yHwneN6zJmU&t=641
 
-func GreatestCommonFactor[T constraints.Float | constraints.Integer](a T, b T) T {
+func GreatestCommonFactor[T Numbers](a T, b T) T {
 	if b == 0 {
 		return a
 	} else {
