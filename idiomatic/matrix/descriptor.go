@@ -1,6 +1,22 @@
 package matrix
 
-import "golang.org/x/exp/constraints"
+import (
+	"github.com/boundedinfinity/go-commoner/idiomatic/math"
+
+	"golang.org/x/exp/constraints"
+)
+
+func SliceToDescriptor[T constraints.Integer, V any](slice [][]V) MatrixDescriptor[T] {
+	descriptor := MatrixDescriptor[T]{
+		Rows: T(len(slice)),
+	}
+
+	for _, row := range slice {
+		descriptor.Cols = math.Max(descriptor.Cols, T(len(row)))
+	}
+
+	return descriptor
+}
 
 type MatrixDescriptor[T constraints.Integer] struct {
 	Rows T

@@ -19,6 +19,19 @@ func FromDescriptor[T constraints.Integer, V any](descriptor MatrixDescriptor[T]
 	return &matrix
 }
 
+func FromSlice[T constraints.Integer, V any](slice [][]V) *Matrix[T, V] {
+	var zero V
+	matrix := FromDescriptor[T, V](SliceToDescriptor[T, V](slice), zero)
+
+	for row := 0; row < len(slice); row++ {
+		for col := 0; col < len(slice[row]); col++ {
+			matrix.matrix[row][col] = slice[row][col]
+		}
+	}
+
+	return matrix
+}
+
 func (t *Matrix[T, V]) Fill(value V) {
 	rows := int(t.Rows)
 	cols := int(t.Cols)
