@@ -1,4 +1,5 @@
-makefile_dir		:= $(abspath $(shell pwd))
+makefile_dir	:= $(abspath $(shell pwd))
+m				:= "updates"
 
 .PHONY: list bootstrap init build clean
 
@@ -25,5 +26,5 @@ tag:
 
 publish: generate test
 	@if ack replace go.mod ;then echo 'Remove the "replace" line from the go.mod file'; exit 1; fi
-	make commit m=$(tag)
-	make tag tag=$(tag)
+	make commit m=$(m)
+	make tag tag=$(m)
