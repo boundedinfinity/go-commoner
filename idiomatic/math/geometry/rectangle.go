@@ -58,21 +58,21 @@ func (t Rectangle[T]) BottomRight() CartesianCoordinate[T] {
 }
 
 func (t Rectangle[T]) TopMidpoint() CartesianCoordinate[T] {
-	return NewLineSegment(t.TopLeft, t.BottomRight()).Midpoint()
+	return NewLineSegmentCoords(t.TopLeft, t.BottomRight()).Midpoint()
 }
 
 func (t Rectangle[T]) RightMidpoint() CartesianCoordinate[T] {
-	return NewLineSegment(t.TopRight(), t.BottomRight()).Midpoint()
+	return NewLineSegmentCoords(t.TopRight(), t.BottomRight()).Midpoint()
 }
 
 func (t Rectangle[T]) BottomMidpoint() CartesianCoordinate[T] {
-	return NewLineSegment(t.BottomLeft(), t.BottomRight()).Midpoint()
+	return NewLineSegmentCoords(t.BottomLeft(), t.BottomRight()).Midpoint()
 }
 
 func (t Rectangle[T]) LeftMidpoint() CartesianCoordinate[T] {
-	return NewLineSegment(t.TopLeft, t.BottomLeft()).Midpoint()
+	return NewLineSegmentCoords(t.TopLeft, t.BottomLeft()).Midpoint()
 }
 
 func (t Rectangle[T]) Center() CartesianCoordinate[T] {
-	return NewLineSegment(t.TopMidpoint(), t.BottomMidpoint()).Midpoint()
+	return NewLineSegmentCoords(t.TopMidpoint(), t.BottomMidpoint()).Midpoint()
 }

@@ -7,13 +7,13 @@ import (
 )
 
 func NewLineSegmentXY[T types.Numbers](x1, y1, x2, y2 T) LineSegment[T] {
-	return NewLineSegment[T](
+	return NewLineSegmentCoords[T](
 		CartesianCoordinate[T]{X: x1, Y: y2},
 		CartesianCoordinate[T]{X: x2, Y: y2},
 	)
 }
 
-func NewLineSegment[T types.Numbers](start, end CartesianCoordinate[T]) LineSegment[T] {
+func NewLineSegmentCoords[T types.Numbers](start, end CartesianCoordinate[T]) LineSegment[T] {
 	return LineSegment[T]{
 		Start: start,
 		End:   end,
@@ -60,48 +60,33 @@ func (t LineSegment[T]) Slope() T {
 	return internal.QuadrupleToSingle(t.Start.X, t.Start.Y, t.End.X, t.End.Y, fn)
 }
 
-// https://martin-thoma.com/how-to-check-if-two-line-segments-intersect/
-func (t LineSegment[T]) IntersectAt(line LineSegment[T]) (CartesianCoordinate[T], bool) {
-	var coord CartesianCoordinate[T]
-	var ok bool
+func (t LineSegment[T]) SlopeIntercept() SlopeInterceptLine[T] {
+	slope := t.Slope()
 
-	return coord, ok
-}
-
-func (t LineSegment[T]) Intersect(line LineSegment[T]) bool {
-	var result bool
-
-	o1 := lineSegmentOrientation(t, line.Start)
-	o2 := lineSegmentOrientation(t, line.End)
-	o3 := lineSegmentOrientation(line, t.Start)
-	o4 := lineSegmentOrientation(line, t.End)
-
-	if o1 != o2 && o3 != o4 {
-		result = true
+	return SlopeInterceptLine[T]{
+		M: slope,
+		B: t.Start.Y / slope * t.Start.X,
 	}
-
-	return result
 }
 
-var EPS = 1e-7
+func (t LineSegment[T]) Standard() StandardLine[T] {
+	sif := t.SlopeIntercept()
 
-func lineSegmentPointOnLine[T types.Numbers](line LineSegment[T], coord CartesianCoordinate[T]) bool {
-	var result bool
-
-	return result
-}
-
-func lineSegmentOrientation[T types.Numbers](line LineSegment[T], coord CartesianCoordinate[T]) int {
-	val := (line.End.Y-line.Start.Y)*(coord.X-line.End.X) - (line.End.X-line.Start.X)*(coord.X-line.End.Y)
-	var result int
-
-	if math.Abs(val) < 0 {
-		return result
-	} else if val > 0 {
-		result = -1
-	} else {
-		result = 1
+	return StandardLine[T]{
+		A: -sif.M,
+		B: 1,
+		C: -sif.B,
 	}
+}
 
-	return result
+// https://www.cuemath.com/geometry/intersection-of-two-lines/
+// https://www.cuemath.com/algebra/cross-multiplication-method/
+func (t LineSegment[T]) IntersectAt(segment LineSegment[T]) CartesianCoordinate[T] {
+	l1 := t.Standard()
+	l2 := segment.Standard()
+
+	return CartesianCoordinate[T]{
+		X: (l1.B*l2.C - l2.B*l1.C) / (l1.A*l2.B - l2.A*l1.B),
+		Y: (l1.C*l2.A - l2.A*l1.A) / (l1.A*l2.B - l2.A*l1.B),
+	}
 }
