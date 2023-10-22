@@ -76,3 +76,14 @@ func (t Rectangle[T]) LeftMidpoint() CartesianCoordinate[T] {
 func (t Rectangle[T]) Center() CartesianCoordinate[T] {
 	return NewLineSegmentCoords(t.TopMidpoint(), t.BottomMidpoint()).Midpoint()
 }
+
+func (t Rectangle[T]) PointOnPeremiter(angle T, direction AngleDirection) CartesianCoordinate[T] {
+	center := t.Center()
+	centerToTopLeft := NewLineSegmentCoords(center, t.TopLeft)
+	circle := NewCircle(center, centerToTopLeft.Length())
+	circlePoint := circle.PointOnCircumference(angle, direction)
+	circleLine := NewLineSegmentCoords(center, circlePoint)
+	topLine := NewLineSegmentCoords(t.TopLeft, t.TopRight())
+
+	return topLine.IntersectAt(circleLine)
+}
