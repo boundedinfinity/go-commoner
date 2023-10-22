@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/boundedinfinity/go-commoner/idiomatic/math"
+	"github.com/boundedinfinity/go-commoner/idiomatic/math/internal"
 	"github.com/boundedinfinity/go-commoner/idiomatic/stringer"
 	"golang.org/x/exp/constraints"
 )
@@ -14,8 +15,12 @@ type Fraction struct {
 	Denominator int
 }
 
-func (t Fraction) Float() int64 {
-	return int64(t.Numerator) / int64(t.Denominator)
+func (t Fraction) Float() float64 {
+	fn := func(n, d float64) float64 {
+		return n / d
+	}
+
+	return internal.DoubleToSingle[int, float64](t.Numerator, t.Denominator, fn)
 }
 
 func (t Fraction) Copy() Fraction {
@@ -44,7 +49,7 @@ func New(numerator, denominator int) Fraction {
 func FromFloat[T constraints.Float](n T) Fraction {
 	numerator := Component(n)
 	size := Magnitude(n)
-	denominator := int(math.Pow10(size))
+	denominator := math.Pow10[int, int](size)
 
 	return Fraction{
 		Numerator:   numerator,

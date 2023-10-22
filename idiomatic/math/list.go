@@ -1,10 +1,11 @@
 package math
 
 import (
+	"github.com/boundedinfinity/go-commoner/idiomatic/math/types"
 	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
 )
 
-func Sum[V Numbers](numbers ...V) V {
+func Sum[V types.Numbers](numbers ...V) V {
 	fn := func(a V, v V) V {
 		return a + v
 	}
@@ -12,7 +13,7 @@ func Sum[V Numbers](numbers ...V) V {
 	return slicer.Reduce(0, numbers, fn)
 }
 
-func Mean[V Numbers](numbers ...V) V {
+func Mean[V types.Numbers](numbers ...V) V {
 	l := len(numbers)
 
 	if l == 0 {
@@ -25,13 +26,13 @@ func Mean[V Numbers](numbers ...V) V {
 	return mean
 }
 
-func Median[V Numbers](numbers ...V) V {
+func Median[V types.Numbers](numbers ...V) V {
 	sorted := slicer.Sort(numbers...)
 	i := Ceil(len(sorted) / 2)
 	return numbers[i]
 }
 
-func MinOf[V Numbers](numbers ...V) V {
+func MinOf[V types.Numbers](numbers ...V) V {
 	fn := func(a V, v V) V {
 		if v < a {
 			return v
@@ -43,7 +44,7 @@ func MinOf[V Numbers](numbers ...V) V {
 	return slicer.Reduce(slicer.Head(numbers), numbers, fn)
 }
 
-func MaxOf[V Numbers](numbers ...V) V {
+func MaxOf[V types.Numbers](numbers ...V) V {
 	fn := func(a V, v V) V {
 		if v > a {
 			return v

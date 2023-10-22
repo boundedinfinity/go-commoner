@@ -19,8 +19,8 @@ func (t Rational) Copy() Rational {
 	}
 }
 
-func (t Rational) Float() int64 {
-	return int64(t.Whole) + t.Fraction.Float()
+func (t Rational) Float() float64 {
+	return float64(t.Whole) + t.Fraction.Float()
 }
 
 func (t Rational) Reduce() Rational {

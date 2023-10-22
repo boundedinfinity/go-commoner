@@ -1,6 +1,6 @@
-package math
+package geometry
 
-//go:generate enumer -path=./coordinate-system.enum.go
+//go:generate enumer -path=./angle-type.enum.go
 
 type AngleType string
 

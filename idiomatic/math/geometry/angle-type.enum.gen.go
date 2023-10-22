@@ -6,7 +6,7 @@
 //*                                                                                  *
 //************************************************************************************
 
-package math
+package geometry
 
 import (
 	"database/sql/driver"

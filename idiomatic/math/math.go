@@ -2,106 +2,110 @@ package math
 
 import (
 	"math"
+
+	"github.com/boundedinfinity/go-commoner/idiomatic/math/internal"
+	"github.com/boundedinfinity/go-commoner/idiomatic/math/types"
+	"golang.org/x/exp/constraints"
 )
 
-func Abs[T Numbers](x T) T {
-	return singleToSingle(x, math.Abs)
+func Abs[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Abs)
 }
 
-func Acos[T Numbers](x T) T {
-	return singleToSingle(x, math.Acos)
+func Acos[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Acos)
 }
 
-func Acosh[T Numbers](x T) T {
-	return singleToSingle(x, math.Acosh)
+func Acosh[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Acosh)
 }
 
-func Asin[T Numbers](x T) T {
-	return singleToSingle(x, math.Asin)
+func Asin[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Asin)
 }
 
-func Asinh[T Numbers](x T) T {
-	return singleToSingle(x, math.Asinh)
+func Asinh[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Asinh)
 }
 
-func Atan[T Numbers](x T) T {
-	return singleToSingle(x, math.Atan)
+func Atan[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Atan)
 }
 
-func Atan2[T Numbers](y, x T) T {
-	return doubleToSingle(y, x, math.Atan2)
+func Atan2[T types.Numbers](y, x T) T {
+	return internal.DoubleToSingle[T, T](y, x, math.Atan2)
 }
 
-func Atanh[T Numbers](x T) T {
-	return singleToSingle(x, math.Atanh)
+func Atanh[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Atanh)
 }
 
-func Cbrt[T Numbers](x T) T {
-	return singleToSingle(x, math.Cbrt)
+func Cbrt[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Cbrt)
 }
 
-func Ceil[T Numbers](x T) T {
-	return singleToSingle(x, math.Ceil)
+func Ceil[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Ceil)
 }
 
-func Copysign[T Numbers](f, sign T) T {
-	return doubleToSingle(f, sign, math.Copysign)
+func Copysign[T types.Numbers](f, sign T) T {
+	return internal.DoubleToSingle[T, T](f, sign, math.Copysign)
 }
 
-func Cos[T Numbers](x T) T {
-	return singleToSingle(x, math.Cos)
+func Cos[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Cos)
 }
 
-func Cosh[T Numbers](x T) T {
-	return singleToSingle(x, math.Cosh)
+func Cosh[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Cosh)
 }
 
-func Dim[T Numbers](x, y T) T {
-	return doubleToSingle(x, y, math.Dim)
+func Dim[T types.Numbers](x, y T) T {
+	return internal.DoubleToSingle[T, T](x, y, math.Dim)
 }
 
-func Erf[T Numbers](x T) T {
-	return singleToSingle(x, math.Erf)
+func Erf[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Erf)
 }
 
-func Erfc[T Numbers](x T) T {
-	return singleToSingle(x, math.Erfc)
+func Erfc[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Erfc)
 }
 
-func Erfcinv[T Numbers](x T) T {
-	return singleToSingle(x, math.Erfcinv)
+func Erfcinv[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Erfcinv)
 }
 
-func Erfinv[T Numbers](x T) T {
-	return singleToSingle(x, math.Erfinv)
+func Erfinv[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Erfinv)
 }
 
-func Exp[T Numbers](x T) T {
-	return singleToSingle(x, math.Exp)
+func Exp[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Exp)
 }
 
-func Exp2[T Numbers](x T) T {
-	return singleToSingle(x, math.Exp2)
+func Exp2[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Exp2)
 }
 
-func Expm1[T Numbers](x T) T {
-	return singleToSingle(x, math.Expm1)
+func Expm1[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Expm1)
 }
 
-func FMA[T Numbers](x, y, z T) T {
-	return tripleToSingle(x, y, z, math.FMA)
+func FMA[T types.Numbers](x, y, z T) T {
+	return internal.TripleToSingle(x, y, z, math.FMA)
 }
 
-func Floor[T Numbers](x T) T {
-	return singleToSingle(x, math.Floor)
+func Floor[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Floor)
 }
 
-func Gamma[T Numbers](x T) T {
-	return singleToSingle(x, math.Gamma)
+func Gamma[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Gamma)
 }
 
-func Hypot[T Numbers](p, q T) T {
-	return doubleToSingle(p, q, math.Hypot)
+func Hypot[T types.Numbers](p, q T) T {
+	return internal.DoubleToSingle[T, T](p, q, math.Hypot)
 }
 
 func Ilogb(x float64) int {
@@ -120,12 +124,12 @@ func IsNaN(x float64) bool {
 	return math.IsNaN(x)
 }
 
-func J0[T Numbers](x T) T {
-	return singleToSingle(x, math.J0)
+func J0[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.J0)
 }
 
-func J1[T Numbers](x T) T {
-	return singleToSingle(x, math.J1)
+func J1[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.J1)
 }
 
 func Jn(n int, x float64) float64 {
@@ -140,120 +144,128 @@ func Lgamma(x float64) (lgamma float64, sign int) {
 	return math.Lgamma(x)
 }
 
-func Log[T Numbers](x T) T {
-	return singleToSingle(x, math.Log)
+func Log[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Log)
 }
 
-func Log10[T Numbers](x T) T {
-	return singleToSingle(x, math.Log10)
+func Log10[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Log10)
 }
 
-func Log1p[T Numbers](x T) T {
-	return singleToSingle(x, math.Log1p)
+func Log1p[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Log1p)
 }
 
-func Log2[T Numbers](x T) T {
-	return singleToSingle(x, math.Log2)
+func Log2[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Log2)
 }
 
-func Logb[T Numbers](x T) T {
-	return singleToSingle(x, math.Logb)
+func Logb[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Logb)
 }
 
-func Max[T Numbers](x, y T) T {
-	return doubleToSingle(x, y, math.Max)
+func Max[T types.Numbers](x, y T) T {
+	return internal.DoubleToSingle[T, T](x, y, math.Max)
 }
 
-// func MaxAll[T Numbers](xs ...T) T {
+// func MaxAll[T types.Numbers](xs ...T) T {
 // 	return T(0)
 // }
 
-func Min[T Numbers](x, y T) T {
-	return doubleToSingle(x, y, math.Min)
+func Min[T types.Numbers](x, y T) T {
+	return internal.DoubleToSingle[T, T](x, y, math.Min)
 }
 
-// func MinAll[T Numbers](xs ...T) T {
+// func MinAll[T types.Numbers](xs ...T) T {
 // 	return T(0)
 // }
 
-func Mod[T Numbers](x, y T) T {
-	return doubleToSingle(x, y, math.Mod)
+func Mod[T types.Numbers](x, y T) T {
+	return internal.DoubleToSingle[T, T](x, y, math.Mod)
 }
 
-func Modf[I Numbers, O Numbers](x I) (O, O) {
-	return singleToDouble[I, O](x, math.Modf)
+func Modf[I types.Numbers, O types.Numbers](x I) (O, O) {
+	return internal.SingleToDouble[I, O](x, math.Modf)
 }
 
 func NaN() float64 {
 	return math.NaN()
 }
 
-func Nextafter[T Numbers](x, y T) T {
-	return doubleToSingle(x, y, math.Nextafter)
+func Nextafter[T types.Numbers](x, y T) T {
+	return internal.DoubleToSingle[T, T](x, y, math.Nextafter)
 }
 
-func Nextafter32[T Numbers](x, y T) T {
-	return doubleToSingle(x, y, math.Nextafter)
+func Nextafter32[T types.Numbers](x, y T) T {
+	return internal.DoubleToSingle[T, T](x, y, math.Nextafter)
 }
 
-func Pow[T Numbers](x, y T) T {
-	return doubleToSingle(x, y, math.Pow)
+func Pow[T types.Numbers](x, y T) T {
+	return internal.DoubleToSingle[T, T](x, y, math.Pow)
 }
 
-func Pow10(n int) float64 {
-	return math.Pow10(n)
+func Square[T types.Numbers](n T) T {
+	return Pow(n, 2)
 }
 
-func Remainder[T Numbers](x, y T) T {
-	return doubleToSingle(x, y, math.Remainder)
+func Qube[T types.Numbers](n T) T {
+	return Pow(n, 3)
 }
 
-func Round[T Numbers](x T) T {
-	return singleToSingle(x, math.Round)
+func Pow10[T constraints.Integer, U types.Numbers](n T) U {
+	return U(math.Pow10(int(n)))
 }
 
-func RoundToEven[T Numbers](x T) T {
-	return singleToSingle(x, math.RoundToEven)
+func Remainder[T types.Numbers](x, y T) T {
+	return internal.DoubleToSingle[T, T](x, y, math.Remainder)
+}
+
+func Round[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Round)
+}
+
+func RoundToEven[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.RoundToEven)
 }
 
 func Signbit(x float64) bool {
 	return math.Signbit(x)
 }
 
-func Sin[T Numbers](x T) T {
-	return singleToSingle(x, math.Sin)
+func Sin[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Sin)
 }
 
 func Sincos(x float64) (sin, cos float64) {
 	return math.Sincos(x)
 }
 
-func Sinh[T Numbers](x T) T {
-	return singleToSingle(x, math.Sinh)
+func Sinh[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Sinh)
 }
 
-func Sqrt[T Numbers](x T) T {
-	return singleToSingle(x, math.Sqrt)
+func Sqrt[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Sqrt)
 }
 
-func Tan[T Numbers](x T) T {
-	return singleToSingle(x, math.Tan)
+func Tan[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Tan)
 }
 
-func Tanh[T Numbers](x T) T {
-	return singleToSingle(x, math.Tanh)
+func Tanh[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Tanh)
 }
 
-func Trunc[T Numbers](x T) T {
-	return singleToSingle(x, math.Trunc)
+func Trunc[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Trunc)
 }
 
-func Y0[T Numbers](x T) T {
-	return singleToSingle(x, math.Y0)
+func Y0[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Y0)
 }
 
-func Y1[T Numbers](x T) T {
-	return singleToSingle(x, math.Y1)
+func Y1[T types.Numbers](x T) T {
+	return internal.SingleToSingle[T, T](x, math.Y1)
 }
 
 func Yn(n int, x float64) float64 {
