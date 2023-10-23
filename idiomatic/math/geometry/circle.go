@@ -23,16 +23,16 @@ type Circle[T types.Numbers] struct {
 	Radius T
 }
 
-func (t Circle[T]) PointOnCircumference(angle T, direction AngleDirection) CartesianCoordinate[T] {
+func (t Circle[T]) PointOnCircumference(angle Angle[T]) CartesianCoordinate[T] {
 	var theta T
 
 	fn := func(theta float64) float64 { return 360 - theta }
 
-	switch direction {
+	switch angle.Direction {
 	case AngleDirections.CounterClockwise:
 		theta = internal.SingleToSingle[T, T](theta, fn)
 	default:
-		theta = angle
+		theta = angle.Magnitude
 	}
 
 	return CartesianCoordinate[T]{
