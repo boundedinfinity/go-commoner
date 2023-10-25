@@ -12,7 +12,7 @@ func Contains[T comparable](match T, items ...T) bool {
 	return FoldLeft(false, fn, items...)
 }
 
-func ContainsFn[T comparable](fn func(T) bool, items ...T) bool {
+func ContainsFn[T any](fn func(T) bool, items ...T) bool {
 	fn2 := func(current bool, item T) bool {
 		if current {
 			return current
@@ -24,7 +24,7 @@ func ContainsFn[T comparable](fn func(T) bool, items ...T) bool {
 	return FoldLeft(false, fn2, items...)
 }
 
-func ContainsFnI[T comparable](fn func(int, T) bool, items ...T) bool {
+func ContainsFnI[T any](fn func(int, T) bool, items ...T) bool {
 	fn2 := func(i int, current bool, item T) bool {
 		if current {
 			return current
@@ -36,7 +36,7 @@ func ContainsFnI[T comparable](fn func(int, T) bool, items ...T) bool {
 	return FoldLeftI(false, fn2, items...)
 }
 
-func ContainsFnErr[T comparable](fn func(T) (bool, error), items ...T) (bool, error) {
+func ContainsFnErr[T any](fn func(T) (bool, error), items ...T) (bool, error) {
 	fn2 := func(current bool, item T) (bool, error) {
 		if current {
 			return current, nil
@@ -48,7 +48,7 @@ func ContainsFnErr[T comparable](fn func(T) (bool, error), items ...T) (bool, er
 	return FoldLeftErr(false, fn2, items...)
 }
 
-func ContainsFnErrI[T comparable](fn func(int, T) (bool, error), items ...T) (bool, error) {
+func ContainsFnErrI[T any](fn func(int, T) (bool, error), items ...T) (bool, error) {
 	fn2 := func(i int, current bool, item T) (bool, error) {
 		if current {
 			return current, nil

@@ -1,6 +1,6 @@
 package slicer
 
-func Chunk[T comparable](size int, items ...T) [][]T {
+func Chunk[T any](size int, items ...T) [][]T {
 	var buffer []T
 
 	fn := func(current [][]T, item T) [][]T {

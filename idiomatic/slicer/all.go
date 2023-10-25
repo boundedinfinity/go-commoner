@@ -8,7 +8,7 @@ func All[T comparable](match T, items ...T) bool {
 	return FoldLeft(true, fn, items...)
 }
 
-func AllFn[T comparable](fn func(T) bool, items ...T) bool {
+func AllFn[T any](fn func(T) bool, items ...T) bool {
 	fn2 := func(current bool, item T) bool {
 		return current && fn(item)
 	}
@@ -16,7 +16,7 @@ func AllFn[T comparable](fn func(T) bool, items ...T) bool {
 	return FoldLeft(true, fn2, items...)
 }
 
-func AllFnI[T comparable](fn func(int, T) bool, items ...T) bool {
+func AllFnI[T any](fn func(int, T) bool, items ...T) bool {
 	fn2 := func(i int, current bool, item T) bool {
 		return current && fn(i, item)
 	}
@@ -24,7 +24,7 @@ func AllFnI[T comparable](fn func(int, T) bool, items ...T) bool {
 	return FoldLeftI(true, fn2, items...)
 }
 
-func AllFnErr[T comparable](fn func(T) (bool, error), items ...T) (bool, error) {
+func AllFnErr[T any](fn func(T) (bool, error), items ...T) (bool, error) {
 	fn2 := func(current bool, item T) (bool, error) {
 		if ok, err := fn(item); err != nil {
 			return current, err
@@ -36,7 +36,7 @@ func AllFnErr[T comparable](fn func(T) (bool, error), items ...T) (bool, error) 
 	return FoldLeftErr(true, fn2, items...)
 }
 
-func AllFnErrI[T comparable](fn func(int, T) (bool, error), items ...T) (bool, error) {
+func AllFnErrI[T any](fn func(int, T) (bool, error), items ...T) (bool, error) {
 	fn2 := func(i int, current bool, item T) (bool, error) {
 		if ok, err := fn(i, item); err != nil {
 			return current, err

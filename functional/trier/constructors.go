@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/boundedinfinity/go-commoner/errorer"
+	"github.com/boundedinfinity/go-commoner/functional/optioner"
 )
 
 func Success[T any](result T) Try[T] {
@@ -32,4 +33,20 @@ func Complete[T any](result T, err error) Try[T] {
 		Result: result,
 		Err:    werr,
 	}
+}
+
+func CompleteOfZero[T comparable](result T, err error) Try[optioner.Option[T]] {
+	return Complete(optioner.OfZero(result), err)
+}
+
+func CompleteOfPtr[T any](result *T, err error) Try[optioner.Option[T]] {
+	return Complete(optioner.OfPtr(result), err)
+}
+
+func CompleteOfFn[T comparable](result T, fn func(v T) bool, err error) Try[optioner.Option[T]] {
+	return Complete(optioner.OfFn(result, fn), err)
+}
+
+func CompleteOfSlice[T any](result []T, err error) Try[optioner.Option[[]T]] {
+	return Complete(optioner.OfSlice(result), err)
 }
