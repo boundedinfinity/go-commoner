@@ -11,8 +11,7 @@ func Test_String_IsZero(t *testing.T) {
 	assert.Equal(t, stringer.IsZero(""), true)
 
 	type MyString string
-	var ms MyString = ""
-	assert.Equal(t, stringer.IsZero(ms), true)
+	assert.Equal(t, stringer.IsZero(MyString("")), true)
 }
 
 func Test_String_FindNonZero(t *testing.T) {
@@ -21,9 +20,7 @@ func Test_String_FindNonZero(t *testing.T) {
 	assert.Equal(t, true, ok1)
 
 	type MyString string
-	zero := MyString("")
-	x := MyString("x")
-	actual2, ok2 := stringer.FindNonZero(zero, MyString(x))
-	assert.Equal(t, x, actual2)
+	actual2, ok2 := stringer.FindNonZero(MyString(""), MyString("x"))
+	assert.Equal(t, MyString("x"), actual2)
 	assert.Equal(t, true, ok2)
 }

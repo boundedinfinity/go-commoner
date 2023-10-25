@@ -2,20 +2,24 @@ package stringer
 
 import (
 	"strings"
+	"unicode"
 
 	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
 )
 
 func TrimSpace[T ~string](s T) T {
-	return TrimSpaceLeft(TrimSpaceRight(s))
+	trimmed := s
+	trimmed = TrimSpaceLeft(trimmed)
+	trimmed = TrimSpaceRight(trimmed)
+	return trimmed
 }
 
 func TrimSpaceRight[T ~string](s T) T {
-	return TrimRunesRight(s, ' ')
+	return TrimFuncRight(s, unicode.IsSpace)
 }
 
 func TrimSpaceLeft[T ~string](s T) T {
-	return TrimRunesLeft(s, ' ')
+	return TrimFuncLeft(s, unicode.IsSpace)
 }
 
 func Trim[T ~string](s T, set string) T {
@@ -81,16 +85,17 @@ func TrimFuncLeft[T ~string](s T, fn func(rune) bool) T {
 		return s
 	}
 
-	start := 0
+	var i int
+	var x rune
 
-	for i, x := range s {
-		if !fn(rune(x)) {
-			start = i
+	for i, x = range s {
+		ok := fn(x)
+		if !ok {
 			break
 		}
 	}
 
-	return s[start:]
+	return s[i:]
 }
 
 func TrimFuncRight[T ~string](s T, fn func(rune) bool) T {
@@ -98,16 +103,16 @@ func TrimFuncRight[T ~string](s T, fn func(rune) bool) T {
 		return s
 	}
 
-	end := len(s) - 1
+	var i int
 
-	for i := len(s) - 1; i >= 0; i-- {
-		x := s[i]
+	for i = len(s) - 1; i >= 0; i-- {
+		x := rune(s[i])
+		ok := fn(x)
 
-		if !fn(rune(x)) {
-			end = i + 1
+		if !ok {
 			break
 		}
 	}
 
-	return s[:end]
+	return s[:i+1]
 }
