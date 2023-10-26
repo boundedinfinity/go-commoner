@@ -1,8 +1,12 @@
 package trier
 
+import "errors"
+
+var errTryForgotToSetError = errors.New("You forgot to assign and error here")
+
 type Try[T any] struct {
-	Result T     `json:"result"`
-	Err    error `json:"error"`
+	Value T     `json:"value"`
+	Err   error `json:"error"`
 }
 
 func (t Try[T]) Failed() bool {
@@ -14,5 +18,9 @@ func (t Try[T]) Succeeded() bool {
 }
 
 func (t Try[T]) Error() string {
-	return t.Err.Error()
+	if t.Err != nil {
+		return t.Err.Error()
+	}
+
+	return errTryForgotToSetError.Error()
 }

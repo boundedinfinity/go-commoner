@@ -5,15 +5,15 @@ import (
 	"errors"
 )
 
-func (e Error) MarshalJSON() ([]byte, error) {
-	if e.err != nil {
-		return json.Marshal(e.Error())
+func (e Errorer) MarshalJSON() ([]byte, error) {
+	if e.wrapped == nil {
+		return json.Marshal(nil)
 	}
 
-	return json.Marshal(nil)
+	return json.Marshal(e.Error())
 }
 
-func (e *Error) UnmarshalJSON(data []byte) error {
+func (e *Errorer) UnmarshalJSON(data []byte) error {
 	if data == nil {
 		return nil
 	}
@@ -28,7 +28,7 @@ func (e *Error) UnmarshalJSON(data []byte) error {
 		return err
 	}
 
-	e.err = errors.New(s)
+	e.wrapped = errors.New(s)
 
 	return nil
 }

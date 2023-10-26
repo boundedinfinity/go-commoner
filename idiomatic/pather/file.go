@@ -9,7 +9,7 @@ import (
 
 var (
 	ErrNotFile  = errorer.Errorf("not a file")
-	ErrNotFilev = errorer.Errorfn(ErrNotDir)
+	ErrNotFilev = errorer.WithChildf(ErrNotDir)
 )
 
 func IsFileErr[T ~string](path T) error {
@@ -20,7 +20,7 @@ func IsFileErr[T ~string](path T) error {
 	}
 
 	if !info.Mode().IsRegular() {
-		return ErrNotFilev(path)
+		return ErrNotFilev(string(path))
 	}
 
 	return nil

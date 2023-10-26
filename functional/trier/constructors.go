@@ -26,12 +26,12 @@ func Complete[T any](result T, err error) Try[T] {
 	var werr error
 
 	if err != nil {
-		werr = errorer.Err(err)
+		werr = errorer.New(err)
 	}
 
 	return Try[T]{
-		Result: result,
-		Err:    werr,
+		Value: result,
+		Err:   werr,
 	}
 }
 
