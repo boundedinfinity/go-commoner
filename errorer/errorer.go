@@ -1,6 +1,7 @@
 package errorer
 
 import (
+	"errors"
 	"fmt"
 )
 
@@ -31,10 +32,16 @@ func Errorf(format string, a ...any) error {
 		return nil
 	}
 
-	return New(fmt.Errorf(format, a...))
+	return New(fmt.Sprintf(format, a...))
 }
 
-func New(err error) error {
+func New(message string) error {
+	return &Errorer{
+		wrapped: errors.New(message),
+	}
+}
+
+func Wrap(err error) error {
 	if err == nil {
 		return nil
 	}

@@ -1,5 +1,5 @@
-package validater
+package validator
 
 type SliceValidator[T any] struct {
-	fns []Validater
+	fns []Validatable
 }

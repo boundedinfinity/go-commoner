@@ -7,9 +7,21 @@ import (
 	"golang.org/x/exp/constraints"
 )
 
+var (
+	zero_rational = Rational{}
+)
+
+func IsZero(item Rational) bool {
+	return item == zero_rational
+}
+
 type Rational struct {
 	Whole    int
 	Fraction fraction.Fraction
+}
+
+func (t Rational) IsZero(item Rational) bool {
+	return IsZero(t)
 }
 
 func (t Rational) Copy() Rational {

@@ -26,7 +26,7 @@ func Complete[T any](result T, err error) Try[T] {
 	var werr error
 
 	if err != nil {
-		werr = errorer.New(err)
+		werr = errorer.Wrap(err)
 	}
 
 	return Try[T]{

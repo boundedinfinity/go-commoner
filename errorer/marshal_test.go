@@ -16,7 +16,7 @@ func Test_Errorer_marshal(t *testing.T) {
 	}{
 		{
 			name:     "New constructor",
-			input:    errorer.New(assert.AnError),
+			input:    errorer.Wrap(assert.AnError),
 			expected: `"assert.AnError general error for testing"`,
 		},
 		{
@@ -54,7 +54,7 @@ func Test_Errorer_marshal_embedded(t *testing.T) {
 	}{
 		{
 			name:     "New constructor",
-			input:    thing{Val: "V", Err: errorer.New(assert.AnError)},
+			input:    thing{Val: "V", Err: errorer.Wrap(assert.AnError)},
 			expected: `{"Val":"V", "Err":"assert.AnError general error for testing"}`,
 		},
 		{

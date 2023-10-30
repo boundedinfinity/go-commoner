@@ -19,7 +19,7 @@ func Test_Errorer_constructors(t *testing.T) {
 	}{
 		{
 			name:   "New constructor",
-			actual: errorer.New(assert.AnError),
+			actual: errorer.Wrap(assert.AnError),
 			is:     assert.AnError,
 			str:    assert.AnError.Error(),
 			err:    assert.AnError.Error(),
