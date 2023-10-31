@@ -83,6 +83,16 @@ func FromString[T ~string](s T) (Rational, error) {
 	return FromFloat(n), nil
 }
 
+func MustString[T ~string](s T) Rational {
+	n, err := strconv.ParseFloat(string(s), 64)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return FromFloat(n)
+}
+
 func New(whole, numerator, denominator int) Rational {
 	return Rational{
 		Whole:    whole,
