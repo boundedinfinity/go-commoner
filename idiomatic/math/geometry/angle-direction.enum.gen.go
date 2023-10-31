@@ -71,8 +71,8 @@ var AngleDirections = struct {
 	Values []AngleDirection
 }{
 	angleDirections: angleDirections{
-		Clockwise:        AngleDirection("Clockwise"),
-		CounterClockwise: AngleDirection("CounterClockwise"),
+		Clockwise:        AngleDirection("clockwise"),
+		CounterClockwise: AngleDirection("counter-clockwise"),
 	},
 	Err: fmt.Errorf("invalid AngleDirection"),
 }

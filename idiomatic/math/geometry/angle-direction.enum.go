@@ -5,6 +5,6 @@ package geometry
 type AngleDirection string
 
 type angleDirections struct {
-	Clockwise        AngleDirection
-	CounterClockwise AngleDirection
+	Clockwise        AngleDirection `enum:"clockwise"`
+	CounterClockwise AngleDirection `enum:"counter-clockwise"`
 }

@@ -71,8 +71,8 @@ var AngleTypes = struct {
 	Values []AngleType
 }{
 	angleTypes: angleTypes{
-		Degrees: AngleType("Degrees"),
-		Radians: AngleType("Radians"),
+		Degrees: AngleType("degress"),
+		Radians: AngleType("radians"),
 	},
 	Err: fmt.Errorf("invalid AngleType"),
 }

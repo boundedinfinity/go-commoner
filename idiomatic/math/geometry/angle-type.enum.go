@@ -5,6 +5,6 @@ package geometry
 type AngleType string
 
 type angleTypes struct {
-	Degrees AngleType
-	Radians AngleType
+	Degrees AngleType `enum:"degress"`
+	Radians AngleType `enum:"radians"`
 }
