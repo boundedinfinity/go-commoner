@@ -16,7 +16,13 @@ type Marshaler struct {
 	types map[string]marshalerContext
 }
 
-func (t *Marshaler) Register(item any) {
+func (t *Marshaler) Register(items ...any) {
+	for _, item := range items {
+		t.register(item)
+	}
+}
+
+func (t *Marshaler) register(item any) {
 	typ := reflect.TypeOf(item)
 
 	ctx := marshalerContext{
