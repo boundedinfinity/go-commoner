@@ -15,6 +15,10 @@ func (t WhichThing) Discriminator() string {
 	return t.Type
 }
 
+func (t WhichThing) Value() any {
+	return t
+}
+
 type thingA struct {
 	ThingA string
 }
@@ -27,23 +31,38 @@ type someInterface interface {
 	GetThing() string
 }
 
-func Test_Marshaler(t *testing.T) {
+var (
+	message = `
+    {
+        "type": "thingA",
+        "value": {
+            "ThingA": "somethingA"
+        }
+    }
+`
+)
+
+func Test_Marshaler_Unmarshal(t *testing.T) {
 	m := marshaler.New()
+	m.Register(thingA{})
+	m.Register(thingB{})
 
-	var ta thingA
-	var tb thingB
+	actual1, err := m.Unmarshal([]byte(message))
+	assert.Nil(t, err)
 
-	m.Interface(&WhichThing{})
-	m.Register(ta, func() any { return thingA{} })
-	m.Register(tb, func() any { return thingB{} })
+	actualThing, ok := actual1.(thingA)
+	assert.True(t, ok)
 
-	actual1, err := m.UnmarshalInterface([]byte(`
-		{
-			"Type": "thingA",
-			"ThingA": "ThingA"
-		}
-	`))
+	assert.Equal(t, thingA{"somethingA"}, actualThing)
+}
+
+func Test_Marshaler_Marshal(t *testing.T) {
+	m := marshaler.New()
+	m.Register(thingA{})
+	bs, err := m.Marshal(thingA{ThingA: "somethingA"})
 
 	assert.Nil(t, err)
-	assert.Equal(t, ta, actual1)
+
+	actual := string(bs)
+	assert.JSONEq(t, message, actual)
 }

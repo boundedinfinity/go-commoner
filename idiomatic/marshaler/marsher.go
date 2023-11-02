@@ -12,58 +12,60 @@ func New() *Marshaler {
 	}
 }
 
-type MarshalDiscriminator interface {
-	Discriminator() string
-}
-
-type marshalerContext struct {
-	typ reflect.Type
-	gen func() any
-}
-
 type Marshaler struct {
-	discriminator MarshalDiscriminator
-	types         map[string]marshalerContext
+	types map[string]marshalerContext
 }
 
-func (t *Marshaler) Interface(discriminator MarshalDiscriminator) {
-	t.discriminator = discriminator
-}
+func (t *Marshaler) Register(item any) {
+	typ := reflect.TypeOf(item)
 
-func (t *Marshaler) Register(item any, gen func() any) {
 	ctx := marshalerContext{
-		typ: reflect.TypeOf(item),
-		gen: gen,
+		typ: typ,
 	}
 
-	t.types[ctx.typ.Name()] = ctx
+	t.types[typ.Name()] = ctx
 }
 
-func (t Marshaler) UnmarshalInterface(data []byte) (any, error) {
-	var err error
+func (t Marshaler) Marshal(item any) ([]byte, error) {
+	name := reflect.TypeOf(item).Name()
 
-	if err = json.Unmarshal(data, t.discriminator); err != nil {
+	if _, ok := t.types[name]; !ok {
+		return nil, fmt.Errorf("no type found for %v", name)
+	}
+
+	wrapped := marshalWrapper{
+		Type:  name,
+		Value: item,
+	}
+
+	return json.Marshal(wrapped)
+}
+
+func (t Marshaler) Unmarshal(data []byte) (any, error) {
+	var err error
+	var wrapped unmarshalWrapper
+
+	if err = json.Unmarshal(data, &wrapped); err != nil {
 		return nil, err
 	}
 
-	ctx, ok := t.types[t.discriminator.Discriminator()]
+	ctx, ok := t.types[wrapped.Type]
 
 	if !ok {
-		return nil, fmt.Errorf("no type found for %v", t.discriminator.Discriminator())
+		return nil, fmt.Errorf("no type found for %v", wrapped.Type)
 	}
 
-	new := reflect.New(ctx.typ)
-	ptr := new.Elem().Interface()
-	val := new.Elem().Interface()
+	rf := reflect.New(ctx.typ)
 
-	if err = json.Unmarshal(data, ptr); err != nil {
+	// fmt.Printf("vp.Type(): %v\n", rf.Type())
+	// fmt.Printf("vp.Elem(): %v\n", rf.Elem())
+	// fmt.Printf("vp.Interface(): %v\n", rf.Interface())
+	// fmt.Printf("vp.Type().Elem(): %v\n", rf.Type().Elem())
+	// fmt.Printf("vp.Elem().Interface(): %v\n", rf.Elem().Interface())
+
+	if err = json.Unmarshal(wrapped.Value, rf.Interface()); err != nil {
 		return nil, err
 	}
 
-	return val, err
-}
-
-func x() {
-	var x string
-	reflect.TypeOf(x).Name()
+	return rf.Elem().Interface(), err
 }
