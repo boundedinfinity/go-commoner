@@ -6,7 +6,7 @@ import (
 	"reflect"
 )
 
-func NewInterfaceMarshaler(discriminator InterfaceUnmarshalDiscriminator) *InterfaceMarshaler {
+func NewInterface(discriminator InterfaceUnmarshalDiscriminator) *InterfaceMarshaler {
 	return &InterfaceMarshaler{
 		discriminator: discriminator,
 		types:         make(map[string]reflect.Type),

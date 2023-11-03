@@ -6,40 +6,46 @@ import (
 	"reflect"
 )
 
-func New() *Marshaler {
-	return &Marshaler{
-		types: make(map[string]marshalerContext),
+func NewWrapped() *WrappedMarshaler {
+	return &WrappedMarshaler{
+		types: make(map[string]reflect.Type),
 	}
 }
 
-type Marshaler struct {
-	types map[string]marshalerContext
+type marshalerWrapper struct {
+	Type  string `json:"type"`
+	Value any    `json:"value"`
 }
 
-func (t *Marshaler) Register(items ...any) {
+type unmarshalerWrapper struct {
+	Type  string          `json:"type"`
+	Value json.RawMessage `json:"value"`
+}
+
+type WrappedMarshaler struct {
+	types map[string]reflect.Type
+}
+
+func (t *WrappedMarshaler) Register(items ...any) {
 	for _, item := range items {
 		t.register(item)
 	}
 }
 
-func (t *Marshaler) register(item any) {
+func (t *WrappedMarshaler) register(item any) {
 	typ := reflect.TypeOf(item)
 
-	ctx := marshalerContext{
-		typ: typ,
-	}
-
-	t.types[typ.Name()] = ctx
+	t.types[typ.Name()] = typ
 }
 
-func (t Marshaler) Marshal(item any) ([]byte, error) {
+func (t WrappedMarshaler) Marshal(item any) ([]byte, error) {
 	name := reflect.TypeOf(item).Name()
 
 	if _, ok := t.types[name]; !ok {
 		return nil, fmt.Errorf("no type found for %v", name)
 	}
 
-	wrapped := marshalWrapper{
+	wrapped := marshalerWrapper{
 		Type:  name,
 		Value: item,
 	}
@@ -47,21 +53,21 @@ func (t Marshaler) Marshal(item any) ([]byte, error) {
 	return json.Marshal(wrapped)
 }
 
-func (t Marshaler) Unmarshal(data []byte) (any, error) {
+func (t WrappedMarshaler) Unmarshal(data []byte) (any, error) {
 	var err error
-	var wrapped unmarshalWrapper
+	var wrapped unmarshalerWrapper
 
 	if err = json.Unmarshal(data, &wrapped); err != nil {
 		return nil, err
 	}
 
-	ctx, ok := t.types[wrapped.Type]
+	typ, ok := t.types[wrapped.Type]
 
 	if !ok {
 		return nil, fmt.Errorf("no type found for %v", wrapped.Type)
 	}
 
-	rf := reflect.New(ctx.typ)
+	rf := reflect.New(typ)
 
 	// fmt.Printf("vp.Type(): %v\n", rf.Type())
 	// fmt.Printf("vp.Elem(): %v\n", rf.Elem())
