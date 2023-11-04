@@ -14,3 +14,7 @@ func FullyQualifiedName(instance any) string {
 		return fmt.Sprintf("%v/%v", typ.PkgPath(), typ.Name())
 	}
 }
+
+func IsZero(x interface{}) bool {
+	return reflect.DeepEqual(x, reflect.Zero(reflect.TypeOf(x)).Interface())
+}

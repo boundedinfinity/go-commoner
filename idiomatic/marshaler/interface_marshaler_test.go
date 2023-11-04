@@ -33,16 +33,16 @@ var (
 
 func Test_InterfaceMarshaler_Unmarshal(t *testing.T) {
 	m := marshaler.NewInterface(&interfaceThingDiscriminator{})
-	// m.Register(wrappedThingA{})
-	// m.Register(wrappedThingB{})
+	m.Register(wrappedThingA{})
+	m.Register(wrappedThingB{})
 
-	// actual1, err := m.Unmarshal([]byte(interfaceMessage))
-	// assert.Nil(t, err)
+	actual1, err := m.Unmarshal([]byte(interfaceMessage))
+	assert.Nil(t, err)
 
-	// actualThing, ok := actual1.(wrappedThingA)
-	// assert.True(t, ok)
+	actualThing, ok := actual1.(wrappedThingA)
+	assert.True(t, ok)
 
-	// assert.Equal(t, wrappedThingA{"somethingA"}, actualThing)
+	assert.Equal(t, wrappedThingA{"somethingA"}, actualThing)
 }
 
 func Test_InterfaceMarshaler_Marshal(t *testing.T) {
