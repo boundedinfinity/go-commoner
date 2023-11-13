@@ -23,7 +23,19 @@
             "type": "string"
         },
         "serialize": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+                "camel",
+                "kebab",
+                "kebab-lower",
+                "kebab-upper",
+                "pascal",
+                "phrase",
+                "snake",
+                "snake-lower",
+                "snake-upper",
+                "unknown"
+            ]
         },
         "skip-format": {
             "type": "boolean"
