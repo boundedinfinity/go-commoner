@@ -2,6 +2,10 @@ package internal
 
 import "github.com/boundedinfinity/go-commoner/idiomatic/math/types"
 
+func ZeroToSingle[I types.Numbers](fn func() float64) I {
+	return I(fn())
+}
+
 func SingleToSingle[I types.Numbers, O types.Numbers](x I, fn func(float64) float64) O {
 	return O(fn(float64(x)))
 }

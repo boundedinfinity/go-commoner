@@ -2,10 +2,15 @@ package measurement
 
 import "github.com/boundedinfinity/go-commoner/idiomatic/math/rational"
 
+var (
+	imperialLengthUnitsCf   map[ImperialLengthUnit]float64
+	imperialLengthUnitsAbbr map[ImperialLengthUnit][]string
+)
+
 // https://en.wikipedia.org/wiki/Imperial_units
 
 func init() {
-	ImperialLengthUnits.cf = map[ImperialLengthUnit]float64{
+	imperialLengthUnitsCf = map[ImperialLengthUnit]float64{
 		ImperialLengthUnits.Twip:         1.0 / 17280.0,
 		ImperialLengthUnits.Thou:         1.0 / 12000.0,
 		ImperialLengthUnits.Barleycorn:   1.0 / 36.0,
@@ -24,7 +29,7 @@ func init() {
 		ImperialLengthUnits.Rod:          66.0 / 4.0,
 	}
 
-	ImperialLengthUnits.abbr = map[ImperialLengthUnit][]string{
+	imperialLengthUnitsAbbr = map[ImperialLengthUnit][]string{
 		ImperialLengthUnits.Twip:         {ImperialLengthUnits.Twip.String()},
 		ImperialLengthUnits.Thou:         {ImperialLengthUnits.Thou.String(), "th"},
 		ImperialLengthUnits.Barleycorn:   {ImperialLengthUnits.Barleycorn.String()},
@@ -50,8 +55,8 @@ func (t imperialLengthUnits) Convert(number rational.Rational, from, to Imperial
 
 func (t imperialLengthUnits) convert(number float64, from, to ImperialLengthUnit) float64 {
 	float := number
-	fromCf, fromOk := t.cf[from]
-	toCf, toOk := t.cf[to]
+	fromCf, fromOk := imperialLengthUnitsCf[from]
+	toCf, toOk := imperialLengthUnitsCf[to]
 
 	if fromOk && toOk {
 		float = number * fromCf * toCf

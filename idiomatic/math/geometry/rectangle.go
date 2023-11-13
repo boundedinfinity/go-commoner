@@ -2,24 +2,23 @@ package geometry
 
 import (
 	"github.com/boundedinfinity/go-commoner/idiomatic/math/internal"
-	"github.com/boundedinfinity/go-commoner/idiomatic/math/types"
 )
 
-func NewRectangle[T types.Numbers](topLeft CartesianCoordinate[T], dimensions Dimension2d[T]) Rectangle[T] {
+func NewRectangle[T geometryNumber](topLeft CartesianCoordinate[T], dimensions Dimension2d[T]) Rectangle[T] {
 	return Rectangle[T]{
 		TopLeft:    topLeft,
 		Dimensions: dimensions,
 	}
 }
 
-func NewRectangleXYHW[T types.Numbers](x, y, height, width T) Rectangle[T] {
+func NewRectangleXYHW[T geometryNumber](x, y, height, width T) Rectangle[T] {
 	return NewRectangle[T](
 		CartesianCoordinate[T]{X: x, Y: y},
 		Dimension2d[T]{Height: height, Width: width},
 	)
 }
 
-type Rectangle[T types.Numbers] struct {
+type Rectangle[T geometryNumber] struct {
 	TopLeft    CartesianCoordinate[T]
 	Dimensions Dimension2d[T]
 }

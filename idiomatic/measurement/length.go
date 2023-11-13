@@ -9,9 +9,9 @@ func Parse(s string) (Length, error) {
 }
 
 type Length struct {
-	Unit   rational.Rational `json:"unit,omitempty"`
-	System MeasurementSystem `json:"system,omitempty"`
-	Format MeasurmentFormat  `json:"format,omitempty"`
+	Unit   rational.Rational     `json:"unit,omitempty"`
+	System MeasurementSystem     `json:"system,omitempty"`
+	Format MeasurementFormatType `json:"format,omitempty"`
 }
 
 func (t Length) Metric() Length {

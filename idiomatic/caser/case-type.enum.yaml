@@ -1,0 +1,12 @@
+serialize: pascal-to-kebab-lower
+values:
+    -   name: Camel
+    -   name: Kebab
+    -   name: KebabLower
+    -   name: KebabUpper
+    -   name: Pascal
+    -   name: Phrase
+    -   name: Snake
+    -   name: SnakeLower
+    -   name: SnakeUpper
+    -   name: Unknown

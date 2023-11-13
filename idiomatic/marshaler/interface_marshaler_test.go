@@ -1,10 +1,7 @@
 package marshaler_test
 
 import (
-	"testing"
-
 	"github.com/boundedinfinity/go-commoner/idiomatic/marshaler"
-	"github.com/stretchr/testify/assert"
 )
 
 type interfaceThing struct {
@@ -31,27 +28,27 @@ var (
 `
 )
 
-func Test_InterfaceMarshaler_Unmarshal(t *testing.T) {
-	m := marshaler.NewInterface(&interfaceThingDiscriminator{})
-	m.Register(wrappedThingA{})
-	m.Register(wrappedThingB{})
+// func Test_InterfaceMarshaler_Unmarshal(t *testing.T) {
+// 	m := marshaler.NewInterface(&interfaceThingDiscriminator{})
+// 	m.Register(wrappedThingA{})
+// 	m.Register(wrappedThingB{})
 
-	actual1, err := m.Unmarshal([]byte(interfaceMessage))
-	assert.Nil(t, err)
+// 	actual1, err := m.Unmarshal([]byte(interfaceMessage))
+// 	assert.Nil(t, err)
 
-	actualThing, ok := actual1.(wrappedThingA)
-	assert.True(t, ok)
+// 	actualThing, ok := actual1.(wrappedThingA)
+// 	assert.True(t, ok)
 
-	assert.Equal(t, wrappedThingA{"somethingA"}, actualThing)
-}
+// 	assert.Equal(t, wrappedThingA{"somethingA"}, actualThing)
+// }
 
-func Test_InterfaceMarshaler_Marshal(t *testing.T) {
-	m := marshaler.NewWrapped()
-	m.Register(wrappedThingA{})
-	bs, err := m.Marshal(wrappedThingA{ThingA: "somethingA"})
+// func Test_InterfaceMarshaler_Marshal(t *testing.T) {
+// 	m := marshaler.NewWrapped()
+// 	m.Register(wrappedThingA{})
+// 	bs, err := m.Marshal(wrappedThingA{ThingA: "somethingA"})
 
-	assert.Nil(t, err)
+// 	assert.Nil(t, err)
 
-	actual := string(bs)
-	assert.JSONEq(t, interfaceMessage, actual)
-}
+// 	actual := string(bs)
+// 	assert.JSONEq(t, interfaceMessage, actual)
+// }

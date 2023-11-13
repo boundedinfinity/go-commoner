@@ -2,20 +2,19 @@ package geometry
 
 import (
 	"github.com/boundedinfinity/go-commoner/idiomatic/math"
-	"github.com/boundedinfinity/go-commoner/idiomatic/math/types"
 )
 
-type CartesianCoordinate[T types.Numbers] struct {
+type CartesianCoordinate[T geometryNumber] struct {
 	X T
 	Y T
 }
 
-type PolarCoordinate[T types.Numbers] struct {
+type PolarCoordinate[T geometryNumber] struct {
 	Radius T
 	Angle  Angle[T]
 }
 
-func CartesianToPolar[T types.Numbers](coordinate CartesianCoordinate[T]) PolarCoordinate[T] {
+func CartesianToPolar[T geometryNumber](coordinate CartesianCoordinate[T]) PolarCoordinate[T] {
 	return PolarCoordinate[T]{
 		Radius: math.Sqrt(math.Pow(coordinate.X, 2) + math.Pow(coordinate.Y, 2)),
 		Angle: Angle[T]{
@@ -26,7 +25,7 @@ func CartesianToPolar[T types.Numbers](coordinate CartesianCoordinate[T]) PolarC
 	}
 }
 
-func PolarToCartesian[T types.Numbers](coordinate PolarCoordinate[T]) CartesianCoordinate[T] {
+func PolarToCartesian[T geometryNumber](coordinate PolarCoordinate[T]) CartesianCoordinate[T] {
 	angle := coordinate.Angle.ToRadian()
 
 	return CartesianCoordinate[T]{

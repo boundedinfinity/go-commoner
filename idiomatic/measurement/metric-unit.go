@@ -2,8 +2,13 @@ package measurement
 
 import "github.com/boundedinfinity/go-commoner/idiomatic/math/rational"
 
+var (
+	metricUnitsCf   map[MetricUnit]float64
+	metricUnitsAbbr map[MetricUnit][]string
+)
+
 func init() {
-	MetricUnits.cf = map[MetricUnit]float64{
+	metricUnitsCf = map[MetricUnit]float64{
 		MetricUnits.Tera:  10e12,
 		MetricUnits.Giga:  10e9,
 		MetricUnits.Mega:  10e6,
@@ -18,7 +23,7 @@ func init() {
 		MetricUnits.Nano:  10e-9,
 		MetricUnits.Pico:  10e-12,
 	}
-	MetricUnits.abbr = map[MetricUnit][]string{
+	metricUnitsAbbr = map[MetricUnit][]string{
 		MetricUnits.Tera:  {MetricUnits.Tera.String(), "T"},
 		MetricUnits.Giga:  {MetricUnits.Giga.String(), "G"},
 		MetricUnits.Mega:  {MetricUnits.Mega.String(), "M"},
@@ -41,8 +46,8 @@ func (t metricUnits) Convert(number rational.Rational, from, to MetricUnit) rati
 
 func (t metricUnits) convert(number float64, from, to MetricUnit) float64 {
 	var float float64
-	fromCf, fromOk := t.cf[from]
-	toCf, toOk := t.cf[to]
+	fromCf, fromOk := metricUnitsCf[from]
+	toCf, toOk := metricUnitsCf[to]
 
 	if fromOk && toOk {
 		float = number * fromCf * toCf

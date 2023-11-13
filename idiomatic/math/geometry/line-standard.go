@@ -1,8 +1,6 @@
 package geometry
 
-import "github.com/boundedinfinity/go-commoner/idiomatic/math/types"
-
-type StandardLine[T types.Numbers] struct {
+type StandardLine[T geometryNumber] struct {
 	A T
 	B T
 	C T

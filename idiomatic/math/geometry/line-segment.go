@@ -3,24 +3,23 @@ package geometry
 import (
 	"github.com/boundedinfinity/go-commoner/idiomatic/math"
 	"github.com/boundedinfinity/go-commoner/idiomatic/math/internal"
-	"github.com/boundedinfinity/go-commoner/idiomatic/math/types"
 )
 
-func NewLineSegmentXY[T types.Numbers](x1, y1, x2, y2 T) LineSegment[T] {
+func NewLineSegmentXY[T geometryNumber](x1, y1, x2, y2 T) LineSegment[T] {
 	return NewLineSegmentCoords[T](
 		CartesianCoordinate[T]{X: x1, Y: y2},
 		CartesianCoordinate[T]{X: x2, Y: y2},
 	)
 }
 
-func NewLineSegmentCoords[T types.Numbers](start, end CartesianCoordinate[T]) LineSegment[T] {
+func NewLineSegmentCoords[T geometryNumber](start, end CartesianCoordinate[T]) LineSegment[T] {
 	return LineSegment[T]{
 		Start: start,
 		End:   end,
 	}
 }
 
-type LineSegment[T types.Numbers] struct {
+type LineSegment[T geometryNumber] struct {
 	Start CartesianCoordinate[T]
 	End   CartesianCoordinate[T]
 }
