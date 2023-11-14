@@ -31,6 +31,10 @@ func replaceNotInList[T ~string](s T, list []string, replacement string) string 
 	return n
 }
 
+func ReplaceSpace[T ~string](s T, replacement string) string {
+	return ReplaceInList(s, []string{" "}, replacement)
+}
+
 func ReplaceNumbers[T ~string](s T, replacement string) string {
 	return ReplaceInList(s, utf8.ToStrings(utf8.NUMBERS), replacement)
 }
