@@ -7,7 +7,7 @@ list:
 	@grep '^[^#[:space:]].*:' Makefile | grep -v ':=' | grep -v '^\.' | sed 's/:.*//g' | sed 's/://g' | sort
 
 purge:
-	find . -name '*.enum.gen.go' -type f -delete
+	find . -name '*.enum.go' -type f -delete
 
 generate: purge
 	go generate ./...

@@ -7,6 +7,26 @@ import (
 	"github.com/boundedinfinity/go-commoner/idiomatic/stringer"
 )
 
+func ConverterCombinations() []string {
+	outputs := []string{}
+
+	for _, c1 := range CaseTypes.Values {
+		for _, c2 := range CaseTypes.Values {
+			if c1 == c2 {
+				continue
+			}
+
+			if c1 == CaseTypes.Unknown || c2 == CaseTypes.Unknown {
+				continue
+			}
+
+			outputs = append(outputs, fmt.Sprintf("%v-to-%v", c1, c2))
+		}
+	}
+
+	return outputs
+}
+
 func MustConverter[V ~string](v V, convert string) func(V) string {
 	converter, err := Converter[V](convert)
 
