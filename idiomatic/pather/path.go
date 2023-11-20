@@ -37,22 +37,30 @@ func (t paths) ExistsErr(path string) (bool, error) {
 	return true, nil
 }
 
-func (t paths) Remove(path string) {
-	t.RemoveErr(path)
+func (t paths) Remove(path string) bool {
+	ok, err := t.RemoveErr(path)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return ok
 }
 
-func (t paths) RemoveErr(path string) error {
+func (t paths) RemoveErr(path string) (bool, error) {
 	ok, err := t.ExistsErr(path)
 
 	if err != nil {
-		return err
+		return false, err
 	}
 
-	if ok {
-		return os.Remove(path)
+	err = os.Remove(path)
+
+	if err != nil {
+		return false, os.Remove(path)
 	}
 
-	return nil
+	return ok, nil
 }
 
 func (t paths) List(root string) ([]string, error) {
