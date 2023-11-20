@@ -7,27 +7,25 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-type testString string
-
 func Test_Path(t *testing.T) {
 	tcs := []struct {
 		name     string
-		input    testString
+		input    string
 		expected string
 		err      error
-		fn       func(testString) string
+		fn       func(string) string
 	}{
 		{
 			name:     "base",
-			input:    testString("a/b/c"),
+			input:    "a/b/c",
 			expected: "c",
-			fn:       pather.Base[testString],
+			fn:       pather.Paths.Base,
 		},
 		{
 			name:     "dir",
-			input:    testString("a/b/c"),
+			input:    "a/b/c",
 			expected: "a/b",
-			fn:       pather.Dir[testString],
+			fn:       pather.Paths.Dir,
 		},
 	}
 

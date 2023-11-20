@@ -5,10 +5,30 @@ import (
 	"github.com/boundedinfinity/go-commoner/idiomatic/pather"
 )
 
-func IsFile(path string) trier.Try[bool] {
-	return trier.Complete(pather.IsFile(path))
+type FileConfig = pather.FileConfig
+
+var Files = files{
+	config: FileConfig{
+		Perm: 0755,
+	},
 }
 
-func GetFiles(path string) trier.Try[[]string] {
-	return trier.Complete(pather.GetFiles(path))
+type files struct {
+	config FileConfig
 }
+
+func (t files) Is(path string) trier.Try[bool] {
+	return trier.Complete(pather.Files.Is(path))
+}
+
+func (t files) List(path string) trier.Try[[]string] {
+	return trier.Complete(pather.Files.List(path))
+}
+
+// func IsFile(path string) trier.Try[bool] {
+// 	return trier.Complete(pather.IsFile(path))
+// }
+
+// func GetFiles(path string) trier.Try[[]string] {
+// 	return trier.Complete(pather.GetFiles(path))
+// }

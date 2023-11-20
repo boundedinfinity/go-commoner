@@ -86,19 +86,19 @@ type metricUnits struct {
 }
 
 var MetricUnits = metricUnits{
-	Tera:  MetricUnit("tera"),
-	Giga:  MetricUnit("giga"),
-	Mega:  MetricUnit("mega"),
-	Kilo:  MetricUnit("kilo"),
-	Hecto: MetricUnit("hecto"),
-	Deca:  MetricUnit("deca"),
-	Unit:  MetricUnit("unit"),
-	Deci:  MetricUnit("deci"),
-	Centi: MetricUnit("centi"),
-	Milli: MetricUnit("milli"),
-	Micro: MetricUnit("micro"),
-	Nano:  MetricUnit("nano"),
-	Pico:  MetricUnit("pico"),
+	Tera:  MetricUnit("Tera"),
+	Giga:  MetricUnit("Giga"),
+	Mega:  MetricUnit("Mega"),
+	Kilo:  MetricUnit("Kilo"),
+	Hecto: MetricUnit("Hecto"),
+	Deca:  MetricUnit("Deca"),
+	Unit:  MetricUnit("Unit"),
+	Deci:  MetricUnit("Deci"),
+	Centi: MetricUnit("Centi"),
+	Milli: MetricUnit("Milli"),
+	Micro: MetricUnit("Micro"),
+	Nano:  MetricUnit("Nano"),
+	Pico:  MetricUnit("Pico"),
 	Err:   fmt.Errorf("invalid MetricUnit"),
 }
 

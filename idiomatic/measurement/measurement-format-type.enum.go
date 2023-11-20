@@ -75,8 +75,8 @@ type measurementFormatTypes struct {
 }
 
 var MeasurementFormatTypes = measurementFormatTypes{
-	Full:         MeasurementFormatType("full"),
-	Abbreviation: MeasurementFormatType("abbreviation"),
+	Full:         MeasurementFormatType("Full"),
+	Abbreviation: MeasurementFormatType("Abbreviation"),
 	Err:          fmt.Errorf("invalid MeasurementFormatType"),
 }
 

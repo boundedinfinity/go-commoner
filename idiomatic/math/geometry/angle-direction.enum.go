@@ -75,8 +75,8 @@ type angleDirections struct {
 }
 
 var AngleDirections = angleDirections{
-	Clockwise:        AngleDirection("clockwise"),
-	CounterClockwise: AngleDirection("counter-clockwise"),
+	Clockwise:        AngleDirection("Clockwise"),
+	CounterClockwise: AngleDirection("CounterClockwise"),
 	Err:              fmt.Errorf("invalid AngleDirection"),
 }
 

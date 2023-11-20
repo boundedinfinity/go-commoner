@@ -75,8 +75,8 @@ type measurementSystems struct {
 }
 
 var MeasurementSystems = measurementSystems{
-	Metric:   MeasurementSystem("metric"),
-	Imperial: MeasurementSystem("imperial"),
+	Metric:   MeasurementSystem("Metric"),
+	Imperial: MeasurementSystem("Imperial"),
 	Err:      fmt.Errorf("invalid MeasurementSystem"),
 }
 

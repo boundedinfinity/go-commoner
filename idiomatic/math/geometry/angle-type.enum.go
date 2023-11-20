@@ -75,8 +75,8 @@ type angleTypes struct {
 }
 
 var AngleTypes = angleTypes{
-	Degrees: AngleType("degrees"),
-	Radians: AngleType("radians"),
+	Degrees: AngleType("Degrees"),
+	Radians: AngleType("Radians"),
 	Err:     fmt.Errorf("invalid AngleType"),
 }
 

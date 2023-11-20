@@ -2,25 +2,28 @@ package pather
 
 import (
 	"errors"
-	"io/fs"
 	"os"
 	"path/filepath"
 )
 
-func Base[T ~string](path T) string {
+var Paths = paths{}
+
+type paths struct{}
+
+func (t paths) Base(path string) string {
 	return filepath.Base(string(path))
 }
 
-func Dir[T ~string](path T) string {
+func (t paths) Dir(path string) string {
 	return filepath.Dir(string(path))
 }
 
-func PathExists(path string) bool {
-	exist, _ := PathExistsErr(path)
+func (t paths) Exists(path string) bool {
+	exist, _ := t.ExistsErr(path)
 	return exist
 }
 
-func PathExistsErr(path string) (bool, error) {
+func (t paths) ExistsErr(path string) (bool, error) {
 	_, err := os.Stat(path)
 
 	if err != nil {
@@ -34,27 +37,25 @@ func PathExistsErr(path string) (bool, error) {
 	return true, nil
 }
 
-func WalkPaths(root string, filterFn func(string, fs.FileInfo) bool, processFn func(string, fs.FileInfo) error) error {
-	walkFn := func(path string, info fs.FileInfo, err error) error {
-		if err != nil {
-			return err
-		}
-
-		if !filterFn(path, info) {
-			return nil
-		}
-
-		if err := processFn(path, info); err != nil {
-			return err
-		}
-
-		return nil
-	}
-
-	return filepath.Walk(root, walkFn)
+func (t paths) Remove(path string) {
+	t.RemoveErr(path)
 }
 
-func GetPaths(root string) ([]string, error) {
+func (t paths) RemoveErr(path string) error {
+	ok, err := t.ExistsErr(path)
+
+	if err != nil {
+		return err
+	}
+
+	if ok {
+		return os.Remove(path)
+	}
+
+	return nil
+}
+
+func (t paths) List(root string) ([]string, error) {
 	out := make([]string, 0)
 
 	filterFn := func(path string, info os.FileInfo) bool {
@@ -66,7 +67,69 @@ func GetPaths(root string) ([]string, error) {
 		return nil
 	}
 
-	err := WalkPaths(root, filterFn, processFn)
+	err := Walks.Paths(root, filterFn, processFn)
 
 	return out, err
 }
+
+// func Base[T ~string](path T) string {
+// 	return filepath.Base(string(path))
+// }
+
+// func Dir[T ~string](path T) string {
+// 	return filepath.Dir(string(path))
+// }
+
+// func PathEnsureRemove(path string) {
+// 	PathExistsErr(path)
+// }
+
+// func PathEnsureRemoveErr(path string) error {
+// 	ok, err := PathExistsErr(path)
+
+// 	if err != nil {
+// 		return err
+// 	}
+
+// 	if ok {
+// 		return os.Remove(path)
+// 	}
+
+// 	return nil
+// }
+
+// func PathExists(path string) bool {
+// 	exist, _ := PathExistsErr(path)
+// 	return exist
+// }
+
+// func PathExistsErr(path string) (bool, error) {
+// 	_, err := os.Stat(path)
+
+// 	if err != nil {
+// 		if errors.Is(err, os.ErrNotExist) {
+// 			return false, nil
+// 		} else {
+// 			return false, err
+// 		}
+// 	}
+
+// 	return true, nil
+// }
+
+// func GetPaths(root string) ([]string, error) {
+// 	out := make([]string, 0)
+
+// 	filterFn := func(path string, info os.FileInfo) bool {
+// 		return true
+// 	}
+
+// 	processFn := func(path string, info os.FileInfo) error {
+// 		out = append(out, path)
+// 		return nil
+// 	}
+
+// 	err := WalkPaths(root, filterFn, processFn)
+
+// 	return out, err
+// }
