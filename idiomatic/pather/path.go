@@ -54,7 +54,9 @@ func (t paths) RemoveErr(path string) (bool, error) {
 		return false, err
 	}
 
-	err = os.Remove(path)
+	if ok {
+		err = os.Remove(path)
+	}
 
 	if err != nil {
 		return false, os.Remove(path)
