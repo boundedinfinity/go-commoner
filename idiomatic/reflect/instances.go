@@ -9,6 +9,8 @@ var Instances = instances{}
 
 type instances struct{}
 
+// https://medium.com/capital-one-tech/learning-to-use-go-reflection-822a0aed74b7
+
 func (t instances) QualifiedName(instance any) string {
 	typ := reflect.TypeOf(instance)
 
