@@ -83,16 +83,16 @@ type caseTypes struct {
 }
 
 var CaseTypes = caseTypes{
-	Camel:      CaseType("Camel"),
-	Kebab:      CaseType("Kebab"),
-	KebabLower: CaseType("KebabLower"),
-	KebabUpper: CaseType("KebabUpper"),
-	Pascal:     CaseType("Pascal"),
-	Phrase:     CaseType("Phrase"),
-	Snake:      CaseType("Snake"),
-	SnakeLower: CaseType("SnakeLower"),
-	SnakeUpper: CaseType("SnakeUpper"),
-	Unknown:    CaseType("Unknown"),
+	Camel:      CaseType("camel"),
+	Kebab:      CaseType("kebab"),
+	KebabLower: CaseType("kebab-lower"),
+	KebabUpper: CaseType("kebab-upper"),
+	Pascal:     CaseType("pascal"),
+	Phrase:     CaseType("phrase"),
+	Snake:      CaseType("snake"),
+	SnakeLower: CaseType("snake-lower"),
+	SnakeUpper: CaseType("snake-upper"),
+	Unknown:    CaseType("unknown"),
 	Err:        fmt.Errorf("invalid CaseType"),
 }
 
