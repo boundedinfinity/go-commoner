@@ -7,15 +7,15 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-type wrappedMarshalerThing struct {
+type typedMarshalerThing struct {
 	Type string
 }
 
-func (t wrappedMarshalerThing) Discriminator() string {
+func (t typedMarshalerThing) Discriminator() string {
 	return t.Type
 }
 
-func (t wrappedMarshalerThing) Value() any {
+func (t typedMarshalerThing) Value() any {
 	return t
 }
 
@@ -32,7 +32,7 @@ type someInterface interface {
 }
 
 var (
-	wrappedMessage = `
+	typedMessage = `
     {
         "type": "wrappedThingA",
         "value": {
@@ -42,12 +42,12 @@ var (
 `
 )
 
-func Test_WrappedMarshaler_Unmarshal(t *testing.T) {
-	m := marshaler.NewWrapped()
+func Test_TypedMarshaler_Unmarshal(t *testing.T) {
+	m := marshaler.NewTyped()
 	m.Register(wrappedThingA{})
 	m.Register(wrappedThingB{})
 
-	actual1, err := m.Unmarshal([]byte(wrappedMessage))
+	actual1, err := m.Unmarshal([]byte(typedMessage))
 	assert.Nil(t, err)
 
 	actualThing, ok := actual1.(wrappedThingA)
@@ -56,13 +56,13 @@ func Test_WrappedMarshaler_Unmarshal(t *testing.T) {
 	assert.Equal(t, wrappedThingA{"somethingA"}, actualThing)
 }
 
-func Test_WrappedMarshaler_Marshal(t *testing.T) {
-	m := marshaler.NewWrapped()
+func Test_TypedMarshaler_Marshal(t *testing.T) {
+	m := marshaler.NewTyped()
 	m.Register(wrappedThingA{})
 	bs, err := m.Marshal(wrappedThingA{ThingA: "somethingA"})
 
 	assert.Nil(t, err)
 
 	actual := string(bs)
-	assert.JSONEq(t, wrappedMessage, actual)
+	assert.JSONEq(t, typedMessage, actual)
 }
