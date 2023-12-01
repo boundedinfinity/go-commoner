@@ -1,9 +1,9 @@
-package reflect_test
+package reflecter_test
 
 import (
 	"testing"
 
-	"github.com/boundedinfinity/go-commoner/idiomatic/reflect"
+	"github.com/boundedinfinity/go-commoner/idiomatic/reflecter"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -14,12 +14,12 @@ var (
 )
 
 func Test_Instances_QualifiedName(t *testing.T) {
-	actual := reflect.Instances.QualifiedName(an_input)
+	actual := reflecter.Instances.QualifiedName(an_input)
 	assert.Equal(t, "github.com/boundedinfinity/go-commoner/idiomatic/reflect_test/aString", actual)
 }
 
 func Test_Instances_SimpleName(t *testing.T) {
-	actual := reflect.Instances.SimpleName(an_input)
+	actual := reflecter.Instances.SimpleName(an_input)
 	assert.Equal(t, "aString", actual)
 }
 

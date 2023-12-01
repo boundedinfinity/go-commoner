@@ -3,12 +3,15 @@ package marshaler
 import (
 	"encoding/json"
 	"fmt"
-	"reflect"
+
+	greflect "reflect"
+
+	"github.com/boundedinfinity/go-commoner/idiomatic/reflecter"
 )
 
 func NewTyped() *TypedMarshaler {
 	return &TypedMarshaler{
-		types: make(map[string]reflect.Type),
+		types: make(map[string]greflect.Type),
 	}
 }
 
@@ -23,7 +26,7 @@ type typedUnmarshaler struct {
 }
 
 type TypedMarshaler struct {
-	types map[string]reflect.Type
+	types map[string]greflect.Type
 }
 
 func (t *TypedMarshaler) Register(items ...any) {
@@ -33,13 +36,13 @@ func (t *TypedMarshaler) Register(items ...any) {
 }
 
 func (t *TypedMarshaler) register(item any) {
-	typ := reflect.TypeOf(item)
-
-	t.types[typ.Name()] = typ
+	name := reflecter.Instances.QualifiedName(item)
+	typ := greflect.TypeOf(item)
+	t.types[name] = typ
 }
 
 func (t TypedMarshaler) Marshal(item any) ([]byte, error) {
-	name := reflect.TypeOf(item).Name()
+	name := reflecter.Instances.QualifiedName(item)
 
 	if _, ok := t.types[name]; !ok {
 		return nil, fmt.Errorf("no type found for %v", name)
@@ -55,27 +58,21 @@ func (t TypedMarshaler) Marshal(item any) ([]byte, error) {
 
 func (t TypedMarshaler) Unmarshal(data []byte) (any, error) {
 	var err error
-	var wrapped typedUnmarshaler
+	var typed typedUnmarshaler
 
-	if err = json.Unmarshal(data, &wrapped); err != nil {
+	if err = json.Unmarshal(data, &typed); err != nil {
 		return nil, err
 	}
 
-	typ, ok := t.types[wrapped.Type]
+	typ, ok := t.types[typed.Type]
 
 	if !ok {
-		return nil, fmt.Errorf("no type found for %v", wrapped.Type)
+		return nil, fmt.Errorf("no type found for %v", typed.Type)
 	}
 
-	rf := reflect.New(typ)
+	rf := greflect.New(typ)
 
-	// fmt.Printf("vp.Type(): %v\n", rf.Type())
-	// fmt.Printf("vp.Elem(): %v\n", rf.Elem())
-	// fmt.Printf("vp.Interface(): %v\n", rf.Interface())
-	// fmt.Printf("vp.Type().Elem(): %v\n", rf.Type().Elem())
-	// fmt.Printf("vp.Elem().Interface(): %v\n", rf.Elem().Interface())
-
-	if err = json.Unmarshal(wrapped.Value, rf.Interface()); err != nil {
+	if err = json.Unmarshal(typed.Value, rf.Interface()); err != nil {
 		return nil, err
 	}
 

@@ -1,32 +1,28 @@
 package marshaler_test
 
-import (
-	"github.com/boundedinfinity/go-commoner/idiomatic/marshaler"
-)
+// type interfaceThing struct {
+// 	Field1 string
+// }
 
-type interfaceThing struct {
-	Field1 string
-}
+// type interfaceThingDiscriminator struct {
+// 	Kind string
+// 	interfaceThing
+// }
 
-type interfaceThingDiscriminator struct {
-	Kind string
-	interfaceThing
-}
+// func (t interfaceThingDiscriminator) Discriminator() string {
+// 	return t.Kind
+// }
 
-func (t interfaceThingDiscriminator) Discriminator() string {
-	return t.Kind
-}
+// var _ marshaler.KindUnmarshal = &interfaceThingDiscriminator{}
 
-var _ marshaler.InterfaceUnmarshalDiscriminator = &interfaceThingDiscriminator{}
-
-var (
-	interfaceMessage = `
-    {
-        "kind": "kindA",
-        "Field1": "someField1"
-    }
-`
-)
+// var (
+// 	interfaceMessage = `
+//     {
+//         "kind": "kindA",
+//         "Field1": "someField1"
+//     }
+// `
+// )
 
 // func Test_InterfaceMarshaler_Unmarshal(t *testing.T) {
 // 	m := marshaler.NewInterface(&interfaceThingDiscriminator{})

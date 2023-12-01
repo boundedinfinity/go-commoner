@@ -19,22 +19,22 @@ func (t typedMarshalerThing) Value() any {
 	return t
 }
 
-type wrappedThingA struct {
+type typedThingA struct {
 	ThingA string
 }
 
-type wrappedThingB struct {
+type typedThingB struct {
 	ThingB string
 }
 
-type someInterface interface {
+type typedInterface interface {
 	GetThing() string
 }
 
 var (
 	typedMessage = `
     {
-        "type": "wrappedThingA",
+        "type": "github.com/boundedinfinity/go-commoner/idiomatic/marshaler_test/typedThingA",
         "value": {
             "ThingA": "somethingA"
         }
@@ -44,22 +44,22 @@ var (
 
 func Test_TypedMarshaler_Unmarshal(t *testing.T) {
 	m := marshaler.NewTyped()
-	m.Register(wrappedThingA{})
-	m.Register(wrappedThingB{})
+	m.Register(typedThingA{})
+	m.Register(typedThingB{})
 
 	actual1, err := m.Unmarshal([]byte(typedMessage))
 	assert.Nil(t, err)
 
-	actualThing, ok := actual1.(wrappedThingA)
+	actualThing, ok := actual1.(typedThingA)
 	assert.True(t, ok)
 
-	assert.Equal(t, wrappedThingA{"somethingA"}, actualThing)
+	assert.Equal(t, typedThingA{"somethingA"}, actualThing)
 }
 
 func Test_TypedMarshaler_Marshal(t *testing.T) {
 	m := marshaler.NewTyped()
-	m.Register(wrappedThingA{})
-	bs, err := m.Marshal(wrappedThingA{ThingA: "somethingA"})
+	m.Register(typedThingA{})
+	bs, err := m.Marshal(typedThingA{ThingA: "somethingA"})
 
 	assert.Nil(t, err)
 
