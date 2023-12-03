@@ -68,6 +68,40 @@ func (t dirs) IsErr(path string) (bool, error) {
 	return info.Mode().IsDir(), nil
 }
 
+func (t dirs) AbsErr(path string) (string, error) {
+	return Paths.AbsErr(path)
+}
+
+func (t dirs) Abs(path string) string {
+	return Paths.Abs(path)
+}
+
+func (t dirs) Exists(path string) bool {
+	return Paths.Exists(path)
+}
+
+func (t dirs) ExistsErr(path string) (bool, error) {
+	return Paths.ExistsErr(path)
+}
+
+func (t dirs) Remove(path string) bool {
+	return Paths.Remove(path)
+}
+
+func (t dirs) RemoveErr(path string) (bool, error) {
+	return Paths.RemoveErr(path)
+}
+
+func (t dirs) Add(dst string, src ...string) error {
+	for _, s := range src {
+		if err := os.Rename(s, dst); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (t dirs) Walk(root string, filterFn func(string, fs.FileInfo) bool, processFn func(string, fs.FileInfo) error) error {
 	filterFn2 := func(path string, info fs.FileInfo) bool {
 		return info.IsDir() && filterFn(path, info)
@@ -92,58 +126,3 @@ func (t dirs) List(root string) ([]string, error) {
 
 	return out, err
 }
-
-// func DirEnsure(path string) error {
-// 	return DirEnsureWithConfig(path, Dirs.config)
-// }
-
-// func DirEnsureWithConfig(path string, config DirConfig) error {
-// 	ok, err := PathExistsErr(path)
-
-// 	if err != nil {
-// 		return err
-// 	}
-
-// 	if !ok {
-// 		if err := os.MkdirAll(path, config.Perm); err != nil {
-// 			return err
-// 		}
-// 	}
-
-// 	return nil
-// }
-
-// func IsDir[T ~string](path T) (bool, error) {
-// 	info, err := os.Stat(string(path))
-
-// 	if err != nil {
-// 		return false, err
-// 	}
-
-// 	return info.Mode().IsDir(), nil
-// }
-
-// func WalkDirs(root string, filterFn func(string, fs.FileInfo) bool, processFn func(string, fs.FileInfo) error) error {
-// 	filterFn2 := func(path string, info fs.FileInfo) bool {
-// 		return info.IsDir() && filterFn(path, info)
-// 	}
-
-// 	return WalkPaths(root, filterFn2, processFn)
-// }
-
-// func GetDirs(root string) ([]string, error) {
-// 	out := make([]string, 0)
-
-// 	filterFn := func(path string, info os.FileInfo) bool {
-// 		return true
-// 	}
-
-// 	processFn := func(path string, info os.FileInfo) error {
-// 		out = append(out, path)
-// 		return nil
-// 	}
-
-// 	err := WalkDirs(root, filterFn, processFn)
-
-// 	return out, err
-// }
