@@ -6,62 +6,74 @@ import (
 	"reflect"
 )
 
-func NewInterface() *KindMarshaler {
-	return &KindMarshaler{
-		types: make(map[string]kindContext),
+func NewKind[K comparable, D any]() *KindMarshaler[K, D] {
+	return &KindMarshaler[K, D]{
+		lookup:   make(map[K]kindInfo[K]),
+		handlers: make([]func(K, any), 0),
 	}
 }
 
-type kindContext struct {
-	kind KindUnmarshal
-	typ  reflect.Type
+type KindMarshaler[K comparable, D any] struct {
+	discriminatorType reflect.Type
+	discriminatorFn   func(D) K
+	lookup            map[K]kindInfo[K]
+	Formatted         bool
+	handlers          []func(K, any)
 }
 
-type KindMarshaler struct {
-	types map[string]kindContext
+type kindInfo[K comparable] struct {
+	discriminator K
+	typ           reflect.Type
 }
 
-type KindUnmarshal interface {
-	Kind() string
+func (t *KindMarshaler[K, D]) RegisterDescriminator(val D, fn func(D) K) {
+	t.discriminatorType = reflect.TypeOf(val)
+	t.discriminatorFn = fn
 }
 
-func (t *KindMarshaler) Register(kind KindUnmarshal) {
-	switch typ := kind.(type) {
-	default:
-		if _, ok := t.types[kind.Kind()]; ok {
-			fmt.Printf("already registered %v", kind)
-		} else {
-			t.types[kind.Kind()] = kindContext{
-				kind: kind,
-				typ:  reflect.TypeOf(typ),
-			}
-		}
+func (t *KindMarshaler[K, D]) RegisterType(discriminator K, val any) {
+	t.lookup[discriminator] = kindInfo[K]{
+		discriminator: discriminator,
+		typ:           reflect.TypeOf(val),
 	}
 }
 
-func (t KindMarshaler) Marshal(item any) ([]byte, error) {
-	return json.Marshal(item)
+func (t *KindMarshaler[K, D]) RegisterHandlerFn(handler func(K, any)) {
+	t.handlers = append(t.handlers, handler)
 }
 
-func (t KindMarshaler) Unmarshal(data []byte) (any, error) {
-	var err error
+func (t KindMarshaler[K, D]) Marshal(val any) ([]byte, error) {
+	if t.Formatted {
+		return json.MarshalIndent(val, "", "    ")
+	} else {
+		return json.Marshal(val)
+	}
+}
 
-	// if err = json.Unmarshal(data, t.kind); err != nil {
-	// 	return nil, err
-	// }
+func (t KindMarshaler[K, D]) Unmarshal(bs []byte) error {
+	dv := reflect.New(t.discriminatorType)
 
-	// typ, ok := t.types[t.kind.Kind()]
+	if err := json.Unmarshal(bs, dv.Interface()); err != nil {
+		return err
+	}
 
-	// if !ok {
-	// 	return nil, fmt.Errorf("no type found for %v", t.kind.Kind())
-	// }
+	name := t.discriminatorFn(dv.Elem().Interface().(D))
 
-	// ptr := reflect.New(typ)
+	info, ok := t.lookup[name]
 
-	// if err = json.Unmarshal(data, ptr.Interface()); err != nil {
-	// 	return nil, err
-	// }
+	if !ok {
+		return fmt.Errorf("no type found for %v", name)
+	}
 
-	// return ptr.Elem().Interface(), err
-	return nil, err
+	vv := reflect.New(info.typ)
+
+	if err := json.Unmarshal(bs, vv.Interface()); err != nil {
+		return err
+	}
+
+	for _, handler := range t.handlers {
+		handler(name, vv.Elem().Interface())
+	}
+
+	return nil
 }

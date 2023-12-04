@@ -1,42 +1,73 @@
 package marshaler_test
 
-// type interfaceThing struct {
-// 	Field1 string
-// }
+import (
+	"fmt"
+	"testing"
 
-// type interfaceThingDiscriminator struct {
-// 	Kind string
-// 	interfaceThing
-// }
+	"github.com/boundedinfinity/go-commoner/idiomatic/marshaler"
+	"github.com/stretchr/testify/assert"
+)
 
-// func (t interfaceThingDiscriminator) Discriminator() string {
-// 	return t.Kind
-// }
+type Animal struct {
+	Kind string
+}
 
-// var _ marshaler.KindUnmarshal = &interfaceThingDiscriminator{}
+type Dog struct {
+	Kind string
+	Bark string
+}
 
-// var (
-// 	interfaceMessage = `
-//     {
-//         "kind": "kindA",
-//         "Field1": "someField1"
-//     }
-// `
-// )
+type Cat struct {
+	Kind string
+	Meow string
+}
 
-// func Test_InterfaceMarshaler_Unmarshal(t *testing.T) {
-// 	m := marshaler.NewInterface(&interfaceThingDiscriminator{})
-// 	m.Register(wrappedThingA{})
-// 	m.Register(wrappedThingB{})
+var (
+	dogJson = `
+    {
+        "Kind": "dog",
+        "Bark": "load"
+    }
+`
+	catJson = `
+    {
+        "Kind": "cat",
+        "Meow": "low"
+    }
+`
+)
 
-// 	actual1, err := m.Unmarshal([]byte(interfaceMessage))
-// 	assert.Nil(t, err)
+func Test_InterfaceMarshaler_Unmarshal(t *testing.T) {
+	m := marshaler.NewKind[string, Animal]()
 
-// 	actualThing, ok := actual1.(wrappedThingA)
-// 	assert.True(t, ok)
+	var dog Dog
+	var cat Cat
+	var err error
 
-// 	assert.Equal(t, wrappedThingA{"somethingA"}, actualThing)
-// }
+	m.RegisterDescriminator(Animal{}, func(a Animal) string { return a.Kind })
+
+	m.RegisterType("dog", Dog{})
+	m.RegisterType("cat", Cat{})
+	m.RegisterHandlerFn(func(name string, val any) {
+		fmt.Printf("%T", val)
+		switch real := val.(type) {
+		case Dog:
+			dog = real
+		case Cat:
+			cat = real
+		default:
+			err = fmt.Errorf("didn't catch %s", name)
+		}
+	})
+
+	err = m.Unmarshal([]byte(dogJson))
+	assert.Nil(t, err)
+	assert.Equal(t, "load", dog.Bark)
+
+	err = m.Unmarshal([]byte(catJson))
+	assert.Nil(t, err)
+	assert.Equal(t, "low", cat.Meow)
+}
 
 // func Test_InterfaceMarshaler_Marshal(t *testing.T) {
 // 	m := marshaler.NewWrapped()
