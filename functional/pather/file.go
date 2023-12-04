@@ -18,7 +18,7 @@ type files struct {
 }
 
 func (t files) Is(path string) trier.Try[bool] {
-	return trier.Complete(pather.Files.Is(path))
+	return trier.Complete(pather.Files.IsErr(path))
 }
 
 func (t files) List(path string) trier.Try[[]string] {
