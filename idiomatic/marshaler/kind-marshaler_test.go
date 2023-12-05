@@ -46,8 +46,8 @@ func Test_InterfaceMarshaler_Unmarshal(t *testing.T) {
 
 	m.RegisterDescriminator(Animal{}, func(a Animal) string { return a.Kind })
 
-	m.RegisterType("dog", Dog{})
-	m.RegisterType("cat", Cat{})
+	m.RegisterValue("dog", Dog{})
+	m.RegisterValue("cat", Cat{})
 	m.RegisterHandlerFn(func(name string, val any) {
 		fmt.Printf("%T", val)
 		switch real := val.(type) {

@@ -31,10 +31,14 @@ func (t *KindMarshaler[K, D]) RegisterDescriminator(val D, fn func(D) K) {
 	t.discriminatorFn = fn
 }
 
-func (t *KindMarshaler[K, D]) RegisterType(discriminator K, val any) {
+func (t *KindMarshaler[K, D]) RegisterValue(discriminator K, val any) {
+	t.RegisterType(discriminator, reflect.TypeOf(val))
+}
+
+func (t *KindMarshaler[K, D]) RegisterType(discriminator K, typ reflect.Type) {
 	t.lookup[discriminator] = kindInfo[K]{
 		discriminator: discriminator,
-		typ:           reflect.TypeOf(val),
+		typ:           typ,
 	}
 }
 

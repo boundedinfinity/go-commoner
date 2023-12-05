@@ -9,7 +9,7 @@ import (
 
 var (
 	ErrNotFile  = errorer.Errorf("not a file")
-	ErrNotFilev = errorer.WithChildf(ErrNotDir)
+	ErrNotFilev = errorer.Subf(ErrNotDir)
 )
 
 type FileConfig struct {

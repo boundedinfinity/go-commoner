@@ -57,28 +57,9 @@ func None() error {
 	}
 }
 
-func WithParent(parent error) func(error) error {
-	return func(child error) error {
-		return fmt.Errorf("%w %w", parent, child)
-	}
-}
-
-func WithParentf(parent error) func(string, ...any) error {
+func Subf(err error) func(string, ...any) error {
 	return func(format string, a ...any) error {
-		child := fmt.Errorf(format, a...)
-		return fmt.Errorf("%w %w", parent, child)
-	}
-}
-
-func WithChild(child error) func(error) error {
-	return func(parent error) error {
-		return fmt.Errorf("%w %w", parent, child)
-	}
-}
-
-func WithChildf(child error) func(string, ...any) error {
-	return func(format string, a ...any) error {
-		parent := fmt.Errorf(format, a...)
-		return fmt.Errorf("%w %w", parent, child)
+		message := fmt.Sprintf(format, a...)
+		return fmt.Errorf("%w : %v", err, message)
 	}
 }
