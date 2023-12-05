@@ -57,7 +57,7 @@ func None() error {
 	}
 }
 
-func Subf(err error) func(string, ...any) error {
+func Wrapf(err error) func(string, ...any) error {
 	return func(format string, a ...any) error {
 		message := fmt.Sprintf(format, a...)
 		return fmt.Errorf("%w : %v", err, message)

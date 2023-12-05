@@ -9,7 +9,7 @@ import (
 
 var (
 	ErrNotDir  = errorer.Errorf("not a directory")
-	ErrNotDirv = errorer.Subf(ErrNotDir)
+	ErrNotDirv = errorer.Wrapf(ErrNotDir)
 )
 
 type DirConfig struct {
