@@ -16,9 +16,17 @@ type Dog struct {
 	Bark string
 }
 
+func (t Dog) TypeName() string {
+	return "dog"
+}
+
 type Cat struct {
 	Kind string
 	Meow string
+}
+
+func (t Cat) TypeName() string {
+	return "cat"
 }
 
 var (
@@ -37,10 +45,9 @@ var (
 )
 
 func Test_InterfaceMarshaler_Unmarshal(t *testing.T) {
-	m := marshaler.NewKind[string, Animal]()
-	m.RegisterDescriminator(Animal{}, func(a Animal) string { return a.Kind })
-	m.RegisterValue("dog", Dog{})
-	m.RegisterValue("cat", Cat{})
+	m := marshaler.NewKind(Animal{}, func(a Animal) string { return a.Kind })
+	m.RegisterNamer(Dog{})
+	m.RegisterNamer(Cat{})
 
 	var dog Dog
 	var cat Cat

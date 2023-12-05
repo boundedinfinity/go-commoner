@@ -57,6 +57,13 @@ func None() error {
 	}
 }
 
+func Wrapv(err error) func(any) error {
+	return func(val any) error {
+		message := fmt.Sprintf("%v", val)
+		return fmt.Errorf("%w : %v", err, message)
+	}
+}
+
 func Wrapf(err error) func(string, ...any) error {
 	return func(format string, a ...any) error {
 		message := fmt.Sprintf(format, a...)

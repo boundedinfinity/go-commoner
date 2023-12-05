@@ -2,13 +2,23 @@ package marshaler
 
 import (
 	"encoding/json"
-	"fmt"
 
 	"reflect"
+
+	"github.com/boundedinfinity/go-commoner/errorer"
+	"github.com/boundedinfinity/go-commoner/idiomatic/stringer"
 )
 
 // Reference
 // https://medium.com/@nate510/dynamic-json-umarshalling-in-go-88095561d6a0
+
+var (
+	ErrTypedMarshalerTypeMissing            = errorer.New("type missing")
+	ErrTypedMarshalerTypeNotRegistered      = errorer.New("type not registered")
+	ErrTypedMarshalerTypeNotRegisteredv     = errorer.Wrapv(ErrTypedMarshalerTypeNotRegistered)
+	ErrTypedMarshalerTypeAlreadyRegistered  = errorer.New("type already registered")
+	ErrTypedMarshalerTypeAlreadyRegisteredv = errorer.Wrapv(ErrTypedMarshalerTypeAlreadyRegistered)
+)
 
 type TypeNamer interface {
 	TypeName() string
@@ -39,25 +49,44 @@ type TypedMarshaler struct {
 	types map[string]typedInfo
 }
 
-func (t *TypedMarshaler) Register(namers ...TypeNamer) {
+func (t *TypedMarshaler) Register(namers ...TypeNamer) error {
 	for _, item := range namers {
-		t.register(item)
+		if err := t.register(item); err != nil {
+			return err
+		}
 	}
+
+	return nil
 }
 
-func (t *TypedMarshaler) register(namer TypeNamer) {
+func (t *TypedMarshaler) register(namer TypeNamer) error {
 	name := namer.TypeName()
+
+	if stringer.IsEmpty(name) {
+		return ErrTypedMarshalerTypeMissing
+	}
+
+	if _, ok := t.types[name]; ok {
+		return ErrTypedMarshalerTypeAlreadyRegisteredv(name)
+	}
+
 	t.types[name] = typedInfo{
 		name: name,
 		typ:  reflect.TypeOf(namer),
 	}
+
+	return nil
 }
 
 func (t TypedMarshaler) Marshal(namer TypeNamer) ([]byte, error) {
 	name := namer.TypeName()
 
+	if stringer.IsEmpty(name) {
+		return nil, ErrTypedMarshalerTypeMissing
+	}
+
 	if _, ok := t.types[name]; !ok {
-		return nil, fmt.Errorf("no type found for %v", name)
+		return nil, ErrTypedMarshalerTypeNotRegisteredv(name)
 	}
 
 	typed := typedMarshaler{
@@ -70,21 +99,25 @@ func (t TypedMarshaler) Marshal(namer TypeNamer) ([]byte, error) {
 
 func (t TypedMarshaler) Unmarshal(data []byte) (any, error) {
 	var err error
-	var typed typedUnmarshaler
+	var discriminator typedUnmarshaler
 
-	if err = json.Unmarshal(data, &typed); err != nil {
+	if err = json.Unmarshal(data, &discriminator); err != nil {
 		return nil, err
 	}
 
-	info, ok := t.types[typed.Type]
+	if stringer.IsEmpty(discriminator.Type) {
+		return nil, ErrTypedMarshalerTypeMissing
+	}
+
+	info, ok := t.types[discriminator.Type]
 
 	if !ok {
-		return nil, fmt.Errorf("no type found for %v", typed.Type)
+		return nil, ErrTypedMarshalerTypeNotRegisteredv(discriminator.Type)
 	}
 
 	rf := reflect.New(info.typ)
 
-	if err = json.Unmarshal(typed.Value, rf.Interface()); err != nil {
+	if err = json.Unmarshal(discriminator.Value, rf.Interface()); err != nil {
 		return nil, err
 	}
 
