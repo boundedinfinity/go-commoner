@@ -6,6 +6,9 @@ import (
 	"reflect"
 )
 
+// Reference
+// https://medium.com/@nate510/dynamic-json-umarshalling-in-go-88095561d6a0
+
 func NewKind[K comparable, D any]() *KindMarshaler[K, D] {
 	return &KindMarshaler[K, D]{
 		lookup: make(map[K]kindInfo[K]),

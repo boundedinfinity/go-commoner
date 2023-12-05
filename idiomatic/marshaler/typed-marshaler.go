@@ -4,8 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 
-	greflect "reflect"
+	"reflect"
 )
+
+// Reference
+// https://medium.com/@nate510/dynamic-json-umarshalling-in-go-88095561d6a0
 
 type TypeNamer interface {
 	TypeName() string
@@ -29,7 +32,7 @@ type typedUnmarshaler struct {
 
 type typedInfo struct {
 	name string
-	typ  greflect.Type
+	typ  reflect.Type
 }
 
 type TypedMarshaler struct {
@@ -46,7 +49,7 @@ func (t *TypedMarshaler) register(namer TypeNamer) {
 	name := namer.TypeName()
 	t.types[name] = typedInfo{
 		name: name,
-		typ:  greflect.TypeOf(namer),
+		typ:  reflect.TypeOf(namer),
 	}
 }
 
@@ -79,7 +82,7 @@ func (t TypedMarshaler) Unmarshal(data []byte) (any, error) {
 		return nil, fmt.Errorf("no type found for %v", typed.Type)
 	}
 
-	rf := greflect.New(info.typ)
+	rf := reflect.New(info.typ)
 
 	if err = json.Unmarshal(typed.Value, rf.Interface()); err != nil {
 		return nil, err
