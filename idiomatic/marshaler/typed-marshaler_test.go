@@ -1,6 +1,7 @@
 package marshaler_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/boundedinfinity/go-commoner/idiomatic/marshaler"
@@ -23,8 +24,16 @@ type typedThingA struct {
 	ThingA string
 }
 
+func (t typedThingA) TypeName() string {
+	return "thingA"
+}
+
 type typedThingB struct {
 	ThingB string
+}
+
+func (t typedThingB) TypeName() string {
+	return "thingB"
 }
 
 type typedInterface interface {
@@ -34,7 +43,7 @@ type typedInterface interface {
 var (
 	typedMessage = `
     {
-        "type": "github.com/boundedinfinity/go-commoner/idiomatic/marshaler_test/typedThingA",
+        "type": "thingA",
         "value": {
             "ThingA": "somethingA"
         }
@@ -60,6 +69,7 @@ func Test_TypedMarshaler_Marshal(t *testing.T) {
 	m := marshaler.NewTyped()
 	m.Register(typedThingA{})
 	bs, err := m.Marshal(typedThingA{ThingA: "somethingA"})
+	fmt.Println(string(bs))
 
 	assert.Nil(t, err)
 

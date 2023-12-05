@@ -5,13 +5,15 @@ import (
 	"fmt"
 
 	greflect "reflect"
-
-	"github.com/boundedinfinity/go-commoner/idiomatic/reflecter"
 )
+
+type TypeNamer interface {
+	TypeName() string
+}
 
 func NewTyped() *TypedMarshaler {
 	return &TypedMarshaler{
-		types: make(map[string]greflect.Type),
+		types: make(map[string]typedInfo),
 	}
 }
 
@@ -25,24 +27,31 @@ type typedUnmarshaler struct {
 	Value json.RawMessage `json:"value"`
 }
 
-type TypedMarshaler struct {
-	types map[string]greflect.Type
+type typedInfo struct {
+	name string
+	typ  greflect.Type
 }
 
-func (t *TypedMarshaler) Register(items ...any) {
-	for _, item := range items {
+type TypedMarshaler struct {
+	types map[string]typedInfo
+}
+
+func (t *TypedMarshaler) Register(namers ...TypeNamer) {
+	for _, item := range namers {
 		t.register(item)
 	}
 }
 
-func (t *TypedMarshaler) register(item any) {
-	name := reflecter.Instances.QualifiedName(item)
-	typ := greflect.TypeOf(item)
-	t.types[name] = typ
+func (t *TypedMarshaler) register(namer TypeNamer) {
+	name := namer.TypeName()
+	t.types[name] = typedInfo{
+		name: name,
+		typ:  greflect.TypeOf(namer),
+	}
 }
 
-func (t TypedMarshaler) Marshal(item any) ([]byte, error) {
-	name := reflecter.Instances.QualifiedName(item)
+func (t TypedMarshaler) Marshal(namer TypeNamer) ([]byte, error) {
+	name := namer.TypeName()
 
 	if _, ok := t.types[name]; !ok {
 		return nil, fmt.Errorf("no type found for %v", name)
@@ -50,7 +59,7 @@ func (t TypedMarshaler) Marshal(item any) ([]byte, error) {
 
 	typed := typedMarshaler{
 		Type:  name,
-		Value: item,
+		Value: namer,
 	}
 
 	return json.Marshal(typed)
@@ -64,13 +73,13 @@ func (t TypedMarshaler) Unmarshal(data []byte) (any, error) {
 		return nil, err
 	}
 
-	typ, ok := t.types[typed.Type]
+	info, ok := t.types[typed.Type]
 
 	if !ok {
 		return nil, fmt.Errorf("no type found for %v", typed.Type)
 	}
 
-	rf := greflect.New(typ)
+	rf := greflect.New(info.typ)
 
 	if err = json.Unmarshal(typed.Value, rf.Interface()); err != nil {
 		return nil, err

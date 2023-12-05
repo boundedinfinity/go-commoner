@@ -8,8 +8,7 @@ import (
 
 func NewKind[K comparable, D any]() *KindMarshaler[K, D] {
 	return &KindMarshaler[K, D]{
-		lookup:   make(map[K]kindInfo[K]),
-		handlers: make([]func(K, any), 0),
+		lookup: make(map[K]kindInfo[K]),
 	}
 }
 
@@ -18,7 +17,6 @@ type KindMarshaler[K comparable, D any] struct {
 	discriminatorFn   func(D) K
 	lookup            map[K]kindInfo[K]
 	Formatted         bool
-	handlers          []func(K, any)
 }
 
 type kindInfo[K comparable] struct {
@@ -42,10 +40,6 @@ func (t *KindMarshaler[K, D]) RegisterType(discriminator K, typ reflect.Type) {
 	}
 }
 
-func (t *KindMarshaler[K, D]) RegisterHandlerFn(handler func(K, any)) {
-	t.handlers = append(t.handlers, handler)
-}
-
 func (t KindMarshaler[K, D]) Marshal(val any) ([]byte, error) {
 	if t.Formatted {
 		return json.MarshalIndent(val, "", "    ")
@@ -54,11 +48,11 @@ func (t KindMarshaler[K, D]) Marshal(val any) ([]byte, error) {
 	}
 }
 
-func (t KindMarshaler[K, D]) Unmarshal(bs []byte) error {
+func (t KindMarshaler[K, D]) Unmarshal(bs []byte) (any, error) {
 	dv := reflect.New(t.discriminatorType)
 
 	if err := json.Unmarshal(bs, dv.Interface()); err != nil {
-		return err
+		return nil, err
 	}
 
 	name := t.discriminatorFn(dv.Elem().Interface().(D))
@@ -66,18 +60,14 @@ func (t KindMarshaler[K, D]) Unmarshal(bs []byte) error {
 	info, ok := t.lookup[name]
 
 	if !ok {
-		return fmt.Errorf("no type found for %v", name)
+		return nil, fmt.Errorf("no type found for %v", name)
 	}
 
 	vv := reflect.New(info.typ)
 
 	if err := json.Unmarshal(bs, vv.Interface()); err != nil {
-		return err
+		return nil, err
 	}
 
-	for _, handler := range t.handlers {
-		handler(name, vv.Elem().Interface())
-	}
-
-	return nil
+	return vv.Elem().Interface(), nil
 }
