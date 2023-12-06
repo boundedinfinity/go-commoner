@@ -1,6 +1,6 @@
 module github.com/boundedinfinity/go-commoner
 
-go 1.18
+go 1.21
 
 require (
 	github.com/boundedinfinity/enumer v1.0.10
