@@ -3,7 +3,7 @@ package caser
 import (
 	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
 	"github.com/boundedinfinity/go-commoner/idiomatic/stringer"
-	"github.com/boundedinfinity/go-commoner/utf8"
+	"github.com/boundedinfinity/go-commoner/idiomatic/utf"
 )
 
 func splitMapJoin(v string, splitFn func(v string) []string, mapFn *slicer.Pipe[string], joinFn func([]string) string) string {
@@ -48,7 +48,7 @@ func splitOnCapitalOrNumber(v string) []string {
 	for i := 0; i < len(v); i++ {
 		c := v[i]
 
-		if utf8.IsUpperCase(c) || utf8.IsNumber(c) {
+		if utf.Utf7.IsUpperCase(c) || utf.Utf7.IsNumber(c) {
 			if t != "" {
 				os = append(os, t)
 				t = ""

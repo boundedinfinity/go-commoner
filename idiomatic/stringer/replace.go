@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
-	"github.com/boundedinfinity/go-commoner/utf8"
+	"github.com/boundedinfinity/go-commoner/idiomatic/utf"
 )
 
 func Replace[T ~string, U ~string, V ~string](s T, old U, new V) string {
@@ -36,25 +36,25 @@ func ReplaceSpace[T ~string](s T, replacement string) string {
 }
 
 func ReplaceNumbers[T ~string](s T, replacement string) string {
-	return ReplaceInList(s, utf8.ToStrings(utf8.NUMBERS), replacement)
+	return ReplaceInList(s, utf.Utf7.ToStrings(utf.Utf7.Numbers()), replacement)
 }
 
 func ReplaceLetters[T ~string](s T, replacement string) string {
-	return ReplaceInList(s, utf8.ToStrings(utf8.LETTERS), replacement)
+	return ReplaceInList(s, utf.Utf7.ToStrings(utf.Utf7.Letters()), replacement)
 }
 
 func ReplaceSymbols[T ~string](s T, replacement string) string {
-	return ReplaceInList(s, utf8.ToStrings(utf8.SYMBOLS), replacement)
+	return ReplaceInList(s, utf.Utf7.ToStrings(utf.Utf7.Symbols()), replacement)
 }
 
 func ReplaceNonNumbers[T ~string](s T, replacement string) string {
-	return replaceNotInList(s, utf8.ToStrings(utf8.NUMBERS), replacement)
+	return replaceNotInList(s, utf.Utf7.ToStrings(utf.Utf7.Numbers()), replacement)
 }
 
 func ReplaceNonLetters[T ~string](s T, replacement string) string {
-	return replaceNotInList(s, utf8.ToStrings(utf8.LETTERS), replacement)
+	return replaceNotInList(s, utf.Utf7.ToStrings(utf.Utf7.Letters()), replacement)
 }
 
 func ReplaceNonWord[T ~string](s T, replacement string) string {
-	return replaceNotInList(s, utf8.ToStrings(utf8.WORD_CHARACTERS), replacement)
+	return replaceNotInList(s, utf.Utf7.ToStrings(utf.Utf7.WordCharacters()), replacement)
 }
