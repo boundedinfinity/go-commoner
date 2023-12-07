@@ -1,7 +1,7 @@
-package math
+package mather
 
 import (
-	"github.com/boundedinfinity/go-commoner/idiomatic/math/types"
+	"github.com/boundedinfinity/go-commoner/idiomatic/mather/types"
 	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
 )
 

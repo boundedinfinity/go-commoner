@@ -1,8 +1,8 @@
 package geometry
 
 import (
-	"github.com/boundedinfinity/go-commoner/idiomatic/math"
-	"github.com/boundedinfinity/go-commoner/idiomatic/math/internal"
+	"github.com/boundedinfinity/go-commoner/idiomatic/mather"
+	"github.com/boundedinfinity/go-commoner/idiomatic/mather/internal"
 )
 
 func NewCircle[T geometryNumber](center CartesianCoordinate[T], radius T) Circle[T] {
@@ -39,10 +39,10 @@ func (t Circle[T]) PointOnCircumference(angle Angle[T]) CartesianCoordinate[T] {
 
 	return CartesianCoordinate[T]{
 		X: internal.TripleToSingle[T](t.Radius, theta, t.Center.X, func(radius, theta, x float64) float64 {
-			return radius*math.Cos(theta) + x
+			return radius*mather.Cos(theta) + x
 		}),
 		Y: internal.TripleToSingle[T](t.Radius, theta, t.Center.Y, func(radius, theta, y float64) float64 {
-			return radius*math.Sin(theta) + y
+			return radius*mather.Sin(theta) + y
 		}),
 	}
 }
@@ -64,7 +64,7 @@ func (t Circle[T]) YCoordinate(x T) CartesianCoordinate[T] {
 	r := t.Radius
 	return CartesianCoordinate[T]{
 		X: x,
-		Y: k + math.Sqrt(math.Square(r)-math.Square(x-h)),
+		Y: k + mather.Sqrt(mather.Square(r)-mather.Square(x-h)),
 	}
 }
 
@@ -78,7 +78,7 @@ func (t Circle[T]) XCoordinate(y T) CartesianCoordinate[T] {
 	k := t.Center.Y
 	r := t.Radius
 	return CartesianCoordinate[T]{
-		X: h + math.Sqrt(math.Square(r)-math.Square(y-k)),
+		X: h + mather.Sqrt(mather.Square(r)-mather.Square(y-k)),
 		Y: y,
 	}
 }

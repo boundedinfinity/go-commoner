@@ -1,9 +1,9 @@
-package math
+package mather
 
 import (
 	"fmt"
 
-	"github.com/boundedinfinity/go-commoner/idiomatic/math/types"
+	"github.com/boundedinfinity/go-commoner/idiomatic/mather/types"
 	"golang.org/x/exp/constraints"
 )
 

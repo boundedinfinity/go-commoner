@@ -3,7 +3,7 @@ package rational
 import (
 	"strconv"
 
-	"github.com/boundedinfinity/go-commoner/idiomatic/math/fraction"
+	"github.com/boundedinfinity/go-commoner/idiomatic/mather/fraction"
 	"golang.org/x/exp/constraints"
 )
 

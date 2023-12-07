@@ -1,6 +1,6 @@
 package geometry
 
-import "github.com/boundedinfinity/go-commoner/idiomatic/math/types"
+import "github.com/boundedinfinity/go-commoner/idiomatic/mather/types"
 
 type Dimension2d[T types.Numbers] struct {
 	Height T

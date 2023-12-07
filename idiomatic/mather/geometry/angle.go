@@ -3,7 +3,7 @@ package geometry
 import (
 	gomath "math"
 
-	"github.com/boundedinfinity/go-commoner/idiomatic/math/internal"
+	"github.com/boundedinfinity/go-commoner/idiomatic/mather/internal"
 )
 
 type Angle[T geometryNumber] struct {

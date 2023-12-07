@@ -3,7 +3,7 @@ package fraction_test
 import (
 	"testing"
 
-	"github.com/boundedinfinity/go-commoner/idiomatic/math/fraction"
+	"github.com/boundedinfinity/go-commoner/idiomatic/mather/fraction"
 	"github.com/stretchr/testify/assert"
 )
 

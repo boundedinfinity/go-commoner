@@ -1,7 +1,7 @@
 package geometry
 
 import (
-	"github.com/boundedinfinity/go-commoner/idiomatic/math/internal"
+	"github.com/boundedinfinity/go-commoner/idiomatic/mather/internal"
 )
 
 func NewRectangle[T geometryNumber](topLeft CartesianCoordinate[T], dimensions Dimension2d[T]) Rectangle[T] {

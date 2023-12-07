@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/boundedinfinity/go-commoner/idiomatic/math"
-	"github.com/boundedinfinity/go-commoner/idiomatic/math/internal"
+	"github.com/boundedinfinity/go-commoner/idiomatic/mather"
+	"github.com/boundedinfinity/go-commoner/idiomatic/mather/internal"
 	"github.com/boundedinfinity/go-commoner/idiomatic/stringer"
 	"golang.org/x/exp/constraints"
 )
@@ -31,7 +31,7 @@ func (t Fraction) Copy() Fraction {
 }
 
 func (t Fraction) Reduce() Fraction {
-	gcd := math.GreatestCommonFactor(t.Numerator, t.Denominator)
+	gcd := mather.GreatestCommonFactor(t.Numerator, t.Denominator)
 
 	return Fraction{
 		Numerator:   t.Numerator / gcd,
@@ -49,7 +49,7 @@ func New(numerator, denominator int) Fraction {
 func FromFloat[T constraints.Float](n T) Fraction {
 	numerator := Component(n)
 	size := Magnitude(n)
-	denominator := math.Pow10[int, int](size)
+	denominator := mather.Pow10[int, int](size)
 
 	return Fraction{
 		Numerator:   numerator,

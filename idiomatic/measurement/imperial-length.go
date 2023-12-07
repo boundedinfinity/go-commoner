@@ -1,6 +1,6 @@
 package measurement
 
-import "github.com/boundedinfinity/go-commoner/idiomatic/math/rational"
+import "github.com/boundedinfinity/go-commoner/idiomatic/mather/rational"
 
 var (
 	imperialLengthUnitsCf   map[ImperialLengthUnit]float64

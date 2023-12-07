@@ -16,6 +16,10 @@ var Utf7 = utf7{}
 
 type utf7 struct{}
 
+func (t utf7) Range(start, end UtfChar) []UtfChar {
+	return Range(start, end)
+}
+
 func (t utf7) Parse(v byte) (UtfChar, error) {
 	f, ok := slicer.FindFn(func(x UtfChar) bool {
 		return UtfChar(v) == x

@@ -1,8 +1,8 @@
-package math
+package mather
 
 import (
-	"github.com/boundedinfinity/go-commoner/idiomatic/math/internal"
-	"github.com/boundedinfinity/go-commoner/idiomatic/math/types"
+	"github.com/boundedinfinity/go-commoner/idiomatic/mather/internal"
+	"github.com/boundedinfinity/go-commoner/idiomatic/mather/types"
 )
 
 // https://byjus.com/temperature-conversion-formula/

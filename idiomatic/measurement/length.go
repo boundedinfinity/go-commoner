@@ -1,6 +1,6 @@
 package measurement
 
-import "github.com/boundedinfinity/go-commoner/idiomatic/math/rational"
+import "github.com/boundedinfinity/go-commoner/idiomatic/mather/rational"
 
 func Parse(s string) (Length, error) {
 	var length Length

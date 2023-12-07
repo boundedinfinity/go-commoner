@@ -1,9 +1,9 @@
-package math_test
+package mather_test
 
 import (
 	"testing"
 
-	"github.com/boundedinfinity/go-commoner/idiomatic/math"
+	"github.com/boundedinfinity/go-commoner/idiomatic/mather"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -27,7 +27,7 @@ func Test_Integer_GreatestCommonFactor(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
-			actual := math.GreatestCommonFactor(tc.input[0], tc.input[1])
+			actual := mather.GreatestCommonFactor(tc.input[0], tc.input[1])
 			assert.Equal(t, tc.expected, actual)
 		})
 	}
@@ -53,7 +53,7 @@ func Test_Integer_AllFactors(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
-			actual := math.AllFactors(tc.input)
+			actual := mather.AllFactors(tc.input)
 			assert.Equal(t, tc.expected, actual)
 		})
 	}

@@ -1,7 +1,7 @@
 package geometry
 
 import (
-	"github.com/boundedinfinity/go-commoner/idiomatic/math"
+	"github.com/boundedinfinity/go-commoner/idiomatic/mather"
 )
 
 type CartesianCoordinate[T geometryNumber] struct {
@@ -16,9 +16,9 @@ type PolarCoordinate[T geometryNumber] struct {
 
 func CartesianToPolar[T geometryNumber](coordinate CartesianCoordinate[T]) PolarCoordinate[T] {
 	return PolarCoordinate[T]{
-		Radius: math.Sqrt(math.Pow(coordinate.X, 2) + math.Pow(coordinate.Y, 2)),
+		Radius: mather.Sqrt(mather.Pow(coordinate.X, 2) + mather.Pow(coordinate.Y, 2)),
 		Angle: Angle[T]{
-			Magnitude: math.Atan(coordinate.Y / coordinate.X),
+			Magnitude: mather.Atan(coordinate.Y / coordinate.X),
 			Type:      AngleTypes.Radians,
 			Direction: AngleDirections.CounterClockwise,
 		},
@@ -29,7 +29,7 @@ func PolarToCartesian[T geometryNumber](coordinate PolarCoordinate[T]) Cartesian
 	angle := coordinate.Angle.ToRadian()
 
 	return CartesianCoordinate[T]{
-		X: coordinate.Radius * math.Cos(angle.Magnitude),
-		Y: coordinate.Radius * math.Sin(angle.Magnitude),
+		X: coordinate.Radius * mather.Cos(angle.Magnitude),
+		Y: coordinate.Radius * mather.Sin(angle.Magnitude),
 	}
 }

@@ -1,6 +1,6 @@
 package internal
 
-import "github.com/boundedinfinity/go-commoner/idiomatic/math/types"
+import "github.com/boundedinfinity/go-commoner/idiomatic/mather/types"
 
 func ZeroToSingle[I types.Numbers](fn func() float64) I {
 	return I(fn())

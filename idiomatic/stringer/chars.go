@@ -1,8 +1,8 @@
 package stringer
 
 import (
+	"github.com/boundedinfinity/go-commoner/idiomatic/runer"
 	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
-	"github.com/boundedinfinity/go-commoner/runes"
 )
 
 var (
@@ -16,21 +16,21 @@ var (
 )
 
 func init() {
-	UppercaseLetters = append(UppercaseLetters, runes.Range(runes.UPPERCASE_A, runes.UPPERCASE_Z)...)
-	LowercaseLetters = append(LowercaseLetters, runes.Range(runes.LOWERCASE_A, runes.LOWERCASE_Z)...)
+	UppercaseLetters = append(UppercaseLetters, runer.Range(runer.UPPERCASE_A, runer.UPPERCASE_Z)...)
+	LowercaseLetters = append(LowercaseLetters, runer.Range(runer.LOWERCASE_A, runer.LOWERCASE_Z)...)
 
 	Letters = append(Letters, LowercaseLetters...)
 	Letters = append(Letters, UppercaseLetters...)
 
-	Numbers = append(Numbers, runes.Range(runes.ZERO, runes.NINE)...)
+	Numbers = append(Numbers, runer.Range(runer.ZERO, runer.NINE)...)
 
 	LettersAndNumbers = append(LettersAndNumbers, Letters...)
 	LettersAndNumbers = append(LettersAndNumbers, Numbers...)
 
-	Symbols = append(Symbols, runes.Range(runes.EXCLAMATION_MARK, runes.SLASH)...)
-	Symbols = append(Symbols, runes.Range(runes.COLON, runes.AT_SIGN)...)
-	Symbols = append(Symbols, runes.Range(runes.LEFT_SQUARE_BRACKET, runes.GRAVE)...)
-	Symbols = append(Symbols, runes.Range(runes.LEFT_CURLY_BRACKET, runes.TILDE)...)
+	Symbols = append(Symbols, runer.Range(runer.EXCLAMATION_MARK, runer.SLASH)...)
+	Symbols = append(Symbols, runer.Range(runer.COLON, runer.AT_SIGN)...)
+	Symbols = append(Symbols, runer.Range(runer.LEFT_SQUARE_BRACKET, runer.GRAVE)...)
+	Symbols = append(Symbols, runer.Range(runer.LEFT_CURLY_BRACKET, runer.TILDE)...)
 
 	VisibleCharacters = append(VisibleCharacters, LettersAndNumbers...)
 	VisibleCharacters = append(VisibleCharacters, Symbols...)

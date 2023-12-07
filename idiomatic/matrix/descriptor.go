@@ -1,8 +1,7 @@
 package matrix
 
 import (
-	"github.com/boundedinfinity/go-commoner/idiomatic/math"
-
+	"github.com/boundedinfinity/go-commoner/idiomatic/mather"
 	"golang.org/x/exp/constraints"
 )
 
@@ -12,7 +11,7 @@ func SliceToDescriptor[T constraints.Integer, V any](slice [][]V) MatrixDescript
 	}
 
 	for _, row := range slice {
-		descriptor.Cols = math.Max(descriptor.Cols, T(len(row)))
+		descriptor.Cols = mather.Max(descriptor.Cols, T(len(row)))
 	}
 
 	return descriptor

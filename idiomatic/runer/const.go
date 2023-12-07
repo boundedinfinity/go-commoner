@@ -1,4 +1,4 @@
-package runes
+package runer
 
 const (
 	NULL                      rune = 0x00

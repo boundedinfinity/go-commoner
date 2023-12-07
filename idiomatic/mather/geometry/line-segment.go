@@ -1,8 +1,8 @@
 package geometry
 
 import (
-	"github.com/boundedinfinity/go-commoner/idiomatic/math"
-	"github.com/boundedinfinity/go-commoner/idiomatic/math/internal"
+	"github.com/boundedinfinity/go-commoner/idiomatic/mather"
+	"github.com/boundedinfinity/go-commoner/idiomatic/mather/internal"
 )
 
 func NewLineSegmentXY[T geometryNumber](x1, y1, x2, y2 T) LineSegment[T] {
@@ -26,7 +26,7 @@ type LineSegment[T geometryNumber] struct {
 
 func (t LineSegment[T]) Length() T {
 	fn := func(x1, y1, x2, y2 float64) float64 {
-		return math.Sqrt(math.Square((x2 - x1)) + math.Square((y2 - y1)))
+		return mather.Sqrt(mather.Square((x2 - x1)) + mather.Square((y2 - y1)))
 	}
 
 	return internal.QuadrupleToSingle(
