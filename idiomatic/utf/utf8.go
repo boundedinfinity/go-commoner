@@ -34,10 +34,8 @@ func (t utf8) Is(s byte) bool {
 	}, t.All()...)
 }
 
-func (t utf8) All() []UtfChar {
-	var chars []UtfChar
-	chars = append(chars, Utf7.All()...)
-	chars = append(chars, []UtfChar{
+func (t utf8) ExtendedCharacters() []UtfChar {
+	return []UtfChar{
 		EURO_SIGN,
 		UNUSED_1,
 		SINGLE_LOW_9_QUOTATION_MARK,
@@ -166,7 +164,13 @@ func (t utf8) All() []UtfChar {
 		LOWERCASE_Y_WITH_ACUTE,
 		LOWERCASE_THORN,
 		LOWERCASE_Y_WITH_DIAERESIS,
-	}...)
+	}
+}
+
+func (t utf8) All() []UtfChar {
+	var chars []UtfChar
+	chars = append(chars, Utf7.All()...)
+	chars = append(chars, t.ExtendedCharacters()...)
 
 	return chars
 }
