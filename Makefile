@@ -20,6 +20,10 @@ commit:
 	git commit -m "$(m)" || true
 	git push origin master
 
+pull:
+	git fetch
+	git pull origin master
+
 tag:
 	git tag -a $(tag) -m "$(tag)"
 	git push origin $(tag)
