@@ -1,13 +1,10 @@
 package slicer
 
-func Tail[V any](items []V) []V {
+func Tail[V any](items ...V) ([]V, bool) {
 	if len(items) > 1 {
-		return items[1:]
+		return items[1:], true
 	} else {
-		return []V{}
+		var zero []V
+		return zero, false
 	}
-}
-
-func TailV[V any](items ...V) []V {
-	return Tail(items)
 }

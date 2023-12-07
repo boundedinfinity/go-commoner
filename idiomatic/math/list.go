@@ -41,7 +41,8 @@ func MinOf[V types.Numbers](numbers ...V) V {
 		}
 	}
 
-	return slicer.Reduce(slicer.Head(numbers), numbers, fn)
+	head, _ := slicer.Head(numbers...)
+	return slicer.Reduce(head, numbers, fn)
 }
 
 func MaxOf[V types.Numbers](numbers ...V) V {
@@ -53,5 +54,6 @@ func MaxOf[V types.Numbers](numbers ...V) V {
 		}
 	}
 
-	return slicer.Reduce(slicer.Head(numbers), numbers, fn)
+	head, _ := slicer.Head(numbers...)
+	return slicer.Reduce(head, numbers, fn)
 }

@@ -15,7 +15,7 @@ var (
 
 func Test_Instances_QualifiedName(t *testing.T) {
 	actual := reflecter.Instances.QualifiedName(an_input)
-	assert.Equal(t, "github.com/boundedinfinity/go-commoner/idiomatic/reflect_test/aString", actual)
+	assert.Equal(t, "github.com/boundedinfinity/go-commoner/idiomatic/reflecter_test/aString", actual)
 }
 
 func Test_Instances_SimpleName(t *testing.T) {
