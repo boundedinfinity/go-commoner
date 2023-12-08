@@ -10,6 +10,7 @@ package geometry
 
 import (
 	"database/sql/driver"
+	"encoding/xml"
 	"fmt"
 
 	"github.com/boundedinfinity/enumer"
@@ -47,6 +48,18 @@ func (t AngleType) MarshalYAML() (interface{}, error) {
 
 func (t *AngleType) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	return enumer.UnmarshalYAML(unmarshal, t, AngleTypes.Parse)
+}
+
+// /////////////////////////////////////////////////////////////////
+//  AngleType XML marshal/unmarshal implemenation
+// /////////////////////////////////////////////////////////////////
+
+func (t AngleType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	return enumer.MarshalXML(t, e, start)
+}
+
+func (t *AngleType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	return enumer.UnmarshalXML(t, AngleTypes.Parse, d, start)
 }
 
 // /////////////////////////////////////////////////////////////////

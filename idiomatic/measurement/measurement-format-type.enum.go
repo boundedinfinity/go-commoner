@@ -10,6 +10,7 @@ package measurement
 
 import (
 	"database/sql/driver"
+	"encoding/xml"
 	"fmt"
 
 	"github.com/boundedinfinity/enumer"
@@ -47,6 +48,18 @@ func (t MeasurementFormatType) MarshalYAML() (interface{}, error) {
 
 func (t *MeasurementFormatType) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	return enumer.UnmarshalYAML(unmarshal, t, MeasurementFormatTypes.Parse)
+}
+
+// /////////////////////////////////////////////////////////////////
+//  MeasurementFormatType XML marshal/unmarshal implemenation
+// /////////////////////////////////////////////////////////////////
+
+func (t MeasurementFormatType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	return enumer.MarshalXML(t, e, start)
+}
+
+func (t *MeasurementFormatType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	return enumer.UnmarshalXML(t, MeasurementFormatTypes.Parse, d, start)
 }
 
 // /////////////////////////////////////////////////////////////////
