@@ -32,19 +32,58 @@ func (t dirs) Config(config DirConfig) dirs {
 	return dirs{config}
 }
 
+func (t dirs) JoinErr(dir string, elems ...string) (string, error) {
+	ok, err := t.IsErr(dir)
+
+	if err != nil {
+		return "", err
+	}
+
+	if !ok {
+		return "", ErrNotDirv(dir)
+	}
+
+	return Join[string](append([]string{dir}, elems...)...), nil
+}
+
+func (t dirs) Join(dir string, elems ...string) string {
+	s, err := t.JoinErr(dir, elems...)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return s
+}
+
 func (t dirs) Ensure(path string) bool {
-	ok, _ := t.EnsureErr(path)
+	ok, err := t.EnsureErr(path)
+
+	if err != nil {
+		panic(err)
+	}
+
 	return ok
 }
 
 func (t dirs) EnsureErr(path string) (bool, error) {
-	ok, err := Paths.ExistsErr(path)
+	exists, err := Paths.ExistsErr(path)
 
 	if err != nil {
 		return false, err
 	}
 
-	if !ok {
+	if exists {
+		dir, err := t.IsErr(path)
+
+		if err != nil {
+			return false, err
+		}
+
+		if !dir {
+			return false, ErrNotDirv(path)
+		}
+	} else {
 		if err := os.MkdirAll(path, t.config.Perm); err != nil {
 			return false, err
 		}

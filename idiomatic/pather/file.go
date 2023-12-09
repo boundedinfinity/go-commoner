@@ -41,6 +41,7 @@ func (t files) Exists(path string) bool {
 }
 
 func (t files) ExistsErr(path string) (bool, error) {
+
 	return Paths.ExistsErr(path)
 }
 
@@ -74,6 +75,42 @@ func (t files) RemoveErr(path string) (bool, error) {
 
 func (t files) Dir(path string) string {
 	return Paths.Dir(path)
+}
+
+func (t files) Ensure(path string) bool {
+	ok, err := t.EnsureErr(path)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return ok
+}
+
+func (t files) EnsureErr(path string) (bool, error) {
+	exists, err := Paths.ExistsErr(path)
+
+	if err != nil {
+		return false, err
+	}
+
+	if exists {
+		dir, err := t.IsErr(path)
+
+		if err != nil {
+			return false, err
+		}
+
+		if !dir {
+			return false, ErrNotDirv(path)
+		}
+	} else {
+		if err := os.MkdirAll(path, t.config.Perm); err != nil {
+			return false, err
+		}
+	}
+
+	return true, nil
 }
 
 func (t files) Appendln(path string, bs []byte, mode fs.FileMode) error {
