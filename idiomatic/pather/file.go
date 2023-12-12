@@ -155,7 +155,7 @@ func (t files) List(root string) ([]string, error) {
 	out := make([]string, 0)
 
 	filterFn := func(path string, info os.FileInfo) bool {
-		return true
+		return info.Mode().IsRegular()
 	}
 
 	processFn := func(path string, info os.FileInfo) error {

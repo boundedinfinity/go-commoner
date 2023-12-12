@@ -12,34 +12,100 @@ var (
 	ErrUtf8Invalidv = errorer.Wrapv(ErrUtf8Invalid)
 )
 
-var Utf8 = utf8{}
-
-type utf8 struct{}
-
-func (t utf8) Range(start, end UtfChar) []UtfChar {
-	return Range(start, end)
+var Utf8 = utf8{
+	utf8Toutf7:          map[UtfChar]UtfChar{},
+	upperCase:           []UtfChar{},
+	lowerCase:           []UtfChar{},
+	extendedCharacters:  []UtfChar{},
+	letters:             []UtfChar{},
+	wordCharacters:      []UtfChar{},
+	visibleCharacters:   []UtfChar{},
+	numbers:             []UtfChar{},
+	printableCharacters: []UtfChar{},
+	spaces:              []UtfChar{},
+	unused:              []UtfChar{},
+	symbols:             []UtfChar{},
+	all:                 []UtfChar{},
 }
 
-func (t utf8) Parse(v byte) (UtfChar, error) {
-	f, ok := slicer.FindFn(func(x UtfChar) bool {
-		return UtfChar(v) == x
-	}, t.All()...)
+func init() {
+	Utf8.lowerCase = append(Utf8.lowerCase, Utf7.LowerCase()...)
+	Utf8.lowerCase = append(Utf8.lowerCase, []UtfChar{
+		LOWERCASE_F_WITH_HOOK,
+		LOWERCASE_LIGATURE_OE,
+		LOWERCASE_Z_WITH_CARON,
+		LOWERCASE_SHARP_S,
+		LOWERCASE_A_WITH_GRAVE,
+		LOWERCASE_A_WITH_ACUTE,
+		LOWERCASE_A_WITH_CIRCUMFLEX,
+		LOWERCASE_A_WITH_TILDE,
+		LOWERCASE_A_WITH_DIAERESIS,
+		LOWERCASE_A_WITH_RING_ABOVE,
+		LOWERCASE_AE,
+		LOWERCASE_C_WITH_CEDILLA,
+		LOWERCASE_E_WITH_GRAVE,
+		LOWERCASE_E_WITH_ACUTE,
+		LOWERCASE_E_WITH_CIRCUMFLEX,
+		LOWERCASE_E_WITH_DIAERESIS,
+		LOWERCASE_I_WITH_GRAVE,
+		LOWERCASE_I_WITH_ACUTE,
+		LOWERCASE_I_WITH_CIRCUMFLEX,
+		LOWERCASE_I_WITH_DIAERESIS,
+		LOWERCASE_ETH,
+		LOWERCASE_N_WITH_TILDE,
+		LOWERCASE_O_WITH_GRAVE,
+		LOWERCASE_O_WITH_ACUTE,
+		LOWERCASE_O_WITH_CIRCUMFLEX,
+		LOWERCASE_O_WITH_TILDE,
+		LOWERCASE_O_WITH_DIAERESIS,
+		LOWERCASE_O_WITH_SLASH,
+		LOWERCASE_U_WITH_GRAVE,
+		LOWERCASE_U_WITH_ACUTE,
+		LOWERCASE_U_WITH_CIRCUMFLEX,
+		LOWERCASE_U_WITH_DIAERESIS,
+		LOWERCASE_Y_WITH_ACUTE,
+		LOWERCASE_THORN,
+		LOWERCASE_Y_WITH_DIAERESIS,
+	}...)
 
-	if !ok {
-		return f, ErrUtf8Invalidv(v)
-	}
+	Utf8.upperCase = append(Utf8.upperCase, Utf7.UpperCase()...)
+	Utf8.upperCase = append(Utf8.upperCase, []UtfChar{
+		UPPERCASE_S_WITH_CARON,
+		UPPERCASE_Z_WITH_CARON,
+		UPPERCASE_Y_WITH_DIAERESIS,
+		UPPERCASE_A_WITH_GRAVE,
+		UPPERCASE_A_WITH_ACUTE,
+		UPPERCASE_A_WITH_CIRCUMFLEX,
+		UPPERCASE_A_WITH_TILDE,
+		UPPERCASE_A_WITH_DIARESIS,
+		UPPERCASE_A_WITH_RING_ABOVE,
+		UPPERCASE_AE,
+		UPPERCASE_C_WITH_CEDILLA,
+		UPPERCASE_E_WITH_GRAVE,
+		UPPERCASE_E_WITH_ACUTE,
+		UPPERCASE_E_WITH_CIRCUMFLEX,
+		UPPERCASE_E_WITH_DIAERESIS,
+		UPPERCASE_I_WITH_GRAVE,
+		UPPERCASE_I_WITH_ACUTE,
+		UPPERCASE_I_WITH_CIRCUMFLEX,
+		UPPERCASE_I_WITH_DIAERESIS,
+		UPPERCASE_ETH,
+		UPPERCASE_N_WITH_TILDE,
+		UPPERCASE_O_WITH_GRAVE,
+		UPPERCASE_O_WITH_ACUTE,
+		UPPERCASE_O_WITH_CIRCUMFLEX,
+		UPPERCASE_O_WITH_TILDE,
+		UPPERCASE_O_WITH_DIAERESIS,
+		UPPERCASE_O_WITH_SLASH,
+		UPPERCASE_U_WITH_GRAVE,
+		UPPERCASE_U_WITH_ACUTE,
+		UPPERCASE_U_WITH_CIRCUMFLEX,
+		UPPERCASE_U_WITH_DIAERESIS,
+		UPPERCASE_Y_WITH_ACUTE,
+		UPPERCASE_THORN,
+	}...)
 
-	return f, nil
-}
-
-func (t utf8) Is(s byte) bool {
-	return slicer.ContainsFn(func(v UtfChar) bool {
-		return byte(v) == s
-	}, t.All()...)
-}
-
-func (t utf8) ExtendedCharacters() []UtfChar {
-	return []UtfChar{
+	Utf8.extendedCharacters = append(Utf8.extendedCharacters, []UtfChar{
 		EURO_SIGN,
 		UNUSED_1,
 		SINGLE_LOW_9_QUOTATION_MARK,
@@ -112,33 +178,33 @@ func (t utf8) ExtendedCharacters() []UtfChar {
 		UPPERCASE_A_WITH_RING_ABOVE,
 		UPPERCASE_AE,
 		UPPERCASE_C_WITH_CEDILLA,
-		UPPERCASE_e_WITH_GRAVE,
+		UPPERCASE_E_WITH_GRAVE,
 		UPPERCASE_E_WITH_ACUTE,
-		UPPERCASE_E_WITH_circumflex,
+		UPPERCASE_E_WITH_CIRCUMFLEX,
 		UPPERCASE_E_WITH_DIAERESIS,
 		UPPERCASE_I_WITH_GRAVE,
 		UPPERCASE_I_WITH_ACUTE,
-		UPPERCASE_I_WITH_circumflex,
+		UPPERCASE_I_WITH_CIRCUMFLEX,
 		UPPERCASE_I_WITH_DIAERESIS,
 		UPPERCASE_ETH,
 		UPPERCASE_N_WITH_TILDE,
 		UPPERCASE_O_WITH_GRAVE,
 		UPPERCASE_O_WITH_ACUTE,
-		UPPERCASE_O_WITH_circumflex,
+		UPPERCASE_O_WITH_CIRCUMFLEX,
 		UPPERCASE_O_WITH_TILDE,
 		UPPERCASE_O_WITH_DIAERESIS,
 		MULTIPLICATION_SIGN,
 		UPPERCASE_O_WITH_SLASH,
 		UPPERCASE_U_WITH_GRAVE,
 		UPPERCASE_U_WITH_ACUTE,
-		UPPERCASE_U_WITH_circumflex,
+		UPPERCASE_U_WITH_CIRCUMFLEX,
 		UPPERCASE_U_WITH_DIAERESIS,
 		UPPERCASE_Y_WITH_ACUTE,
 		UPPERCASE_THORN,
 		LOWERCASE_SHARP_S,
 		LOWERCASE_A_WITH_GRAVE,
 		LOWERCASE_A_WITH_ACUTE,
-		LOWERCASE_A_WITH_circumflex,
+		LOWERCASE_A_WITH_CIRCUMFLEX,
 		LOWERCASE_A_WITH_TILDE,
 		LOWERCASE_A_WITH_DIAERESIS,
 		LOWERCASE_A_WITH_RING_ABOVE,
@@ -146,157 +212,32 @@ func (t utf8) ExtendedCharacters() []UtfChar {
 		LOWERCASE_C_WITH_CEDILLA,
 		LOWERCASE_E_WITH_GRAVE,
 		LOWERCASE_E_WITH_ACUTE,
-		LOWERCASE_E_WITH_circumflex,
+		LOWERCASE_E_WITH_CIRCUMFLEX,
 		LOWERCASE_E_WITH_DIAERESIS,
 		LOWERCASE_I_WITH_GRAVE,
 		LOWERCASE_I_WITH_ACUTE,
-		LOWERCASE_I_WITH_circumflex,
+		LOWERCASE_I_WITH_CIRCUMFLEX,
 		LOWERCASE_I_WITH_DIAERESIS,
 		LOWERCASE_ETH,
 		LOWERCASE_N_WITH_TILDE,
 		LOWERCASE_O_WITH_GRAVE,
 		LOWERCASE_O_WITH_ACUTE,
-		LOWERCASE_O_WITH_circumflex,
+		LOWERCASE_O_WITH_CIRCUMFLEX,
 		LOWERCASE_O_WITH_TILDE,
 		LOWERCASE_O_WITH_DIAERESIS,
 		DIVISION_SIGN,
 		LOWERCASE_O_WITH_SLASH,
 		LOWERCASE_U_WITH_GRAVE,
 		LOWERCASE_U_WITH_ACUTE,
-		LOWERCASE_U_WITH_circumflex,
-		LOWERCASE_U_WITH_DIAERESIS,
-		LOWERCASE_Y_WITH_ACUTE,
-		LOWERCASE_THORN,
-		LOWERCASE_Y_WITH_DIAERESIS,
-	}
-}
-
-func (t utf8) All() []UtfChar {
-	var chars []UtfChar
-	chars = append(chars, Utf7.All()...)
-	chars = append(chars, t.ExtendedCharacters()...)
-
-	return chars
-}
-
-func (t utf8) UpperCase() []UtfChar {
-	var chars []UtfChar
-	chars = append(chars, Utf7.UpperCase()...)
-	chars = append(chars, []UtfChar{
-		UPPERCASE_S_WITH_CARON,
-		UPPERCASE_Z_WITH_CARON,
-		UPPERCASE_Y_WITH_DIAERESIS,
-		UPPERCASE_A_WITH_GRAVE,
-		UPPERCASE_A_WITH_ACUTE,
-		UPPERCASE_A_WITH_CIRCUMFLEX,
-		UPPERCASE_A_WITH_TILDE,
-		UPPERCASE_A_WITH_DIARESIS,
-		UPPERCASE_A_WITH_RING_ABOVE,
-		UPPERCASE_AE,
-		UPPERCASE_C_WITH_CEDILLA,
-		UPPERCASE_e_WITH_GRAVE,
-		UPPERCASE_E_WITH_ACUTE,
-		UPPERCASE_E_WITH_circumflex,
-		UPPERCASE_E_WITH_DIAERESIS,
-		UPPERCASE_I_WITH_GRAVE,
-		UPPERCASE_I_WITH_ACUTE,
-		UPPERCASE_I_WITH_circumflex,
-		UPPERCASE_I_WITH_DIAERESIS,
-		UPPERCASE_ETH,
-		UPPERCASE_N_WITH_TILDE,
-		UPPERCASE_O_WITH_GRAVE,
-		UPPERCASE_O_WITH_ACUTE,
-		UPPERCASE_O_WITH_circumflex,
-		UPPERCASE_O_WITH_TILDE,
-		UPPERCASE_O_WITH_DIAERESIS,
-		UPPERCASE_O_WITH_SLASH,
-		UPPERCASE_U_WITH_GRAVE,
-		UPPERCASE_U_WITH_ACUTE,
-		UPPERCASE_U_WITH_circumflex,
-		UPPERCASE_U_WITH_DIAERESIS,
-		UPPERCASE_Y_WITH_ACUTE,
-		UPPERCASE_THORN,
-	}...)
-
-	return chars
-}
-
-func (t utf8) LowerCase() []UtfChar {
-	var chars []UtfChar
-	chars = append(chars, Utf7.LowerCase()...)
-	chars = append(chars, []UtfChar{
-		LOWERCASE_F_WITH_HOOK,
-		LOWERCASE_LIGATURE_OE,
-		LOWERCASE_Z_WITH_CARON,
-		LOWERCASE_SHARP_S,
-		LOWERCASE_A_WITH_GRAVE,
-		LOWERCASE_A_WITH_ACUTE,
-		LOWERCASE_A_WITH_circumflex,
-		LOWERCASE_A_WITH_TILDE,
-		LOWERCASE_A_WITH_DIAERESIS,
-		LOWERCASE_A_WITH_RING_ABOVE,
-		LOWERCASE_AE,
-		LOWERCASE_C_WITH_CEDILLA,
-		LOWERCASE_E_WITH_GRAVE,
-		LOWERCASE_E_WITH_ACUTE,
-		LOWERCASE_E_WITH_circumflex,
-		LOWERCASE_E_WITH_DIAERESIS,
-		LOWERCASE_I_WITH_GRAVE,
-		LOWERCASE_I_WITH_ACUTE,
-		LOWERCASE_I_WITH_circumflex,
-		LOWERCASE_I_WITH_DIAERESIS,
-		LOWERCASE_ETH,
-		LOWERCASE_N_WITH_TILDE,
-		LOWERCASE_O_WITH_GRAVE,
-		LOWERCASE_O_WITH_ACUTE,
-		LOWERCASE_O_WITH_circumflex,
-		LOWERCASE_O_WITH_TILDE,
-		LOWERCASE_O_WITH_DIAERESIS,
-		LOWERCASE_O_WITH_SLASH,
-		LOWERCASE_U_WITH_GRAVE,
-		LOWERCASE_U_WITH_ACUTE,
-		LOWERCASE_U_WITH_circumflex,
+		LOWERCASE_U_WITH_CIRCUMFLEX,
 		LOWERCASE_U_WITH_DIAERESIS,
 		LOWERCASE_Y_WITH_ACUTE,
 		LOWERCASE_THORN,
 		LOWERCASE_Y_WITH_DIAERESIS,
 	}...)
 
-	return chars
-}
-
-func (t utf8) Letters() []UtfChar {
-	var letters []UtfChar
-	letters = append(letters, t.UpperCase()...)
-	letters = append(letters, t.LowerCase()...)
-	return letters
-}
-
-func (t utf8) WordCharacters() []UtfChar {
-	var letters []UtfChar
-	letters = append(letters, t.Letters()...)
-	letters = append(letters, t.Numbers()...)
-	return letters
-}
-
-func (t utf8) VisibleCharacters() []UtfChar {
-	var letters []UtfChar
-	letters = append(letters, t.WordCharacters()...)
-	letters = append(letters, t.Symbols()...)
-	return letters
-}
-
-func (t utf8) PrintableCharacters() []UtfChar {
-	var letters []UtfChar
-	letters = append(letters, t.VisibleCharacters()...)
-	letters = append(letters, t.Spaces()...)
-	return letters
-}
-
-func (t utf8) Numbers() []UtfChar {
-	var chars []UtfChar
-	chars = append(chars, Utf7.Numbers()...)
-	chars = append(chars, []UtfChar{
+	Utf8.numbers = append(Utf8.numbers, Utf7.Numbers()...)
+	Utf8.numbers = append(Utf8.numbers, []UtfChar{
 		SUPERSCRIPT_1,
 		SUPERSCRIPT_2_SQUARED,
 		SUPERSCRIPT_3_CUBED,
@@ -305,23 +246,19 @@ func (t utf8) Numbers() []UtfChar {
 		FRACTION_3_4,
 	}...)
 
-	return chars
-}
+	Utf8.spaces = append(Utf8.spaces, Utf7.Spaces()...)
+	Utf8.spaces = append(Utf8.spaces, NON_BREAKING_SPACE)
 
-func (t utf8) Unused() []UtfChar {
-	return []UtfChar{
+	Utf8.unused = append(Utf8.unused, []UtfChar{
 		UNUSED_1,
 		UNUSED_2,
 		UNUSED_3,
 		UNUSED_4,
 		UNUSED_5,
-	}
-}
+	}...)
 
-func (t utf8) Symbols() []UtfChar {
-	var chars []UtfChar
-	chars = append(chars, Utf7.Symbols()...)
-	chars = append(chars, []UtfChar{
+	Utf8.symbols = append(Utf8.symbols, Utf7.Symbols()...)
+	Utf8.symbols = append(Utf8.symbols, []UtfChar{
 		EURO_SIGN,
 		SINGLE_LOW_9_QUOTATION_MARK,
 		DOUBLE_LOW_9_QUOTATION_MARK,
@@ -371,15 +308,190 @@ func (t utf8) Symbols() []UtfChar {
 		DIVISION_SIGN,
 	}...)
 
-	return chars
+	Utf8.letters = append(Utf8.letters, Utf8.UpperCase()...)
+	Utf8.letters = append(Utf8.letters, Utf8.LowerCase()...)
+
+	Utf8.wordCharacters = append(Utf8.wordCharacters, Utf8.Letters()...)
+	Utf8.wordCharacters = append(Utf8.wordCharacters, Utf8.Numbers()...)
+
+	Utf8.visibleCharacters = append(Utf8.visibleCharacters, Utf8.WordCharacters()...)
+	Utf8.visibleCharacters = append(Utf8.visibleCharacters, Utf8.Symbols()...)
+
+	Utf8.printableCharacters = append(Utf8.printableCharacters, Utf8.VisibleCharacters()...)
+	Utf8.printableCharacters = append(Utf8.printableCharacters, Utf8.Spaces()...)
+
+	Utf8.all = append(Utf8.all, Utf7.All()...)
+	Utf8.all = append(Utf8.all, Utf8.ExtendedCharacters()...)
+
+	Utf8.utf8Toutf7 = map[UtfChar]UtfChar{
+		UPPERCASE_A_WITH_GRAVE:      UPPERCASE_A,
+		UPPERCASE_A_WITH_ACUTE:      UPPERCASE_A,
+		UPPERCASE_A_WITH_CIRCUMFLEX: UPPERCASE_A,
+		UPPERCASE_A_WITH_TILDE:      UPPERCASE_A,
+		UPPERCASE_A_WITH_DIARESIS:   UPPERCASE_A,
+		UPPERCASE_A_WITH_RING_ABOVE: UPPERCASE_A,
+		UPPERCASE_C_WITH_CEDILLA:    UPPERCASE_E,
+		UPPERCASE_E_WITH_GRAVE:      UPPERCASE_E,
+		UPPERCASE_E_WITH_ACUTE:      UPPERCASE_E,
+		UPPERCASE_E_WITH_CIRCUMFLEX: UPPERCASE_E,
+		UPPERCASE_E_WITH_DIAERESIS:  UPPERCASE_E,
+		UPPERCASE_I_WITH_GRAVE:      UPPERCASE_I,
+		UPPERCASE_I_WITH_ACUTE:      UPPERCASE_I,
+		UPPERCASE_I_WITH_CIRCUMFLEX: UPPERCASE_I,
+		UPPERCASE_I_WITH_DIAERESIS:  UPPERCASE_I,
+		UPPERCASE_N_WITH_TILDE:      UPPERCASE_N,
+		UPPERCASE_O_WITH_GRAVE:      UPPERCASE_O,
+		UPPERCASE_O_WITH_ACUTE:      UPPERCASE_O,
+		UPPERCASE_O_WITH_CIRCUMFLEX: UPPERCASE_O,
+		UPPERCASE_O_WITH_TILDE:      UPPERCASE_O,
+		UPPERCASE_O_WITH_DIAERESIS:  UPPERCASE_O,
+		UPPERCASE_O_WITH_SLASH:      UPPERCASE_O,
+		UPPERCASE_U_WITH_GRAVE:      UPPERCASE_U,
+		UPPERCASE_U_WITH_ACUTE:      UPPERCASE_U,
+		UPPERCASE_U_WITH_CIRCUMFLEX: UPPERCASE_U,
+		UPPERCASE_U_WITH_DIAERESIS:  UPPERCASE_U,
+		UPPERCASE_S_WITH_CARON:      UPPERCASE_S,
+		UPPERCASE_Y_WITH_DIAERESIS:  UPPERCASE_Y,
+		UPPERCASE_Y_WITH_ACUTE:      UPPERCASE_Y,
+		UPPERCASE_Z_WITH_CARON:      UPPERCASE_Z,
+		LOWERCASE_A_WITH_GRAVE:      LOWERCASE_A,
+		LOWERCASE_A_WITH_ACUTE:      LOWERCASE_A,
+		LOWERCASE_A_WITH_CIRCUMFLEX: LOWERCASE_A,
+		LOWERCASE_A_WITH_TILDE:      LOWERCASE_A,
+		LOWERCASE_A_WITH_DIAERESIS:  LOWERCASE_A,
+		LOWERCASE_A_WITH_RING_ABOVE: LOWERCASE_A,
+		LOWERCASE_C_WITH_CEDILLA:    LOWERCASE_C,
+		LOWERCASE_E_WITH_GRAVE:      LOWERCASE_E,
+		LOWERCASE_E_WITH_ACUTE:      LOWERCASE_E,
+		LOWERCASE_E_WITH_CIRCUMFLEX: LOWERCASE_E,
+		LOWERCASE_E_WITH_DIAERESIS:  LOWERCASE_E,
+		LOWERCASE_F_WITH_HOOK:       LOWERCASE_F,
+		LOWERCASE_I_WITH_GRAVE:      LOWERCASE_I,
+		LOWERCASE_I_WITH_ACUTE:      LOWERCASE_I,
+		LOWERCASE_I_WITH_CIRCUMFLEX: LOWERCASE_I,
+		LOWERCASE_I_WITH_DIAERESIS:  LOWERCASE_I,
+		LOWERCASE_N_WITH_TILDE:      LOWERCASE_N,
+		LOWERCASE_O_WITH_GRAVE:      LOWERCASE_O,
+		LOWERCASE_O_WITH_ACUTE:      LOWERCASE_O,
+		LOWERCASE_O_WITH_CIRCUMFLEX: LOWERCASE_O,
+		LOWERCASE_O_WITH_TILDE:      LOWERCASE_O,
+		LOWERCASE_O_WITH_DIAERESIS:  LOWERCASE_O,
+		LOWERCASE_O_WITH_SLASH:      LOWERCASE_O,
+		LOWERCASE_SHARP_S:           LOWERCASE_S,
+		LOWERCASE_U_WITH_GRAVE:      LOWERCASE_U,
+		LOWERCASE_U_WITH_ACUTE:      LOWERCASE_U,
+		LOWERCASE_U_WITH_CIRCUMFLEX: LOWERCASE_U,
+		LOWERCASE_U_WITH_DIAERESIS:  LOWERCASE_U,
+		LOWERCASE_Y_WITH_ACUTE:      LOWERCASE_Y,
+		LOWERCASE_Y_WITH_DIAERESIS:  LOWERCASE_Y,
+		LOWERCASE_Z_WITH_CARON:      LOWERCASE_Z,
+	}
+}
+
+type utf8 struct {
+	utf8Toutf7          map[UtfChar]UtfChar
+	extendedCharacters  []UtfChar
+	upperCase           []UtfChar
+	lowerCase           []UtfChar
+	letters             []UtfChar
+	wordCharacters      []UtfChar
+	visibleCharacters   []UtfChar
+	numbers             []UtfChar
+	printableCharacters []UtfChar
+	spaces              []UtfChar
+	unused              []UtfChar
+	symbols             []UtfChar
+	all                 []UtfChar
+}
+
+func (t utf8) Range(start, end UtfChar) []UtfChar {
+	return Range(start, end)
+}
+
+func (t utf8) Parse(v byte) (UtfChar, error) {
+	f, ok := slicer.FindFn(func(x UtfChar) bool {
+		return UtfChar(v) == x
+	}, t.All()...)
+
+	if !ok {
+		return f, ErrUtf8Invalidv(v)
+	}
+
+	return f, nil
+}
+
+func (t utf8) Is(s byte) bool {
+	return slicer.ContainsFn(func(v UtfChar) bool {
+		return byte(v) == s
+	}, t.All()...)
+}
+
+func (t utf8) IsExtend(s byte) bool {
+	return slicer.ContainsFn(func(v UtfChar) bool {
+		return byte(v) == s
+	}, t.ExtendedCharacters()...)
+}
+
+func (t utf8) ExtendedCharacters() []UtfChar {
+	return t.extendedCharacters
+}
+
+func (t utf8) ToUtf7(fillChar UtfChar, chars ...UtfChar) []UtfChar {
+	var utf7 []UtfChar
+
+	for _, char := range chars {
+		if found, ok := t.utf8Toutf7[char]; ok {
+			utf7 = append(utf7, found)
+		} else {
+			utf7 = append(utf7, fillChar)
+		}
+	}
+
+	return utf7
+}
+
+func (t utf8) All() []UtfChar {
+	return t.all
+}
+
+func (t utf8) UpperCase() []UtfChar {
+	return t.upperCase
+}
+
+func (t utf8) LowerCase() []UtfChar {
+	return t.lowerCase
+}
+
+func (t utf8) Letters() []UtfChar {
+	return t.letters
+}
+
+func (t utf8) WordCharacters() []UtfChar {
+	return t.wordCharacters
+}
+
+func (t utf8) VisibleCharacters() []UtfChar {
+	return t.visibleCharacters
+}
+
+func (t utf8) PrintableCharacters() []UtfChar {
+	return t.printableCharacters
+}
+
+func (t utf8) Numbers() []UtfChar {
+	return t.numbers
+}
+
+func (t utf8) Unused() []UtfChar {
+	return t.unused
+}
+
+func (t utf8) Symbols() []UtfChar {
+	return t.symbols
 }
 
 func (t utf8) Spaces() []UtfChar {
-	var chars []UtfChar
-	chars = append(chars, Utf7.Spaces()...)
-	chars = append(chars, NON_BREAKING_SPACE)
-	return chars
-
+	return t.spaces
 }
 
 func (t utf8) ToStrings(cs []UtfChar) []string {
