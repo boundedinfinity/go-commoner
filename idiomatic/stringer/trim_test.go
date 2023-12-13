@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_String_TrimSpace(t *testing.T) {
+func Test_TrimSpace(t *testing.T) {
 	testCases := []struct {
 		name     string
 		input    string
@@ -53,7 +53,7 @@ func Test_String_TrimSpace(t *testing.T) {
 	}
 }
 
-func Test_String_Trim_other_characters(t *testing.T) {
+func Test_Trim_other_characters(t *testing.T) {
 	testCases := []struct {
 		name     string
 		input    string

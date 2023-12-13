@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_String_IsEmpty(t *testing.T) {
+func Test_IsEmpty(t *testing.T) {
 	testCases := []struct {
 		name     string
 		input    string
@@ -48,7 +48,7 @@ func Test_String_IsEmpty(t *testing.T) {
 	}
 }
 
-func Test_String_FindNonEmpty(t *testing.T) {
+func Test_FindNonEmpty(t *testing.T) {
 	testCases := []struct {
 		name     string
 		input    []string
