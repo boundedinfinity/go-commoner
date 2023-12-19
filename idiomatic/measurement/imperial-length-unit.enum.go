@@ -1,3 +1,12 @@
+package measurement
+
+import (
+	"database/sql/driver"
+	"encoding/xml"
+	"fmt"
+	enumer "github.com/boundedinfinity/enumer"
+)
+
 //************************************************************************************
 //*                                                                                  *
 //* ===== DO NOT EDIT =====                                                          *
@@ -6,28 +15,14 @@
 //*                                                                                  *
 //************************************************************************************
 
-package measurement
-
-import (
-	"database/sql/driver"
-	"encoding/xml"
-	"fmt"
-
-	"github.com/boundedinfinity/enumer"
-)
-
 type ImperialLengthUnit string
-
-// /////////////////////////////////////////////////////////////////
-//  ImperialLengthUnit Stringer implemenation
-// /////////////////////////////////////////////////////////////////
 
 func (t ImperialLengthUnit) String() string {
 	return string(t)
 }
 
 // /////////////////////////////////////////////////////////////////
-//  ImperialLengthUnit JSON marshal/unmarshal implemenation
+//  JSON serialization
 // /////////////////////////////////////////////////////////////////
 
 func (t ImperialLengthUnit) MarshalJSON() ([]byte, error) {
@@ -39,7 +34,7 @@ func (t *ImperialLengthUnit) UnmarshalJSON(data []byte) error {
 }
 
 // /////////////////////////////////////////////////////////////////
-//  ImperialLengthUnit YAML marshal/unmarshal implemenation
+//  YAML serialization
 // /////////////////////////////////////////////////////////////////
 
 func (t ImperialLengthUnit) MarshalYAML() (interface{}, error) {
@@ -51,7 +46,7 @@ func (t *ImperialLengthUnit) UnmarshalYAML(unmarshal func(interface{}) error) er
 }
 
 // /////////////////////////////////////////////////////////////////
-//  ImperialLengthUnit XML marshal/unmarshal implemenation
+//  XML serialization
 // /////////////////////////////////////////////////////////////////
 
 func (t ImperialLengthUnit) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -63,7 +58,7 @@ func (t *ImperialLengthUnit) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 }
 
 // /////////////////////////////////////////////////////////////////
-//  ImperialLengthUnit SQL Database marshal/unmarshal implemenation
+//  SQL serialization
 // /////////////////////////////////////////////////////////////////
 
 func (t ImperialLengthUnit) Value() (driver.Value, error) {
@@ -75,9 +70,7 @@ func (t *ImperialLengthUnit) Scan(value interface{}) error {
 }
 
 // /////////////////////////////////////////////////////////////////
-//
-//  Enumeration
-//
+//  Companion
 // /////////////////////////////////////////////////////////////////
 
 type imperialLengthUnits struct {
@@ -102,23 +95,24 @@ type imperialLengthUnits struct {
 }
 
 var ImperialLengthUnits = imperialLengthUnits{
-	Twip:         ImperialLengthUnit("Twip"),
-	Thou:         ImperialLengthUnit("Thou"),
-	Barleycorn:   ImperialLengthUnit("Barleycorn"),
-	Inch:         ImperialLengthUnit("Inch"),
-	Hand:         ImperialLengthUnit("Hand"),
-	Foot:         ImperialLengthUnit("Foot"),
-	Yard:         ImperialLengthUnit("Yard"),
-	Chain:        ImperialLengthUnit("Chain"),
-	Furlong:      ImperialLengthUnit("Furlong"),
-	Mile:         ImperialLengthUnit("Mile"),
-	League:       ImperialLengthUnit("League"),
-	Fathom:       ImperialLengthUnit("Fathom"),
-	Cable:        ImperialLengthUnit("Cable"),
-	NauticalMile: ImperialLengthUnit("NauticalMile"),
-	Link:         ImperialLengthUnit("Link"),
-	Rod:          ImperialLengthUnit("Rod"),
+
+	Barleycorn:   ImperialLengthUnit("barleycorn"),
+	Cable:        ImperialLengthUnit("cable"),
+	Chain:        ImperialLengthUnit("chain"),
 	Err:          fmt.Errorf("invalid ImperialLengthUnit"),
+	Fathom:       ImperialLengthUnit("fathom"),
+	Foot:         ImperialLengthUnit("foot"),
+	Furlong:      ImperialLengthUnit("furlong"),
+	Hand:         ImperialLengthUnit("hand"),
+	Inch:         ImperialLengthUnit("inch"),
+	League:       ImperialLengthUnit("league"),
+	Link:         ImperialLengthUnit("link"),
+	Mile:         ImperialLengthUnit("mile"),
+	NauticalMile: ImperialLengthUnit("nautical-mile"),
+	Rod:          ImperialLengthUnit("rod"),
+	Thou:         ImperialLengthUnit("thou"),
+	Twip:         ImperialLengthUnit("twip"),
+	Yard:         ImperialLengthUnit("yard"),
 }
 
 func init() {
@@ -147,8 +141,7 @@ func (t imperialLengthUnits) newErr(a any, values ...ImperialLengthUnit) error {
 		"invalid %w value '%v'. Must be one of %v",
 		ImperialLengthUnits.Err,
 		a,
-		enumer.Join(values, ", "),
-	)
+		enumer.Join(values, ", "))
 }
 
 func (t imperialLengthUnits) ParseFrom(v string, values ...ImperialLengthUnit) (ImperialLengthUnit, error) {

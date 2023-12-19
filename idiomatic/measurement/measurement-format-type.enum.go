@@ -1,3 +1,12 @@
+package measurement
+
+import (
+	"database/sql/driver"
+	"encoding/xml"
+	"fmt"
+	enumer "github.com/boundedinfinity/enumer"
+)
+
 //************************************************************************************
 //*                                                                                  *
 //* ===== DO NOT EDIT =====                                                          *
@@ -6,28 +15,14 @@
 //*                                                                                  *
 //************************************************************************************
 
-package measurement
-
-import (
-	"database/sql/driver"
-	"encoding/xml"
-	"fmt"
-
-	"github.com/boundedinfinity/enumer"
-)
-
 type MeasurementFormatType string
-
-// /////////////////////////////////////////////////////////////////
-//  MeasurementFormatType Stringer implemenation
-// /////////////////////////////////////////////////////////////////
 
 func (t MeasurementFormatType) String() string {
 	return string(t)
 }
 
 // /////////////////////////////////////////////////////////////////
-//  MeasurementFormatType JSON marshal/unmarshal implemenation
+//  JSON serialization
 // /////////////////////////////////////////////////////////////////
 
 func (t MeasurementFormatType) MarshalJSON() ([]byte, error) {
@@ -39,7 +34,7 @@ func (t *MeasurementFormatType) UnmarshalJSON(data []byte) error {
 }
 
 // /////////////////////////////////////////////////////////////////
-//  MeasurementFormatType YAML marshal/unmarshal implemenation
+//  YAML serialization
 // /////////////////////////////////////////////////////////////////
 
 func (t MeasurementFormatType) MarshalYAML() (interface{}, error) {
@@ -51,7 +46,7 @@ func (t *MeasurementFormatType) UnmarshalYAML(unmarshal func(interface{}) error)
 }
 
 // /////////////////////////////////////////////////////////////////
-//  MeasurementFormatType XML marshal/unmarshal implemenation
+//  XML serialization
 // /////////////////////////////////////////////////////////////////
 
 func (t MeasurementFormatType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -63,7 +58,7 @@ func (t *MeasurementFormatType) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 }
 
 // /////////////////////////////////////////////////////////////////
-//  MeasurementFormatType SQL Database marshal/unmarshal implemenation
+//  SQL serialization
 // /////////////////////////////////////////////////////////////////
 
 func (t MeasurementFormatType) Value() (driver.Value, error) {
@@ -75,9 +70,7 @@ func (t *MeasurementFormatType) Scan(value interface{}) error {
 }
 
 // /////////////////////////////////////////////////////////////////
-//
-//  Enumeration
-//
+//  Companion
 // /////////////////////////////////////////////////////////////////
 
 type measurementFormatTypes struct {
@@ -88,9 +81,10 @@ type measurementFormatTypes struct {
 }
 
 var MeasurementFormatTypes = measurementFormatTypes{
-	Full:         MeasurementFormatType("Full"),
-	Abbreviation: MeasurementFormatType("Abbreviation"),
+
+	Abbreviation: MeasurementFormatType("abbreviation"),
 	Err:          fmt.Errorf("invalid MeasurementFormatType"),
+	Full:         MeasurementFormatType("full"),
 }
 
 func init() {
@@ -105,8 +99,7 @@ func (t measurementFormatTypes) newErr(a any, values ...MeasurementFormatType) e
 		"invalid %w value '%v'. Must be one of %v",
 		MeasurementFormatTypes.Err,
 		a,
-		enumer.Join(values, ", "),
-	)
+		enumer.Join(values, ", "))
 }
 
 func (t measurementFormatTypes) ParseFrom(v string, values ...MeasurementFormatType) (MeasurementFormatType, error) {

@@ -1,3 +1,12 @@
+package measurement
+
+import (
+	"database/sql/driver"
+	"encoding/xml"
+	"fmt"
+	enumer "github.com/boundedinfinity/enumer"
+)
+
 //************************************************************************************
 //*                                                                                  *
 //* ===== DO NOT EDIT =====                                                          *
@@ -6,28 +15,14 @@
 //*                                                                                  *
 //************************************************************************************
 
-package measurement
-
-import (
-	"database/sql/driver"
-	"encoding/xml"
-	"fmt"
-
-	"github.com/boundedinfinity/enumer"
-)
-
 type MeasurementSystem string
-
-// /////////////////////////////////////////////////////////////////
-//  MeasurementSystem Stringer implemenation
-// /////////////////////////////////////////////////////////////////
 
 func (t MeasurementSystem) String() string {
 	return string(t)
 }
 
 // /////////////////////////////////////////////////////////////////
-//  MeasurementSystem JSON marshal/unmarshal implemenation
+//  JSON serialization
 // /////////////////////////////////////////////////////////////////
 
 func (t MeasurementSystem) MarshalJSON() ([]byte, error) {
@@ -39,7 +34,7 @@ func (t *MeasurementSystem) UnmarshalJSON(data []byte) error {
 }
 
 // /////////////////////////////////////////////////////////////////
-//  MeasurementSystem YAML marshal/unmarshal implemenation
+//  YAML serialization
 // /////////////////////////////////////////////////////////////////
 
 func (t MeasurementSystem) MarshalYAML() (interface{}, error) {
@@ -51,7 +46,7 @@ func (t *MeasurementSystem) UnmarshalYAML(unmarshal func(interface{}) error) err
 }
 
 // /////////////////////////////////////////////////////////////////
-//  MeasurementSystem XML marshal/unmarshal implemenation
+//  XML serialization
 // /////////////////////////////////////////////////////////////////
 
 func (t MeasurementSystem) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -63,7 +58,7 @@ func (t *MeasurementSystem) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 }
 
 // /////////////////////////////////////////////////////////////////
-//  MeasurementSystem SQL Database marshal/unmarshal implemenation
+//  SQL serialization
 // /////////////////////////////////////////////////////////////////
 
 func (t MeasurementSystem) Value() (driver.Value, error) {
@@ -75,28 +70,30 @@ func (t *MeasurementSystem) Scan(value interface{}) error {
 }
 
 // /////////////////////////////////////////////////////////////////
-//
-//  Enumeration
-//
+//  Companion
 // /////////////////////////////////////////////////////////////////
 
 type measurementSystems struct {
 	Metric   MeasurementSystem
 	Imperial MeasurementSystem
+	Unitless MeasurementSystem
 	Values   []MeasurementSystem
 	Err      error
 }
 
 var MeasurementSystems = measurementSystems{
-	Metric:   MeasurementSystem("Metric"),
-	Imperial: MeasurementSystem("Imperial"),
+
 	Err:      fmt.Errorf("invalid MeasurementSystem"),
+	Imperial: MeasurementSystem("imperial"),
+	Metric:   MeasurementSystem("metric"),
+	Unitless: MeasurementSystem("unitless"),
 }
 
 func init() {
 	MeasurementSystems.Values = []MeasurementSystem{
 		MeasurementSystems.Metric,
 		MeasurementSystems.Imperial,
+		MeasurementSystems.Unitless,
 	}
 }
 
@@ -105,8 +102,7 @@ func (t measurementSystems) newErr(a any, values ...MeasurementSystem) error {
 		"invalid %w value '%v'. Must be one of %v",
 		MeasurementSystems.Err,
 		a,
-		enumer.Join(values, ", "),
-	)
+		enumer.Join(values, ", "))
 }
 
 func (t measurementSystems) ParseFrom(v string, values ...MeasurementSystem) (MeasurementSystem, error) {

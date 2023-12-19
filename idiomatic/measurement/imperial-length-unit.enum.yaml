@@ -1,5 +1,3 @@
-serialize: 
-    values: pascal-to-kebab-lower
 values:
     -   name: Twip
     -   name: Thou

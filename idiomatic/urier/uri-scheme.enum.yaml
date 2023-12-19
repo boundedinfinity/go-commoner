@@ -1,0 +1,242 @@
+
+serialize:
+    value: kebab-lower-to-pascal
+values:
+    -   serialized: aaa               # Diameter Protocol
+    -   serialized: aaas              # Secure Diameter Protocol
+    -   serialized: about             # About (used in browsers)
+    -   serialized: acap              # Application Configuration Access Protocol
+    -   serialized: acct              # Identifying user account
+    -   serialized: acr               # Anonymous Customer Reference
+    -   serialized: adiumxtra         # Direct installation of Adium Xtras (plugins)
+    -   serialized: afp               # Apple Filing Protoco
+    -   serialized: afs               # Andrew File System
+    -   serialized: apt               # APT protocol
+    -   serialized: attachment                # Attaching resources to MHTML pages
+    -   serialized: aw                        # Link to an Active Worlds world
+    -   serialized: amss                      # Identifier for an AMSS broadcast
+    -   serialized: barion                    # Barion e-money wallet
+    -   serialized: beshare                   # Open a search query on a BeShare server
+    -   serialized: bitcoin                   # Bitcoin address
+    -   serialized: blob                      # Binary data access in browsers
+    -   serialized: bolo                      # Bolo game
+    -   serialized: callto                    # Skype call
+    -   serialized: cap                       # Calendar access protocol
+    -   serialized: chrome                    # Specifies user interfaces built using XUL in Mozilla-based browsers
+    -   serialized: chrome-extension          # Manage Chrome extensions
+    -   serialized: com-eventbrite-attendee   # Provisional IANA registration template
+    -   serialized: cid                       # Referencing individual parts of an SMTP/MIME message Permanent
+    -   serialized: coaps                     # Constrained Application Protocol
+    -   serialized: conten                    # Accessing an Android content provider
+    -   serialized: crid                      # TV-Anytime Content Reference Identifier
+    -   serialized: cvs                       # Concurrent Versions System (CVS) Repository
+    -   serialized: dab                       # Identifier for a DAB broadcast
+    -   serialized: data                      # Inclusion of small data items inline
+    -   serialized: dav                       # HTTP Extensions for Distributed Authoring (WebDAV)
+    -   serialized: dict                      # Dictionary service protocol
+    -   serialized: dlna-playsingle 
+    -   serialized: dlna-playcontainer 
+    -   serialized: dns                       # Domain Name System
+    -   serialized: dntp                      # Direct Network Transfer Protocol
+    -   serialized: doi                       # Digital object identifier, a digital identifier for any object of intellectual property.
+    -   serialized: drm                       # Identifier for a DRM broadcastUriScheme =  
+    -   serialized: dtn  # DTNRG research and development
+    -   serialized: dvb 
+    -   serialized: ed2k  #  Resources available using the eDonkey2000 network
+    -   serialized: example 
+    -   serialized: facetime  # FaceTime is a video conferencing software
+    -   serialized: fax  # telefacsimile numbers
+    -   serialized: feed  # web feed subscription
+    -   serialized: file  # Addressing files on local or network file systems
+    -   serialized: filesystem  # Abandoned part of File API
+    -   serialized: finger  # Querying user information using the Finger protocol
+    -   serialized: fish  # Accessing another computer's files using the SSH protocol
+    -   serialized: fm  # Identifier for an FM broadcast
+    -   serialized: ftp  # FTP resources
+    -   serialized: gemini  #Used with the Gemini protocol
+    -   serialized: geo  #  A Uniform Resource Identifier for Geographic Locations
+    -   serialized: gg  #  Starting chat with Gadu-Gadu user
+    -   serialized: git  # link to a GIT repository
+    -   serialized: gizmoproject  # Gizmo5 calling link
+    -   serialized: go  # Common Name Resolution Protocol
+    -   serialized: gopher  # Gopher protocol
+    -   serialized: gtalk  # Start a chat with a Google Talk user
+    -   serialized: h323  # Used with H.323 multimedia communications
+    -   serialized: http  # HTTP resources
+    -   serialized: https  # HTTP connections secured using SSL/TLS
+    -   serialized: iax  # Inter-Asterisk eXchange protocol version 2
+    -   serialized: icap  # Internet Content Adaptation Protocol
+    -   serialized: icon  # Provisional IETF Draft
+    -   serialized: im  # Instant messaging protocol
+    -   serialized: imap  # Accessing e-mail resources through IMAP
+    -   serialized: info  # Information Assets with Identifiers in Public Namespaces
+    -   serialized: iotdisco  # Identify things on Internet of Things
+    -   serialized: ipn 
+    -   serialized: ipp  # Internet Printing Protocol
+    -   serialized: ipps  # Internet Printing Protocol over HTTPS
+    -   serialized: irc  # Internet Relay Chat server
+    -   serialized: irc6  # IPv6 equivalent of irc
+    -   serialized: ircs  # Secure equivalent of irc
+    -   serialized: iris  # Internet Registry Information Service
+    -   serialized: iris.beep  # Internet Registry Information Service
+    -   serialized: iris.xpc  # Internet Registry Information Service
+    -   serialized: iris.xpcs  # Internet Registry Information Service
+    -   serialized: iris.lws  # Internet Registry Information Service
+    -   serialized: itms  # iTunes Music Store
+    -   serialized: jabber 
+    -   serialized: jar  # Compressed archive
+    -   serialized: jms  # Java Message Service
+    -   serialized: keyparc  # Keyparc encrypt/decrypt resource
+    -   serialized: lastfm 
+    -   serialized: ldap  # LDAP directory request
+    -   serialized: ldaps  # Secure equivalent of ldap
+    -   serialized: magnet  # magnet links
+    -   serialized: mailserver  # Access to data available from mail servers
+    -   serialized: mailto  # SMTP e-mail addresses and default content
+    -   serialized: maps  # map links
+    -   serialized: market  # Opens Google Play
+    -   serialized: message  # Direct link to specific email message
+    -   serialized: mid  # Referencing SMTP/MIME messages, or parts of messages
+    -   serialized: mms  # Windows streaming media
+    -   serialized: modem 
+    -   serialized: ms-help  # help page on Microsoft Windows Help and Support Center
+    -   serialized: ms-settings  # application Settings in Windows
+    -   serialized: ms-settings-airplanemode  # application Settings in Windows
+    -   serialized: ms-settings-bluetooth  # application Settings in Windows
+    -   serialized: ms-settings-camera  # application Settings in Windows
+    -   serialized: ms-settings-cellular  # application Settings in Windows
+    -   serialized: ms-settings-cloudstorage  # application Settings in Windows
+    -   serialized: ms-settings-emailandaccounts  # application Settings in Windows
+    -   serialized: ms-settings-language  # application Settings in Windows
+    -   serialized: ms-settings-location  # application Settings in Windows
+    -   serialized: ms-settings-lock  # application Settings in Windows
+    -   serialized: ms-settings-nfctransactions  # application Settings in Windows
+    -   serialized: ms-settings-notifications  # application Settings in Windows
+    -   serialized: ms-settings-power  # application Settings in Windows
+    -   serialized: ms-settings-privacy  # application Settings in Windows
+    -   serialized: ms-settings-proximity  # application Settings in Windows
+    -   serialized: ms-settings-screenrotation  # application Settings in Windows
+    -   serialized: ms-settings-wifi  # application Settings in Windows
+    -   serialized: ms-settings-workplace  # application Settings in Windows
+    -   serialized: msnim  # Windows Live Messenger
+    -   serialized: msrp  #
+    -   serialized: msrps  # Message Session Relay Protocol
+    -   serialized: mtqp  # Message Tracking Query Protocol
+    -   serialized: mumble  #
+    -   serialized: mupdate  # Mailbox Update Protocol
+    -   serialized: mvn  # Access Apache Maven repository artifacts
+    -   serialized: news  # (Usenet) newsgroups and postings
+    -   serialized: nfs  # Network File System resources
+    -   serialized: ni  # Naming Things with Hashes
+    -   serialized: nih  # Naming Things with Hashes
+    -   serialized: nntp  # Usenet NNTP
+    -   serialized: oid 
+    -   serialized: opaquelocktoken 
+    -   serialized: openpgp4fpr  # OpenPGP version 4 public keys
+    -   serialized: pack 
+    -   serialized: palm  # system services in HP webOS applications
+    -   serialized: paparazzi  # the application  Paparazzi!  (Mac only)
+    -   serialized: payto  # Designate target for payments
+    -   serialized: pkcs11  # PKCS #11
+    -   serialized: platform  # Eclipse platform resources
+    -   serialized: pop  # Accessing mailbox through POP3 Permanent
+    -   serialized: pres  # Used in Common Profile for Presence (CPP) to identify presence
+    -   serialized: prospero  # Prospero Directory Service
+    -   serialized: proxy  # Alter proxy settings in the FoxyProxy application
+    -   serialized: psyc  # Used to identify or locate a person, group, place or a service and specify its ability to communicate
+    -   serialized: query  # Opens a filesystem query
+    -   serialized: redis  # Redis database
+    -   serialized: rediss  # Redis database secure
+    -   serialized: reload  # REsource LOcation And Discovery Protocol
+    -   serialized: res  # Used by Internet Explorer to display error pages
+    -   serialized: resource  # Creating mapping for resource protocol aliases generted by the resource instruction. Used by Firefox
+    -   serialized: rmi  # Look up a Java object in an RMI registry
+    -   serialized: rsync  # rsync
+    -   serialized: rtmfp  # Real Time Media Flow Protocol
+    -   serialized: rtmp  # Real Time Messaging Protocol
+    -   serialized: rtsp  # Real Time Streaming Protocol
+    -   serialized: s3  # Amazon S3 bucket
+    -   serialized: secondlife  # Open the Map floater in Second Life application to teleport the resident to the location. Provisional IANA registration template
+    -   serialized: service 
+    -   serialized: session  # Media Resource Control Protocol
+    -   serialized: sftp  # SFTP file transfers (not be to confused with FTPS (FTP/SSL))
+    -   serialized: sgn  # Social Graph Node Mapper
+    -   serialized: shc  # SMART Health Cards Framework
+    -   serialized: shttp  # Secure HTTP
+    -   serialized: sieve  # ManageSieve protocol
+    -   serialized: sip  # Session Initiation Protocol (SIP)
+    -   serialized: sips  # Secure equivalent of sip
+    -   serialized: skype  # Launching Skype call (see also callto:)
+    -   serialized: smb  # Accessing SMB/CIFS shares
+    -   serialized: sms  # SMS capable devices for composing and sending messages
+    -   serialized: snews  # NNTP over SSL/TLS
+    -   serialized: snmp  # Simple Network Management Protocol
+    -   serialized: soap.beep 
+    -   serialized: soap.beeps 
+    -   serialized: soldat 
+    -   serialized: spotify  # Load a track, album, artist, search, or playlist in Spotify
+    -   serialized: ssh  # SSH connections
+    -   serialized: steam  # Interact with Steam: install apps, purchase games, run games, etc
+    -   serialized: stun  # Session Traversal Utilities for NAT (STUN)
+    -   serialized: stuns  # Session Traversal Utilities for NAT (STUN)
+    -   serialized: svn  # Subversion (SVN) source control repository
+    -   serialized: tag  # tag URI scheme
+    -   serialized: teamspeak 
+    -   serialized: tel  # telephone numbers
+    -   serialized: telnet  # telnet
+    -   serialized: tftp  # Trivial File Transfer Protocol
+    -   serialized: things  # Interact with Things: create new to-dos or go to a specific list
+    -   serialized: thismessage  # multipart/related relative reference resolution
+    -   serialized: tn3270  # Interactive 3270 emulation sessions
+    -   serialized: tip  # Transaction Internet Protocol
+    -   serialized: turn  # Traversal Using Relays around NAT (TURN)
+    -   serialized: turns  # Secure Traversal Using Relays around NAT (TURN)
+    -   serialized: tv  # TV Broadcasts
+    -   serialized: udp  # BitTorrent tracker protocol based on UDP
+    # -   serialized: udp  # MPEG Transport Stream over UDP
+    -   serialized: unreal 
+    -   serialized: urn  # Uniform Resource Names
+    -   serialized: ut2004 
+    -   serialized: vemmi  # Versatile Multimedia Interface
+    -   serialized: ventrilo 
+    -   serialized: videotex 
+    -   serialized: view-source  # Shows a web page as code
+    -   serialized: vnc  # Virtual Network Computing
+    -   serialized: wais  # Wide area information server (WAIS)
+    -   serialized: webcal  # Calendars in iCalendar format
+    -   serialized: ws  # WebSocket protocol
+    -   serialized: wss  # Secure WebSocket protocol
+    -   serialized: wtai  # Wireless Telephony Application Interface
+    -   serialized: wyciwyg  # What You Cache Is What You Get
+    -   serialized: xcon 
+    -   serialized: xcon-userid 
+    -   serialized: xfire 
+    -   serialized: xmlrpc.beep 
+    -   serialized: xmlrpc.beeps 
+    -   serialized: xmpp  # XMPP
+    -   serialized: xri  # eXtensible Resource Identifier (XRI)
+    -   serialized: ymsgr  # a Yahoo! Contact
+    -   serialized: z39.50  # Z39.50 information access
+    -   serialized: z39.50r  # Z39.50 retrieval
+    -   serialized: z39.50s  # Z39.50 session
+    -   serialized: admin  # URL scheme in the GNOME desktop environment to access file(s)
+    -   serialized: app  # URL scheme can be used by packaged applications to obtain resources that are inside a container
+    -   serialized: javascript  # Execute JavaScript code
+    -   serialized: jdbc  # Java Database Connectivity technology
+    -   serialized: msteams  # Microsoft to launch the Microsoft Teams desktop client
+    -   serialized: ms-access  # Used by Microsoft to launch Microsoft Office applications
+    -   serialized: ms-excel  # Used by Microsoft to launch Microsoft Office applications
+    -   serialized: ms-infopath  # Used by Microsoft to launch Microsoft Office applications
+    -   serialized: ms-powerpoint  # Used by Microsoft to launch Microsoft Office applications
+    -   serialized: ms-project  # Used by Microsoft to launch Microsoft Office applications
+    -   serialized: ms-publisher  # Used by Microsoft to launch Microsoft Office applications
+    -   serialized: ms-spd  # Used by Microsoft to launch Microsoft Office applications
+    -   serialized: ms-visio  # Used by Microsoft to launch Microsoft Office applications
+    -   serialized: ms-word  # Used by Microsoft to launch Microsoft Office applications
+    -   serialized: odbc  # Open Database Connectivity
+    -   serialized: rdar  # URL scheme used by Apple's internal issue-tracking system
+    -   serialized: trueconf  # Used by TrueConf Server
+    -   serialized: slack  # Slack to launch the Slack client
+    -   serialized: stratum  # the Stratum protocol
+    -   serialized: zoommtg  # Used by Zoom conferencing software to launch the Zoom client
+    -   serialized: zoomus  # Used by Zoom conferencing software to launch the Zoom client

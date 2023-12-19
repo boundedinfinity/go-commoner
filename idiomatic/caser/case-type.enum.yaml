@@ -1,5 +1,5 @@
 serialize: 
-    value: pascal-to-kebab-lower
+    type: pascal-to-kebab-lower
 values:
     -   name: Camel
     -   name: Kebab

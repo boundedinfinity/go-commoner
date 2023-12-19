@@ -1,3 +1,12 @@
+package measurement
+
+import (
+	"database/sql/driver"
+	"encoding/xml"
+	"fmt"
+	enumer "github.com/boundedinfinity/enumer"
+)
+
 //************************************************************************************
 //*                                                                                  *
 //* ===== DO NOT EDIT =====                                                          *
@@ -6,28 +15,14 @@
 //*                                                                                  *
 //************************************************************************************
 
-package measurement
-
-import (
-	"database/sql/driver"
-	"encoding/xml"
-	"fmt"
-
-	"github.com/boundedinfinity/enumer"
-)
-
 type MetricUnit string
-
-// /////////////////////////////////////////////////////////////////
-//  MetricUnit Stringer implemenation
-// /////////////////////////////////////////////////////////////////
 
 func (t MetricUnit) String() string {
 	return string(t)
 }
 
 // /////////////////////////////////////////////////////////////////
-//  MetricUnit JSON marshal/unmarshal implemenation
+//  JSON serialization
 // /////////////////////////////////////////////////////////////////
 
 func (t MetricUnit) MarshalJSON() ([]byte, error) {
@@ -39,7 +34,7 @@ func (t *MetricUnit) UnmarshalJSON(data []byte) error {
 }
 
 // /////////////////////////////////////////////////////////////////
-//  MetricUnit YAML marshal/unmarshal implemenation
+//  YAML serialization
 // /////////////////////////////////////////////////////////////////
 
 func (t MetricUnit) MarshalYAML() (interface{}, error) {
@@ -51,7 +46,7 @@ func (t *MetricUnit) UnmarshalYAML(unmarshal func(interface{}) error) error {
 }
 
 // /////////////////////////////////////////////////////////////////
-//  MetricUnit XML marshal/unmarshal implemenation
+//  XML serialization
 // /////////////////////////////////////////////////////////////////
 
 func (t MetricUnit) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -63,7 +58,7 @@ func (t *MetricUnit) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 }
 
 // /////////////////////////////////////////////////////////////////
-//  MetricUnit SQL Database marshal/unmarshal implemenation
+//  SQL serialization
 // /////////////////////////////////////////////////////////////////
 
 func (t MetricUnit) Value() (driver.Value, error) {
@@ -75,9 +70,7 @@ func (t *MetricUnit) Scan(value interface{}) error {
 }
 
 // /////////////////////////////////////////////////////////////////
-//
-//  Enumeration
-//
+//  Companion
 // /////////////////////////////////////////////////////////////////
 
 type metricUnits struct {
@@ -99,20 +92,21 @@ type metricUnits struct {
 }
 
 var MetricUnits = metricUnits{
-	Tera:  MetricUnit("Tera"),
-	Giga:  MetricUnit("Giga"),
-	Mega:  MetricUnit("Mega"),
-	Kilo:  MetricUnit("Kilo"),
-	Hecto: MetricUnit("Hecto"),
-	Deca:  MetricUnit("Deca"),
-	Unit:  MetricUnit("Unit"),
-	Deci:  MetricUnit("Deci"),
-	Centi: MetricUnit("Centi"),
-	Milli: MetricUnit("Milli"),
-	Micro: MetricUnit("Micro"),
-	Nano:  MetricUnit("Nano"),
-	Pico:  MetricUnit("Pico"),
+
+	Centi: MetricUnit("centi"),
+	Deca:  MetricUnit("deca"),
+	Deci:  MetricUnit("deci"),
 	Err:   fmt.Errorf("invalid MetricUnit"),
+	Giga:  MetricUnit("giga"),
+	Hecto: MetricUnit("hecto"),
+	Kilo:  MetricUnit("kilo"),
+	Mega:  MetricUnit("mega"),
+	Micro: MetricUnit("micro"),
+	Milli: MetricUnit("milli"),
+	Nano:  MetricUnit("nano"),
+	Pico:  MetricUnit("pico"),
+	Tera:  MetricUnit("tera"),
+	Unit:  MetricUnit("unit"),
 }
 
 func init() {
@@ -138,8 +132,7 @@ func (t metricUnits) newErr(a any, values ...MetricUnit) error {
 		"invalid %w value '%v'. Must be one of %v",
 		MetricUnits.Err,
 		a,
-		enumer.Join(values, ", "),
-	)
+		enumer.Join(values, ", "))
 }
 
 func (t metricUnits) ParseFrom(v string, values ...MetricUnit) (MetricUnit, error) {

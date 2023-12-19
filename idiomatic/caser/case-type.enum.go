@@ -1,3 +1,12 @@
+package caser
+
+import (
+	"database/sql/driver"
+	"encoding/xml"
+	"fmt"
+	enumer "github.com/boundedinfinity/enumer"
+)
+
 //************************************************************************************
 //*                                                                                  *
 //* ===== DO NOT EDIT =====                                                          *
@@ -6,28 +15,14 @@
 //*                                                                                  *
 //************************************************************************************
 
-package caser
-
-import (
-	"database/sql/driver"
-	"encoding/xml"
-	"fmt"
-
-	"github.com/boundedinfinity/enumer"
-)
-
 type CaseType string
-
-// /////////////////////////////////////////////////////////////////
-//  CaseType Stringer implemenation
-// /////////////////////////////////////////////////////////////////
 
 func (t CaseType) String() string {
 	return string(t)
 }
 
 // /////////////////////////////////////////////////////////////////
-//  CaseType JSON marshal/unmarshal implemenation
+//  JSON serialization
 // /////////////////////////////////////////////////////////////////
 
 func (t CaseType) MarshalJSON() ([]byte, error) {
@@ -39,7 +34,7 @@ func (t *CaseType) UnmarshalJSON(data []byte) error {
 }
 
 // /////////////////////////////////////////////////////////////////
-//  CaseType YAML marshal/unmarshal implemenation
+//  YAML serialization
 // /////////////////////////////////////////////////////////////////
 
 func (t CaseType) MarshalYAML() (interface{}, error) {
@@ -51,7 +46,7 @@ func (t *CaseType) UnmarshalYAML(unmarshal func(interface{}) error) error {
 }
 
 // /////////////////////////////////////////////////////////////////
-//  CaseType XML marshal/unmarshal implemenation
+//  XML serialization
 // /////////////////////////////////////////////////////////////////
 
 func (t CaseType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -63,7 +58,7 @@ func (t *CaseType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 }
 
 // /////////////////////////////////////////////////////////////////
-//  CaseType SQL Database marshal/unmarshal implemenation
+//  SQL serialization
 // /////////////////////////////////////////////////////////////////
 
 func (t CaseType) Value() (driver.Value, error) {
@@ -75,9 +70,7 @@ func (t *CaseType) Scan(value interface{}) error {
 }
 
 // /////////////////////////////////////////////////////////////////
-//
-//  Enumeration
-//
+//  Companion
 // /////////////////////////////////////////////////////////////////
 
 type caseTypes struct {
@@ -96,7 +89,9 @@ type caseTypes struct {
 }
 
 var CaseTypes = caseTypes{
+
 	Camel:      CaseType("camel"),
+	Err:        fmt.Errorf("invalid CaseType"),
 	Kebab:      CaseType("kebab"),
 	KebabLower: CaseType("kebab-lower"),
 	KebabUpper: CaseType("kebab-upper"),
@@ -106,7 +101,6 @@ var CaseTypes = caseTypes{
 	SnakeLower: CaseType("snake-lower"),
 	SnakeUpper: CaseType("snake-upper"),
 	Unknown:    CaseType("unknown"),
-	Err:        fmt.Errorf("invalid CaseType"),
 }
 
 func init() {
@@ -129,8 +123,7 @@ func (t caseTypes) newErr(a any, values ...CaseType) error {
 		"invalid %w value '%v'. Must be one of %v",
 		CaseTypes.Err,
 		a,
-		enumer.Join(values, ", "),
-	)
+		enumer.Join(values, ", "))
 }
 
 func (t caseTypes) ParseFrom(v string, values ...CaseType) (CaseType, error) {

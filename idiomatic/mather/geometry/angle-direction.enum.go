@@ -1,3 +1,12 @@
+package geometry
+
+import (
+	"database/sql/driver"
+	"encoding/xml"
+	"fmt"
+	enumer "github.com/boundedinfinity/enumer"
+)
+
 //************************************************************************************
 //*                                                                                  *
 //* ===== DO NOT EDIT =====                                                          *
@@ -6,28 +15,14 @@
 //*                                                                                  *
 //************************************************************************************
 
-package geometry
-
-import (
-	"database/sql/driver"
-	"encoding/xml"
-	"fmt"
-
-	"github.com/boundedinfinity/enumer"
-)
-
 type AngleDirection string
-
-// /////////////////////////////////////////////////////////////////
-//  AngleDirection Stringer implemenation
-// /////////////////////////////////////////////////////////////////
 
 func (t AngleDirection) String() string {
 	return string(t)
 }
 
 // /////////////////////////////////////////////////////////////////
-//  AngleDirection JSON marshal/unmarshal implemenation
+//  JSON serialization
 // /////////////////////////////////////////////////////////////////
 
 func (t AngleDirection) MarshalJSON() ([]byte, error) {
@@ -39,7 +34,7 @@ func (t *AngleDirection) UnmarshalJSON(data []byte) error {
 }
 
 // /////////////////////////////////////////////////////////////////
-//  AngleDirection YAML marshal/unmarshal implemenation
+//  YAML serialization
 // /////////////////////////////////////////////////////////////////
 
 func (t AngleDirection) MarshalYAML() (interface{}, error) {
@@ -51,7 +46,7 @@ func (t *AngleDirection) UnmarshalYAML(unmarshal func(interface{}) error) error 
 }
 
 // /////////////////////////////////////////////////////////////////
-//  AngleDirection XML marshal/unmarshal implemenation
+//  XML serialization
 // /////////////////////////////////////////////////////////////////
 
 func (t AngleDirection) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -63,7 +58,7 @@ func (t *AngleDirection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 }
 
 // /////////////////////////////////////////////////////////////////
-//  AngleDirection SQL Database marshal/unmarshal implemenation
+//  SQL serialization
 // /////////////////////////////////////////////////////////////////
 
 func (t AngleDirection) Value() (driver.Value, error) {
@@ -75,9 +70,7 @@ func (t *AngleDirection) Scan(value interface{}) error {
 }
 
 // /////////////////////////////////////////////////////////////////
-//
-//  Enumeration
-//
+//  Companion
 // /////////////////////////////////////////////////////////////////
 
 type angleDirections struct {
@@ -88,8 +81,9 @@ type angleDirections struct {
 }
 
 var AngleDirections = angleDirections{
-	Clockwise:        AngleDirection("Clockwise"),
-	CounterClockwise: AngleDirection("CounterClockwise"),
+
+	Clockwise:        AngleDirection("clockwise"),
+	CounterClockwise: AngleDirection("counter-clockwise"),
 	Err:              fmt.Errorf("invalid AngleDirection"),
 }
 
@@ -105,8 +99,7 @@ func (t angleDirections) newErr(a any, values ...AngleDirection) error {
 		"invalid %w value '%v'. Must be one of %v",
 		AngleDirections.Err,
 		a,
-		enumer.Join(values, ", "),
-	)
+		enumer.Join(values, ", "))
 }
 
 func (t angleDirections) ParseFrom(v string, values ...AngleDirection) (AngleDirection, error) {

@@ -9,7 +9,7 @@ var (
 )
 
 func init() {
-	languageCharacters = append(languageCharacters, utf.Utf7.Letters()...)
+	languageCharacters = append(languageCharacters, utf.Utf7.WordCharacters()...)
 	languageCharacters = append(languageCharacters, utf.UNDERSCORE)
 }
 

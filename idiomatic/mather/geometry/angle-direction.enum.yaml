@@ -1,5 +1,5 @@
-serialize: 
-    values: pascal-to-kebab-lower
+serialize:
+    type: pascal-to-kebab-lower
 values:
     -   name: Clockwise
     -   name: CounterClockwise
