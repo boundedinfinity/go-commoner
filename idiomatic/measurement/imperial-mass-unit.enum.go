@@ -74,43 +74,64 @@ func (t *ImperialMassUnit) Scan(value interface{}) error {
 // /////////////////////////////////////////////////////////////////
 
 type imperialMassUnits struct {
-	Grain         ImperialMassUnit
-	Drachm        ImperialMassUnit
-	Ounce         ImperialMassUnit
-	Pound         ImperialMassUnit
-	Stone         ImperialMassUnit
-	Quarter       ImperialMassUnit
-	HundredWeight ImperialMassUnit
-	Ton           ImperialMassUnit
-	Slug          ImperialMassUnit
-	Values        []ImperialMassUnit
-	Err           error
+	Grain             ImperialMassUnit
+	PennyWeight       ImperialMassUnit
+	Scruple           ImperialMassUnit
+	Drachm            ImperialMassUnit
+	Ounce             ImperialMassUnit
+	OunceApothecaries ImperialMassUnit
+	Pound             ImperialMassUnit
+	Dram              ImperialMassUnit
+	Stone             ImperialMassUnit
+	Quarter           ImperialMassUnit
+	Cental            ImperialMassUnit
+	HundredWeight     ImperialMassUnit
+	Ton               ImperialMassUnit
+	MetricTon         ImperialMassUnit
+	Quintal           ImperialMassUnit
+	Slug              ImperialMassUnit
+	Values            []ImperialMassUnit
+	Err               error
 }
 
 var ImperialMassUnits = imperialMassUnits{
 
-	Drachm:        ImperialMassUnit("drachm"),
-	Err:           fmt.Errorf("invalid ImperialMassUnit"),
-	Grain:         ImperialMassUnit("grain"),
-	HundredWeight: ImperialMassUnit("hundred-weight"),
-	Ounce:         ImperialMassUnit("ounce"),
-	Pound:         ImperialMassUnit("pound"),
-	Quarter:       ImperialMassUnit("quarter"),
-	Slug:          ImperialMassUnit("slug"),
-	Stone:         ImperialMassUnit("stone"),
-	Ton:           ImperialMassUnit("ton"),
+	Cental:            ImperialMassUnit("cental"),
+	Drachm:            ImperialMassUnit("drachm"),
+	Dram:              ImperialMassUnit("dram"),
+	Err:               fmt.Errorf("invalid ImperialMassUnit"),
+	Grain:             ImperialMassUnit("grain"),
+	HundredWeight:     ImperialMassUnit("hundred-weight"),
+	MetricTon:         ImperialMassUnit("metric-ton"),
+	Ounce:             ImperialMassUnit("ounce"),
+	OunceApothecaries: ImperialMassUnit("ounce-apothecaries"),
+	PennyWeight:       ImperialMassUnit("penny-weight"),
+	Pound:             ImperialMassUnit("pound"),
+	Quarter:           ImperialMassUnit("quarter"),
+	Quintal:           ImperialMassUnit("quintal"),
+	Scruple:           ImperialMassUnit("scruple"),
+	Slug:              ImperialMassUnit("slug"),
+	Stone:             ImperialMassUnit("stone"),
+	Ton:               ImperialMassUnit("ton"),
 }
 
 func init() {
 	ImperialMassUnits.Values = []ImperialMassUnit{
 		ImperialMassUnits.Grain,
+		ImperialMassUnits.PennyWeight,
+		ImperialMassUnits.Scruple,
 		ImperialMassUnits.Drachm,
 		ImperialMassUnits.Ounce,
+		ImperialMassUnits.OunceApothecaries,
 		ImperialMassUnits.Pound,
+		ImperialMassUnits.Dram,
 		ImperialMassUnits.Stone,
 		ImperialMassUnits.Quarter,
+		ImperialMassUnits.Cental,
 		ImperialMassUnits.HundredWeight,
 		ImperialMassUnits.Ton,
+		ImperialMassUnits.MetricTon,
+		ImperialMassUnits.Quintal,
 		ImperialMassUnits.Slug,
 	}
 }
