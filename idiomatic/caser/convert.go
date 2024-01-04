@@ -10,8 +10,8 @@ import (
 func ConverterCombinations() []string {
 	outputs := []string{}
 
-	for _, c1 := range CaseTypes.Values {
-		for _, c2 := range CaseTypes.Values {
+	for _, c1 := range CaseTypes.Values() {
+		for _, c2 := range CaseTypes.Values() {
 			if c1 == c2 {
 				continue
 			}
