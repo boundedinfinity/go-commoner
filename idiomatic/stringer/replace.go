@@ -35,26 +35,34 @@ func ReplaceSpace[T ~string](s T, replacement string) string {
 	return ReplaceInList(s, []string{" "}, replacement)
 }
 
+func ReplaceSpaces[T ~string](s T, replacement string) string {
+	return ReplaceInList(s, utf.Utf8.ToStrings(utf.Utf8.Spaces()), replacement)
+}
+
 func ReplaceNumbers[T ~string](s T, replacement string) string {
-	return ReplaceInList(s, utf.Utf7.ToStrings(utf.Utf7.Numbers()), replacement)
+	return ReplaceInList(s, utf.Utf8.ToStrings(utf.Utf8.Numbers()), replacement)
 }
 
 func ReplaceLetters[T ~string](s T, replacement string) string {
-	return ReplaceInList(s, utf.Utf7.ToStrings(utf.Utf7.Letters()), replacement)
+	return ReplaceInList(s, utf.Utf8.ToStrings(utf.Utf8.Letters()), replacement)
 }
 
 func ReplaceSymbols[T ~string](s T, replacement string) string {
-	return ReplaceInList(s, utf.Utf7.ToStrings(utf.Utf7.Symbols()), replacement)
+	return ReplaceInList(s, utf.Utf8.ToStrings(utf.Utf8.Symbols()), replacement)
 }
 
 func ReplaceNonNumbers[T ~string](s T, replacement string) string {
-	return replaceNotInList(s, utf.Utf7.ToStrings(utf.Utf7.Numbers()), replacement)
+	return replaceNotInList(s, utf.Utf8.ToStrings(utf.Utf8.Numbers()), replacement)
 }
 
 func ReplaceNonLetters[T ~string](s T, replacement string) string {
-	return replaceNotInList(s, utf.Utf7.ToStrings(utf.Utf7.Letters()), replacement)
+	return replaceNotInList(s, utf.Utf8.ToStrings(utf.Utf8.Letters()), replacement)
 }
 
 func ReplaceNonWord[T ~string](s T, replacement string) string {
-	return replaceNotInList(s, utf.Utf7.ToStrings(utf.Utf7.WordCharacters()), replacement)
+	return replaceNotInList(s, utf.Utf8.ToStrings(utf.Utf8.WordCharacters()), replacement)
+}
+
+func ReplaceNewlines[T ~string](s T, replacement string) string {
+	return ReplaceInList(s, utf.Utf8.ToStrings(utf.Utf8.Newlines()), replacement)
 }

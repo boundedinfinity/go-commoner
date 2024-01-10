@@ -24,6 +24,7 @@ var Utf7 = utf7{
 	printableCharacters: []UtfChar{},
 	symbols:             []UtfChar{},
 	spaces:              []UtfChar{},
+	newlines:            []UtfChar{},
 }
 
 type utf7 struct {
@@ -38,10 +39,11 @@ type utf7 struct {
 	printableCharacters []UtfChar
 	symbols             []UtfChar
 	spaces              []UtfChar
+	newlines            []UtfChar
 }
 
 func init() {
-	Utf7.numbers = append(Utf7.numbers, []UtfChar{
+	Utf7.numbers = append(Utf7.numbers,
 		NUMBER_ZERO,
 		NUMBER_ONE,
 		NUMBER_TWO,
@@ -52,9 +54,9 @@ func init() {
 		NUMBER_SEVEN,
 		NUMBER_EIGHT,
 		NUMBER_NINE,
-	}...)
+	)
 
-	Utf7.lowerCase = append(Utf7.lowerCase, []UtfChar{
+	Utf7.lowerCase = append(Utf7.lowerCase,
 		LOWERCASE_A,
 		LOWERCASE_B,
 		LOWERCASE_C,
@@ -81,9 +83,9 @@ func init() {
 		LOWERCASE_X,
 		LOWERCASE_Y,
 		LOWERCASE_Z,
-	}...)
+	)
 
-	Utf7.upperCase = append(Utf7.upperCase, []UtfChar{
+	Utf7.upperCase = append(Utf7.upperCase,
 		UPPERCASE_A,
 		UPPERCASE_B,
 		UPPERCASE_C,
@@ -110,9 +112,9 @@ func init() {
 		UPPERCASE_X,
 		UPPERCASE_Y,
 		UPPERCASE_Z,
-	}...)
+	)
 
-	Utf7.all = append(Utf7.all, []UtfChar{
+	Utf7.all = append(Utf7.all,
 		NULL,
 		START_OF_HEADER,
 		START_OF_TEXT,
@@ -241,9 +243,9 @@ func init() {
 		CLOSING_CURLY_BRACKET,
 		TILDE,
 		DELETE,
-	}...)
+	)
 
-	Utf7.controlCharacters = append(Utf7.controlCharacters, []UtfChar{
+	Utf7.controlCharacters = append(Utf7.controlCharacters,
 		NULL,
 		START_OF_HEADER,
 		START_OF_TEXT,
@@ -276,9 +278,9 @@ func init() {
 		GROUP_SEPARATOR,
 		RECORD_SEPARATOR,
 		UNIT_SEPARATOR,
-	}...)
+	)
 
-	Utf7.symbols = append(Utf7.symbols, []UtfChar{
+	Utf7.symbols = append(Utf7.symbols,
 		EXCLAMATION_MARK,
 		DOUBLE_QUOTE,
 		NUMBER_SIGN,
@@ -311,9 +313,9 @@ func init() {
 		VERTICAL_BAR,
 		CLOSING_CURLY_BRACKET,
 		TILDE,
-	}...)
+	)
 
-	Utf7.spaces = append(Utf7.spaces, []UtfChar{
+	Utf7.spaces = append(Utf7.spaces,
 		BACKSPACE,
 		HORIZONTAL_TAB,
 		LINE_FEED,
@@ -321,7 +323,12 @@ func init() {
 		FORM_FEED,
 		CARRIAGE_RETURN,
 		SPACE,
-	}...)
+	)
+
+	Utf7.newlines = append(Utf7.newlines,
+		LINE_FEED,
+		CARRIAGE_RETURN,
+	)
 
 	Utf7.letters = append(Utf7.letters, Utf7.UpperCase()...)
 	Utf7.letters = append(Utf7.letters, Utf7.LowerCase()...)
@@ -400,6 +407,10 @@ func (t utf7) Symbols() []UtfChar {
 
 func (t utf7) Spaces() []UtfChar {
 	return t.spaces
+}
+
+func (t utf7) Newlines() []UtfChar {
+	return t.newlines
 }
 
 func (t utf7) ToStrings(cs []UtfChar) []string {

@@ -18,6 +18,8 @@ test: generate
 commit:
 	git add . || true
 	git commit -m "$(m)" || true
+
+push: commit
 	git push origin master
 
 pull:

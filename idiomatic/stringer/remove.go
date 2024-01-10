@@ -31,3 +31,11 @@ func RemoveNonWord[T ~string](s T) string {
 func RemoveSpace[T ~string](s T) string {
 	return ReplaceSpace(s, "")
 }
+
+func RemoveSpaces[T ~string](s T) string {
+	return ReplaceSpaces(s, "")
+}
+
+func RemoveNewlines[T ~string](s T) string {
+	return ReplaceNewlines(s, "")
+}

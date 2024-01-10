@@ -25,12 +25,13 @@ var Utf8 = utf8{
 	spaces:              []UtfChar{},
 	unused:              []UtfChar{},
 	symbols:             []UtfChar{},
+	newlines:            []UtfChar{},
 	all:                 []UtfChar{},
 }
 
 func init() {
 	Utf8.lowerCase = append(Utf8.lowerCase, Utf7.LowerCase()...)
-	Utf8.lowerCase = append(Utf8.lowerCase, []UtfChar{
+	Utf8.lowerCase = append(Utf8.lowerCase,
 		LOWERCASE_F_WITH_HOOK,
 		LOWERCASE_LIGATURE_OE,
 		LOWERCASE_Z_WITH_CARON,
@@ -66,10 +67,10 @@ func init() {
 		LOWERCASE_Y_WITH_ACUTE,
 		LOWERCASE_THORN,
 		LOWERCASE_Y_WITH_DIAERESIS,
-	}...)
+	)
 
 	Utf8.upperCase = append(Utf8.upperCase, Utf7.UpperCase()...)
-	Utf8.upperCase = append(Utf8.upperCase, []UtfChar{
+	Utf8.upperCase = append(Utf8.upperCase,
 		UPPERCASE_S_WITH_CARON,
 		UPPERCASE_Z_WITH_CARON,
 		UPPERCASE_Y_WITH_DIAERESIS,
@@ -103,9 +104,9 @@ func init() {
 		UPPERCASE_U_WITH_DIAERESIS,
 		UPPERCASE_Y_WITH_ACUTE,
 		UPPERCASE_THORN,
-	}...)
+	)
 
-	Utf8.extendedCharacters = append(Utf8.extendedCharacters, []UtfChar{
+	Utf8.extendedCharacters = append(Utf8.extendedCharacters,
 		EURO_SIGN,
 		UNUSED_1,
 		SINGLE_LOW_9_QUOTATION_MARK,
@@ -234,31 +235,31 @@ func init() {
 		LOWERCASE_Y_WITH_ACUTE,
 		LOWERCASE_THORN,
 		LOWERCASE_Y_WITH_DIAERESIS,
-	}...)
+	)
 
 	Utf8.numbers = append(Utf8.numbers, Utf7.Numbers()...)
-	Utf8.numbers = append(Utf8.numbers, []UtfChar{
+	Utf8.numbers = append(Utf8.numbers,
 		SUPERSCRIPT_1,
 		SUPERSCRIPT_2_SQUARED,
 		SUPERSCRIPT_3_CUBED,
 		FRACTION_1_4,
 		FRACTION_1_2,
 		FRACTION_3_4,
-	}...)
+	)
 
 	Utf8.spaces = append(Utf8.spaces, Utf7.Spaces()...)
 	Utf8.spaces = append(Utf8.spaces, NON_BREAKING_SPACE)
 
-	Utf8.unused = append(Utf8.unused, []UtfChar{
+	Utf8.unused = append(Utf8.unused,
 		UNUSED_1,
 		UNUSED_2,
 		UNUSED_3,
 		UNUSED_4,
 		UNUSED_5,
-	}...)
+	)
 
 	Utf8.symbols = append(Utf8.symbols, Utf7.Symbols()...)
-	Utf8.symbols = append(Utf8.symbols, []UtfChar{
+	Utf8.symbols = append(Utf8.symbols,
 		EURO_SIGN,
 		SINGLE_LOW_9_QUOTATION_MARK,
 		DOUBLE_LOW_9_QUOTATION_MARK,
@@ -306,7 +307,7 @@ func init() {
 		INVERTED_QUESTION_MARK,
 		MULTIPLICATION_SIGN,
 		DIVISION_SIGN,
-	}...)
+	)
 
 	Utf8.letters = append(Utf8.letters, Utf8.UpperCase()...)
 	Utf8.letters = append(Utf8.letters, Utf8.LowerCase()...)
@@ -322,6 +323,8 @@ func init() {
 
 	Utf8.all = append(Utf8.all, Utf7.All()...)
 	Utf8.all = append(Utf8.all, Utf8.ExtendedCharacters()...)
+
+	Utf8.newlines = append(Utf8.newlines, Utf7.Newlines()...)
 
 	Utf8.utf8Toutf7 = map[UtfChar]UtfChar{
 		UPPERCASE_A_WITH_GRAVE:      UPPERCASE_A,
@@ -401,6 +404,7 @@ type utf8 struct {
 	spaces              []UtfChar
 	unused              []UtfChar
 	symbols             []UtfChar
+	newlines            []UtfChar
 	all                 []UtfChar
 }
 
@@ -492,6 +496,10 @@ func (t utf8) Symbols() []UtfChar {
 
 func (t utf8) Spaces() []UtfChar {
 	return t.spaces
+}
+
+func (t utf8) Newlines() []UtfChar {
+	return t.newlines
 }
 
 func (t utf8) ToStrings(cs []UtfChar) []string {
