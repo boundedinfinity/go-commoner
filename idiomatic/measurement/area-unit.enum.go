@@ -161,19 +161,21 @@ func (t *AreaUnit) Scan(value interface{}) error {
 //////////////////////////////////////////////////////////////////
 
 var AreaUnits = areaUnits{
-	Acre:       AreaUnit("acre"),
 	Err:        fmt.Errorf("invalid AreaUnit"),
+	Invalid:    AreaUnit("invalid"),
+	SquareMile: AreaUnit("square-mile"),
+	Acre:       AreaUnit("acre"),
 	Rood:       AreaUnit("rood"),
+	SquareYard: AreaUnit("square-yard"),
 	SquareFoot: AreaUnit("square-foot"),
 	SquareInch: AreaUnit("square-inch"),
-	SquareMile: AreaUnit("square-mile"),
-	SquareYard: AreaUnit("square-yard"),
 }
 
 type areaUnits struct {
 	Err        error
 	errf       func(any, ...AreaUnit) error
 	parseMap   map[AreaUnit][]string
+	Invalid    AreaUnit
 	SquareMile AreaUnit
 	Acre       AreaUnit
 	Rood       AreaUnit
@@ -212,11 +214,13 @@ func (t areaUnits) ParseFrom(v string, items ...AreaUnit) (AreaUnit, error) {
 			}
 		}
 
-		if !ok {
-			return found, t.errf(v, items...)
+		if ok {
+			break
 		}
+	}
 
-		return found, nil
+	if !ok {
+		return found, t.errf(v, items...)
 	}
 
 	return found, nil

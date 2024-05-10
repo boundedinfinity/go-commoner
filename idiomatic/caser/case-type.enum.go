@@ -161,8 +161,9 @@ func (t *CaseType) Scan(value interface{}) error {
 //////////////////////////////////////////////////////////////////
 
 var CaseTypes = caseTypes{
-	Camel:      CaseType("camel"),
 	Err:        fmt.Errorf("invalid CaseType"),
+	Invalid:    CaseType("invalid"),
+	Camel:      CaseType("camel"),
 	Kebab:      CaseType("kebab"),
 	KebabLower: CaseType("kebab-lower"),
 	KebabUpper: CaseType("kebab-upper"),
@@ -178,6 +179,7 @@ type caseTypes struct {
 	Err        error
 	errf       func(any, ...CaseType) error
 	parseMap   map[CaseType][]string
+	Invalid    CaseType
 	Camel      CaseType
 	Kebab      CaseType
 	KebabLower CaseType
@@ -224,11 +226,13 @@ func (t caseTypes) ParseFrom(v string, items ...CaseType) (CaseType, error) {
 			}
 		}
 
-		if !ok {
-			return found, t.errf(v, items...)
+		if ok {
+			break
 		}
+	}
 
-		return found, nil
+	if !ok {
+		return found, t.errf(v, items...)
 	}
 
 	return found, nil

@@ -217,8 +217,15 @@ func Test_ParseConvert(t *testing.T) {
 	for _, tc := range tcs {
 		t.Run(tc.name, func(tt *testing.T) {
 			actual, err := caser.ConvertAs(tc.input, tc.convert)
+
+			if tc.err == nil {
+				assert.Nil(t, err)
+			} else {
+				assert.Equal(t, tc.err, err)
+			}
+
 			assert.Equal(t, tc.err, err)
-			assert.Equal(t, actual, tc.expected)
+			assert.Equal(t, actual, tc.expected, tc.convert)
 		})
 	}
 }

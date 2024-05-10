@@ -161,8 +161,9 @@ func (t *AngleType) Scan(value interface{}) error {
 //////////////////////////////////////////////////////////////////
 
 var AngleTypes = angleTypes{
-	Degrees: AngleType("degrees"),
 	Err:     fmt.Errorf("invalid AngleType"),
+	Invalid: AngleType("invalid"),
+	Degrees: AngleType("degrees"),
 	Radians: AngleType("radians"),
 }
 
@@ -170,6 +171,7 @@ type angleTypes struct {
 	Err      error
 	errf     func(any, ...AngleType) error
 	parseMap map[AngleType][]string
+	Invalid  AngleType
 	Degrees  AngleType
 	Radians  AngleType
 }
@@ -200,11 +202,13 @@ func (t angleTypes) ParseFrom(v string, items ...AngleType) (AngleType, error) {
 			}
 		}
 
-		if !ok {
-			return found, t.errf(v, items...)
+		if ok {
+			break
 		}
+	}
 
-		return found, nil
+	if !ok {
+		return found, t.errf(v, items...)
 	}
 
 	return found, nil

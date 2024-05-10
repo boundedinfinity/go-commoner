@@ -162,8 +162,9 @@ func (t *MeasurementSystem) Scan(value interface{}) error {
 
 var MeasurementSystems = measurementSystems{
 	Err:      fmt.Errorf("invalid MeasurementSystem"),
-	Imperial: MeasurementSystem("imperial"),
+	Invalid:  MeasurementSystem("invalid"),
 	Metric:   MeasurementSystem("metric"),
+	Imperial: MeasurementSystem("imperial"),
 	Unitless: MeasurementSystem("unitless"),
 }
 
@@ -171,6 +172,7 @@ type measurementSystems struct {
 	Err      error
 	errf     func(any, ...MeasurementSystem) error
 	parseMap map[MeasurementSystem][]string
+	Invalid  MeasurementSystem
 	Metric   MeasurementSystem
 	Imperial MeasurementSystem
 	Unitless MeasurementSystem
@@ -203,11 +205,13 @@ func (t measurementSystems) ParseFrom(v string, items ...MeasurementSystem) (Mea
 			}
 		}
 
-		if !ok {
-			return found, t.errf(v, items...)
+		if ok {
+			break
 		}
+	}
 
-		return found, nil
+	if !ok {
+		return found, t.errf(v, items...)
 	}
 
 	return found, nil

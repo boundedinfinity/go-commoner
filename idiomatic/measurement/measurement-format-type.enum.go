@@ -161,15 +161,17 @@ func (t *MeasurementFormatType) Scan(value interface{}) error {
 //////////////////////////////////////////////////////////////////
 
 var MeasurementFormatTypes = measurementFormatTypes{
-	Abbreviation: MeasurementFormatType("abbreviation"),
 	Err:          fmt.Errorf("invalid MeasurementFormatType"),
+	Invalid:      MeasurementFormatType("invalid"),
 	Full:         MeasurementFormatType("full"),
+	Abbreviation: MeasurementFormatType("abbreviation"),
 }
 
 type measurementFormatTypes struct {
 	Err          error
 	errf         func(any, ...MeasurementFormatType) error
 	parseMap     map[MeasurementFormatType][]string
+	Invalid      MeasurementFormatType
 	Full         MeasurementFormatType
 	Abbreviation MeasurementFormatType
 }
@@ -200,11 +202,13 @@ func (t measurementFormatTypes) ParseFrom(v string, items ...MeasurementFormatTy
 			}
 		}
 
-		if !ok {
-			return found, t.errf(v, items...)
+		if ok {
+			break
 		}
+	}
 
-		return found, nil
+	if !ok {
+		return found, t.errf(v, items...)
 	}
 
 	return found, nil

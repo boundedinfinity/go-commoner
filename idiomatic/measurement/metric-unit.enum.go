@@ -161,26 +161,28 @@ func (t *MetricUnit) Scan(value interface{}) error {
 //////////////////////////////////////////////////////////////////
 
 var MetricUnits = metricUnits{
-	Centi: MetricUnit("centi"),
-	Deca:  MetricUnit("deca"),
-	Deci:  MetricUnit("deci"),
-	Err:   fmt.Errorf("invalid MetricUnit"),
-	Giga:  MetricUnit("giga"),
-	Hecto: MetricUnit("hecto"),
-	Kilo:  MetricUnit("kilo"),
-	Mega:  MetricUnit("mega"),
-	Micro: MetricUnit("micro"),
-	Milli: MetricUnit("milli"),
-	Nano:  MetricUnit("nano"),
-	Pico:  MetricUnit("pico"),
-	Tera:  MetricUnit("tera"),
-	Unit:  MetricUnit("unit"),
+	Err:     fmt.Errorf("invalid MetricUnit"),
+	Invalid: MetricUnit("invalid"),
+	Tera:    MetricUnit("tera"),
+	Giga:    MetricUnit("giga"),
+	Mega:    MetricUnit("mega"),
+	Kilo:    MetricUnit("kilo"),
+	Hecto:   MetricUnit("hecto"),
+	Deca:    MetricUnit("deca"),
+	Unit:    MetricUnit("unit"),
+	Deci:    MetricUnit("deci"),
+	Centi:   MetricUnit("centi"),
+	Milli:   MetricUnit("milli"),
+	Micro:   MetricUnit("micro"),
+	Nano:    MetricUnit("nano"),
+	Pico:    MetricUnit("pico"),
 }
 
 type metricUnits struct {
 	Err      error
 	errf     func(any, ...MetricUnit) error
 	parseMap map[MetricUnit][]string
+	Invalid  MetricUnit
 	Tera     MetricUnit
 	Giga     MetricUnit
 	Mega     MetricUnit
@@ -233,11 +235,13 @@ func (t metricUnits) ParseFrom(v string, items ...MetricUnit) (MetricUnit, error
 			}
 		}
 
-		if !ok {
-			return found, t.errf(v, items...)
+		if ok {
+			break
 		}
+	}
 
-		return found, nil
+	if !ok {
+		return found, t.errf(v, items...)
 	}
 
 	return found, nil

@@ -161,29 +161,31 @@ func (t *ImperialLengthUnit) Scan(value interface{}) error {
 //////////////////////////////////////////////////////////////////
 
 var ImperialLengthUnits = imperialLengthUnits{
-	Barleycorn:   ImperialLengthUnit("barleycorn"),
-	Cable:        ImperialLengthUnit("cable"),
-	Chain:        ImperialLengthUnit("chain"),
 	Err:          fmt.Errorf("invalid ImperialLengthUnit"),
-	Fathom:       ImperialLengthUnit("fathom"),
-	Foot:         ImperialLengthUnit("foot"),
-	Furlong:      ImperialLengthUnit("furlong"),
-	Hand:         ImperialLengthUnit("hand"),
-	Inch:         ImperialLengthUnit("inch"),
-	League:       ImperialLengthUnit("league"),
-	Link:         ImperialLengthUnit("link"),
-	Mile:         ImperialLengthUnit("mile"),
-	NauticalMile: ImperialLengthUnit("nautical-mile"),
-	Rod:          ImperialLengthUnit("rod"),
-	Thou:         ImperialLengthUnit("thou"),
+	Invalid:      ImperialLengthUnit("invalid"),
 	Twip:         ImperialLengthUnit("twip"),
+	Thou:         ImperialLengthUnit("thou"),
+	Barleycorn:   ImperialLengthUnit("barleycorn"),
+	Inch:         ImperialLengthUnit("inch"),
+	Hand:         ImperialLengthUnit("hand"),
+	Foot:         ImperialLengthUnit("foot"),
 	Yard:         ImperialLengthUnit("yard"),
+	Chain:        ImperialLengthUnit("chain"),
+	Furlong:      ImperialLengthUnit("furlong"),
+	Mile:         ImperialLengthUnit("mile"),
+	League:       ImperialLengthUnit("league"),
+	Fathom:       ImperialLengthUnit("fathom"),
+	Cable:        ImperialLengthUnit("cable"),
+	NauticalMile: ImperialLengthUnit("nautical-mile"),
+	Link:         ImperialLengthUnit("link"),
+	Rod:          ImperialLengthUnit("rod"),
 }
 
 type imperialLengthUnits struct {
 	Err          error
 	errf         func(any, ...ImperialLengthUnit) error
 	parseMap     map[ImperialLengthUnit][]string
+	Invalid      ImperialLengthUnit
 	Twip         ImperialLengthUnit
 	Thou         ImperialLengthUnit
 	Barleycorn   ImperialLengthUnit
@@ -242,11 +244,13 @@ func (t imperialLengthUnits) ParseFrom(v string, items ...ImperialLengthUnit) (I
 			}
 		}
 
-		if !ok {
-			return found, t.errf(v, items...)
+		if ok {
+			break
 		}
+	}
 
-		return found, nil
+	if !ok {
+		return found, t.errf(v, items...)
 	}
 
 	return found, nil

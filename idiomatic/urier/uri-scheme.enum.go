@@ -161,6 +161,8 @@ func (t *UriScheme) Scan(value interface{}) error {
 //////////////////////////////////////////////////////////////////
 
 var UriSchemes = uriSchemes{
+	Err:                        fmt.Errorf("invalid UriScheme"),
+	Invalid:                    UriScheme("invalid"),
 	Aaa:                        UriScheme("aaa"),
 	Aaas:                       UriScheme("aaas"),
 	About:                      UriScheme("about"),
@@ -168,14 +170,12 @@ var UriSchemes = uriSchemes{
 	Acct:                       UriScheme("acct"),
 	Acr:                        UriScheme("acr"),
 	Adiumxtra:                  UriScheme("adiumxtra"),
-	Admin:                      UriScheme("admin"),
 	Afp:                        UriScheme("afp"),
 	Afs:                        UriScheme("afs"),
-	Amss:                       UriScheme("amss"),
-	App:                        UriScheme("app"),
 	Apt:                        UriScheme("apt"),
 	Attachment:                 UriScheme("attachment"),
 	Aw:                         UriScheme("aw"),
+	Amss:                       UriScheme("amss"),
 	Barion:                     UriScheme("barion"),
 	Beshare:                    UriScheme("beshare"),
 	Bitcoin:                    UriScheme("bitcoin"),
@@ -185,9 +185,9 @@ var UriSchemes = uriSchemes{
 	Cap:                        UriScheme("cap"),
 	Chrome:                     UriScheme("chrome"),
 	ChromeExtension:            UriScheme("chrome-extension"),
+	ComEventbriteAttendee:      UriScheme("com-eventbrite-attendee"),
 	Cid:                        UriScheme("cid"),
 	Coaps:                      UriScheme("coaps"),
-	ComEventbriteAttendee:      UriScheme("com-eventbrite-attendee"),
 	Conten:                     UriScheme("conten"),
 	Crid:                       UriScheme("crid"),
 	Cvs:                        UriScheme("cvs"),
@@ -195,8 +195,8 @@ var UriSchemes = uriSchemes{
 	Data:                       UriScheme("data"),
 	Dav:                        UriScheme("dav"),
 	Dict:                       UriScheme("dict"),
-	DlnaPlaycontainer:          UriScheme("dlna-playcontainer"),
 	DlnaPlaysingle:             UriScheme("dlna-playsingle"),
+	DlnaPlaycontainer:          UriScheme("dlna-playcontainer"),
 	Dns:                        UriScheme("dns"),
 	Dntp:                       UriScheme("dntp"),
 	Doi:                        UriScheme("doi"),
@@ -204,7 +204,6 @@ var UriSchemes = uriSchemes{
 	Dtn:                        UriScheme("dtn"),
 	Dvb:                        UriScheme("dvb"),
 	Ed2k:                       UriScheme("ed2k"),
-	Err:                        fmt.Errorf("invalid UriScheme"),
 	Example:                    UriScheme("example"),
 	Facetime:                   UriScheme("facetime"),
 	Fax:                        UriScheme("fax"),
@@ -241,14 +240,12 @@ var UriSchemes = uriSchemes{
 	Ircs:                       UriScheme("ircs"),
 	Iris:                       UriScheme("iris"),
 	IrisBeep:                   UriScheme("iris.beep"),
-	IrisLws:                    UriScheme("iris.lws"),
 	IrisXpc:                    UriScheme("iris.xpc"),
 	IrisXpcs:                   UriScheme("iris.xpcs"),
+	IrisLws:                    UriScheme("iris.lws"),
 	Itms:                       UriScheme("itms"),
 	Jabber:                     UriScheme("jabber"),
 	Jar:                        UriScheme("jar"),
-	Javascript:                 UriScheme("javascript"),
-	Jdbc:                       UriScheme("jdbc"),
 	Jms:                        UriScheme("jms"),
 	Keyparc:                    UriScheme("keyparc"),
 	Lastfm:                     UriScheme("lastfm"),
@@ -263,13 +260,7 @@ var UriSchemes = uriSchemes{
 	Mid:                        UriScheme("mid"),
 	Mms:                        UriScheme("mms"),
 	Modem:                      UriScheme("modem"),
-	MsAccess:                   UriScheme("ms-access"),
-	MsExcel:                    UriScheme("ms-excel"),
 	MsHelp:                     UriScheme("ms-help"),
-	MsInfopath:                 UriScheme("ms-infopath"),
-	MsPowerpoint:               UriScheme("ms-powerpoint"),
-	MsProject:                  UriScheme("ms-project"),
-	MsPublisher:                UriScheme("ms-publisher"),
 	MsSettings:                 UriScheme("ms-settings"),
 	MsSettingsAirplanemode:     UriScheme("ms-settings-airplanemode"),
 	MsSettingsBluetooth:        UriScheme("ms-settings-bluetooth"),
@@ -288,13 +279,9 @@ var UriSchemes = uriSchemes{
 	MsSettingsScreenrotation:   UriScheme("ms-settings-screenrotation"),
 	MsSettingsWifi:             UriScheme("ms-settings-wifi"),
 	MsSettingsWorkplace:        UriScheme("ms-settings-workplace"),
-	MsSpd:                      UriScheme("ms-spd"),
-	MsVisio:                    UriScheme("ms-visio"),
-	MsWord:                     UriScheme("ms-word"),
 	Msnim:                      UriScheme("msnim"),
 	Msrp:                       UriScheme("msrp"),
 	Msrps:                      UriScheme("msrps"),
-	Msteams:                    UriScheme("msteams"),
 	Mtqp:                       UriScheme("mtqp"),
 	Mumble:                     UriScheme("mumble"),
 	Mupdate:                    UriScheme("mupdate"),
@@ -304,7 +291,6 @@ var UriSchemes = uriSchemes{
 	Ni:                         UriScheme("ni"),
 	Nih:                        UriScheme("nih"),
 	Nntp:                       UriScheme("nntp"),
-	Odbc:                       UriScheme("odbc"),
 	Oid:                        UriScheme("oid"),
 	Opaquelocktoken:            UriScheme("opaquelocktoken"),
 	Openpgp4fpr:                UriScheme("openpgp4fpr"),
@@ -320,7 +306,6 @@ var UriSchemes = uriSchemes{
 	Proxy:                      UriScheme("proxy"),
 	Psyc:                       UriScheme("psyc"),
 	Query:                      UriScheme("query"),
-	Rdar:                       UriScheme("rdar"),
 	Redis:                      UriScheme("redis"),
 	Rediss:                     UriScheme("rediss"),
 	Reload:                     UriScheme("reload"),
@@ -343,7 +328,6 @@ var UriSchemes = uriSchemes{
 	Sip:                        UriScheme("sip"),
 	Sips:                       UriScheme("sips"),
 	Skype:                      UriScheme("skype"),
-	Slack:                      UriScheme("slack"),
 	Smb:                        UriScheme("smb"),
 	Sms:                        UriScheme("sms"),
 	Snews:                      UriScheme("snews"),
@@ -354,7 +338,6 @@ var UriSchemes = uriSchemes{
 	Spotify:                    UriScheme("spotify"),
 	Ssh:                        UriScheme("ssh"),
 	Steam:                      UriScheme("steam"),
-	Stratum:                    UriScheme("stratum"),
 	Stun:                       UriScheme("stun"),
 	Stuns:                      UriScheme("stuns"),
 	Svn:                        UriScheme("svn"),
@@ -365,9 +348,8 @@ var UriSchemes = uriSchemes{
 	Tftp:                       UriScheme("tftp"),
 	Things:                     UriScheme("things"),
 	Thismessage:                UriScheme("thismessage"),
-	Tip:                        UriScheme("tip"),
 	Tn3270:                     UriScheme("tn3270"),
-	Trueconf:                   UriScheme("trueconf"),
+	Tip:                        UriScheme("tip"),
 	Turn:                       UriScheme("turn"),
 	Turns:                      UriScheme("turns"),
 	Tv:                         UriScheme("tv"),
@@ -397,6 +379,25 @@ var UriSchemes = uriSchemes{
 	Z3950:                      UriScheme("z39.50"),
 	Z3950r:                     UriScheme("z39.50r"),
 	Z3950s:                     UriScheme("z39.50s"),
+	Admin:                      UriScheme("admin"),
+	App:                        UriScheme("app"),
+	Javascript:                 UriScheme("javascript"),
+	Jdbc:                       UriScheme("jdbc"),
+	Msteams:                    UriScheme("msteams"),
+	MsAccess:                   UriScheme("ms-access"),
+	MsExcel:                    UriScheme("ms-excel"),
+	MsInfopath:                 UriScheme("ms-infopath"),
+	MsPowerpoint:               UriScheme("ms-powerpoint"),
+	MsProject:                  UriScheme("ms-project"),
+	MsPublisher:                UriScheme("ms-publisher"),
+	MsSpd:                      UriScheme("ms-spd"),
+	MsVisio:                    UriScheme("ms-visio"),
+	MsWord:                     UriScheme("ms-word"),
+	Odbc:                       UriScheme("odbc"),
+	Rdar:                       UriScheme("rdar"),
+	Trueconf:                   UriScheme("trueconf"),
+	Slack:                      UriScheme("slack"),
+	Stratum:                    UriScheme("stratum"),
 	Zoommtg:                    UriScheme("zoommtg"),
 	Zoomus:                     UriScheme("zoomus"),
 }
@@ -405,6 +406,7 @@ type uriSchemes struct {
 	Err                        error
 	errf                       func(any, ...UriScheme) error
 	parseMap                   map[UriScheme][]string
+	Invalid                    UriScheme
 	Aaa                        UriScheme
 	Aaas                       UriScheme
 	About                      UriScheme
@@ -905,11 +907,13 @@ func (t uriSchemes) ParseFrom(v string, items ...UriScheme) (UriScheme, error) {
 			}
 		}
 
-		if !ok {
-			return found, t.errf(v, items...)
+		if ok {
+			break
 		}
+	}
 
-		return found, nil
+	if !ok {
+		return found, t.errf(v, items...)
 	}
 
 	return found, nil

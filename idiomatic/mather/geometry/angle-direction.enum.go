@@ -161,15 +161,17 @@ func (t *AngleDirection) Scan(value interface{}) error {
 //////////////////////////////////////////////////////////////////
 
 var AngleDirections = angleDirections{
+	Err:              fmt.Errorf("invalid AngleDirection"),
+	Invalid:          AngleDirection("invalid"),
 	Clockwise:        AngleDirection("clockwise"),
 	CounterClockwise: AngleDirection("counter-clockwise"),
-	Err:              fmt.Errorf("invalid AngleDirection"),
 }
 
 type angleDirections struct {
 	Err              error
 	errf             func(any, ...AngleDirection) error
 	parseMap         map[AngleDirection][]string
+	Invalid          AngleDirection
 	Clockwise        AngleDirection
 	CounterClockwise AngleDirection
 }
@@ -200,11 +202,13 @@ func (t angleDirections) ParseFrom(v string, items ...AngleDirection) (AngleDire
 			}
 		}
 
-		if !ok {
-			return found, t.errf(v, items...)
+		if ok {
+			break
 		}
+	}
 
-		return found, nil
+	if !ok {
+		return found, t.errf(v, items...)
 	}
 
 	return found, nil

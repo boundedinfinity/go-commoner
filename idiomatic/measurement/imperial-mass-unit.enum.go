@@ -161,29 +161,31 @@ func (t *ImperialMassUnit) Scan(value interface{}) error {
 //////////////////////////////////////////////////////////////////
 
 var ImperialMassUnits = imperialMassUnits{
-	Cental:            ImperialMassUnit("cental"),
-	Drachm:            ImperialMassUnit("drachm"),
-	Dram:              ImperialMassUnit("dram"),
 	Err:               fmt.Errorf("invalid ImperialMassUnit"),
+	Invalid:           ImperialMassUnit("invalid"),
 	Grain:             ImperialMassUnit("grain"),
-	HundredWeight:     ImperialMassUnit("hundred-weight"),
-	MetricTon:         ImperialMassUnit("metric-ton"),
+	PennyWeight:       ImperialMassUnit("penny-weight"),
+	Scruple:           ImperialMassUnit("scruple"),
+	Drachm:            ImperialMassUnit("drachm"),
 	Ounce:             ImperialMassUnit("ounce"),
 	OunceApothecaries: ImperialMassUnit("ounce-apothecaries"),
-	PennyWeight:       ImperialMassUnit("penny-weight"),
 	Pound:             ImperialMassUnit("pound"),
-	Quarter:           ImperialMassUnit("quarter"),
-	Quintal:           ImperialMassUnit("quintal"),
-	Scruple:           ImperialMassUnit("scruple"),
-	Slug:              ImperialMassUnit("slug"),
+	Dram:              ImperialMassUnit("dram"),
 	Stone:             ImperialMassUnit("stone"),
+	Quarter:           ImperialMassUnit("quarter"),
+	Cental:            ImperialMassUnit("cental"),
+	HundredWeight:     ImperialMassUnit("hundred-weight"),
 	Ton:               ImperialMassUnit("ton"),
+	MetricTon:         ImperialMassUnit("metric-ton"),
+	Quintal:           ImperialMassUnit("quintal"),
+	Slug:              ImperialMassUnit("slug"),
 }
 
 type imperialMassUnits struct {
 	Err               error
 	errf              func(any, ...ImperialMassUnit) error
 	parseMap          map[ImperialMassUnit][]string
+	Invalid           ImperialMassUnit
 	Grain             ImperialMassUnit
 	PennyWeight       ImperialMassUnit
 	Scruple           ImperialMassUnit
@@ -242,11 +244,13 @@ func (t imperialMassUnits) ParseFrom(v string, items ...ImperialMassUnit) (Imper
 			}
 		}
 
-		if !ok {
-			return found, t.errf(v, items...)
+		if ok {
+			break
 		}
+	}
 
-		return found, nil
+	if !ok {
+		return found, t.errf(v, items...)
 	}
 
 	return found, nil
