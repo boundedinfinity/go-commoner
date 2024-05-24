@@ -40,3 +40,8 @@ func (t Option[T]) OrElse(v T) T {
 
 	return v
 }
+
+// OrOrNil returns a pointer to the value or nil.
+func (t Option[T]) OrNil() *T {
+	return t.v
+}
