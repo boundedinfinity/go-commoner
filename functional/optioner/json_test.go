@@ -9,6 +9,10 @@ import (
 )
 
 func Test_serialize(t *testing.T) {
+	type something[T any] struct {
+		V o.Option[T] `json:",omitempty"`
+	}
+
 	testCases := []struct {
 		name     string
 		input    any
@@ -35,156 +39,176 @@ func Test_serialize(t *testing.T) {
 			input:    o.None[int](),
 			expected: `null`,
 		},
+		{
+			name:     "some string",
+			input:    something[string]{V: o.Some("s")},
+			expected: `{"V": "s"}`,
+		},
+		{
+			name:     "some string",
+			input:    something[string]{V: o.None[string]()},
+			expected: `{"V": null}`,
+		},
 	}
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
 			actual, err := json.Marshal(tc.input)
+
 			assert.Equal(tt, tc.err, err)
-			assert.Equal(tt, string(tc.expected), string(actual))
+			assert.JSONEqf(tt, tc.expected, string(actual), "%v == %v", tc.expected, string(actual))
 		})
 	}
 }
 
-// func Test_deserialize(t *testing.T) {
-// 	testCases := []struct {
-// 		name     string
-// 		input    string
-// 		expected o.Option[any]
-// 		err      error
-// 	}{
-// 		{
-// 			name:     "some string",
-// 			input:    `"s"`,
-// 			expected: o.Some("s"),
-// 		},
-// 	}
+func Test_deserialize_string(t *testing.T) {
+	testCases := []struct {
+		name     string
+		input    string
+		expected o.Option[string]
+		err      error
+	}{
+		{
+			name:     "some string",
+			input:    `"s"`,
+			expected: o.Some("s"),
+		},
+		{
+			name:     "zero string",
+			input:    `""`,
+			expected: o.Some(""),
+		},
+		{
+			name:     "null string",
+			input:    `null`,
+			expected: o.None[string](),
+		},
+	}
 
-// 	for _, tc := range testCases {
-// 		t.Run(tc.name, func(tt *testing.T) {
-// 			input := []byte(tc.input)
-// 			var actual o.Option[any]
-// 			err := json.Unmarshal(input, &actual)
+	for _, tc := range testCases {
+		t.Run(tc.name, func(tt *testing.T) {
+			var actual o.Option[string]
+			err := json.Unmarshal([]byte(tc.input), &actual)
 
-// 			assert.Equal(tt, tc.err, err)
-// 			assert.Equal(tt, tc.expected.Get(), actual.Get())
-// 			assert.Equal(tt, tc.expected.Empty(), actual.Empty())
-// 			assert.Equal(tt, tc.expected.Defined(), actual.Defined())
+			assert.Equal(tt, tc.err, err)
+			assert.Equal(tt, tc.expected.Get(), actual.Get(), "Get()")
+			assert.Equal(tt, tc.expected.Empty(), actual.Empty(), "Empty()")
+			assert.Equal(tt, tc.expected.Defined(), actual.Defined(), "Defined()")
+		})
+	}
+}
 
-// 		})
-// 	}
-// }
+func Test_deserialize_int(t *testing.T) {
+	testCases := []struct {
+		name     string
+		input    string
+		expected o.Option[int]
+		err      error
+	}{
+		{
+			name:     "some int",
+			input:    `1`,
+			expected: o.Some(1),
+		},
+		{
+			name:     "zero int",
+			input:    `0`,
+			expected: o.Some(0),
+		},
+		{
+			name:     "null int",
+			input:    `null`,
+			expected: o.None[int](),
+		},
+	}
 
-// func Test_JSON_deserialize_string(t *testing.T) {
-// 	input := []byte(`"s"`)
-// 	expected := optioner.Some("s")
-// 	var actual optioner.Option[string]
-// 	err := json.Unmarshal(input, &actual)
+	for _, tc := range testCases {
+		t.Run(tc.name, func(tt *testing.T) {
+			var actual o.Option[int]
+			err := json.Unmarshal([]byte(tc.input), &actual)
 
-// 	assert.Nil(t, err)
-// 	assert.Equal(t, expected.Get(), actual.Get())
-// 	assert.Equal(t, expected.Empty(), actual.Empty())
-// 	assert.Equal(t, expected.Defined(), actual.Defined())
-// }
+			assert.Equal(tt, tc.err, err)
+			assert.Equal(tt, tc.expected.Get(), actual.Get(), "Get()")
+			assert.Equal(tt, tc.expected.Empty(), actual.Empty(), "Empty()")
+			assert.Equal(tt, tc.expected.Defined(), actual.Defined(), "Defined()")
+		})
+	}
+}
 
-// func Test_JSON_deserialize_nil_string(t *testing.T) {
-// 	input := []byte(`null`)
-// 	expected := optioner.None[string]()
-// 	var actual optioner.Option[string]
-// 	err := json.Unmarshal(input, &actual)
+func Test_deserialize_bool(t *testing.T) {
+	testCases := []struct {
+		name     string
+		input    string
+		expected o.Option[bool]
+		err      error
+	}{
+		{
+			name:     "some bool",
+			input:    `true`,
+			expected: o.Some(true),
+		},
+		{
+			name:     "zero bool",
+			input:    `false`,
+			expected: o.Some(false),
+		},
+		{
+			name:     "null bool",
+			input:    `null`,
+			expected: o.None[bool](),
+		},
+	}
 
-// 	assert.Nil(t, err)
-// 	assert.Equal(t, expected.Get(), actual.Get())
-// 	assert.Equal(t, expected.Empty(), actual.Empty())
-// 	assert.Equal(t, expected.Defined(), actual.Defined())
-// }
+	for _, tc := range testCases {
+		t.Run(tc.name, func(tt *testing.T) {
+			var actual o.Option[bool]
+			err := json.Unmarshal([]byte(tc.input), &actual)
 
-// func Test_JSON_deserialize_int(t *testing.T) {
-// 	input := []byte(`null`)
-// 	expected := optioner.None[string]()
-// 	var actual optioner.Option[string]
-// 	err := json.Unmarshal(input, &actual)
+			assert.Equal(tt, tc.err, err)
+			assert.Equal(tt, tc.expected.Get(), actual.Get(), "Get()")
+			assert.Equal(tt, tc.expected.Empty(), actual.Empty(), "Empty()")
+			assert.Equal(tt, tc.expected.Defined(), actual.Defined(), "Defined()")
+		})
+	}
+}
 
-// 	assert.Nil(t, err)
-// 	assert.Equal(t, expected.Get(), actual.Get())
-// 	assert.Equal(t, expected.Empty(), actual.Empty())
-// 	assert.Equal(t, expected.Defined(), actual.Defined())
-// }
+func Test_deserialize_struct(t *testing.T) {
+	type something[T string] struct {
+		V o.Option[T] `json:",omitempty"`
+	}
 
-// func Test_JSON_deserialize_int_empty(t *testing.T) {
-// 	input := []byte(`null`)
-// 	expected := optioner.None[string]()
-// 	var actual optioner.Option[string]
-// 	err := json.Unmarshal(input, &actual)
+	testCases := []struct {
+		name     string
+		input    string
+		expected something[string]
+		err      error
+	}{
+		{
+			name:     "some struct",
+			input:    `{"V": "s"}`,
+			expected: something[string]{V: o.Some("s")},
+		},
+		{
+			name:     "zero struct",
+			input:    `{}`,
+			expected: something[string]{V: o.None[string]()},
+		},
+		{
+			name:     "null struct",
+			input:    `{"V": null}`,
+			expected: something[string]{V: o.None[string]()},
+		},
+	}
 
-// 	assert.Nil(t, err)
-// 	assert.Equal(t, expected.Get(), actual.Get())
-// 	assert.Equal(t, expected.Empty(), actual.Empty())
-// 	assert.Equal(t, expected.Defined(), actual.Defined())
-// }
+	for _, tc := range testCases {
+		t.Run(tc.name, func(tt *testing.T) {
+			var actual something[string]
+			err := json.Unmarshal([]byte(tc.input), &actual)
 
-// func Test_JSON_deserialize_nil_int(t *testing.T) {
-// 	input := []byte(`null`)
-// 	expected := optioner.None[int]()
-// 	var actual optioner.Option[int]
-// 	err := json.Unmarshal(input, &actual)
-
-// 	assert.Nil(t, err)
-// 	assert.Equal(t, expected.Get(), actual.Get())
-// 	assert.Equal(t, expected.Empty(), actual.Empty())
-// 	assert.Equal(t, expected.Defined(), actual.Defined())
-// }
-
-// func Test_JSON_serialize_struct(t *testing.T) {
-// 	type Struct1 struct {
-// 		I int
-// 		S string
-// 	}
-
-// 	s1 := Struct1{
-// 		I: 1,
-// 		S: "s",
-// 	}
-
-// 	input1 := optioner.Some(s1)
-// 	expected1 := []byte(`{"I":1,"S":"s"}`)
-// 	actual1, err := json.Marshal(input1)
-
-// 	assert.Nil(t, err)
-// 	assert.Equal(t, string(expected1), string(actual1))
-
-// 	input2 := optioner.None[Struct1]()
-// 	expected2 := []byte(`null`)
-// 	actual2, err := json.Marshal(input2)
-
-// 	assert.Nil(t, err)
-// 	assert.Equal(t, string(expected2), string(actual2))
-
-// 	type Struct2 struct {
-// 		I optioner.Option[int]
-// 		S optioner.Option[string]
-// 	}
-
-// 	input3 := Struct2{
-// 		I: optioner.None[int](),
-// 		S: optioner.None[string](),
-// 	}
-
-// 	expected3 := []byte(`{"I":null,"S":null}`)
-// 	actual3, err := json.Marshal(input3)
-
-// 	assert.Nil(t, err)
-// 	assert.Equal(t, string(expected3), string(actual3))
-// }
-
-// func Test_JSON_deserialize_struct(t *testing.T) {
-// 	input := []byte(`null`)
-// 	expected := optioner.None[int]()
-// 	var actual optioner.Option[int]
-// 	err := json.Unmarshal(input, &actual)
-
-// 	assert.Nil(t, err)
-// 	assert.Equal(t, expected.Get(), actual.Get())
-// 	assert.Equal(t, expected.Empty(), actual.Empty())
-// 	assert.Equal(t, expected.Defined(), actual.Defined())
-// }
+			assert.Equal(tt, tc.err, err)
+			assert.Equal(tt, tc.expected.V.Get(), actual.V.Get(), "Get()")
+			assert.Equal(tt, tc.expected.V.Empty(), actual.V.Empty(), "Empty()")
+			assert.Equal(tt, tc.expected.V.Defined(), actual.V.Defined(), "Defined()")
+		})
+	}
+}
