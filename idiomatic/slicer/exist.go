@@ -1,29 +1,34 @@
 package slicer
 
 func Exist[T comparable](s T, items ...T) bool {
-	fn := func(t T) bool {
+	fn := func(_ int, t T) bool {
 		return t == s
 	}
 
 	return ExistFn(fn, items...)
 }
 
-func ExistFn[T any](fn func(T) bool, items ...T) bool {
-	for _, item := range items {
-		if fn(item) {
-			return true
-		}
+func ExistFn[T any](fn func(int, T) bool, items ...T) bool {
+	wrap := func(i int, t T) (bool, error) {
+		return fn(i, t), nil
 	}
 
-	return false
+	found, _ := ExistFnErr(wrap, items...)
+	return found
 }
 
-func ExistFnErr[T any](fn func(T) (bool, error), items ...T) (bool, error) {
+func ExistFnErr[T any](fn func(int, T) (bool, error), items ...T) (bool, error) {
 	var ok bool
 	var err error
 
-	for _, item := range items {
-		if ok, err = fn(item); ok || err != nil {
+	for i, item := range items {
+		ok, err = fn(i, item)
+
+		if !ok {
+			break
+		}
+
+		if err != nil {
 			break
 		}
 	}

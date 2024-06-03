@@ -1,28 +1,33 @@
 package slicer
 
-func Uniq[T comparable](vs ...T) []T {
-	o := []T{}
-	m := map[T]bool{}
-
-	for _, v := range vs {
-		if _, ok := m[v]; !ok {
-			m[v] = true
-		}
+func Uniq[C comparable](vs ...C) []C {
+	wrap := func(t C) C {
+		return t
 	}
 
-	for v := range m {
-		o = append(o, v)
+	return UniqFn(wrap, vs...)
+}
+
+func UniqFn[T any, C comparable](fn func(T) C, vs ...T) []T {
+	wrap := func(t T) (C, error) {
+		return fn(t), nil
 	}
+
+	o, _ := UniqFnErr(wrap, vs...)
 
 	return o
 }
 
-func UniqFn[T any, U comparable](fn func(T) U, vs ...T) []T {
+func UniqFnErr[T any, C comparable](fn func(T) (C, error), vs ...T) ([]T, error) {
 	o := []T{}
-	m := map[U]T{}
+	m := map[C]T{}
 
 	for _, v := range vs {
-		c := fn(v)
+		c, err := fn(v)
+
+		if err != nil {
+			return o, err
+		}
 
 		if _, ok := m[c]; !ok {
 			m[c] = v
@@ -33,5 +38,5 @@ func UniqFn[T any, U comparable](fn func(T) U, vs ...T) []T {
 		o = append(o, v)
 	}
 
-	return o
+	return o, nil
 }

@@ -9,36 +9,37 @@ import (
 )
 
 func Test_Map(t *testing.T) {
-	type Type1 struct {
-		thing string
+	type Thing1 struct {
+		aItem string
 	}
 
-	type Type2 struct {
-		thing string
+	type Thing2 struct {
+		bItem string
 	}
 
-	expected := []Type2{{thing: "a"}, {thing: "b"}}
-	input := []Type1{{thing: "a"}, {thing: "b"}}
-	actual := slicer.Map(func(t1 Type1) Type2 {
-		return Type2{thing: t1.thing}
+	expected := []Thing2{{bItem: "a"}, {bItem: "b"}}
+	input := []Thing1{{aItem: "a"}, {aItem: "b"}}
+
+	actual := slicer.Map(func(t1 Thing1) Thing2 {
+		return Thing2{bItem: t1.aItem}
 	}, input...)
 
 	assert.ElementsMatch(t, expected, actual)
 }
 
 func Test_MapErr_NoErr(t *testing.T) {
-	type Type1 struct {
-		thing string
+	type Thing1 struct {
+		aItem string
 	}
 
-	type Type2 struct {
-		thing string
+	type Thing2 struct {
+		bItem string
 	}
 
-	expected := []Type2{{thing: "a"}, {thing: "b"}}
-	input := []Type1{{thing: "a"}, {thing: "b"}}
-	actual, err := slicer.MapErr(func(t1 Type1) (Type2, error) {
-		return Type2{thing: t1.thing}, nil
+	expected := []Thing2{{bItem: "a"}, {bItem: "b"}}
+	input := []Thing1{{aItem: "a"}, {aItem: "b"}}
+	actual, err := slicer.MapErr(func(t1 Thing1) (Thing2, error) {
+		return Thing2{bItem: t1.aItem}, nil
 	}, input...)
 
 	assert.ElementsMatch(t, expected, actual)
@@ -46,18 +47,18 @@ func Test_MapErr_NoErr(t *testing.T) {
 }
 
 func Test_MapErr_WithErr(t *testing.T) {
-	type Type1 struct {
-		thing string
+	type Thing1 struct {
+		aItem string
 	}
 
-	type Type2 struct {
-		thing string
+	type Thing2 struct {
+		bItem string
 	}
 
-	expected := []Type2{}
-	input := []Type1{{thing: "a"}, {thing: "b"}}
-	actual, err := slicer.MapErr(func(t1 Type1) (Type2, error) {
-		return Type2{}, errors.New("map error")
+	expected := []Thing2{}
+	input := []Thing1{{aItem: "a"}, {aItem: "b"}}
+	actual, err := slicer.MapErr(func(t1 Thing1) (Thing2, error) {
+		return Thing2{}, errors.New("map error")
 	}, input...)
 
 	assert.ElementsMatch(t, expected, actual)
