@@ -6,8 +6,12 @@ func (t Slicer[T]) Len() int {
 	return len(t)
 }
 
-func (t Slicer[T]) Append(items ...T) {
-	t = append(t, items...)
+func (t *Slicer[T]) Append(items ...T) {
+	*t = append(*t, items...)
+}
+
+func (t Slicer[T]) Slice() []T {
+	return t
 }
 
 // ////////////////////////////////////////////////////////////////////////////

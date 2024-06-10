@@ -1,12 +1,16 @@
 package slicer
 
-func Last[V any](vs ...V) (V, bool) {
-	l := len(vs)
+func End[T any](items ...T) (T, bool) {
+	return Last(items...)
+}
+
+func Last[T any](items ...T) (T, bool) {
+	l := len(items)
 
 	if l > 0 {
-		return vs[l-1], true
+		return items[l-1], true
 	} else {
-		var zero V
+		var zero T
 		return zero, false
 	}
 }

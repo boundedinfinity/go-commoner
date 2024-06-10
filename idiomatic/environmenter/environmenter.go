@@ -16,35 +16,45 @@ var (
 	}
 )
 
-type ConfigArg func(*Config)
-
-func Pattern(p string) ConfigArg {
-	return Patterns([]string{p})
+func New() *Environmenter {
+	t := &Environmenter{}
+	return t.
+		WithPatterns(default_patterns...).
+		WithSplitChar("=")
 }
 
-func Patterns(ps []string) ConfigArg {
-	return func(c *Config) {
-		var patterns []string
-
-		if c.Patterns == nil {
-			patterns = make([]string, 0)
-		}
-
-		patterns = append(patterns, c.Patterns...)
-		patterns = append(patterns, ps...)
-		c.Patterns = patterns
-	}
+type Environmenter struct {
+	patterns    []string
+	splitChar   string
+	environment []string
 }
 
-type Config struct {
-	Patterns []string
+func (t *Environmenter) WithSplitChar(splitChar string) *Environmenter {
+	t.splitChar = splitChar
+	return t
 }
 
-func SubWithConfig(s string, config Config) string {
-	o := s
+func (t *Environmenter) WithPatterns(patterns ...string) *Environmenter {
+	t.patterns = append(t.patterns, patterns...)
+	return t
+}
 
-	for _, env := range os.Environ() {
-		comps := stringer.Split(env, "=")
+func (t *Environmenter) WithEnvironment(environment ...string) *Environmenter {
+	t.environment = append(t.environment, environment...)
+	return t
+}
+
+func (t *Environmenter) ResetPatterns(patterns ...string) *Environmenter {
+	t.patterns = patterns
+	return t
+}
+
+func (t *Environmenter) parseEnv() map[string]string {
+	env := append(os.Environ(), t.environment...)
+	envMap := map[string]string{}
+
+	for _, env := range env {
+		comps := stringer.Split(env, t.splitChar)
 
 		if len(comps) != 2 {
 			continue
@@ -52,38 +62,44 @@ func SubWithConfig(s string, config Config) string {
 
 		key := comps[0]
 		val := comps[1]
+		envMap[key] = val
+	}
 
-		for _, format := range config.Patterns {
+	return envMap
+}
+
+func (t *Environmenter) subWithMap(item string, envMap map[string]string) string {
+	replaced := item
+
+	for key, val := range envMap {
+		for _, format := range t.patterns {
 			pattern := fmt.Sprintf(format, key)
-			o = strings.ReplaceAll(o, pattern, val)
+			replaced = strings.ReplaceAll(replaced, pattern, val)
 		}
 	}
 
-	return o
+	return replaced
 }
 
-func SubWithArgs(s string, args ...ConfigArg) string {
-	var config Config
-
-	if len(args) == 0 {
-		for _, p := range default_patterns {
-			args = append(args, Pattern(p))
-		}
-	}
-
-	for _, arg := range args {
-		arg(&config)
-	}
-
-	return SubWithConfig(s, config)
+func (t *Environmenter) Sub(item string) string {
+	return t.subWithMap(item, t.parseEnv())
 }
 
-func Sub(s string) string {
-	args := make([]ConfigArg, 0)
+func (t *Environmenter) SubAll(items ...string) []string {
+	var replaced []string
+	envMap := t.parseEnv()
 
-	for _, p := range default_patterns {
-		args = append(args, Pattern(p))
+	for _, item := range items {
+		replaced = append(replaced, t.subWithMap(item, envMap))
 	}
 
-	return SubWithArgs(s, args...)
+	return replaced
+}
+
+func Sub(item string) string {
+	return New().Sub(item)
+}
+
+func SubAll(items ...string) []string {
+	return New().SubAll(items...)
 }

@@ -41,7 +41,6 @@ func (t files) Exists(path string) bool {
 }
 
 func (t files) ExistsErr(path string) (bool, error) {
-
 	return Paths.ExistsErr(path)
 }
 

@@ -4,6 +4,8 @@ import (
 	"errors"
 	"os"
 	"path/filepath"
+
+	"github.com/boundedinfinity/go-commoner/idiomatic/stringer"
 )
 
 var Paths = paths{}
@@ -18,6 +20,20 @@ func (t paths) Dir(path string) string {
 	return filepath.Dir(string(path))
 }
 
+func (t paths) IsAbs(path string) bool {
+	return path == t.Abs(path)
+}
+
+func (t paths) IsAbsErr(path string) (bool, error) {
+	abs, err := t.AbsErr(path)
+
+	if err != nil {
+		return false, err
+	}
+
+	return path == abs, nil
+}
+
 func (t paths) AbsErr(path string) (string, error) {
 	return filepath.Abs(path)
 }
@@ -30,6 +46,10 @@ func (t paths) Abs(path string) string {
 	}
 
 	return abs
+}
+
+func (t paths) EndsWith(path, suffix string) bool {
+	return stringer.HasSuffx(path, suffix)
 }
 
 func (t paths) Exists(path string) bool {

@@ -1,10 +1,14 @@
 package slicer
 
-func Head[V any](items ...V) (V, bool) {
+func Head[T any](items ...T) (T, bool) {
+	return First(items...)
+}
+
+func First[T any](items ...T) (T, bool) {
 	if len(items) > 0 {
 		return items[0], true
 	} else {
-		var zero V
+		var zero T
 		return zero, false
 	}
 }
