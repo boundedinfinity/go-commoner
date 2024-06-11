@@ -5,36 +5,36 @@ package slicer
 //      - https://lodash.com/docs/4.17.15#includes
 // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Contains test wheather the match value is equal to any of the elems.
+// Contains[T] test if the match value is equal to any of the elements in elems
 func Contains[T comparable](match T, elems ...T) bool {
 	fn := func(_ int, current bool, elem T) bool {
-		if current {
-			return current
-		}
-
 		return match == elem
 	}
 
 	return FoldLeft(false, fn, elems...)
 }
 
+// Contains[T] test if the value returned from fn is true for any of the elements in elems
+//
+// The fn(int, T) bool functions takes:
+//   - int is the index of the current element
+//   - T is the current element
 func ContainsFn[T any](fn func(int, T) bool, elems ...T) bool {
-	fn2 := func(i int, current bool, elem T) bool {
-		if current {
-			return current
-		}
-
-		return fn(i, elem)
+	fn2 := func(i int, elem T) (bool, error) {
+		return fn(i, elem), nil
 	}
 
-	return FoldLeft(false, fn2, elems...)
+	found, _ := ContainsFnErr(fn2, elems...)
+	return found
 }
 
-// ContainsFnErr test wheather the match value is equal to any of the elems.
+// Contains[T] test if the value returned from fn is true for any of the elements in elems
 //
-// If the fn function returns an error, processing through elements is stopped and the error is returned.  The values
-// of the grouped elements will contain any elements processed up to but not including the element when the error
-// occured.
+// The fn(int, T) bool functions takes:
+//   - int is the index of the current element
+//   - T is the current element
+//
+// If the fn function returns an error, processing through elems is stopped and the error is returned.
 func ContainsFnErr[T any](fn func(int, T) (bool, error), elems ...T) (bool, error) {
 	var found bool
 	var err error
