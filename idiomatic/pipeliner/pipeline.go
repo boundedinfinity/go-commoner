@@ -16,31 +16,31 @@ func (p *pipeline[T]) Then(fn func(T) (T, error)) *pipeline[T] {
 }
 
 func (p *pipeline[T]) MustThen(fn func(T) T) *pipeline[T] {
-	return p.Then(func(item T) (T, error) {
-		return fn(item), nil
+	return p.Then(func(elem T) (T, error) {
+		return fn(elem), nil
 	})
 }
 
-func (p pipeline[T]) Run(item T) (T, error) {
+func (p pipeline[T]) Run(elem T) (T, error) {
 	var err error
 
 	for _, fn := range p.fns {
-		item, err = fn(item)
+		elem, err = fn(elem)
 
 		if err != nil {
 			break
 		}
 	}
 
-	return item, err
+	return elem, err
 }
 
-func (p pipeline[T]) MustRun(item T) T {
-	item, err := p.Run(item)
+func (p pipeline[T]) MustRun(elem T) T {
+	elem, err := p.Run(elem)
 
 	if err != nil {
 		panic(err)
 	}
 
-	return item
+	return elem
 }

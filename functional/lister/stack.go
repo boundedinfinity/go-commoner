@@ -23,8 +23,8 @@ func (t *Stack[T]) Len() int {
 	return t.idiomatic.Len()
 }
 
-func (t *Stack[T]) Push(items ...T) {
-	t.idiomatic.Push(items...)
+func (t *Stack[T]) Push(elems ...T) {
+	t.idiomatic.Push(elems...)
 }
 
 func (t *Stack[T]) Pop() optioner.Option[T] {

@@ -2,11 +2,11 @@ package stringer
 
 import "strings"
 
-func Join[T ~string](sep string, items ...T) string {
+func Join[T ~string](sep string, elems ...T) string {
 	ss := []string{}
 
-	for _, item := range items {
-		ss = append(ss, string(item))
+	for _, elem := range elems {
+		ss = append(ss, string(elem))
 	}
 
 	return strings.Join(ss, sep)

@@ -16,10 +16,10 @@ var ErrNumberIsInvalid = errorer.New("number")
 // 	fns []func(T) error
 // }
 
-// func (t *NumberValidatorBuilder[T]) Validator(item T) Validater {
+// func (t *NumberValidatorBuilder[T]) Validator(elem T) Validater {
 // 	return &validater[T]{
 // 		fns:  t.fns,
-// 		item: item,
+// 		elem: elem,
 // 	}
 // }
 
@@ -33,20 +33,20 @@ var ErrNumberIsInvalid = errorer.New("number")
 // 	return t
 // }
 
-// func (t *NumberValidatorBuilder[T]) NotOneOf(items ...T) *NumberValidatorBuilder[T] {
-// 	t.fns = append(t.fns, NotOneOf[T](items...))
+// func (t *NumberValidatorBuilder[T]) NotOneOf(elems ...T) *NumberValidatorBuilder[T] {
+// 	t.fns = append(t.fns, NotOneOf[T](elems...))
 // 	return t
 // }
 
 // // Stand alone
 
-// func NotOneOf[T constraints.Integer | constraints.Float](items ...T) func(s T) error {
+// func NotOneOf[T constraints.Integer | constraints.Float](elems ...T) func(s T) error {
 // 	return func(n T) error {
-// 		for i, item := range items {
-// 			if item == n {
+// 		for i, elem := range elems {
+// 			if elem == n {
 // 				return fmt.Errorf(
-// 					"%w %v cannot be equal items[%v] = %v",
-// 					ErrNumberIsInvalid, n, i, items[i],
+// 					"%w %v cannot be equal elems[%v] = %v",
+// 					ErrNumberIsInvalid, n, i, elems[i],
 // 				)
 // 			}
 // 		}

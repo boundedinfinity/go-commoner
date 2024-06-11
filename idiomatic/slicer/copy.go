@@ -1,10 +1,10 @@
 package slicer
 
-func Copy[T any](items ...T) []T {
-	copy := make([]T, len(items))
+func Copy[T any](elems ...T) []T {
+	copy := make([]T, len(elems))
 
-	for i := 0; i < len(items); i++ {
-		copy[i] = items[i]
+	for i := 0; i < len(elems); i++ {
+		copy[i] = elems[i]
 	}
 
 	return copy

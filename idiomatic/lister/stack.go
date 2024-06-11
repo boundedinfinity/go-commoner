@@ -18,8 +18,8 @@ func (t *Stack[T]) Len() int {
 	return t.list.Len()
 }
 
-func (t *Stack[T]) Push(items ...T) {
-	t.list.PushF(items...)
+func (t *Stack[T]) Push(elems ...T) {
+	t.list.PushF(elems...)
 }
 
 func (t *Stack[T]) Pop() (T, bool) {

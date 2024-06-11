@@ -8,7 +8,7 @@ type Validatable interface {
 type validatable[T any] struct {
 	fns    []func(T) error
 	groups []string
-	item   T
+	elem   T
 }
 
 func (t *validatable[T]) Groups() []string {
@@ -17,7 +17,7 @@ func (t *validatable[T]) Groups() []string {
 
 func (t *validatable[T]) Validate(groups ...string) error {
 	for _, fn := range t.fns {
-		if err := fn(t.item); err != nil {
+		if err := fn(t.elem); err != nil {
 			return err
 		}
 	}

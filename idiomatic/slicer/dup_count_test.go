@@ -37,8 +37,8 @@ func Test_DupCountFn(t *testing.T) {
 
 	input := []Thing{thing1, thing2, thing3, thing1, thing2, thing3}
 
-	actual := slicer.DupCountFn(func(item Thing) string {
-		return item.K
+	actual := slicer.DupCountFn(func(elem Thing) string {
+		return elem.K
 	}, input...)
 
 	assert.ElementsMatch(t, expected, actual)

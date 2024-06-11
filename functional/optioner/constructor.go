@@ -66,12 +66,12 @@ func OfSlice[T any](v []T) Option[[]T] {
 	})
 }
 
-func OfOptions[T any](items ...Option[T]) Option[[]T] {
+func OfOptions[T any](elems ...Option[T]) Option[[]T] {
 	var realItems []T
 
-	for _, item := range items {
-		if item.Defined() {
-			realItems = append(realItems, item.Get())
+	for _, elem := range elems {
+		if elem.Defined() {
+			realItems = append(realItems, elem.Get())
 		}
 	}
 

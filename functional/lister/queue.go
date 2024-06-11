@@ -23,8 +23,8 @@ func (t *Queue[T]) Len() int {
 	return t.idiomatic.Len()
 }
 
-func (t *Queue[T]) Push(items ...T) {
-	t.idiomatic.Push(items...)
+func (t *Queue[T]) Push(elems ...T) {
+	t.idiomatic.Push(elems...)
 }
 
 func (t *Queue[T]) Pop() optioner.Option[T] {

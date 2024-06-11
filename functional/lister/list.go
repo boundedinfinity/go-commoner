@@ -25,12 +25,12 @@ func (t *List[T]) Empty() bool {
 	return t.idiomatic.Empty()
 }
 
-func (t *List[T]) PushF(items ...T) {
-	t.idiomatic.PushF(items...)
+func (t *List[T]) PushF(elems ...T) {
+	t.idiomatic.PushF(elems...)
 }
 
-func (t *List[T]) PushB(items ...T) {
-	t.idiomatic.PushB(items...)
+func (t *List[T]) PushB(elems ...T) {
+	t.idiomatic.PushB(elems...)
 }
 
 func (t *List[T]) PeekB() optioner.Option[T] {

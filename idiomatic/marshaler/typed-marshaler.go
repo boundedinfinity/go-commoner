@@ -50,8 +50,8 @@ type TypedMarshaler struct {
 }
 
 func (t *TypedMarshaler) Register(namers ...TypeNamer) error {
-	for _, item := range namers {
-		if err := t.register(item); err != nil {
+	for _, elem := range namers {
+		if err := t.register(elem); err != nil {
 			return err
 		}
 	}

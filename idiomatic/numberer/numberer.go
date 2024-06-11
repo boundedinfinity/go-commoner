@@ -7,25 +7,25 @@ type number interface {
 }
 
 func Range[T number](start, end T) []T {
-	var items []T
+	var elems []T
 
 	for i := start; i <= end; i++ {
-		items = append(items, i)
+		elems = append(elems, i)
 	}
 
-	return items
+	return elems
 }
 
 func RangeStep[T number](start, end, step T) []T {
-	var items []T
+	var elems []T
 	s := T(0)
 
 	for i := start; i <= end; i++ {
 		if i == s {
-			items = append(items, i)
+			elems = append(elems, i)
 			s += step
 		}
 	}
 
-	return items
+	return elems
 }

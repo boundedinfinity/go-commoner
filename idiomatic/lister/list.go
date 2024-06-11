@@ -1,38 +1,38 @@
 package lister
 
 type List[T any] struct {
-	items []T
+	elems []T
 }
 
 func NewList[T any]() *List[T] {
 	s := &List[T]{
-		items: make([]T, 0),
+		elems: make([]T, 0),
 	}
 
 	return s
 }
 
 func (t *List[T]) Len() int {
-	return len(t.items)
+	return len(t.elems)
 }
 
 func (t *List[T]) Empty() bool {
-	return len(t.items) > 0
+	return len(t.elems) > 0
 }
 
-func (t *List[T]) PushF(items ...T) {
-	t.items = append(items, t.items...)
+func (t *List[T]) PushF(elems ...T) {
+	t.elems = append(elems, t.elems...)
 }
 
-func (t *List[T]) PushB(items ...T) {
-	t.items = append(t.items, items...)
+func (t *List[T]) PushB(elems ...T) {
+	t.elems = append(t.elems, elems...)
 }
 
 func (t *List[T]) PeekB() (T, bool) {
-	l := len(t.items) - 1
+	l := len(t.elems) - 1
 
 	if l > -1 {
-		return t.items[l], true
+		return t.elems[l], true
 	}
 
 	var zero T
@@ -40,12 +40,12 @@ func (t *List[T]) PeekB() (T, bool) {
 }
 
 func (t *List[T]) PopB() (T, bool) {
-	l := len(t.items) - 1
+	l := len(t.elems) - 1
 
 	if l > -1 {
-		item := t.items[l]
-		t.items = t.items[:l]
-		return item, true
+		elem := t.elems[l]
+		t.elems = t.elems[:l]
+		return elem, true
 	}
 
 	var zero T
@@ -53,8 +53,8 @@ func (t *List[T]) PopB() (T, bool) {
 }
 
 func (t *List[T]) PeekF() (T, bool) {
-	if len(t.items) > 0 {
-		return t.items[0], true
+	if len(t.elems) > 0 {
+		return t.elems[0], true
 	}
 
 	var zero T
@@ -62,12 +62,12 @@ func (t *List[T]) PeekF() (T, bool) {
 }
 
 func (t *List[T]) PopF() (T, bool) {
-	l := len(t.items) - 1
+	l := len(t.elems) - 1
 
 	if l > -1 {
-		item := t.items[0]
-		t.items = t.items[1:]
-		return item, true
+		elem := t.elems[0]
+		t.elems = t.elems[1:]
+		return elem, true
 	}
 
 	var zero T

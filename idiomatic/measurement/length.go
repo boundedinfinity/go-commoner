@@ -13,7 +13,7 @@ func Parse(s string) (Length, error) {
 }
 
 type Length struct {
-	Number rational.Rational     `json:"unit,omitempty"`
+	Number rational.Rational     `json:"unit,omelempty"`
 	System MeasurementSystem     `json:"system,omitempty"`
 	Format MeasurementFormatType `json:"format,omitempty"`
 }

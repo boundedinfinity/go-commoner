@@ -9,8 +9,8 @@ func FanIn[T any](inputs ...<-chan T) chan T {
 	merge := func(c <-chan T) {
 		defer wg.Done()
 
-		for item := range c {
-			out <- item
+		for elem := range c {
+			out <- elem
 		}
 	}
 

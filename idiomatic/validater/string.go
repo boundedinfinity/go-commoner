@@ -22,9 +22,9 @@ type StringValidatorBuilder[T ~string] struct {
 	fns []func(T) error
 }
 
-func (t *StringValidatorBuilder[T]) Validate(item T, groups ...string) error {
+func (t *StringValidatorBuilder[T]) Validate(elem T, groups ...string) error {
 	for _, fn := range t.fns {
-		if err := fn(item); err != nil {
+		if err := fn(elem); err != nil {
 			return err
 		}
 	}

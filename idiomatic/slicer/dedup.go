@@ -1,37 +1,37 @@
 package slicer
 
-func Dedup[T comparable](items ...T) []T {
-	fn := func(item T) T {
-		return item
+func Dedup[T comparable](elems ...T) []T {
+	fn := func(elem T) T {
+		return elem
 	}
 
-	return DedupFn(fn, items...)
+	return DedupFn(fn, elems...)
 }
 
-func DedupFn[T any, K comparable](fn func(T) K, items ...T) []T {
-	fn2 := func(item T) (K, error) {
-		k := fn(item)
+func DedupFn[T any, K comparable](fn func(T) K, elems ...T) []T {
+	fn2 := func(elem T) (K, error) {
+		k := fn(elem)
 		return k, nil
 	}
 
-	results, _ := DedupFnErr(fn2, items...)
+	results, _ := DedupFnErr(fn2, elems...)
 
 	return results
 }
 
-func DedupFnErr[T any, K comparable](fn func(T) (K, error), items ...T) ([]T, error) {
+func DedupFnErr[T any, K comparable](fn func(T) (K, error), elems ...T) ([]T, error) {
 	m := make(map[K]T)
 	var err error
 	var key K
 	var results []T
 
-	for _, item := range items {
-		if key, err = fn(item); err != nil {
+	for _, elem := range elems {
+		if key, err = fn(elem); err != nil {
 			break
 		} else {
 			if _, ok := m[key]; !ok {
-				m[key] = item
-				results = append(results, item)
+				m[key] = elem
+				results = append(results, elem)
 			}
 		}
 	}

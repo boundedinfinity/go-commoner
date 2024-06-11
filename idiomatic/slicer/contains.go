@@ -1,61 +1,55 @@
 package slicer
 
-func Contains[T comparable](match T, items ...T) bool {
-	fn := func(current bool, item T) bool {
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// References
+//      - https://lodash.com/docs/4.17.15#includes
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Contains test wheather the match value is equal to any of the elems.
+func Contains[T comparable](match T, elems ...T) bool {
+	fn := func(_ int, current bool, elem T) bool {
 		if current {
 			return current
 		}
 
-		return match == item
+		return match == elem
 	}
 
-	return FoldLeft(false, fn, items...)
+	return FoldLeft(false, fn, elems...)
 }
 
-func ContainsFn[T any](fn func(T) bool, items ...T) bool {
-	fn2 := func(current bool, item T) bool {
+func ContainsFn[T any](fn func(int, T) bool, elems ...T) bool {
+	fn2 := func(i int, current bool, elem T) bool {
 		if current {
 			return current
 		}
 
-		return fn(item)
+		return fn(i, elem)
 	}
 
-	return FoldLeft(false, fn2, items...)
+	return FoldLeft(false, fn2, elems...)
 }
 
-func ContainsFnI[T any](fn func(int, T) bool, items ...T) bool {
-	fn2 := func(i int, current bool, item T) bool {
-		if current {
-			return current
+// ContainsFnErr test wheather the match value is equal to any of the elems.
+//
+// If the fn function returns an error, processing through elements is stopped and the error is returned.  The values
+// of the grouped elements will contain any elements processed up to but not including the element when the error
+// occured.
+func ContainsFnErr[T any](fn func(int, T) (bool, error), elems ...T) (bool, error) {
+	var found bool
+	var err error
+
+	for i, elem := range elems {
+		found, err = fn(i, elem)
+
+		if err != nil {
+			break
 		}
 
-		return fn(i, item)
-	}
-
-	return FoldLeftI(false, fn2, items...)
-}
-
-func ContainsFnErr[T any](fn func(T) (bool, error), items ...T) (bool, error) {
-	fn2 := func(current bool, item T) (bool, error) {
-		if current {
-			return current, nil
+		if found {
+			break
 		}
-
-		return fn(item)
 	}
 
-	return FoldLeftErr(false, fn2, items...)
-}
-
-func ContainsFnErrI[T any](fn func(int, T) (bool, error), items ...T) (bool, error) {
-	fn2 := func(i int, current bool, item T) (bool, error) {
-		if current {
-			return current, nil
-		}
-
-		return fn(i, item)
-	}
-
-	return FoldLeftErrI(false, fn2, items...)
+	return found, err
 }

@@ -5,18 +5,18 @@ import (
 	gstring "strings"
 )
 
-func Join[T any](sep string, items ...T) string {
-	return JoinFn(sep, func(el T) string {
-		return fmt.Sprintf("%v", el)
-	}, items...)
+func Join[T any](sep string, elems ...T) string {
+	return JoinFn(sep, func(_ int, elem T) string {
+		return fmt.Sprintf("%v", elem)
+	}, elems...)
 }
 
-func JoinFn[T any](sep string, fn func(T) string, items ...T) string {
-	return gstring.Join(Map(fn, items...), sep)
+func JoinFn[T any](sep string, fn func(int, T) string, elems ...T) string {
+	return gstring.Join(Map(fn, elems...), sep)
 }
 
-func JoinErrFn[T any](sep string, fn func(T) (string, error), items ...T) (string, error) {
-	res, err := MapErr(fn, items...)
+func JoinErrFn[T any](sep string, fn func(int, T) (string, error), elems ...T) (string, error) {
+	res, err := MapErr(fn, elems...)
 
 	if err != nil {
 		return "", err

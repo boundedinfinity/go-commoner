@@ -20,7 +20,7 @@ func Test_Map(t *testing.T) {
 	expected := []Thing2{{bItem: "a"}, {bItem: "b"}}
 	input := []Thing1{{aItem: "a"}, {aItem: "b"}}
 
-	actual := slicer.Map(func(t1 Thing1) Thing2 {
+	actual := slicer.Map(func(_ int, t1 Thing1) Thing2 {
 		return Thing2{bItem: t1.aItem}
 	}, input...)
 
@@ -38,7 +38,7 @@ func Test_MapErr_NoErr(t *testing.T) {
 
 	expected := []Thing2{{bItem: "a"}, {bItem: "b"}}
 	input := []Thing1{{aItem: "a"}, {aItem: "b"}}
-	actual, err := slicer.MapErr(func(t1 Thing1) (Thing2, error) {
+	actual, err := slicer.MapErr(func(_ int, t1 Thing1) (Thing2, error) {
 		return Thing2{bItem: t1.aItem}, nil
 	}, input...)
 
@@ -57,7 +57,7 @@ func Test_MapErr_WithErr(t *testing.T) {
 
 	expected := []Thing2{}
 	input := []Thing1{{aItem: "a"}, {aItem: "b"}}
-	actual, err := slicer.MapErr(func(t1 Thing1) (Thing2, error) {
+	actual, err := slicer.MapErr(func(_ int, t1 Thing1) (Thing2, error) {
 		return Thing2{}, errors.New("map error")
 	}, input...)
 

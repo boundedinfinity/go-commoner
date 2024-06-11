@@ -7,48 +7,48 @@ import (
 )
 
 type builtInSort[T constraints.Ordered] struct {
-	items []T
+	elems []T
 }
 
 func (t builtInSort[T]) Len() int {
-	return len(t.items)
+	return len(t.elems)
 }
 
 func (t builtInSort[T]) Less(i, j int) bool {
-	return t.items[i] < t.items[j]
+	return t.elems[i] < t.elems[j]
 }
 
 func (t builtInSort[T]) Swap(i, j int) {
-	t.items[i], t.items[j] = t.items[j], t.items[i]
+	t.elems[i], t.elems[j] = t.elems[j], t.elems[i]
 }
 
-func Sort[T constraints.Ordered](items ...T) []T {
-	copy := Copy(items...)
-	sort.Sort(builtInSort[T]{items: copy})
+func Sort[T constraints.Ordered](elems ...T) []T {
+	copy := Copy(elems...)
+	sort.Sort(builtInSort[T]{elems: copy})
 	return copy
 }
 
 type builtInFnSort[T any, O constraints.Ordered] struct {
-	items []T
+	elems []T
 	fn    func(T) O
 }
 
 func (t builtInFnSort[T, O]) Len() int {
-	return len(t.items)
+	return len(t.elems)
 }
 
 func (t builtInFnSort[T, O]) Less(i, j int) bool {
-	return t.fn(t.items[i]) < t.fn(t.items[j])
+	return t.fn(t.elems[i]) < t.fn(t.elems[j])
 }
 
 func (t builtInFnSort[T, O]) Swap(i, j int) {
-	t.items[i], t.items[j] = t.items[j], t.items[i]
+	t.elems[i], t.elems[j] = t.elems[j], t.elems[i]
 }
 
-func SortFn[T any, O constraints.Ordered](fn func(T) O, items ...T) []T {
-	copy := Copy(items...)
+func SortFn[T any, O constraints.Ordered](fn func(T) O, elems ...T) []T {
+	copy := Copy(elems...)
 	sort.Sort(builtInFnSort[T, O]{
-		items: copy,
+		elems: copy,
 		fn:    fn,
 	})
 	return copy

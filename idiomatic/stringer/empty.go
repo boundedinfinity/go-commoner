@@ -11,8 +11,8 @@ func IsEmpty[T ~string](s T) bool {
 	return IsZero(trimmed)
 }
 
-func FindNonEmpty[T ~string](items ...T) (T, bool) {
-	return slicer.FindFn(func(item T) bool {
-		return !IsEmpty(item)
-	}, items...)
+func FindNonEmpty[T ~string](elems ...T) (T, bool) {
+	return slicer.FindFn(func(elem T) bool {
+		return !IsEmpty(elem)
+	}, elems...)
 }

@@ -36,8 +36,8 @@ func Test_DedupFn(t *testing.T) {
 		{K: "z", V: 300},
 	}
 
-	actual := slicer.DedupFn(func(item Thing) string {
-		return item.K
+	actual := slicer.DedupFn(func(elem Thing) string {
+		return elem.K
 	}, input...)
 
 	assert.Equal(t, expected, actual)

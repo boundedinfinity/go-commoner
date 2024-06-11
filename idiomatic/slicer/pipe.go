@@ -1,22 +1,22 @@
 package slicer
 
 type Pipe[T any] struct {
-	fns []func(T) T
+	fns []func(int, T) T
 }
 
 func NewPipe[T any]() *Pipe[T] {
 	return &Pipe[T]{
-		fns: make([]func(T) T, 0),
+		fns: make([]func(int, T) T, 0),
 	}
 }
 
-func (p *Pipe[T]) Then(fn func(T) T) *Pipe[T] {
+func (p *Pipe[T]) Then(fn func(int, T) T) *Pipe[T] {
 	p.fns = append(p.fns, fn)
 	return p
 }
 
-func (p *Pipe[T]) List(items ...T) []T {
-	output := append([]T{}, items...)
+func (p *Pipe[T]) List(elems ...T) []T {
+	output := append([]T{}, elems...)
 
 	for _, fn := range p.fns {
 		output = Map(fn, output...)
@@ -25,11 +25,11 @@ func (p *Pipe[T]) List(items ...T) []T {
 	return output
 }
 
-func (p *Pipe[T]) Single(item T) T {
-	items := p.List(item)
+func (p *Pipe[T]) Single(elem T) T {
+	elems := p.List(elem)
 
-	if len(items) > 0 {
-		return items[0]
+	if len(elems) > 0 {
+		return elems[0]
 	}
 
 	var zero T
@@ -37,22 +37,22 @@ func (p *Pipe[T]) Single(item T) T {
 }
 
 type PipeErr[T any] struct {
-	fns []func(T) (T, error)
+	fns []func(int, T) (T, error)
 }
 
 func NewPipeErr[T any]() *PipeErr[T] {
 	return &PipeErr[T]{
-		fns: make([]func(T) (T, error), 0),
+		fns: make([]func(int, T) (T, error), 0),
 	}
 }
 
-func (p *PipeErr[T]) Then(fn func(T) (T, error)) *PipeErr[T] {
+func (p *PipeErr[T]) Then(fn func(int, T) (T, error)) *PipeErr[T] {
 	p.fns = append(p.fns, fn)
 	return p
 }
 
-func (p *PipeErr[T]) List(items ...T) ([]T, error) {
-	output := append([]T{}, items...)
+func (p *PipeErr[T]) List(elems ...T) ([]T, error) {
+	output := append([]T{}, elems...)
 	var err error
 
 	for _, fn := range p.fns {
@@ -66,11 +66,11 @@ func (p *PipeErr[T]) List(items ...T) ([]T, error) {
 	return output, nil
 }
 
-func (p *PipeErr[T]) Single(item T) (T, error) {
-	items, err := p.List(item)
+func (p *PipeErr[T]) Single(elem T) (T, error) {
+	elems, err := p.List(elem)
 
-	if len(items) > 0 {
-		return items[0], err
+	if len(elems) > 0 {
+		return elems[0], err
 	}
 
 	var zero T

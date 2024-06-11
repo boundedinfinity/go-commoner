@@ -11,26 +11,26 @@ func Test_Contains(t *testing.T) {
 	testCases := []struct {
 		name     string
 		match    string
-		list     []string
+		input    []string
 		expected bool
 	}{
 		{
 			name:     "contains a",
 			match:    "a",
-			list:     []string{"a", "a", "a", "a"},
+			input:    []string{"b", "c", "b", "a"},
 			expected: true,
 		},
 		{
 			name:     "does not contain a",
 			match:    "a",
-			list:     []string{"b", "c", "d", "e"},
+			input:    []string{"b", "c", "d", "e"},
 			expected: false,
 		},
 	}
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
-			actual := slicer.Contains(tc.match, tc.list...)
+			actual := slicer.Contains(tc.match, tc.input...)
 			assert.Equal(t, tc.expected, actual)
 		})
 	}

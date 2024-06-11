@@ -3,20 +3,28 @@ package mapper
 import (
 	"github.com/boundedinfinity/go-commoner/functional/optioner"
 	"github.com/boundedinfinity/go-commoner/idiomatic/mapper"
-	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
 )
 
 type Item[K comparable, V any] mapper.Item[K, V]
 
 func Items[K comparable, V any](m map[K]V) optioner.Option[[]Item[K, V]] {
-	fn := func(K, V) bool { return true }
-	return ItemsFiltered(m, fn)
+	var elems []Item[K, V]
+
+	for k, v := range m {
+		elems = append(elems, Item[K, V]{K: k, V: v})
+	}
+
+	return optioner.OfSlice(elems)
 }
 
-func ItemsFiltered[K comparable, V any](m map[K]V, fn func(K, V) bool) optioner.Option[[]Item[K, V]] {
-	results := slicer.Map(func(item mapper.Item[K, V]) Item[K, V] {
-		return Item[K, V]{K: item.K, V: item.V}
-	}, mapper.ItemsFiltered(m, fn)...)
+// func ItemsFiltered[K comparable, V any](m map[K]V, fn func(K, V) bool) optioner.Option[[]Item[K, V]] {
+// 	convert := func(_ int, elem Item[K, V]) mapper.Item[K, V] {
+// 		return mapper.Item[K, V]{K: elem.K, V: elem.V}
+// 	}
 
-	return optioner.OfSlice(results)
-}
+//     inputs := slicer.Map(convert, m)
+
+// 	results := mapper.ItemsFiltered()
+
+// 	return optioner.OfSlice(results)
+// }

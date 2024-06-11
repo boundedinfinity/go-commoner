@@ -425,13 +425,13 @@ func (t utf8) Parse(v byte) (UtfChar, error) {
 }
 
 func (t utf8) Is(s byte) bool {
-	return slicer.ContainsFn(func(v UtfChar) bool {
+	return slicer.ContainsFn(func(_ int, v UtfChar) bool {
 		return byte(v) == s
 	}, t.All()...)
 }
 
 func (t utf8) IsExtend(s byte) bool {
-	return slicer.ContainsFn(func(v UtfChar) bool {
+	return slicer.ContainsFn(func(_ int, v UtfChar) bool {
 		return byte(v) == s
 	}, t.ExtendedCharacters()...)
 }
@@ -503,7 +503,7 @@ func (t utf8) Newlines() []UtfChar {
 }
 
 func (t utf8) ToStrings(cs []UtfChar) []string {
-	return slicer.Map(func(c UtfChar) string {
+	return slicer.Map(func(_ int, c UtfChar) string {
 		return string(c)
 	}, cs...)
 }

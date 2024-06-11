@@ -68,8 +68,8 @@ func (t *Environmenter) parseEnv() map[string]string {
 	return envMap
 }
 
-func (t *Environmenter) subWithMap(item string, envMap map[string]string) string {
-	replaced := item
+func (t *Environmenter) subWithMap(elem string, envMap map[string]string) string {
+	replaced := elem
 
 	for key, val := range envMap {
 		for _, format := range t.patterns {
@@ -81,25 +81,25 @@ func (t *Environmenter) subWithMap(item string, envMap map[string]string) string
 	return replaced
 }
 
-func (t *Environmenter) Sub(item string) string {
-	return t.subWithMap(item, t.parseEnv())
+func (t *Environmenter) Sub(elem string) string {
+	return t.subWithMap(elem, t.parseEnv())
 }
 
-func (t *Environmenter) SubAll(items ...string) []string {
+func (t *Environmenter) SubAll(elems ...string) []string {
 	var replaced []string
 	envMap := t.parseEnv()
 
-	for _, item := range items {
-		replaced = append(replaced, t.subWithMap(item, envMap))
+	for _, elem := range elems {
+		replaced = append(replaced, t.subWithMap(elem, envMap))
 	}
 
 	return replaced
 }
 
-func Sub(item string) string {
-	return New().Sub(item)
+func Sub(elem string) string {
+	return New().Sub(elem)
 }
 
-func SubAll(items ...string) []string {
-	return New().SubAll(items...)
+func SubAll(elems ...string) []string {
+	return New().SubAll(elems...)
 }

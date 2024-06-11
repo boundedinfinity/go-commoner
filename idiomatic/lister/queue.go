@@ -18,8 +18,8 @@ func (t *Queue[T]) Len() int {
 	return t.list.Len()
 }
 
-func (t *Queue[T]) Push(items ...T) {
-	t.list.PushB(items...)
+func (t *Queue[T]) Push(elems ...T) {
+	t.list.PushB(elems...)
 }
 
 func (t *Queue[T]) Pop() (T, bool) {

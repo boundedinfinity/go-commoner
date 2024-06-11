@@ -5,14 +5,14 @@ import (
 	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
 )
 
-func Exist[T comparable](s T, items ...T) bool {
-	return slicer.Exist(s, items...)
+func Exist[T comparable](s T, elems ...T) bool {
+	return slicer.Exist(s, elems...)
 }
 
-func ExistFn[T any](fn func(int, T) bool, items ...T) bool {
-	return slicer.ExistFn(fn, items...)
+func ExistFn[T any](fn func(int, T) bool, elems ...T) bool {
+	return slicer.ExistFn(fn, elems...)
 }
 
-func ExistFnErr[T any](fn func(int, T) (bool, error), items ...T) trier.Try[bool] {
-	return trier.Complete(slicer.ExistFnErr(fn, items...))
+func ExistFnErr[T any](fn func(int, T) (bool, error), elems ...T) trier.Try[bool] {
+	return trier.Complete(slicer.ExistFnErr(fn, elems...))
 }

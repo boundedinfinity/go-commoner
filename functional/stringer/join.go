@@ -13,16 +13,16 @@ func Join[T ~string](sep string, slice optioner.Option[[]T]) string {
 	return ""
 }
 
-func JoinLift[T ~string](sep string, items ...T) string {
-	return Join(sep, optioner.OfSlice(items))
+func JoinLift[T ~string](sep string, elems ...T) string {
+	return Join(sep, optioner.OfSlice(elems))
 }
 
-func JoinOptions[T ~string](sep string, items ...optioner.Option[T]) string {
+func JoinOptions[T ~string](sep string, elems ...optioner.Option[T]) string {
 	var realItems []T
 
-	for _, item := range items {
-		if item.Defined() {
-			realItems = append(realItems, item.Get())
+	for _, elem := range elems {
+		if elem.Defined() {
+			realItems = append(realItems, elem.Get())
 		}
 	}
 

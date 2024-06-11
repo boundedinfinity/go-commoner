@@ -107,27 +107,33 @@ func Convert[V ~string](v V, from, to CaseType) string {
 		o = string(v)
 	}
 
+	wrap := func(fn func(string) string) func(int, string) string {
+		return func(_ int, s string) string {
+			return fn(s)
+		}
+	}
+
 	switch to {
 	case CaseTypes.Camel:
-		mapFn = slicer.NewPipe[string]().Then(stringer.ToLower[string]).Then(stringer.Title[string])
+		mapFn = slicer.NewPipe[string]().Then(wrap(stringer.ToLower[string])).Then(wrap(stringer.Title[string]))
 		joinFn = joinWithNoSpace
 	case CaseTypes.Phrase:
-		mapFn = slicer.NewPipe[string]().Then(stringer.ToLower[string]).Then(stringer.Title[string])
+		mapFn = slicer.NewPipe[string]().Then(wrap(stringer.ToLower[string])).Then(wrap(stringer.Title[string]))
 		joinFn = joinWithSpace
 	case CaseTypes.Snake, CaseTypes.SnakeLower:
-		mapFn = slicer.NewPipe[string]().Then(stringer.ToLower[string])
+		mapFn = slicer.NewPipe[string]().Then(wrap(stringer.ToLower[string]))
 		joinFn = joinWithUnderscore
 	case CaseTypes.SnakeUpper:
-		mapFn = slicer.NewPipe[string]().Then(stringer.ToUpper[string])
+		mapFn = slicer.NewPipe[string]().Then(wrap(stringer.ToUpper[string]))
 		joinFn = joinWithUnderscore
 	case CaseTypes.Pascal:
-		mapFn = slicer.NewPipe[string]().Then(stringer.ToLower[string]).Then(stringer.Title[string])
+		mapFn = slicer.NewPipe[string]().Then(wrap(stringer.ToLower[string])).Then(wrap(stringer.Title[string]))
 		joinFn = joinWithNoSpace
 	case CaseTypes.Kebab, CaseTypes.KebabLower:
-		mapFn = slicer.NewPipe[string]().Then(stringer.ToLower[string])
+		mapFn = slicer.NewPipe[string]().Then(wrap(stringer.ToLower[string]))
 		joinFn = joinWithDash
 	case CaseTypes.KebabUpper:
-		mapFn = slicer.NewPipe[string]().Then(stringer.ToUpper[string])
+		mapFn = slicer.NewPipe[string]().Then(wrap(stringer.ToUpper[string]))
 		joinFn = joinWithDash
 	default:
 		o = string(v)

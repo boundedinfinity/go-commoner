@@ -5,34 +5,26 @@ import (
 	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
 )
 
-func FoldLeft[I any, O any](initial O, fn func(O, I) O, items ...I) O {
-	return slicer.FoldLeft(initial, fn, items...)
+func Fold[I any, O any](initial O, fn func(int, O, I) O, elems ...I) O {
+	return slicer.Fold(initial, fn, elems...)
 }
 
-func FoldLeftI[I any, O any](initial O, fn func(int, O, I) O, items ...I) O {
-	return slicer.FoldLeftI(initial, fn, items...)
+func FoldErr[I any, O any](initial O, fn func(int, O, I) (O, error), elems ...I) trier.Try[O] {
+	return trier.Complete(slicer.FoldErr(initial, fn, elems...))
 }
 
-func FoldLeftErr[I any, O any](initial O, fn func(O, I) (O, error), items ...I) trier.Try[O] {
-	return trier.Complete(slicer.FoldLeftErr(initial, fn, items...))
+func FoldLeft[I any, O any](initial O, fn func(int, O, I) O, elems ...I) O {
+	return slicer.FoldLeft(initial, fn, elems...)
 }
 
-func FoldLeftErrI[I any, O any](initial O, fn func(int, O, I) (O, error), items ...I) trier.Try[O] {
-	return trier.Complete(slicer.FoldLeftErrI(initial, fn, items...))
+func FoldLeftErr[I any, O any](initial O, fn func(int, O, I) (O, error), elems ...I) trier.Try[O] {
+	return trier.Complete(slicer.FoldLeftErr(initial, fn, elems...))
 }
 
-func FoldRight[I any, O any](initial O, fn func(O, I) O, items ...I) O {
-	return slicer.FoldRight(initial, fn, items...)
+func FoldRight[I any, O any](initial O, fn func(int, O, I) O, elems ...I) O {
+	return slicer.FoldRight(initial, fn, elems...)
 }
 
-func FoldRightI[I any, O any](initial O, fn func(int, O, I) O, items ...I) O {
-	return slicer.FoldRightI(initial, fn, items...)
-}
-
-func FoldRightErr[I any, O any](initial O, fn func(O, I) (O, error), items ...I) trier.Try[O] {
-	return trier.Complete(slicer.FoldRightErr(initial, fn, items...))
-}
-
-func FoldRightErrI[I any, O any](initial O, fn func(int, O, I) (O, error), items ...I) trier.Try[O] {
-	return trier.Complete(slicer.FoldRightErrI(initial, fn, items...))
+func FoldRightErr[I any, O any](initial O, fn func(int, O, I) (O, error), elems ...I) trier.Try[O] {
+	return trier.Complete(slicer.FoldRightErr(initial, fn, elems...))
 }

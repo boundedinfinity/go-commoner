@@ -8,9 +8,30 @@ import (
 )
 
 func Test_Chunk(t *testing.T) {
-	expected := [][]int{{1, 2}, {3, 4}, {5, 6}, {7}}
-	input := []int{1, 2, 3, 4, 5, 6, 7}
-	actual := slicer.Chunk(2, input...)
+	testCases := []struct {
+		name     string
+		input    []int
+		size     int
+		expected [][]int
+	}{
+		{
+			name:     "Even chunks",
+			input:    []int{1, 2, 3, 4},
+			size:     2,
+			expected: [][]int{{1, 2}, {3, 4}},
+		},
+		{
+			name:     "Uneven chunks",
+			input:    []int{1, 2, 3, 4, 5},
+			size:     2,
+			expected: [][]int{{1, 2}, {3, 4}, {5}},
+		},
+	}
 
-	assert.Equal(t, expected, actual)
+	for _, tc := range testCases {
+		t.Run(tc.name, func(tt *testing.T) {
+			actual := slicer.Chunk(tc.size, tc.input...)
+			assert.Equal(t, tc.expected, actual, tc.name)
+		})
+	}
 }

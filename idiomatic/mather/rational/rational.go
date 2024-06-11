@@ -11,8 +11,8 @@ var (
 	zero_rational = Rational{}
 )
 
-func IsZero(item Rational) bool {
-	return item == zero_rational
+func IsZero(elem Rational) bool {
+	return elem == zero_rational
 }
 
 type Rational struct {
@@ -20,7 +20,7 @@ type Rational struct {
 	Fraction fraction.Fraction
 }
 
-func (t Rational) IsZero(item Rational) bool {
+func (t Rational) IsZero(elem Rational) bool {
 	return IsZero(t)
 }
 

@@ -12,7 +12,7 @@ func Keys[K comparable, V any](m map[K]V) optioner.Option[[]K] {
 }
 
 func KeysFiltered[K comparable, V any](m map[K]V, fn func(K) bool) optioner.Option[[]K] {
-	return optioner.OfFn(mapper.KeysFiltered(m, fn), func(items []K) bool {
-		return len(items) > 0
+	return optioner.OfFn(mapper.KeysFiltered(m, fn), func(elems []K) bool {
+		return len(elems) > 0
 	})
 }

@@ -6,13 +6,13 @@ import (
 	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
 )
 
-func AsString(item fmt.Stringer) string {
-	return item.String()
+func AsString(elem fmt.Stringer) string {
+	return elem.String()
 }
 
-func AsStrings(items ...fmt.Stringer) []string {
+func AsStrings(elems ...fmt.Stringer) []string {
 	return slicer.Map(
-		func(item fmt.Stringer) string { return item.String() },
-		items...,
+		func(_ int, elem fmt.Stringer) string { return elem.String() },
+		elems...,
 	)
 }

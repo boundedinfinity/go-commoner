@@ -1,49 +1,29 @@
 package slicer
 
-func All[T comparable](match T, items ...T) bool {
-	fn := func(current bool, item T) bool {
-		return current && match == item
+func All[T comparable](match T, elems ...T) bool {
+	fn := func(_ int, current bool, elem T) bool {
+		return current && match == elem
 	}
 
-	return FoldLeft(true, fn, items...)
+	return FoldLeft(true, fn, elems...)
 }
 
-func AllFn[T any](fn func(T) bool, items ...T) bool {
-	fn2 := func(current bool, item T) bool {
-		return current && fn(item)
+func AllFn[T any](fn func(int, T) bool, elems ...T) bool {
+	fn2 := func(i int, current bool, elem T) bool {
+		return current && fn(i, elem)
 	}
 
-	return FoldLeft(true, fn2, items...)
+	return FoldLeft(true, fn2, elems...)
 }
 
-func AllFnI[T any](fn func(int, T) bool, items ...T) bool {
-	fn2 := func(i int, current bool, item T) bool {
-		return current && fn(i, item)
-	}
-
-	return FoldLeftI(true, fn2, items...)
-}
-
-func AllFnErr[T any](fn func(T) (bool, error), items ...T) (bool, error) {
-	fn2 := func(current bool, item T) (bool, error) {
-		if ok, err := fn(item); err != nil {
+func AllFnErr[T any](fn func(int, T) (bool, error), elems ...T) (bool, error) {
+	fn2 := func(i int, current bool, elem T) (bool, error) {
+		if ok, err := fn(i, elem); err != nil {
 			return current, err
 		} else {
 			return current && ok, nil
 		}
 	}
 
-	return FoldLeftErr(true, fn2, items...)
-}
-
-func AllFnErrI[T any](fn func(int, T) (bool, error), items ...T) (bool, error) {
-	fn2 := func(i int, current bool, item T) (bool, error) {
-		if ok, err := fn(i, item); err != nil {
-			return current, err
-		} else {
-			return current && ok, nil
-		}
-	}
-
-	return FoldLeftErrI(true, fn2, items...)
+	return FoldLeftErr(true, fn2, elems...)
 }

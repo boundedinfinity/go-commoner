@@ -1,97 +1,49 @@
 package slicer
 
-func Map[T any, U any](fn func(T) U, items ...T) []U {
-	var us []U
-
-	for _, t := range items {
-		u := fn(t)
-		us = append(us, u)
+func Map[T any, R any](fn func(int, T) R, elems ...T) []R {
+	fn2 := func(i int, elem T) (R, error) {
+		return fn(i, elem), nil
 	}
 
-	return us
+	results, _ := MapErr(fn2, elems...)
+	return results
 }
 
-func MapI[T any, U any](fn func(int, T) U, items ...T) []U {
-	var us []U
-
-	for i, item := range items {
-		u := fn(i, item)
-		us = append(us, u)
-	}
-
-	return us
-}
-
-func MapErr[T any, U any](fn func(T) (U, error), items ...T) ([]U, error) {
-	var us []U
-	var u U
+func MapErr[T any, R any](fn func(int, T) (R, error), elems ...T) ([]R, error) {
+	var results []R
+	var result R
 	var err error
 
-	for _, item := range items {
-		if u, err = fn(item); err != nil {
+	for i, elem := range elems {
+		result, err = fn(i, elem)
+
+		if err != nil {
 			break
-		} else {
-			us = append(us, u)
 		}
+
+		results = append(results, result)
 	}
 
-	return us, err
+	return results, err
 }
 
-func MapErrI[T any, U any](fn func(int, T) (U, error), items ...T) ([]U, error) {
-	var us []U
-	var u U
-	var err error
-
-	for i, item := range items {
-		if u, err = fn(i, item); err != nil {
-			break
-		} else {
-			us = append(us, u)
-		}
-	}
-
-	return us, err
-}
-
-func MapPipe[T any, U any](fns []func(T) U, items ...T) []U {
-	var us []U
+func MapPipe[T any, R any](fns []func(int, T) R, elems ...T) []R {
+	var results []R
 
 	for _, fn := range fns {
-		us = Map(fn, items...)
+		results = Map(fn, elems...)
 	}
 
-	return us
+	return results
 }
 
-func MapPipeI[T any, U any](fns []func(int, T) U, items ...T) []U {
-	var us []U
-
-	for _, fn := range fns {
-		us = MapI(fn, items...)
-	}
-
-	return us
-}
-
-func MapPipeErr[T any, U any](fns []func(T) (U, error), items ...T) ([]U, error) {
-	var us []U
+func MapPipeErr[T any, R any](fns []func(int, T) (R, error), elems ...T) ([]R, error) {
+	var results []R
 	var err error
 
 	for _, fn := range fns {
-		us, err = MapErr(fn, items...)
+		results, err = MapErr(fn, elems...)
 	}
 
-	return us, err
-}
-
-func MapPipeErrI[T any, U any](fns []func(int, T) (U, error), items ...T) ([]U, error) {
-	var us []U
-	var err error
-
-	for _, fn := range fns {
-		us, err = MapErrI(fn, items...)
-	}
-
-	return us, err
+	return results, err
 }

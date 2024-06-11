@@ -8,6 +8,6 @@ type Slicer[T any] optioner.Option[[]T]
 // 	return len(t.Get())
 // }
 
-// func (t *Slicer[T]) Append(item T) {
-// 	t.Option = optioner.OfSlice(append(t.Get(), item))
+// func (t *Slicer[T]) Append(elem T) {
+// 	t.Option = optioner.OfSlice(append(t.Get(), elem))
 // }

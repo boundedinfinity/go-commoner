@@ -39,19 +39,19 @@ func Test_All(t *testing.T) {
 func Test_AllFn(t *testing.T) {
 	testCases := []struct {
 		name     string
-		match    func(string) bool
+		match    func(int, string) bool
 		list     []string
 		expected bool
 	}{
 		{
 			name:     "a to all a's",
-			match:    func(item string) bool { return item == "a" },
+			match:    func(_ int, elem string) bool { return elem == "a" },
 			list:     []string{"a", "a", "a", "a"},
 			expected: true,
 		},
 		{
 			name:     "a to all a's and b's",
-			match:    func(item string) bool { return item == "a" },
+			match:    func(_ int, elem string) bool { return elem == "a" },
 			list:     []string{"a", "b", "a", "a"},
 			expected: false,
 		},

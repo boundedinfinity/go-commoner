@@ -5,39 +5,39 @@ type DupCountResult[T any] struct {
 	Item  T
 }
 
-func DupCount[T comparable](items ...T) []DupCountResult[T] {
-	fn := func(item T) T {
-		return item
+func DupCount[T comparable](elems ...T) []DupCountResult[T] {
+	fn := func(elem T) T {
+		return elem
 	}
 
-	return DupCountFn(fn, items...)
+	return DupCountFn(fn, elems...)
 }
 
-func DupCountFn[T any, K comparable](fn func(T) K, items ...T) []DupCountResult[T] {
-	fn2 := func(item T) (K, error) {
-		k := fn(item)
+func DupCountFn[T any, K comparable](fn func(T) K, elems ...T) []DupCountResult[T] {
+	fn2 := func(elem T) (K, error) {
+		k := fn(elem)
 		return k, nil
 	}
 
-	results, _ := DupCountFnErr(fn2, items...)
+	results, _ := DupCountFnErr(fn2, elems...)
 
 	return results
 }
 
-func DupCountFnErr[T any, K comparable](fn func(T) (K, error), items ...T) ([]DupCountResult[T], error) {
+func DupCountFnErr[T any, K comparable](fn func(T) (K, error), elems ...T) ([]DupCountResult[T], error) {
 	m := make(map[K]*DupCountResult[T])
 	var err error
 	var key K
 	var results []DupCountResult[T]
 
-	for _, item := range items {
-		if key, err = fn(item); err != nil {
+	for _, elem := range elems {
+		if key, err = fn(elem); err != nil {
 			break
 		}
 
 		if _, ok := m[key]; !ok {
 			m[key] = &DupCountResult[T]{
-				Item:  item,
+				Item:  elem,
 				Count: 0,
 			}
 		}

@@ -17,15 +17,15 @@ import (
 // The first slice contains the elements for which the fn function returns a true value.  The second slice contains the
 // elements for which the fn function returns a false value.
 //
-// for which the fn function returns a true value.  The second slice contains the items for which
+// for which the fn function returns a true value.  The second slice contains the elems for which
 // the fn fucntion returns a false value.
-func Partition[T any](fn func(int, T) bool, items ...T) ([]T, []T) {
-	fn2 := func(i int, item T) (bool, error) {
-		k := fn(i, item)
+func Partition[T any](fn func(int, T) bool, elems ...T) ([]T, []T) {
+	fn2 := func(i int, elem T) (bool, error) {
+		k := fn(i, elem)
 		return k, nil
 	}
 
-	p1, p2, _ := PartitionErr(fn2, items...)
+	p1, p2, _ := PartitionErr(fn2, elems...)
 
 	return p1, p2
 }
@@ -53,8 +53,8 @@ func PartitionErr[T any](fn func(int, T) (bool, error), elems ...T) ([]T, []T, e
 	var err error
 	var ok bool
 
-	for i, item := range elems {
-		ok, err = fn(i, item)
+	for i, elem := range elems {
+		ok, err = fn(i, elem)
 
 		if err != nil {
 			err = errPartitionFn(i, err)
@@ -62,9 +62,9 @@ func PartitionErr[T any](fn func(int, T) (bool, error), elems ...T) ([]T, []T, e
 		}
 
 		if ok {
-			p1 = append(p1, item)
+			p1 = append(p1, elem)
 		} else {
-			p2 = append(p2, item)
+			p2 = append(p2, elem)
 		}
 	}
 

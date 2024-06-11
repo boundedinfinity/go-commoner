@@ -11,13 +11,13 @@ func Items[K comparable, V any](m map[K]V) []Item[K, V] {
 }
 
 func ItemsFiltered[K comparable, V any](m map[K]V, fn func(K, V) bool) []Item[K, V] {
-	var items []Item[K, V]
+	var elems []Item[K, V]
 
 	for k, v := range m {
 		if fn(k, v) {
-			items = append(items, Item[K, V]{K: k, V: v})
+			elems = append(elems, Item[K, V]{K: k, V: v})
 		}
 	}
 
-	return items
+	return elems
 }
