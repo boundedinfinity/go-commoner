@@ -413,7 +413,7 @@ func (t utf8) Range(start, end UtfChar) []UtfChar {
 }
 
 func (t utf8) Parse(v byte) (UtfChar, error) {
-	f, ok := slicer.FindFn(func(x UtfChar) bool {
+	f, ok := slicer.FindFn(func(_ int, x UtfChar) bool {
 		return UtfChar(v) == x
 	}, t.All()...)
 

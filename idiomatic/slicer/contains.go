@@ -7,11 +7,11 @@ package slicer
 
 // Contains[T] test if the match value is equal to any of the elements in elems
 func Contains[T comparable](match T, elems ...T) bool {
-	fn := func(_ int, current bool, elem T) bool {
+	fn := func(_ int, elem T) bool {
 		return match == elem
 	}
 
-	return FoldLeft(false, fn, elems...)
+	return ContainsFn(fn, elems...)
 }
 
 // Contains[T] test if the value returned from fn is true for any of the elements in elems

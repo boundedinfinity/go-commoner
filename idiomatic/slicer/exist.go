@@ -9,11 +9,11 @@ func Exist[T comparable](s T, elems ...T) bool {
 }
 
 func ExistFn[T any](fn func(int, T) bool, elems ...T) bool {
-	wrap := func(i int, t T) (bool, error) {
+	fn2 := func(i int, t T) (bool, error) {
 		return fn(i, t), nil
 	}
 
-	found, _ := ExistFnErr(wrap, elems...)
+	found, _ := ExistFnErr(fn2, elems...)
 	return found
 }
 

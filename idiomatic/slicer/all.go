@@ -23,7 +23,7 @@ func AllFnErr[T any](fn func(int, T) (bool, error), elems ...T) (bool, error) {
 	var err error
 
 	for i, elem := range elems {
-		all, err := fn(i, elem)
+		all, err = fn(i, elem)
 
 		if err != nil {
 			all = false
