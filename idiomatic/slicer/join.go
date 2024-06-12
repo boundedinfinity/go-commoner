@@ -6,21 +6,25 @@ import (
 )
 
 func Join[T any](sep string, elems ...T) string {
-	return JoinFn(sep, func(_ int, elem T) string {
-		return fmt.Sprintf("%v", elem)
-	}, elems...)
+	fn := func(_ int, elem T) string { return fmt.Sprintf("%v", elem) }
+	return JoinFn(fn, sep, elems...)
 }
 
-func JoinFn[T any](sep string, fn func(int, T) string, elems ...T) string {
-	return gstring.Join(Map(fn, elems...), sep)
+func JoinFn[T any](fn func(int, T) string, sep string, elems ...T) string {
+	fn2 := func(i int, elem T) (string, error) {
+		return fn(i, elem), nil
+	}
+
+	result, _ := JoinErrFn(fn2, sep, elems...)
+	return result
 }
 
-func JoinErrFn[T any](sep string, fn func(int, T) (string, error), elems ...T) (string, error) {
-	res, err := MapErr(fn, elems...)
+func JoinErrFn[T any](fn func(int, T) (string, error), sep string, elems ...T) (string, error) {
+	result, err := MapErr(fn, elems...)
 
 	if err != nil {
 		return "", err
 	}
 
-	return gstring.Join(res, sep), nil
+	return gstring.Join(result, sep), nil
 }

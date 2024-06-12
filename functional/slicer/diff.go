@@ -7,13 +7,13 @@ import (
 )
 
 func Diff[T comparable](as, bs []T) optioner.Option[[]T] {
-	return optioner.OfSlice(slicer.Diff(as, bs))
+	return optioner.OfSlice(slicer.Difference(as, bs))
 }
 
 func DiffFn[T any](as, bs []T, fn func(int, T) bool) optioner.Option[[]T] {
-	return optioner.OfSlice(slicer.DiffFn(fn, as, bs))
+	return optioner.OfSlice(slicer.DifferenceFn(fn, as, bs))
 }
 
 func DiffFnErr[T any](as, bs []T, fn func(int, T) (bool, error)) trier.Try[optioner.Option[[]T]] {
-	return trier.CompleteOfSlice(slicer.DiffFnErr(fn, as, bs))
+	return trier.CompleteOfSlice(slicer.DifferenceFnErr(fn, as, bs))
 }

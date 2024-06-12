@@ -1,29 +1,25 @@
 package slicer
 
-func Reduce[V any, A any](initial A, vs []V, fn func(V, A) A) A {
-	if len(vs) == 0 {
-		return initial
+func Reduce[T any, R any](fn func(int, R, T) R, initial R, elems ...T) R {
+	fn2 := func(i int, result R, elem T) (R, error) {
+		return fn(i, result, elem), nil
 	}
 
-	c := initial
-
-	for _, v := range vs {
-		c = fn(v, c)
-	}
-
-	return c
+	result, _ := ReduceErr(fn2, initial, elems...)
+	return result
 }
 
-func ReduceErr[V any, A any](vs []V, fn func(V, A) (A, error), s A) (A, error) {
-	c := s
+func ReduceErr[T any, R any](fn func(int, R, T) (R, error), initial R, elems ...T) (R, error) {
+	result := initial
+	var err error
 
-	for _, v := range vs {
-		c, err := fn(v, c)
+	for i, elem := range elems {
+		result, err = fn(i, result, elem)
 
 		if err != nil {
-			return c, err
+			break
 		}
 	}
 
-	return c, nil
+	return result, err
 }

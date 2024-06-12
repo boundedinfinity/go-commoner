@@ -6,11 +6,11 @@ import (
 )
 
 func Sum[V types.Numbers](numbers ...V) V {
-	fn := func(a V, v V) V {
+	fn := func(_ int, a V, v V) V {
 		return a + v
 	}
 
-	return slicer.Reduce(0, numbers, fn)
+	return slicer.Reduce(fn, 0, numbers...)
 }
 
 func Mean[V types.Numbers](numbers ...V) V {
@@ -33,7 +33,7 @@ func Median[V types.Numbers](numbers ...V) V {
 }
 
 func MinOf[V types.Numbers](numbers ...V) V {
-	fn := func(a V, v V) V {
+	fn := func(_ int, a V, v V) V {
 		if v < a {
 			return v
 		} else {
@@ -42,11 +42,11 @@ func MinOf[V types.Numbers](numbers ...V) V {
 	}
 
 	head, _ := slicer.Head(numbers...)
-	return slicer.Reduce(head, numbers, fn)
+	return slicer.Reduce(fn, head, numbers...)
 }
 
 func MaxOf[V types.Numbers](numbers ...V) V {
-	fn := func(a V, v V) V {
+	fn := func(_ int, a V, v V) V {
 		if v > a {
 			return v
 		} else {
@@ -55,5 +55,5 @@ func MaxOf[V types.Numbers](numbers ...V) V {
 	}
 
 	head, _ := slicer.Head(numbers...)
-	return slicer.Reduce(head, numbers, fn)
+	return slicer.Reduce(fn, head, numbers...)
 }

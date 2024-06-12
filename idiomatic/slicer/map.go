@@ -10,7 +10,7 @@ func Map[T any, R any](fn func(int, T) R, elems ...T) []R {
 }
 
 func MapErr[T any, R any](fn func(int, T) (R, error), elems ...T) ([]R, error) {
-	var results []R
+	results := []R{}
 	var result R
 	var err error
 

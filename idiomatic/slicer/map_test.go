@@ -17,14 +17,28 @@ func Test_Map(t *testing.T) {
 		bItem string
 	}
 
-	expected := []Thing2{{bItem: "a"}, {bItem: "b"}}
-	input := []Thing1{{aItem: "a"}, {aItem: "b"}}
+	testCases := []struct {
+		name     string
+		input    []Thing1
+		expected []Thing2
+	}{
+		{
+			name:     "map 1",
+			input:    []Thing1{{aItem: "a"}, {aItem: "b"}},
+			expected: []Thing2{{bItem: "a"}, {bItem: "b"}},
+		},
+	}
 
-	actual := slicer.Map(func(_ int, t1 Thing1) Thing2 {
-		return Thing2{bItem: t1.aItem}
-	}, input...)
+	for _, tc := range testCases {
+		t.Run(tc.name, func(tt *testing.T) {
+			fn := func(_ int, t1 Thing1) Thing2 {
+				return Thing2{bItem: t1.aItem}
+			}
 
-	assert.ElementsMatch(t, expected, actual)
+			actual := slicer.Map(fn, tc.input...)
+			assert.ElementsMatch(t, tc.expected, actual)
+		})
+	}
 }
 
 func Test_MapErr_NoErr(t *testing.T) {
@@ -36,30 +50,35 @@ func Test_MapErr_NoErr(t *testing.T) {
 		bItem string
 	}
 
-	expected := []Thing2{{bItem: "a"}, {bItem: "b"}}
-	input := []Thing1{{aItem: "a"}, {aItem: "b"}}
-	actual, err := slicer.MapErr(func(_ int, t1 Thing1) (Thing2, error) {
-		return Thing2{bItem: t1.aItem}, nil
-	}, input...)
-
-	assert.ElementsMatch(t, expected, actual)
-	assert.Nil(t, err)
-}
-
-func Test_MapErr_WithErr(t *testing.T) {
-	type Thing1 struct {
-		aItem string
+	testCases := []struct {
+		name     string
+		input    []Thing1
+		expected []Thing2
+		err      error
+		fn       func(_ int, t1 Thing1) (Thing2, error)
+	}{
+		{
+			name:     "no error",
+			input:    []Thing1{{aItem: "a"}, {aItem: "b"}},
+			expected: []Thing2{{bItem: "a"}, {bItem: "b"}},
+			fn: func(_ int, t1 Thing1) (Thing2, error) {
+				return Thing2{bItem: t1.aItem}, nil
+			},
+		},
+		{
+			name:     "with error",
+			input:    []Thing1{{aItem: "a"}, {aItem: "b"}},
+			expected: []Thing2{},
+			fn:       func(_ int, t1 Thing1) (Thing2, error) { return Thing2{}, errors.New("map error") },
+			err:      errors.New("map error"),
+		},
 	}
 
-	type Thing2 struct {
-		bItem string
+	for _, tc := range testCases {
+		t.Run(tc.name, func(tt *testing.T) {
+			actual, err := slicer.MapErr(tc.fn, tc.input...)
+			assert.Equal(t, tc.expected, actual, tc.name)
+			assert.Equal(t, tc.err, err, tc.name)
+		})
 	}
-
-	expected := []Thing2{}
-	input := []Thing1{{aItem: "a"}, {aItem: "b"}}
-	fn := func(_ int, t1 Thing1) (Thing2, error) { return Thing2{}, errors.New("map error") }
-	actual, err := slicer.MapErr(fn, input...)
-
-	assert.ElementsMatch(t, expected, actual)
-	assert.NotNil(t, err)
 }

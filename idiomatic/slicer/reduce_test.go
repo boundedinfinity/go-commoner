@@ -12,9 +12,9 @@ func Test_Reduce_Int(t *testing.T) {
 
 	input := []int{1, 2, 3, 4, 5}
 
-	actual := slicer.Reduce(0, input, func(v int, a int) int {
+	actual := slicer.Reduce(func(_ int, v int, a int) int {
 		return a + v
-	})
+	}, 0, input...)
 
 	assert.Equal(t, expected, actual)
 }
@@ -27,7 +27,7 @@ func Test_Reduce_Struct(t *testing.T) {
 
 	expected := Thing{
 		a: "a_val",
-		b: []string{"b1", "b2", "b3"},
+		b: []string{"b3", "b2", "b1"},
 	}
 
 	input := []Thing{
@@ -38,7 +38,7 @@ func Test_Reduce_Struct(t *testing.T) {
 		{},
 	}
 
-	actual := slicer.Reduce(Thing{b: []string{}}, input, func(v Thing, a Thing) Thing {
+	fn := func(_ int, v Thing, a Thing) Thing {
 		if v.a != "" {
 			a.a = v.a
 		}
@@ -48,7 +48,8 @@ func Test_Reduce_Struct(t *testing.T) {
 		}
 
 		return a
-	})
+	}
 
-	assert.Equal(t, expected, actual)
+	actual := slicer.Reduce(fn, Thing{b: []string{}}, input...)
+	assert.EqualValues(t, expected, actual)
 }

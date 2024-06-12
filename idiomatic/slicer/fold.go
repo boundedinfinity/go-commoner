@@ -1,57 +1,57 @@
 package slicer
 
-func Fold[I any, O any](initial O, fn func(int, O, I) O, elems ...I) O {
+func Fold[I any, R any](initial R, fn func(int, R, I) R, elems ...I) R {
 	return FoldLeft(initial, fn, elems...)
 }
 
-func FoldLeft[I any, O any](initial O, fn func(int, O, I) O, elems ...I) O {
-	curr := initial
+func FoldLeft[I any, R any](initial R, fn func(int, R, I) R, elems ...I) R {
+	result := initial
 
 	for i, elem := range elems {
-		curr = fn(i, curr, elem)
+		result = fn(i, result, elem)
 	}
 
-	return curr
+	return result
 }
 
-func FoldErr[I any, O any](initial O, fn func(int, O, I) (O, error), elems ...I) (O, error) {
+func FoldErr[I any, R any](initial R, fn func(int, R, I) (R, error), elems ...I) (R, error) {
 	return FoldLeftErr(initial, fn, elems...)
 }
 
-func FoldLeftErr[I any, O any](initial O, fn func(int, O, I) (O, error), elems ...I) (O, error) {
-	curr := initial
+func FoldLeftErr[I any, R any](initial R, fn func(int, R, I) (R, error), elems ...I) (R, error) {
+	result := initial
 	var err error
 
 	for i, elem := range elems {
-		curr, err = fn(i, curr, elem)
+		result, err = fn(i, result, elem)
 
 		if err != nil {
-			return curr, err
+			return result, err
 		}
 	}
 
-	return curr, nil
+	return result, nil
 }
 
-func FoldRight[I any, O any](initial O, fn func(int, O, I) O, elems ...I) O {
-	curr := initial
+func FoldRight[I any, R any](initial R, fn func(int, R, I) R, elems ...I) R {
+	result := initial
 
 	for i := len(elems) - 1; i >= 0; i-- {
-		curr = fn(i, curr, elems[i])
+		result = fn(i, result, elems[i])
 	}
 
-	return curr
+	return result
 }
 
-func FoldRightErr[I any, O any](initial O, fn func(int, O, I) (O, error), elems ...I) (O, error) {
-	curr := initial
+func FoldRightErr[I any, R any](initial R, fn func(int, R, I) (R, error), elems ...I) (R, error) {
+	result := initial
 	var err error
 
 	for i := len(elems) - 1; i >= 0; i-- {
-		if curr, err = fn(i, curr, elems[i]); err != nil {
+		if result, err = fn(i, result, elems[i]); err != nil {
 			break
 		}
 	}
 
-	return curr, err
+	return result, err
 }
