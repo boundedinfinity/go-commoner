@@ -1,5 +1,11 @@
 package slicer
 
+import "errors"
+
+var (
+	ErrReduceExit = errors.New("reduce exit")
+)
+
 func Reduce[T any, R any](fn func(int, R, T) R, initial R, elems ...T) R {
 	fn2 := func(i int, result R, elem T) (R, error) {
 		return fn(i, result, elem), nil
@@ -17,6 +23,10 @@ func ReduceErr[T any, R any](fn func(int, R, T) (R, error), initial R, elems ...
 		result, err = fn(i, result, elem)
 
 		if err != nil {
+			if errors.Is(err, ErrReduceExit) {
+				err = nil
+			}
+
 			break
 		}
 	}
