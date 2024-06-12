@@ -12,9 +12,9 @@ func Replace[T ~string, U ~string, V ~string](s T, old U, new V) string {
 }
 
 func ReplaceInList[T ~string](s T, olds []string, new string) string {
-	return slicer.FoldLeft(string(s), func(_ int, current, old string) string {
+	return slicer.FoldLeft(func(_ int, current, old string) string {
 		return Replace(current, old, new)
-	}, olds...)
+	}, string(s), olds...)
 }
 
 func replaceNotInList[T ~string](s T, list []string, replacement string) string {

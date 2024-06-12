@@ -1,57 +1,57 @@
 package slicer
 
-func Fold[I any, R any](initial R, fn func(int, R, I) R, elems ...I) R {
-	return FoldLeft(initial, fn, elems...)
+func Fold[T any, R any](fn func(int, R, T) R, initial R, elems ...T) R {
+	return FoldLeft(fn, initial, elems...)
 }
 
-func FoldLeft[I any, R any](initial R, fn func(int, R, I) R, elems ...I) R {
-	result := initial
+func FoldErr[T any, R any](fn func(int, R, T) (R, error), initial R, elems ...T) (R, error) {
+	return FoldLeftErr(fn, initial, elems...)
+}
 
-	for i, elem := range elems {
-		result = fn(i, result, elem)
+func FoldLeft[T any, R any](fn func(int, R, T) R, initial R, elems ...T) R {
+	fn2 := func(i int, accumulator R, elem T) (R, error) {
+		return fn(i, accumulator, elem), nil
 	}
 
-	return result
+	accumalater, _ := FoldLeftErr(fn2, initial, elems...)
+	return accumalater
 }
 
-func FoldErr[I any, R any](initial R, fn func(int, R, I) (R, error), elems ...I) (R, error) {
-	return FoldLeftErr(initial, fn, elems...)
-}
-
-func FoldLeftErr[I any, R any](initial R, fn func(int, R, I) (R, error), elems ...I) (R, error) {
-	result := initial
+func FoldLeftErr[T any, R any](fn func(int, R, T) (R, error), initial R, elems ...T) (R, error) {
+	accumulator := initial
 	var err error
 
 	for i, elem := range elems {
-		result, err = fn(i, result, elem)
+		accumulator, err = fn(i, accumulator, elem)
 
 		if err != nil {
-			return result, err
+			return accumulator, err
 		}
 	}
 
-	return result, nil
+	return accumulator, nil
 }
 
-func FoldRight[I any, R any](initial R, fn func(int, R, I) R, elems ...I) R {
-	result := initial
-
-	for i := len(elems) - 1; i >= 0; i-- {
-		result = fn(i, result, elems[i])
+func FoldRight[T any, R any](fn func(int, R, T) R, initial R, elems ...T) R {
+	fn2 := func(i int, accumulator R, elem T) (R, error) {
+		return fn(i, accumulator, elem), nil
 	}
 
-	return result
+	accumulator, _ := FoldRightErr(fn2, initial, elems...)
+	return accumulator
 }
 
-func FoldRightErr[I any, R any](initial R, fn func(int, R, I) (R, error), elems ...I) (R, error) {
-	result := initial
+func FoldRightErr[T any, R any](fn func(int, R, T) (R, error), initial R, elems ...T) (R, error) {
+	accumulator := initial
 	var err error
 
 	for i := len(elems) - 1; i >= 0; i-- {
-		if result, err = fn(i, result, elems[i]); err != nil {
+		accumulator, err = fn(i, accumulator, elems[i])
+
+		if err != nil {
 			break
 		}
 	}
 
-	return result, err
+	return accumulator, err
 }

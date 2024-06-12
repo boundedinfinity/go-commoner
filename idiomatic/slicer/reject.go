@@ -19,7 +19,7 @@ func RejectErr[T any](fn func(int, T) (bool, error), elems ...T) ([]T, error) {
 			return results, err
 		}
 
-		if ok {
+		if !ok {
 			results = append(results, elem)
 		}
 	}

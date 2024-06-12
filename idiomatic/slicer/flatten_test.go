@@ -8,7 +8,6 @@ import (
 )
 
 func Test_Flatten(t *testing.T) {
-
 	testCases := []struct {
 		name     string
 		input    [][]int
