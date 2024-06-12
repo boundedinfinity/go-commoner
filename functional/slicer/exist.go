@@ -14,5 +14,5 @@ func ExistFn[T any](fn func(int, T) bool, elems ...T) bool {
 }
 
 func ExistFnErr[T any](fn func(int, T) (bool, error), elems ...T) trier.Try[bool] {
-	return trier.Complete(slicer.ExistFnErr(fn, elems...))
+	return trier.CompleteErr(slicer.ExistFnErr(fn, elems...))
 }

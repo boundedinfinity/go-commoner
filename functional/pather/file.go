@@ -18,11 +18,11 @@ type files struct {
 }
 
 func (t files) Is(path string) trier.Try[bool] {
-	return trier.Complete(pather.Files.IsErr(path))
+	return trier.CompleteErr(pather.Files.IsErr(path))
 }
 
 func (t files) List(path string) trier.Try[[]string] {
-	return trier.Complete(pather.Files.List(path))
+	return trier.CompleteErr(pather.Files.List(path))
 }
 
 // func IsFile(path string) trier.Try[bool] {

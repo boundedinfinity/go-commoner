@@ -14,5 +14,5 @@ func EqualsFn[T any, K comparable](fn func(int, T) K, as, bs []T) bool {
 }
 
 func EqualsFnErr[T comparable, K comparable](fn func(int, T) (K, error), as, bs []T) trier.Try[bool] {
-	return trier.Complete(slicer.EqualsFnErr(fn, as, bs))
+	return trier.CompleteErr(slicer.EqualsFnErr(fn, as, bs))
 }

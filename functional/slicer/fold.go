@@ -10,7 +10,7 @@ func Fold[I any, O any](initial O, fn func(int, O, I) O, elems ...I) O {
 }
 
 func FoldErr[I any, O any](initial O, fn func(int, O, I) (O, error), elems ...I) trier.Try[O] {
-	return trier.Complete(slicer.FoldErr(fn, initial, elems...))
+	return trier.CompleteErr(slicer.FoldErr(fn, initial, elems...))
 }
 
 func FoldLeft[I any, O any](initial O, fn func(int, O, I) O, elems ...I) O {
@@ -18,7 +18,7 @@ func FoldLeft[I any, O any](initial O, fn func(int, O, I) O, elems ...I) O {
 }
 
 func FoldLeftErr[I any, O any](initial O, fn func(int, O, I) (O, error), elems ...I) trier.Try[O] {
-	return trier.Complete(slicer.FoldLeftErr(fn, initial, elems...))
+	return trier.CompleteErr(slicer.FoldLeftErr(fn, initial, elems...))
 }
 
 func FoldRight[I any, O any](initial O, fn func(int, O, I) O, elems ...I) O {
@@ -26,5 +26,5 @@ func FoldRight[I any, O any](initial O, fn func(int, O, I) O, elems ...I) O {
 }
 
 func FoldRightErr[I any, O any](initial O, fn func(int, O, I) (O, error), elems ...I) trier.Try[O] {
-	return trier.Complete(slicer.FoldRightErr(fn, initial, elems...))
+	return trier.CompleteErr(slicer.FoldRightErr(fn, initial, elems...))
 }

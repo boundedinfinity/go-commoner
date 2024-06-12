@@ -18,8 +18,8 @@ func MapErr[T any, U any](fn func(int, T) (U, error), elems optioner.Option[[]T]
 	if elems.Defined() {
 		results, err := slicer.MapErr(fn, elems.Get()...)
 
-		return trier.Complete(optioner.OfSlice(results), err)
+		return trier.CompleteErr(optioner.OfSlice(results), err)
 	}
 
-	return trier.Complete(optioner.None[[]U](), nil)
+	return trier.CompleteErr(optioner.None[[]U](), nil)
 }

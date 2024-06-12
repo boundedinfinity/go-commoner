@@ -14,5 +14,5 @@ func DedupFn[T any, K comparable](fn func(int, T) K, elems ...T) []T {
 }
 
 func DedupFnErr[T any, K comparable](fn func(int, T) (K, error), elems ...T) trier.Try[[]T] {
-	return trier.Complete(slicer.DeduplicateFnErr(fn, elems...))
+	return trier.CompleteErr(slicer.DeduplicateFnErr(fn, elems...))
 }

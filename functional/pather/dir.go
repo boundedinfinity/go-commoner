@@ -12,11 +12,11 @@ var Dirs = dirs{}
 type dirs struct{}
 
 func (t dirs) Is(path string) trier.Try[bool] {
-	return trier.Complete(pather.Dirs.IsErr(path))
+	return trier.CompleteErr(pather.Dirs.IsErr(path))
 }
 
 func (t dirs) List(path string) trier.Try[[]string] {
-	return trier.Complete(pather.Dirs.List(path))
+	return trier.CompleteErr(pather.Dirs.List(path))
 }
 
 // func IsDir(path string) trier.Try[bool] {

@@ -10,7 +10,7 @@ func ReduceTry[V any, A any](vs []V, fn func(V, A) (A, error), initial A) trier.
 		agg = a
 
 		if err != nil {
-			return trier.Complete(agg, err)
+			return trier.CompleteErr(agg, err)
 		}
 	}
 
