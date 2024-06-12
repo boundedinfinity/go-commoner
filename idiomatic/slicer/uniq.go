@@ -1,42 +1,39 @@
 package slicer
 
-func Uniq[C comparable](vs ...C) []C {
-	wrap := func(t C) C {
-		return t
-	}
-
-	return UniqFn(wrap, vs...)
+func Uniq[C comparable](elems ...C) []C {
+	fn2 := func(_ int, elem C) C { return elem }
+	return UniqFn(fn2, elems...)
 }
 
-func UniqFn[T any, C comparable](fn func(T) C, vs ...T) []T {
-	wrap := func(t T) (C, error) {
-		return fn(t), nil
+func UniqFn[T any, C comparable](fn func(int, T) C, elems ...T) []T {
+	fn2 := func(i int, elem T) (C, error) {
+		return fn(i, elem), nil
 	}
 
-	o, _ := UniqFnErr(wrap, vs...)
+	results, _ := UniqFnErr(fn2, elems...)
 
-	return o
+	return results
 }
 
-func UniqFnErr[T any, C comparable](fn func(T) (C, error), vs ...T) ([]T, error) {
-	o := []T{}
+func UniqFnErr[T any, C comparable](fn func(int, T) (C, error), elems ...T) ([]T, error) {
+	results := []T{}
 	m := map[C]T{}
 
-	for _, v := range vs {
-		c, err := fn(v)
+	for i, elem := range elems {
+		c, err := fn(i, elem)
 
 		if err != nil {
-			return o, err
+			return results, err
 		}
 
 		if _, ok := m[c]; !ok {
-			m[c] = v
+			m[c] = elem
 		}
 	}
 
 	for _, v := range m {
-		o = append(o, v)
+		results = append(results, v)
 	}
 
-	return o, nil
+	return results, nil
 }
