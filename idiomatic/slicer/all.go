@@ -2,10 +2,7 @@ package slicer
 
 // All[T] test if the match value is equal to all elements in elems
 func All[T comparable](match T, elems ...T) bool {
-	fn := func(_ int, elem T) bool {
-		return match == elem
-	}
-
+	fn := func(_ int, elem T) bool { return match == elem }
 	return AllFn(fn, elems...)
 }
 
