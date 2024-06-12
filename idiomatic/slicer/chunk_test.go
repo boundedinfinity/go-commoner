@@ -26,6 +26,24 @@ func Test_Chunk(t *testing.T) {
 			size:     2,
 			expected: [][]int{{1, 2}, {3, 4}, {5}},
 		},
+		{
+			name:     "size of 1",
+			input:    []int{1, 2, 3, 4, 5},
+			size:     1,
+			expected: [][]int{{1}, {2}, {3}, {4}, {5}},
+		},
+		{
+			name:     "size of 0",
+			input:    []int{1, 2, 3, 4, 5},
+			size:     0,
+			expected: [][]int{{1}, {2}, {3}, {4}, {5}},
+		},
+		{
+			name:     "size of -1",
+			input:    []int{1, 2, 3, 4, 5},
+			size:     -1,
+			expected: [][]int{{1}, {2}, {3}, {4}, {5}},
+		},
 	}
 
 	for _, tc := range testCases {

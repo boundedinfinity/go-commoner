@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_Find(t *testing.T) {
+func Test_Exist(t *testing.T) {
 	type thing struct {
 		a string
 		b int
@@ -17,44 +17,44 @@ func Test_Find(t *testing.T) {
 		name     string
 		input    []thing
 		fn       func(i int, t thing) bool
-		expected thing
-		ok       bool
+		expected bool
 	}{
 		{
-			name:     "should find",
+			name:     "should exist",
 			input:    []thing{{a: "A", b: 10}, {a: "A", b: 20}, {a: "B", b: 30}},
 			fn:       func(_ int, t thing) bool { return t.a == "A" },
-			expected: thing{a: "A", b: 10},
-			ok:       true,
+			expected: true,
 		},
 		{
-			name:     "should not find",
+			name:     "should not exist",
 			input:    []thing{{a: "A", b: 10}, {a: "A", b: 20}, {a: "B", b: 30}},
 			fn:       func(_ int, t thing) bool { return t.a == "Z" },
-			expected: thing{},
-			ok:       false,
+			expected: false,
 		},
 		{
-			name:     "should not find with empty input",
+			name:     "should exist empty input",
 			input:    []thing{},
 			fn:       func(_ int, t thing) bool { return t.a == "Z" },
-			expected: thing{},
-			ok:       false,
+			expected: false,
 		},
 		{
-			name:     "should not find with nil input",
+			name:     "should exist nil input",
 			input:    nil,
-			fn:       func(_ int, t thing) bool { return t.a == "Z" },
-			expected: thing{},
-			ok:       false,
+			fn:       func(_ int, t thing) bool { return t.a == "A" },
+			expected: false,
+		},
+		{
+			name:     "should not exist with nil fn",
+			input:    []thing{{a: "A", b: 10}, {a: "A", b: 20}, {a: "B", b: 30}},
+			fn:       nil,
+			expected: false,
 		},
 	}
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
-			actual, ok := slicer.FindFn(tc.fn, tc.input...)
+			actual := slicer.ExistFn(tc.fn, tc.input...)
 			assert.Equal(t, tc.expected, actual, tc.name)
-			assert.Equal(t, tc.ok, ok, tc.name)
 		})
 	}
 }

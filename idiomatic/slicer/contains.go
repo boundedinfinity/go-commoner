@@ -20,6 +20,10 @@ func Contains[T comparable](match T, elems ...T) bool {
 //   - int is the index of the current element
 //   - T is the current element
 func ContainsFn[T any](fn func(int, T) bool, elems ...T) bool {
+	if fn == nil {
+		return false
+	}
+
 	fn2 := func(i int, elem T) (bool, error) {
 		return fn(i, elem), nil
 	}
@@ -38,6 +42,10 @@ func ContainsFn[T any](fn func(int, T) bool, elems ...T) bool {
 func ContainsFnErr[T any](fn func(int, T) (bool, error), elems ...T) (bool, error) {
 	var found bool
 	var err error
+
+	if fn == nil {
+		return found, err
+	}
 
 	for i, elem := range elems {
 		found, err = fn(i, elem)

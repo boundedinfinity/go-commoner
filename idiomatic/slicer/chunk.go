@@ -10,6 +10,7 @@ import "fmt"
 // Chunk creates a slice where each element is a slice of elems of size length.
 //
 // If elems can't be split evenly, the final element will contain the remaining elems.
+// If count < 1 the results are return as if count is 1
 //
 // Example:
 //

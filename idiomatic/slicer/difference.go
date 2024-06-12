@@ -6,6 +6,10 @@ func Difference[T comparable](as, bs []T) []T {
 }
 
 func DifferenceFn[T any, C comparable](fn func(int, T) C, as, bs []T) []T {
+	if fn == nil {
+		return []T{}
+	}
+
 	fn2 := func(i int, t T) (C, error) {
 		return fn(i, t), nil
 	}
@@ -17,6 +21,10 @@ func DifferenceFn[T any, C comparable](fn func(int, T) C, as, bs []T) []T {
 func DifferenceFnErr[T any, C comparable](fn func(int, T) (C, error), as, bs []T) ([]T, error) {
 	results := []T{}
 	var err error
+
+	if fn == nil {
+		return results, err
+	}
 
 	for ai, a := range as {
 		ac, ferr := fn(ai, a)

@@ -8,10 +8,48 @@ import (
 )
 
 func Test_Flatten(t *testing.T) {
-	as := []int{1, 2, 3}
-	bs := []int{4, 5, 6}
-	actual := slicer.Flatten(as, bs)
-	expected := []int{1, 2, 3, 4, 5, 6}
 
-	assert.Equal(t, expected, actual)
+	testCases := []struct {
+		name     string
+		input    [][]int
+		expected []int
+	}{
+		{
+			name:     "flatten 1",
+			input:    [][]int{{1}, {2}},
+			expected: []int{1, 2},
+		},
+		{
+			name:     "flatten 2",
+			input:    [][]int{{1, 2}, {3}},
+			expected: []int{1, 2, 3},
+		},
+		{
+			name:     "flatten 3",
+			input:    [][]int{{1, 2}, {}},
+			expected: []int{1, 2},
+		},
+		{
+			name:     "flatten 4",
+			input:    [][]int{{1, 2}, nil},
+			expected: []int{1, 2},
+		},
+		{
+			name:     "flatten 4",
+			input:    [][]int{},
+			expected: []int{},
+		},
+		{
+			name:     "flatten 5",
+			input:    [][]int{nil},
+			expected: []int{},
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(tt *testing.T) {
+			actual := slicer.Flatten(tc.input...)
+			assert.ElementsMatch(t, tc.expected, actual, tc.name)
+		})
+	}
 }

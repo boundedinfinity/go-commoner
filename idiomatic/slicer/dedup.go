@@ -17,6 +17,10 @@ func Dedup[T comparable](elems ...T) []T {
 //   - T is the current element
 //   - K the comparable type to deduplicate
 func DedupFn[T any, K comparable](fn func(int, T) K, elems ...T) []T {
+	if fn == nil {
+		return []T{}
+	}
+
 	fn2 := func(i int, elem T) (K, error) {
 		k := fn(i, elem)
 		return k, nil
@@ -41,6 +45,10 @@ func DedupFnErr[T any, K comparable](fn func(int, T) (K, error), elems ...T) ([]
 	var err error
 	var key K
 	var results []T
+
+	if fn == nil {
+		return results, err
+	}
 
 	for i, elem := range elems {
 		if key, err = fn(i, elem); err != nil {

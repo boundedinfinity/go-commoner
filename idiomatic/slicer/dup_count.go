@@ -14,6 +14,10 @@ func DupCount[T comparable](elems ...T) []DupCountResult[T] {
 }
 
 func DupCountFn[T any, K comparable](fn func(T) K, elems ...T) []DupCountResult[T] {
+	if fn == nil {
+		return []DupCountResult[T]{}
+	}
+
 	fn2 := func(elem T) (K, error) {
 		k := fn(elem)
 		return k, nil
@@ -29,6 +33,10 @@ func DupCountFnErr[T any, K comparable](fn func(T) (K, error), elems ...T) ([]Du
 	var err error
 	var key K
 	var results []DupCountResult[T]
+
+	if fn == nil {
+		return results, err
+	}
 
 	for _, elem := range elems {
 		if key, err = fn(elem); err != nil {

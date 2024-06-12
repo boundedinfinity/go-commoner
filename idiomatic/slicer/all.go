@@ -12,6 +12,10 @@ func All[T comparable](match T, elems ...T) bool {
 //   - int is the index of the current element
 //   - T is the current element
 func AllFn[T any](fn func(int, T) bool, elems ...T) bool {
+	if fn == nil {
+		return false
+	}
+
 	fn2 := func(i int, elem T) (bool, error) {
 		return fn(i, elem), nil
 	}
