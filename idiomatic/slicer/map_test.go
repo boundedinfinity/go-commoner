@@ -57,9 +57,8 @@ func Test_MapErr_WithErr(t *testing.T) {
 
 	expected := []Thing2{}
 	input := []Thing1{{aItem: "a"}, {aItem: "b"}}
-	actual, err := slicer.MapErr(func(_ int, t1 Thing1) (Thing2, error) {
-		return Thing2{}, errors.New("map error")
-	}, input...)
+	fn := func(_ int, t1 Thing1) (Thing2, error) { return Thing2{}, errors.New("map error") }
+	actual, err := slicer.MapErr(fn, input...)
 
 	assert.ElementsMatch(t, expected, actual)
 	assert.NotNil(t, err)
