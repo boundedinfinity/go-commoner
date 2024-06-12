@@ -1,22 +1,22 @@
 package slicer
 
-// Dedup[T] creates a copy of elems with duplicates removed
-func Dedup[T comparable](elems ...T) []T {
+// Deduplicate[T] creates a copy of elems with duplicates removed
+func Deduplicate[T comparable](elems ...T) []T {
 	fn := func(_ int, elem T) T {
 		return elem
 	}
 
-	return DedupFn(fn, elems...)
+	return DeduplicateFn(fn, elems...)
 }
 
-// DedupFn[T, K] creates a copy of elems with duplicates removed based on the result of the
+// DeduplicateFn[T, K] creates a copy of elems with duplicates removed based on the result of the
 // fn(int, T) function
 //
 // The fn(int, T) K functions takes:
 //   - int is the index of the current element
 //   - T is the current element
 //   - K the comparable type to deduplicate
-func DedupFn[T any, K comparable](fn func(int, T) K, elems ...T) []T {
+func DeduplicateFn[T any, K comparable](fn func(int, T) K, elems ...T) []T {
 	if fn == nil {
 		return []T{}
 	}
@@ -26,7 +26,7 @@ func DedupFn[T any, K comparable](fn func(int, T) K, elems ...T) []T {
 		return k, nil
 	}
 
-	results, _ := DedupFnErr(fn2, elems...)
+	results, _ := DeduplicateFnErr(fn2, elems...)
 
 	return results
 }
@@ -40,7 +40,7 @@ func DedupFn[T any, K comparable](fn func(int, T) K, elems ...T) []T {
 //   - K the comparable type to deduplicate
 //
 // If the fn function returns an error, processing through elems is stopped and the error is returned.
-func DedupFnErr[T any, K comparable](fn func(int, T) (K, error), elems ...T) ([]T, error) {
+func DeduplicateFnErr[T any, K comparable](fn func(int, T) (K, error), elems ...T) ([]T, error) {
 	m := make(map[K]T)
 	var err error
 	var key K

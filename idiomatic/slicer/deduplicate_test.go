@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_Dedup(t *testing.T) {
+func Test_Deduplicate(t *testing.T) {
 	testCases := []struct {
 		name     string
 		input    []string
@@ -27,13 +27,13 @@ func Test_Dedup(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
-			actual := slicer.Dedup(tc.input...)
+			actual := slicer.Deduplicate(tc.input...)
 			assert.Equal(t, tc.expected, actual, tc.name)
 		})
 	}
 }
 
-func Test_DedupFn(t *testing.T) {
+func Test_DeduplicateFn(t *testing.T) {
 	type Thing struct {
 		K string
 		V int
@@ -65,7 +65,7 @@ func Test_DedupFn(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
 			fn := func(_ int, elem Thing) string { return elem.K }
-			actual := slicer.DedupFn(fn, tc.input...)
+			actual := slicer.DeduplicateFn(fn, tc.input...)
 			assert.Equal(t, tc.expected, actual, tc.name)
 		})
 	}
