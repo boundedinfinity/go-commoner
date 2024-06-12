@@ -8,11 +8,29 @@ import (
 )
 
 func Test_Dedup(t *testing.T) {
-	expected := []int{1, 2, 3}
-	input := []int{1, 1, 2, 2, 3, 3}
-	actual := slicer.Dedup(input...)
+	testCases := []struct {
+		name     string
+		input    []string
+		expected []string
+	}{
+		{
+			name:     "with  duplicates",
+			input:    []string{"a", "a", "a", "a"},
+			expected: []string{"a"},
+		},
+		{
+			name:     "no duplicates",
+			input:    []string{"a", "b", "c", "d"},
+			expected: []string{"a", "b", "c", "d"},
+		},
+	}
 
-	assert.Equal(t, expected, actual)
+	for _, tc := range testCases {
+		t.Run(tc.name, func(tt *testing.T) {
+			actual := slicer.Dedup(tc.input...)
+			assert.Equal(t, tc.expected, actual, tc.name)
+		})
+	}
 }
 
 func Test_DedupFn(t *testing.T) {
@@ -21,24 +39,34 @@ func Test_DedupFn(t *testing.T) {
 		V int
 	}
 
-	expected := []Thing{
-		{K: "x", V: 100},
-		{K: "y", V: 200},
-		{K: "z", V: 300},
+	testCases := []struct {
+		name     string
+		input    []Thing
+		expected []Thing
+	}{
+		{
+			name: "with  duplicates",
+			input: []Thing{
+				{K: "x", V: 100},
+				{K: "y", V: 200},
+				{K: "z", V: 300},
+				{K: "x", V: 100},
+				{K: "y", V: 200},
+				{K: "z", V: 300},
+			},
+			expected: []Thing{
+				{K: "x", V: 100},
+				{K: "y", V: 200},
+				{K: "z", V: 300},
+			},
+		},
 	}
 
-	input := []Thing{
-		{K: "x", V: 100},
-		{K: "y", V: 200},
-		{K: "z", V: 300},
-		{K: "x", V: 100},
-		{K: "y", V: 200},
-		{K: "z", V: 300},
+	for _, tc := range testCases {
+		t.Run(tc.name, func(tt *testing.T) {
+			fn := func(_ int, elem Thing) string { return elem.K }
+			actual := slicer.DedupFn(fn, tc.input...)
+			assert.Equal(t, tc.expected, actual, tc.name)
+		})
 	}
-
-	actual := slicer.DedupFn(func(elem Thing) string {
-		return elem.K
-	}, input...)
-
-	assert.Equal(t, expected, actual)
 }

@@ -23,9 +23,11 @@ func (t builtInSort[T]) Swap(i, j int) {
 }
 
 func Sort[T constraints.Ordered](elems ...T) []T {
-	copy := Copy(elems...)
-	sort.Sort(builtInSort[T]{elems: copy})
-	return copy
+	var copied []T
+	copy(copied, elems)
+
+	sort.Sort(builtInSort[T]{elems: copied})
+	return copied
 }
 
 type builtInFnSort[T any, O constraints.Ordered] struct {
@@ -46,10 +48,12 @@ func (t builtInFnSort[T, O]) Swap(i, j int) {
 }
 
 func SortFn[T any, O constraints.Ordered](fn func(T) O, elems ...T) []T {
-	copy := Copy(elems...)
+	var copied []T
+	copy(copied, elems)
+
 	sort.Sort(builtInFnSort[T, O]{
-		elems: copy,
+		elems: copied,
 		fn:    fn,
 	})
-	return copy
+	return copied
 }

@@ -1,50 +1,54 @@
 package slicer
 
 func Diff[T comparable](as, bs []T) []T {
-	fn := func(a, b T) bool {
-		return a == b
-	}
-
-	return DiffFn(as, bs, fn)
+	fn := func(_ int, t T) T { return t }
+	return DiffFn(fn, as, bs)
 }
 
-func DiffFn[T any](as, bs []T, fn func(T, T) bool) []T {
-	var d []T
-
-	for _, a := range as {
-		var found bool
-
-		for _, b := range bs {
-			if found = fn(a, b); found {
-				break
-			}
-		}
-
-		if !found {
-			d = append(d, a)
-		}
+func DiffFn[T any, C comparable](fn func(int, T) C, as, bs []T) []T {
+	fn2 := func(i int, t T) (C, error) {
+		return fn(i, t), nil
 	}
 
-	return d
+	results, _ := DiffFnErr(fn2, as, bs)
+	return results
 }
 
-func DiffFnErr[T any](as, bs []T, fn func(T, T) (bool, error)) ([]T, error) {
-	var d []T
+func DiffFnErr[T any, C comparable](fn func(int, T) (C, error), as, bs []T) ([]T, error) {
+	results := []T{}
 	var err error
 
-	for _, a := range as {
+	for ai, a := range as {
+		ac, ferr := fn(ai, a)
+
+		if ferr != nil {
+			err = ferr
+			break
+		}
+
 		var found bool
 
 		for _, b := range bs {
-			if found, err = fn(a, b); found || err != nil {
+			bc, ferr := fn(ai, b)
+
+			if ferr != nil {
+				err = ferr
 				break
+			}
+
+			if ac == bc {
+				found = true
 			}
 		}
 
+		if err != nil {
+			break
+		}
+
 		if !found {
-			d = append(d, a)
+			results = append(results, a)
 		}
 	}
 
-	return d, err
+	return results, err
 }
