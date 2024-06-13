@@ -49,3 +49,16 @@ func IntersectionFnErr[T any, C comparable](fn func(T) (C, error), as []T, bs []
 
 	return results, nil
 }
+
+func HasIntersection[T comparable](as []T, bs []T) bool {
+	return len(Intersection(as, bs)) > 0
+}
+
+func HasIntersectionFn[T any, C comparable](fn func(T) C, as []T, bs []T) bool {
+	return len(IntersectionFn(fn, as, bs)) > 0
+}
+
+func HasIntersectionFnErr[T any, C comparable](fn func(T) (C, error), as []T, bs []T) (bool, error) {
+	results, err := IntersectionFnErr(fn, as, bs)
+	return len(results) > 0, err
+}

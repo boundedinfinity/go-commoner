@@ -1,4 +1,4 @@
-package validator
+package validater
 
 import "github.com/boundedinfinity/go-commoner/errorer"
 
