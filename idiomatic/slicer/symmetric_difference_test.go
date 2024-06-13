@@ -37,7 +37,7 @@ func Test_SymmetricDifference(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
 			actual := slicer.SymmetricDifference(tc.input1, tc.input2)
-			assert.ElementsMatch(t, tc.expected, actual, tc.name)
+			assert.ElementsMatch(t, tc.expected, actual)
 		})
 	}
 }
@@ -114,7 +114,7 @@ func Test_SymmetricDifferenceFn(t *testing.T) {
 		t.Run(tc.name, func(tt *testing.T) {
 			fn := func(_ int, elem Thing) string { return elem.K }
 			actual := slicer.SymmetricDifferenceFn(fn, tc.input1, tc.input2)
-			assert.ElementsMatch(t, tc.expected, actual, tc.name)
+			assert.ElementsMatch(t, tc.expected, actual)
 		})
 	}
 }

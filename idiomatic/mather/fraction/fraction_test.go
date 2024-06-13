@@ -33,7 +33,7 @@ func Test_Fraction_Component(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
 			actual := fraction.Component(tc.input)
-			assert.Equal(t, tc.expected, actual, tc.name)
+			assert.Equal(tt, tc.expected, actual)
 		})
 	}
 }
@@ -64,7 +64,7 @@ func Test_Fraction_Magnitude(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
 			actual := fraction.Magnitude(tc.input)
-			assert.Equal(t, tc.expected, actual, tc.name)
+			assert.Equal(tt, tc.expected, actual)
 		})
 	}
 }
@@ -360,7 +360,7 @@ func Test_Fraction_FromFloat(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
 			actual := fraction.FromFloat(tc.input).Reduce()
-			assert.Equal(t, tc.expected, actual, tc.name)
+			assert.Equal(tt, tc.expected, actual)
 		})
 	}
 }

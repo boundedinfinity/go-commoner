@@ -48,7 +48,7 @@ func Test_TrimSpace(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
 			actual := stringer.TrimSpace(tc.input)
-			assert.Equal(t, tc.expected, actual)
+			assert.Equal(tt, tc.expected, actual)
 		})
 	}
 }
@@ -71,7 +71,7 @@ func Test_Trim_other_characters(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
 			actual := stringer.Trim(tc.input, tc.set)
-			assert.Equal(t, tc.expected, actual)
+			assert.Equal(tt, tc.expected, actual)
 		})
 	}
 }

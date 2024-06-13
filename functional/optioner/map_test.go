@@ -34,9 +34,9 @@ func Test_FlatMap(t *testing.T) {
 	for _, tc := range tcs {
 		t.Run(tc.name, func(tt *testing.T) {
 			actual := o.FlatMap(tc.input, fn)
-			assert.Equal(t, actual.Empty(), tc.expected.Empty())
-			assert.Equal(t, actual.Defined(), tc.expected.Defined())
-			assert.Equal(t, actual.Get(), tc.expected.Get())
+			assert.Equal(tt, actual.Empty(), tc.expected.Empty())
+			assert.Equal(tt, actual.Defined(), tc.expected.Defined())
+			assert.Equal(tt, actual.Get(), tc.expected.Get())
 		})
 	}
 }

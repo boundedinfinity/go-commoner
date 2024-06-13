@@ -28,7 +28,7 @@ func Test_Integer_GreatestCommonFactor(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
 			actual := mather.GreatestCommonFactor(tc.input[0], tc.input[1])
-			assert.Equal(t, tc.expected, actual)
+			assert.Equal(tt, tc.expected, actual)
 		})
 	}
 }
@@ -54,7 +54,7 @@ func Test_Integer_AllFactors(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
 			actual := mather.AllFactors(tc.input)
-			assert.Equal(t, tc.expected, actual)
+			assert.Equal(tt, tc.expected, actual)
 		})
 	}
 }

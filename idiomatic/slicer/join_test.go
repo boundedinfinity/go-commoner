@@ -25,7 +25,7 @@ func Test_Join(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
 			actual := slicer.Join(tc.sep, tc.input...)
-			assert.Equal(t, tc.expected, actual, tc.name)
+			assert.Equal(tt, tc.expected, actual)
 		})
 	}
 }

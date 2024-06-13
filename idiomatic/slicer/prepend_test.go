@@ -61,7 +61,7 @@ func Test_Prepend(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
 			actual := slicer.Prepend(tc.input1, tc.input2...)
-			assert.Equal(t, tc.expected, actual, tc.name)
+			assert.Equal(tt, tc.expected, actual)
 		})
 	}
 }

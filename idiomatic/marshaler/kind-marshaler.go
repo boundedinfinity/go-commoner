@@ -14,9 +14,9 @@ import (
 var (
 	ErrKindMarshalerTypeMissing            = errorer.New("type missing")
 	ErrKindMarshalerTypeNotRegistered      = errorer.New("type not registered")
-	ErrKindMarshalerTypeNotRegisteredv     = errorer.Wrapv(ErrKindMarshalerTypeNotRegistered)
+	ErrKindMarshalerTypeNotRegisteredv     = ErrKindMarshalerTypeNotRegistered.ValueFn()
 	ErrKindMarshalerTypeAlreadyRegistered  = errorer.New("type already registered")
-	ErrKindMarshalerTypeAlreadyRegisteredv = errorer.Wrapv(ErrKindMarshalerTypeAlreadyRegistered)
+	ErrKindMarshalerTypeAlreadyRegisteredv = ErrKindMarshalerTypeAlreadyRegistered.ValueFn()
 )
 
 func NewKind[D any](val D, fn func(D) string) *KindMarshaler[D] {

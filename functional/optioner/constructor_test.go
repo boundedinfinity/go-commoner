@@ -94,10 +94,10 @@ func Test_Option_constructors(t *testing.T) {
 
 	for _, tc := range tcs {
 		t.Run(tc.name, func(tt *testing.T) {
-			assert.Equal(t, tc.expectedDefined, tc.actual.Defined(), tc.name)
-			assert.Equal(t, !tc.expectedDefined, tc.actual.Empty(), tc.name)
-			assert.Equal(t, tc.expectedGet, tc.actual.Get(), tc.name)
-			assert.Equal(t,
+			assert.Equal(tt, tc.expectedDefined, tc.actual.Defined())
+			assert.Equal(tt, !tc.expectedDefined, tc.actual.Empty())
+			assert.Equal(tt, tc.expectedGet, tc.actual.Get())
+			assert.Equal(tt,
 				tc.expectedOrElseOutput,
 				tc.actual.OrElse(tc.expectedOrElseInput),
 				tc.name,

@@ -33,7 +33,7 @@ func Test_Reverse(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
 			actual := slicer.Reverse(tc.input...)
-			assert.ElementsMatch(t, tc.expected, actual, tc.name)
+			assert.ElementsMatch(t, tc.expected, actual)
 		})
 	}
 }

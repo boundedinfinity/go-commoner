@@ -31,7 +31,7 @@ func Test_All(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
 			actual := slicer.All(tc.match, tc.list...)
-			assert.Equal(t, tc.expected, actual)
+			assert.Equal(tt, tc.expected, actual)
 		})
 	}
 }
@@ -60,7 +60,7 @@ func Test_AllFn(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
 			actual := slicer.AllFn(tc.match, tc.list...)
-			assert.Equal(t, tc.expected, actual)
+			assert.Equal(tt, tc.expected, actual)
 		})
 	}
 }

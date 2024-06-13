@@ -77,8 +77,8 @@ func Test_MapErr_NoErr(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
 			actual, err := slicer.MapErr(tc.fn, tc.input...)
-			assert.Equal(t, tc.expected, actual, tc.name)
-			assert.Equal(t, tc.err, err, tc.name)
+			assert.Equal(tt, tc.expected, actual)
+			assert.Equal(tt, tc.err, err)
 		})
 	}
 }

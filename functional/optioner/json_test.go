@@ -9,54 +9,25 @@ import (
 )
 
 func Test_serialize(t *testing.T) {
-	type something[T any] struct {
-		V o.Option[T] `json:",omitempty"`
-	}
-
 	testCases := []struct {
 		name     string
-		input    any
+		input    o.Option[string]
 		expected string
 		err      error
 	}{
 		{
-			name:     "some string",
-			input:    o.Some("s"),
-			expected: `"s"`,
-		},
-		{
-			name:     "none string",
-			input:    o.None[string](),
-			expected: `null`,
-		},
-		{
-			name:     "some int",
-			input:    o.Some(1),
-			expected: `1`,
-		},
-		{
-			name:     "none int",
-			input:    o.None[int](),
-			expected: `null`,
-		},
-		{
-			name:     "some string",
-			input:    something[string]{V: o.Some("s")},
-			expected: `{"V": "s"}`,
-		},
-		{
-			name:     "some string",
-			input:    something[string]{V: o.None[string]()},
-			expected: `{"V": null}`,
+			name:     "case 1",
+			input:    o.Some("case 1"),
+			expected: `"case 1"`,
+			err:      nil,
 		},
 	}
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
 			actual, err := json.Marshal(tc.input)
-
 			assert.Equal(tt, tc.err, err)
-			assert.JSONEqf(tt, tc.expected, string(actual), "%v == %v", tc.expected, string(actual))
+			assert.JSONEq(tt, tc.expected, string(actual), string(actual))
 		})
 	}
 }

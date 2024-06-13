@@ -58,10 +58,10 @@ func Test_Instances_SimpleName(t *testing.T) {
 
 // 	for _, tc := range tcs {
 // 		t.Run(tc.name, func(tt *testing.T) {
-// 			assert.Error(t, tc.actual, tc.name)
-// 			assert.ErrorIs(t, tc.actual, tc.is, tc.name)
-// 			assert.Equal(t, tc.str, tc.actual.(*errorer.Errorer).String(), tc.name)
-// 			assert.Equal(t, tc.err, tc.actual.Error(), tc.name)
+// 			assert.Error(t, tc.actual)
+// 			assert.ErrorIs(t, tc.actual, tc.is)
+// 			assert.Equal(tt, tc.str, tc.actual.(*errorer.Errorer).String())
+// 			assert.Equal(tt, tc.err, tc.actual.Error())
 // 		})
 // 	}
 // }

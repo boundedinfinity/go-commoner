@@ -15,9 +15,9 @@ import (
 var (
 	ErrTypedMarshalerTypeMissing            = errorer.New("type missing")
 	ErrTypedMarshalerTypeNotRegistered      = errorer.New("type not registered")
-	ErrTypedMarshalerTypeNotRegisteredv     = errorer.Wrapv(ErrTypedMarshalerTypeNotRegistered)
+	ErrTypedMarshalerTypeNotRegisteredv     = ErrTypedMarshalerTypeNotRegistered.ValueFn()
 	ErrTypedMarshalerTypeAlreadyRegistered  = errorer.New("type already registered")
-	ErrTypedMarshalerTypeAlreadyRegisteredv = errorer.Wrapv(ErrTypedMarshalerTypeAlreadyRegistered)
+	ErrTypedMarshalerTypeAlreadyRegisteredv = ErrTypedMarshalerTypeAlreadyRegistered.ValueFn()
 )
 
 type TypeNamer interface {

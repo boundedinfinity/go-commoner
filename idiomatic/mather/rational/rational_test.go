@@ -27,7 +27,7 @@ func Test_Rational_Reduce(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
 			actual := tc.input.Reduce()
-			assert.Equal(t, tc.expected, actual, tc.name)
+			assert.Equal(tt, tc.expected, actual)
 		})
 	}
 }
@@ -53,7 +53,7 @@ func Test_Rational_Mixed(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
 			actual := tc.input.Mixed()
-			assert.Equal(t, tc.expected, actual, tc.name)
+			assert.Equal(tt, tc.expected, actual)
 		})
 	}
 }
@@ -84,7 +84,7 @@ func Test_Rational_Improper(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
 			actual := tc.input.Improper()
-			assert.Equal(t, tc.expected, actual, tc.name)
+			assert.Equal(tt, tc.expected, actual)
 		})
 	}
 }

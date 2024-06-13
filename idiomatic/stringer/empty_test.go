@@ -43,7 +43,7 @@ func Test_IsEmpty(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
 			actual := stringer.IsEmpty(tc.input)
-			assert.Equal(t, tc.expected, actual, tc.name)
+			assert.Equal(tt, tc.expected, actual)
 		})
 	}
 }
@@ -72,8 +72,8 @@ func Test_FindNonEmpty(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
 			actual, ok := stringer.FindNonEmpty(tc.input...)
-			assert.Equal(t, tc.expected, actual)
-			assert.Equal(t, tc.ok, ok)
+			assert.Equal(tt, tc.expected, actual)
+			assert.Equal(tt, tc.ok, ok)
 		})
 	}
 }

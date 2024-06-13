@@ -101,7 +101,7 @@ func Test_Convert(t *testing.T) {
 	for _, tc := range tcs {
 		t.Run(tc.name, func(tt *testing.T) {
 			actual := tc.fn(tc.input)
-			assert.Equal(t, actual, tc.expected)
+			assert.Equal(tt, actual, tc.expected)
 		})
 	}
 }
@@ -221,11 +221,11 @@ func Test_ParseConvert(t *testing.T) {
 			if tc.err == nil {
 				assert.Nil(t, err)
 			} else {
-				assert.Equal(t, tc.err, err)
+				assert.Equal(tt, tc.err, err)
 			}
 
-			assert.Equal(t, tc.err, err)
-			assert.Equal(t, actual, tc.expected, tc.convert)
+			assert.Equal(tt, tc.err, err)
+			assert.Equal(tt, actual, tc.expected, tc.convert)
 		})
 	}
 }

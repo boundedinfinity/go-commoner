@@ -10,7 +10,7 @@ package pather_test
 // 	for _, tc := range tcs {
 // 		t.Run(tc.name, func(tt *testing.T) {
 // 			actual := pather.Join(tc.inputs...)
-// 			assert.Equal(t, actual, tc.expected)
+// 			assert.Equal(tt, actual, tc.expected)
 // 		})
 // 	}
 // }

@@ -48,14 +48,14 @@ func Test_trier_constructors(t *testing.T) {
 
 	for _, tc := range tcs {
 		t.Run(tc.name, func(tt *testing.T) {
-			assert.Equal(t, tc.expectedResult, tc.actual.Value, tc.name)
-			assert.Equal(t, tc.expectedSucceeded, tc.actual.Succeeded(), tc.name)
-			assert.Equal(t, !tc.expectedSucceeded, tc.actual.Failed(), tc.name)
+			assert.Equal(t, tc.expectedResult, tc.actual.Value)
+			assert.Equal(t, tc.expectedSucceeded, tc.actual.Succeeded())
+			assert.Equal(t, !tc.expectedSucceeded, tc.actual.Failed())
 
 			if tc.expectedErr == nil {
-				assert.Nil(t, tc.actual.Err, tc.name)
+				assert.Nil(t, tc.actual.Err)
 			} else {
-				assert.ErrorIs(t, tc.actual.Err, tc.expectedErr, tc.name)
+				assert.ErrorIs(t, tc.actual.Err, tc.expectedErr)
 			}
 		})
 	}
@@ -80,14 +80,14 @@ func Test_trier_lift_constructors(t *testing.T) {
 
 	for _, tc := range tcs {
 		t.Run(tc.name, func(tt *testing.T) {
-			assert.Equal(t, tc.expectedSucceeded, tc.actual.Succeeded(), tc.name)
-			assert.Equal(t, !tc.expectedSucceeded, tc.actual.Failed(), tc.name)
-			assert.Equal(t, tc.expectedResult, tc.actual.Value, tc.name)
+			assert.Equal(t, tc.expectedSucceeded, tc.actual.Succeeded())
+			assert.Equal(t, !tc.expectedSucceeded, tc.actual.Failed())
+			assert.Equal(t, tc.expectedResult, tc.actual.Value)
 
 			if tc.expectedErr == nil {
-				assert.Nil(t, tc.actual.Err, tc.name)
+				assert.Nil(t, tc.actual.Err)
 			} else {
-				assert.ErrorIs(t, tc.actual.Err, tc.expectedErr, tc.name)
+				assert.ErrorIs(t, tc.actual.Err, tc.expectedErr)
 			}
 		})
 	}

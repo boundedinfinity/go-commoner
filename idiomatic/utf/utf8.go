@@ -1,15 +1,13 @@
 package utf
 
 import (
-	"errors"
-
 	"github.com/boundedinfinity/go-commoner/errorer"
 	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
 )
 
 var (
-	ErrUtf8Invalid  = errors.New("invalid utf-8 character")
-	ErrUtf8Invalidv = errorer.Wrapv(ErrUtf8Invalid)
+	ErrUtf8Invalid  = errorer.New("invalid utf-8 character")
+	ErrUtf8Invalidv = ErrUtf8Invalid.ValueFn()
 )
 
 var Utf8 = utf8{

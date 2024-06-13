@@ -31,7 +31,7 @@ func Test_Intersection(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
 			actual := slicer.Intersection(tc.input1, tc.input2)
-			assert.ElementsMatch(t, tc.expected, actual, tc.name)
+			assert.ElementsMatch(t, tc.expected, actual)
 		})
 	}
 }

@@ -31,7 +31,7 @@ func Test_Contains(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
 			actual := slicer.Contains(tc.match, tc.input...)
-			assert.Equal(t, tc.expected, actual)
+			assert.Equal(tt, tc.expected, actual)
 		})
 	}
 }

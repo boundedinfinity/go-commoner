@@ -49,7 +49,7 @@ func Test_Ext(t *testing.T) {
 	for _, tc := range tcs {
 		t.Run(tc.name, func(tt *testing.T) {
 			actual := tc.fn(tc.input)
-			assert.Equal(t, actual, tc.expected)
+			assert.Equal(tt, actual, tc.expected)
 		})
 	}
 }
