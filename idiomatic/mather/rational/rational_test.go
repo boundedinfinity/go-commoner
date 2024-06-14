@@ -18,6 +18,16 @@ func Test_Rational_String(t *testing.T) {
 			input:    rational.New(1, 1, 2),
 			expected: "1 1/2",
 		},
+		{
+			name:     "1 3/2",
+			input:    rational.New(1, 3, 2),
+			expected: "1 3/2",
+		},
+		{
+			name:     "1 3/2 -> 2 1/2",
+			input:    rational.New(1, 3, 2).Mixed(),
+			expected: "2 1/2",
+		},
 	}
 
 	for _, tc := range testCases {

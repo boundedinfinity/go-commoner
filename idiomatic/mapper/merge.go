@@ -1,19 +1,25 @@
 package mapper
 
-func MergeInto[K comparable, V any](m1, m2 map[K]V) {
-	for k, v := range m2 {
-		m1[k] = v
+func MergeInto[K comparable, V any](dst map[K]V, src map[K]V) {
+	if dst == nil {
+		return
+	}
+
+	for k, v := range src {
+		dst[k] = v
 	}
 }
 
-func MergeCopy[K comparable, V any](m1, m2 map[K]V) {
-	m3 := map[K]V{}
+func MergeCopy[K comparable, V any](m1, m2 map[K]V) map[K]V {
+	result := map[K]V{}
 
 	for k, v := range m1 {
-		m3[k] = v
+		result[k] = v
 	}
 
 	for k, v := range m2 {
-		m3[k] = v
+		result[k] = v
 	}
+
+	return result
 }
