@@ -57,6 +57,16 @@ func (e Errorer) Error() string {
 	}
 }
 
+func (e *Errorer) Is(err error) bool {
+	for _, possible := range e.Errors {
+		if errors.Is(err, possible) {
+			return true
+		}
+	}
+
+	return false
+}
+
 func (e *Errorer) Unwrap() []error {
 	return e.Errors
 }

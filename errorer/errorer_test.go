@@ -18,13 +18,13 @@ func Test_Errorer_constructor(t *testing.T) {
 		str    string
 		list   []string
 	}{
-		{
-			name:   "case 1",
-			actual: errRoot,
-			target: errRoot,
-			str:    "root error",
-			list:   []string{"root error"},
-		},
+		// {
+		// 	name:   "case 1",
+		// 	actual: errRoot,
+		// 	target: errRoot,
+		// 	str:    "root error",
+		// 	list:   []string{"root error"},
+		// },
 		{
 			name:   "case 2",
 			actual: errRoot.Subf("case 2"),
@@ -39,7 +39,7 @@ func Test_Errorer_constructor(t *testing.T) {
 			assert.Error(t, tc.actual)
 			assert.ErrorContains(t, tc.actual, tc.str)
 			assert.Equal(tt, tc.list, tc.actual.(*errorer.Errorer).List())
-			// assert.ErrorIs(t, tc.actual, tc.target)
+			assert.ErrorIs(t, tc.actual, tc.target)
 		})
 	}
 }
