@@ -9,10 +9,10 @@ func Equals[T comparable](as, bs []T) bool {
 	return slicer.Equals(as, bs)
 }
 
-func EqualsFn[T any, K comparable](fn func(int, T) K, as, bs []T) bool {
+func EqualsFn[T any, C comparable](fn func(int, T) C, as, bs []T) bool {
 	return slicer.EqualsFn(fn, as, bs)
 }
 
-func EqualsFnErr[T comparable, K comparable](fn func(int, T) (K, error), as, bs []T) trier.Try[bool] {
+func EqualsFnErr[T comparable, C comparable](fn func(int, T) (C, error), as, bs []T) trier.Try[bool] {
 	return trier.CompleteErr(slicer.EqualsFnErr(fn, as, bs))
 }

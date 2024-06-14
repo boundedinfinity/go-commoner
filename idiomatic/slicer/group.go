@@ -13,8 +13,8 @@ import (
 
 // Group creates a map composed of keys generated from the fn function and the value is the value passed to the fn
 // function which genereated they key.
-func Group[T any, K comparable](fn func(int, T) K, elems ...T) map[K][]T {
-	fn2 := func(i int, elem T) (K, error) {
+func Group[T any, C comparable](fn func(int, T) C, elems ...T) map[C][]T {
+	fn2 := func(i int, elem T) (C, error) {
 		key := fn(i, elem)
 		return key, nil
 	}
@@ -37,10 +37,10 @@ var (
 // If the fn function returns an error, processing through elements is stopped and the error is returned.  The values
 // of the grouped elements will contain any elements processed up to but not including the element when the error
 // occured.
-func GroupErr[T any, K comparable](fn func(int, T) (K, error), elems ...T) (map[K][]T, error) {
-	groups := make(map[K][]T)
+func GroupErr[T any, C comparable](fn func(int, T) (C, error), elems ...T) (map[C][]T, error) {
+	groups := make(map[C][]T)
 	var err error
-	var key K
+	var key C
 
 	for i, elem := range elems {
 		key, err = fn(i, elem)

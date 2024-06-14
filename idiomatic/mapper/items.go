@@ -6,7 +6,7 @@ type Item[K comparable, V any] struct {
 }
 
 func Items[K comparable, V any](m map[K]V) []Item[K, V] {
-	fn := func(k K, v V) bool { return true }
+	fn := func(_ K, _ V) bool { return true }
 	return ItemsFiltered(m, fn)
 }
 

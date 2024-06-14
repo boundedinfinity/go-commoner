@@ -1,7 +1,7 @@
 package mapper
 
 func Values[K comparable, V any](m map[K]V) []V {
-	return ValuesFiltered(m, func(k V) bool {
+	return ValuesFiltered(m, func(_ V) bool {
 		return true
 	})
 }

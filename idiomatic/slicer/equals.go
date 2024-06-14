@@ -5,12 +5,12 @@ func Equals[T comparable](as, bs []T) bool {
 	return EqualsFn(fn, as, bs)
 }
 
-func EqualsFn[T any, K comparable](fn func(int, T) K, as, bs []T) bool {
+func EqualsFn[T any, C comparable](fn func(int, T) C, as, bs []T) bool {
 	if fn == nil {
 		return false
 	}
 
-	fn2 := func(i int, elem T) (K, error) {
+	fn2 := func(i int, elem T) (C, error) {
 		return fn(i, elem), nil
 	}
 
@@ -18,7 +18,7 @@ func EqualsFn[T any, K comparable](fn func(int, T) K, as, bs []T) bool {
 	return result
 }
 
-func EqualsFnErr[T any, K comparable](fn func(int, T) (K, error), as, bs []T) (bool, error) {
+func EqualsFnErr[T any, C comparable](fn func(int, T) (C, error), as, bs []T) (bool, error) {
 	var ok bool
 	var err error
 

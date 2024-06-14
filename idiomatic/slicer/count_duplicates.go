@@ -13,12 +13,12 @@ func CountDuplicates[T comparable](elems ...T) []CountDuplicatesResult[T] {
 	return CountDuplicatesFn(fn, elems...)
 }
 
-func CountDuplicatesFn[T any, K comparable](fn func(T) K, elems ...T) []CountDuplicatesResult[T] {
+func CountDuplicatesFn[T any, C comparable](fn func(T) C, elems ...T) []CountDuplicatesResult[T] {
 	if fn == nil {
 		return []CountDuplicatesResult[T]{}
 	}
 
-	fn2 := func(elem T) (K, error) {
+	fn2 := func(elem T) (C, error) {
 		k := fn(elem)
 		return k, nil
 	}
@@ -28,10 +28,10 @@ func CountDuplicatesFn[T any, K comparable](fn func(T) K, elems ...T) []CountDup
 	return results
 }
 
-func CountDuplicatesFnErr[T any, K comparable](fn func(T) (K, error), elems ...T) ([]CountDuplicatesResult[T], error) {
-	m := make(map[K]*CountDuplicatesResult[T])
+func CountDuplicatesFnErr[T any, C comparable](fn func(T) (C, error), elems ...T) ([]CountDuplicatesResult[T], error) {
+	m := make(map[C]*CountDuplicatesResult[T])
 	var err error
-	var key K
+	var key C
 	var results []CountDuplicatesResult[T]
 
 	if fn == nil {
