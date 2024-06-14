@@ -7,6 +7,27 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func Test_Rational_String(t *testing.T) {
+	testCases := []struct {
+		name     string
+		input    rational.Rational
+		expected string
+	}{
+		{
+			name:     "1 1/2",
+			input:    rational.New(1, 1, 2),
+			expected: "1 1/2",
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(tt *testing.T) {
+			actual := tc.input.String()
+			assert.Equal(tt, tc.expected, actual)
+		})
+	}
+}
+
 func Test_Rational_Whole(t *testing.T) {
 	assert.Equal(t, 3, rational.Whole(3.14))
 }

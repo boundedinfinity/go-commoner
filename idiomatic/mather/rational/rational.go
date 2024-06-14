@@ -11,16 +11,55 @@ var (
 	zero_rational = Rational{}
 )
 
-func IsZero(elem Rational) bool {
-	return elem == zero_rational
+// ----------------------------------------------------------------------------------------------------
+// Constructors
+// ----------------------------------------------------------------------------------------------------
+
+func New(whole, numerator, denominator int) Rational {
+	return Rational{
+		Whole:    whole,
+		Fraction: fraction.New(numerator, denominator),
+	}
 }
+
+func FromString[T ~string](s T) (Rational, error) {
+	n, err := strconv.ParseFloat(string(s), 64)
+
+	if err != nil {
+		return Rational{}, err
+	}
+
+	return FromFloat(n), nil
+}
+
+// ----------------------------------------------------------------------------------------------------
+// Type
+// ----------------------------------------------------------------------------------------------------
 
 type Rational struct {
 	Whole    int
 	Fraction fraction.Fraction
 }
 
-func (t Rational) IsZero(elem Rational) bool {
+func (t Rational) String() string {
+	var result string
+
+	if t.Whole != 0 {
+		result = strconv.Itoa(t.Whole)
+	}
+
+	if !t.Fraction.IsZero() {
+		if result != "" {
+			result += " "
+		}
+
+		result += t.Fraction.String()
+	}
+
+	return result
+}
+
+func (t Rational) IsZero() bool {
 	return IsZero(t)
 }
 
@@ -73,14 +112,12 @@ func (t Rational) Improper() Rational {
 	}
 }
 
-func FromString[T ~string](s T) (Rational, error) {
-	n, err := strconv.ParseFloat(string(s), 64)
+// ----------------------------------------------------------------------------------------------------
+// Helpers
+// ----------------------------------------------------------------------------------------------------
 
-	if err != nil {
-		return Rational{}, err
-	}
-
-	return FromFloat(n), nil
+func IsZero(elem Rational) bool {
+	return elem == zero_rational
 }
 
 func MustString[T ~string](s T) Rational {
@@ -91,13 +128,6 @@ func MustString[T ~string](s T) Rational {
 	}
 
 	return FromFloat(n)
-}
-
-func New(whole, numerator, denominator int) Rational {
-	return Rational{
-		Whole:    whole,
-		Fraction: fraction.New(numerator, denominator),
-	}
 }
 
 func FromFloat[T constraints.Float](n T) Rational {

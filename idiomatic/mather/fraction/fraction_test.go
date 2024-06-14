@@ -7,6 +7,27 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func Test_Fraction_String(t *testing.T) {
+	testCases := []struct {
+		name     string
+		input    fraction.Fraction
+		expected string
+	}{
+		{
+			name:     "1/2",
+			input:    fraction.New(1, 2),
+			expected: "1/2",
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(tt *testing.T) {
+			actual := tc.input.String()
+			assert.Equal(tt, tc.expected, actual)
+		})
+	}
+}
+
 func Test_Fraction_Component(t *testing.T) {
 	testCases := []struct {
 		name     string

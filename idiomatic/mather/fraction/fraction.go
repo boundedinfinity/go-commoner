@@ -10,9 +10,43 @@ import (
 	"golang.org/x/exp/constraints"
 )
 
+var (
+	zero_fraction = Fraction{}
+)
+
+// ----------------------------------------------------------------------------------------------------
+// Constructors
+// ----------------------------------------------------------------------------------------------------
+
+func New(numerator, denominator int) Fraction {
+	return Fraction{
+		Numerator:   numerator,
+		Denominator: denominator,
+	}
+}
+
+func FromFloat[T constraints.Float](n T) Fraction {
+	numerator := Component(n)
+	magnitude := Magnitude(n)
+	denominator := mather.Pow10[int, int](magnitude)
+
+	return Fraction{
+		Numerator:   numerator,
+		Denominator: denominator,
+	}
+}
+
+// ----------------------------------------------------------------------------------------------------
+// Type
+// ----------------------------------------------------------------------------------------------------
+
 type Fraction struct {
 	Numerator   int
 	Denominator int
+}
+
+func (t Fraction) String() string {
+	return fmt.Sprintf("%v/%v", t.Numerator, t.Denominator)
 }
 
 func (t Fraction) Float() float64 {
@@ -39,22 +73,16 @@ func (t Fraction) Reduce() Fraction {
 	}
 }
 
-func New(numerator, denominator int) Fraction {
-	return Fraction{
-		Numerator:   numerator,
-		Denominator: denominator,
-	}
+func (t Fraction) IsZero() bool {
+	return IsZero(t)
 }
 
-func FromFloat[T constraints.Float](n T) Fraction {
-	numerator := Component(n)
-	size := Magnitude(n)
-	denominator := mather.Pow10[int, int](size)
+// ----------------------------------------------------------------------------------------------------
+// Helpers
+// ----------------------------------------------------------------------------------------------------
 
-	return Fraction{
-		Numerator:   numerator,
-		Denominator: denominator,
-	}
+func IsZero(elem Fraction) bool {
+	return elem == zero_fraction
 }
 
 func Component[T constraints.Float](n T) int {
