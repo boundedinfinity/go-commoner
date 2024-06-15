@@ -1,4 +1,4 @@
-package utf
+package utfer
 
 import (
 	"encoding/json"

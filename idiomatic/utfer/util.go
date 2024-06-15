@@ -1,4 +1,4 @@
-package utf
+package utfer
 
 import (
 	"github.com/boundedinfinity/go-commoner/idiomatic/numberer"

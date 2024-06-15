@@ -2,22 +2,22 @@ package langer
 
 import (
 	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
-	"github.com/boundedinfinity/go-commoner/idiomatic/utf"
+	"github.com/boundedinfinity/go-commoner/idiomatic/utfer"
 )
 
 var (
-	languageCharacters = []utf.UtfChar{}
+	languageCharacters = []utfer.UtfChar{}
 )
 
 func init() {
-	languageCharacters = append(languageCharacters, utf.Utf7.WordCharacters()...)
-	languageCharacters = append(languageCharacters, utf.UNDERSCORE)
+	languageCharacters = append(languageCharacters, utfer.Utf7.WordCharacters()...)
+	languageCharacters = append(languageCharacters, utfer.UNDERSCORE)
 }
 
 func ReplaceNonLanguageCharacters[T ~string](s T, replacement T, startsWithNumber T) string {
-	o := replaceNotInList(s, utf.ToStrings(languageCharacters), string(replacement))
+	o := replaceNotInList(s, utfer.ToStrings(languageCharacters), string(replacement))
 
-	if len(o) > 0 && utf.Utf7.IsNumber(o[0]) {
+	if len(o) > 0 && utfer.Utf7.IsNumber(o[0]) {
 		o = string(startsWithNumber) + o
 	}
 

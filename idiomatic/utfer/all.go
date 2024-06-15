@@ -1,4 +1,4 @@
-package utf
+package utfer
 
 // https://www.ascii-code.com/
 

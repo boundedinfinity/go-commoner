@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
-	"github.com/boundedinfinity/go-commoner/idiomatic/utf"
+	"github.com/boundedinfinity/go-commoner/idiomatic/utfer"
 )
 
 func Replace[T ~string, U ~string, V ~string](s T, old U, new V) string {
@@ -36,33 +36,33 @@ func ReplaceSpace[T ~string](s T, replacement string) string {
 }
 
 func ReplaceSpaces[T ~string](s T, replacement string) string {
-	return ReplaceInList(s, utf.ToStrings(utf.Utf8.Spaces()), replacement)
+	return ReplaceInList(s, utfer.ToStrings(utfer.Utf8.Spaces()), replacement)
 }
 
 func ReplaceNumbers[T ~string](s T, replacement string) string {
-	return ReplaceInList(s, utf.ToStrings(utf.Utf8.Numbers()), replacement)
+	return ReplaceInList(s, utfer.ToStrings(utfer.Utf8.Numbers()), replacement)
 }
 
 func ReplaceLetters[T ~string](s T, replacement string) string {
-	return ReplaceInList(s, utf.ToStrings(utf.Utf8.Letters()), replacement)
+	return ReplaceInList(s, utfer.ToStrings(utfer.Utf8.Letters()), replacement)
 }
 
 func ReplaceSymbols[T ~string](s T, replacement string) string {
-	return ReplaceInList(s, utf.ToStrings(utf.Utf8.Symbols()), replacement)
+	return ReplaceInList(s, utfer.ToStrings(utfer.Utf8.Symbols()), replacement)
 }
 
 func ReplaceNonNumbers[T ~string](s T, replacement string) string {
-	return replaceNotInList(s, utf.ToStrings(utf.Utf8.Numbers()), replacement)
+	return replaceNotInList(s, utfer.ToStrings(utfer.Utf8.Numbers()), replacement)
 }
 
 func ReplaceNonLetters[T ~string](s T, replacement string) string {
-	return replaceNotInList(s, utf.ToStrings(utf.Utf8.Letters()), replacement)
+	return replaceNotInList(s, utfer.ToStrings(utfer.Utf8.Letters()), replacement)
 }
 
 func ReplaceNonWord[T ~string](s T, replacement string) string {
-	return replaceNotInList(s, utf.ToStrings(utf.Utf8.WordCharacters()), replacement)
+	return replaceNotInList(s, utfer.ToStrings(utfer.Utf8.WordCharacters()), replacement)
 }
 
 func ReplaceNewlines[T ~string](s T, replacement string) string {
-	return ReplaceInList(s, utf.ToStrings(utf.Utf8.Newlines()), replacement)
+	return ReplaceInList(s, utfer.ToStrings(utfer.Utf8.Newlines()), replacement)
 }
