@@ -116,6 +116,10 @@ func (e Errorer) ValueFn() func(v any) error {
 	return func(v any) error { return e.Subf("%v", v) }
 }
 
+func (e Errorer) WithValue(v any) error {
+	return e.ValueFn()(v)
+}
+
 // ----------------------------------------------------------------------------------------------------
 // Marshal functions
 // ----------------------------------------------------------------------------------------------------
