@@ -2,7 +2,7 @@ package langer
 
 // https://mathiasbynens.be/notes/javascript-identifiers
 
-var TypeScript = golang{}
+var TypeScript = typeScript{}
 
 type typeScript struct{}
 

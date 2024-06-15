@@ -1,6 +1,6 @@
 package langer
 
-var Java = golang{}
+var Java = java{}
 
 type java struct{}
 

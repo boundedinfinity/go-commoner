@@ -1,6 +1,6 @@
 package langer
 
-var CSharp = golang{}
+var CSharp = cSharp{}
 
 type cSharp struct{}
 
