@@ -500,12 +500,6 @@ func (t utf8) Newlines() []UtfChar {
 	return t.newlines
 }
 
-func (t utf8) ToStrings(cs []UtfChar) []string {
-	return slicer.Map(func(_ int, c UtfChar) string {
-		return string(c)
-	}, cs...)
-}
-
 func (t utf8) IsUpperCase(v byte) bool {
 	return slicer.Contains(UtfChar(v), t.UpperCase()...)
 }

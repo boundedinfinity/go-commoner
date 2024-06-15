@@ -1,6 +1,10 @@
 package langer
 
-import "errors"
+import (
+	"github.com/boundedinfinity/go-commoner/errorer"
+	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
+	"github.com/boundedinfinity/go-commoner/idiomatic/stringer"
+)
 
 // https://go.dev/ref/spec#Identifiers
 
@@ -8,20 +12,36 @@ var Go = golang{}
 
 type golang struct {
 	keywords                             []string
-	ErrIdentifierInvalidIsKeyword        error
-	ErrIdentifierInvalidStartsWithNumber error
+	ErrIdentifierInvalidIsKeyword        *errorer.Errorer
+	ErrIdentifierInvalidStartsWithNumber *errorer.Errorer
+}
+
+func (t golang) IsKeyword(s string) bool {
+	return slicer.Contains(s, t.keywords...)
 }
 
 func (t golang) Identifier(s string) (string, error) {
-	o := s
+	identifier := s
 
-	for _, keyword := range t.keywords {
-		if s == keyword {
-			return o, t.ErrIdentifierInvalidIsKeyword
-		}
+	if t.IsKeyword(s) {
+		return identifier, t.ErrIdentifierInvalidIsKeyword.WithValue(identifier)
 	}
 
-	return o, nil
+	// if stringer.HasPrefix(identifier, utf.Utf7.Numbers()...) {
+	// 	return identifier, t.ErrIdentifierInvalidStartsWithNumber.WithValue(identifier)
+	// }
+
+	identifier = stringer.ReplaceInList(s, []string{" ", "-"}, "_")
+
+	// o := s
+
+	// for _, keyword := range t.keywords {
+	// 	if s == keyword {
+	// 		return o, t.ErrIdentifierInvalidIsKeyword
+	// 	}
+	// }
+
+	return identifier, nil
 }
 
 func (t golang) MustIdentifier(s string) string {
@@ -42,6 +62,6 @@ func init() {
 		"import", "return", "var",
 	}
 
-	Go.ErrIdentifierInvalidIsKeyword = errors.New("invalid go identifier: is a keyword")
-	Go.ErrIdentifierInvalidStartsWithNumber = errors.New("invalid go identifier: starts with number")
+	Go.ErrIdentifierInvalidIsKeyword = errorer.New("invalid go identifier: is a keyword")
+	Go.ErrIdentifierInvalidStartsWithNumber = errorer.New("invalid go identifier: starts with number")
 }
