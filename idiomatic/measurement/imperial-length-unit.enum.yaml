@@ -1,3 +1,4 @@
+overwrite: true
 values:
     -   name: Twip
     -   name: Thou
@@ -12,6 +13,6 @@ values:
     -   name: League
     -   name: Fathom
     -   name: Cable
-    -   name: NauticalMile
+    -   name: Nautical Mile
     -   name: Link
     -   name: Rod

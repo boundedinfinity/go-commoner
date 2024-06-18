@@ -1,4 +1,5 @@
-serialize: 
+overwrite: true
+serialize:
     values: pascal-to-kebab-lower
 values:
     -   name: Tera

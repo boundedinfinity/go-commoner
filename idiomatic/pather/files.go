@@ -37,7 +37,7 @@ func (t files) Abs(path string) string {
 }
 
 func (t files) Exists(path string) bool {
-	return Paths.Exists(path)
+	return Paths.Exists(path) && t.Is(path)
 }
 
 func (t files) ExistsErr(path string) (bool, error) {

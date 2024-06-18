@@ -2,8 +2,9 @@ package langer
 
 import (
 	"github.com/boundedinfinity/go-commoner/errorer"
+	"github.com/boundedinfinity/go-commoner/idiomatic/caser"
 	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
-	"github.com/boundedinfinity/go-commoner/idiomatic/stringer"
+	"github.com/boundedinfinity/go-commoner/idiomatic/utfer"
 )
 
 // https://go.dev/ref/spec#Identifiers
@@ -20,38 +21,32 @@ func (t golang) IsKeyword(s string) bool {
 	return slicer.Contains(s, t.keywords...)
 }
 
-func (t golang) Identifier(s string) (string, error) {
-	identifier := s
-
-	if t.IsKeyword(s) {
-		return identifier, t.ErrIdentifierInvalidIsKeyword.WithValue(identifier)
-	}
-
-	// if stringer.HasPrefix(identifier, utf.Utf7.Numbers()...) {
-	// 	return identifier, t.ErrIdentifierInvalidStartsWithNumber.WithValue(identifier)
-	// }
-
-	identifier = stringer.ReplaceInList(s, []string{" ", "-"}, "_")
-
-	// o := s
-
-	// for _, keyword := range t.keywords {
-	// 	if s == keyword {
-	// 		return o, t.ErrIdentifierInvalidIsKeyword
-	// 	}
-	// }
-
-	return identifier, nil
-}
-
 func (t golang) MustIdentifier(s string) string {
-	o, err := t.Identifier(s)
+	identifier, err := t.Identifier(s)
 
 	if err != nil {
 		panic(err)
 	}
 
-	return o
+	return identifier
+}
+
+func (t golang) Identifier(s string) (string, error) {
+	identifier := s
+
+	identifier = utfer.RemoveNewlines(identifier)
+	identifier = utfer.RemoveSymbols(identifier)
+	identifier = caser.PhraseToPascal(identifier)
+
+	if utfer.OneOf(identifier[0], utfer.Utf8.Numbers()) {
+		identifier = "_" + identifier
+	}
+
+	if t.IsKeyword(identifier) {
+		return identifier, t.ErrIdentifierInvalidIsKeyword.WithValue(identifier)
+	}
+
+	return identifier, nil
 }
 
 func init() {

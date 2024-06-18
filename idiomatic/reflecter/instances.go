@@ -5,14 +5,15 @@ import (
 	"reflect"
 )
 
-var Instances = instances{}
-
-type instances struct{}
-
 // https://medium.com/capital-one-tech/learning-to-use-go-reflection-822a0aed74b7
 
-func (t instances) QualifiedName(instance any) string {
-	typ := reflect.TypeOf(instance)
+func TypeQualifiedName[T any]() string {
+	var t T
+	return InstanceQualifiedName(t)
+}
+
+func InstanceQualifiedName(t any) string {
+	typ := reflect.TypeOf(t)
 
 	switch typ.Kind() {
 	case reflect.Bool, reflect.Int, reflect.Int8, reflect.Int16,
@@ -27,8 +28,13 @@ func (t instances) QualifiedName(instance any) string {
 	}
 }
 
-func (t instances) SimpleName(instance any) string {
-	typ := reflect.TypeOf(instance)
+func TypeBaseName[T any]() string {
+	var t T
+	return InstanceSimpleName(t)
+}
+
+func InstanceSimpleName(t any) string {
+	typ := reflect.TypeOf(t)
 
 	switch typ.Kind() {
 	case reflect.Bool, reflect.Int, reflect.Int8, reflect.Int16,
@@ -43,9 +49,7 @@ func (t instances) SimpleName(instance any) string {
 	}
 }
 
-func (t instances) IsZero(instance any) bool {
-	return reflect.DeepEqual(
-		instance,
-		reflect.Zero(reflect.TypeOf(instance)).Interface(),
-	)
+func IsZero[T any](instance any) bool {
+	var t T
+	return reflect.DeepEqual(instance, t)
 }

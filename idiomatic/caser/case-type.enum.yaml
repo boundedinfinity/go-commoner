@@ -1,13 +1,14 @@
+overwrite: true
 serialize: 
     type: pascal-to-kebab-lower
 values:
     -   name: Camel
     -   name: Kebab
-    -   name: KebabLower
-    -   name: KebabUpper
+    -   name: Kebab Lower
+    -   name: Kebab Upper
     -   name: Pascal
     -   name: Phrase
     -   name: Snake
-    -   name: SnakeLower
-    -   name: SnakeUpper
+    -   name: Snake Lower
+    -   name: Snake Upper
     -   name: Unknown

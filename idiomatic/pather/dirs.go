@@ -116,7 +116,7 @@ func (t dirs) Abs(path string) string {
 }
 
 func (t dirs) Exists(path string) bool {
-	return Paths.Exists(path)
+	return Paths.Exists(path) && t.Is(path)
 }
 
 func (t dirs) ExistsErr(path string) (bool, error) {

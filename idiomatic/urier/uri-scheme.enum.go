@@ -184,8 +184,8 @@ var UriSchemes = uriSchemes{
 	Callto:                     UriScheme("callto"),
 	Cap:                        UriScheme("cap"),
 	Chrome:                     UriScheme("chrome"),
-	ChromeExtension:            UriScheme("chrome-extension"),
-	ComEventbriteAttendee:      UriScheme("com-eventbrite-attendee"),
+	Chromeextension:            UriScheme("chrome-extension"),
+	Comeventbriteattendee:      UriScheme("com-eventbrite-attendee"),
 	Cid:                        UriScheme("cid"),
 	Coaps:                      UriScheme("coaps"),
 	Conten:                     UriScheme("conten"),
@@ -195,8 +195,8 @@ var UriSchemes = uriSchemes{
 	Data:                       UriScheme("data"),
 	Dav:                        UriScheme("dav"),
 	Dict:                       UriScheme("dict"),
-	DlnaPlaysingle:             UriScheme("dlna-playsingle"),
-	DlnaPlaycontainer:          UriScheme("dlna-playcontainer"),
+	Dlnaplaysingle:             UriScheme("dlna-playsingle"),
+	Dlnaplaycontainer:          UriScheme("dlna-playcontainer"),
 	Dns:                        UriScheme("dns"),
 	Dntp:                       UriScheme("dntp"),
 	Doi:                        UriScheme("doi"),
@@ -239,10 +239,10 @@ var UriSchemes = uriSchemes{
 	Irc6:                       UriScheme("irc6"),
 	Ircs:                       UriScheme("ircs"),
 	Iris:                       UriScheme("iris"),
-	IrisBeep:                   UriScheme("iris.beep"),
-	IrisXpc:                    UriScheme("iris.xpc"),
-	IrisXpcs:                   UriScheme("iris.xpcs"),
-	IrisLws:                    UriScheme("iris.lws"),
+	Irisbeep:                   UriScheme("iris-beep"),
+	Irisxpc:                    UriScheme("iris-xpc"),
+	Irisxpcs:                   UriScheme("iris-xpcs"),
+	Irislws:                    UriScheme("iris-lws"),
 	Itms:                       UriScheme("itms"),
 	Jabber:                     UriScheme("jabber"),
 	Jar:                        UriScheme("jar"),
@@ -260,25 +260,25 @@ var UriSchemes = uriSchemes{
 	Mid:                        UriScheme("mid"),
 	Mms:                        UriScheme("mms"),
 	Modem:                      UriScheme("modem"),
-	MsHelp:                     UriScheme("ms-help"),
-	MsSettings:                 UriScheme("ms-settings"),
-	MsSettingsAirplanemode:     UriScheme("ms-settings-airplanemode"),
-	MsSettingsBluetooth:        UriScheme("ms-settings-bluetooth"),
-	MsSettingsCamera:           UriScheme("ms-settings-camera"),
-	MsSettingsCellular:         UriScheme("ms-settings-cellular"),
-	MsSettingsCloudstorage:     UriScheme("ms-settings-cloudstorage"),
-	MsSettingsEmailandaccounts: UriScheme("ms-settings-emailandaccounts"),
-	MsSettingsLanguage:         UriScheme("ms-settings-language"),
-	MsSettingsLocation:         UriScheme("ms-settings-location"),
-	MsSettingsLock:             UriScheme("ms-settings-lock"),
-	MsSettingsNfctransactions:  UriScheme("ms-settings-nfctransactions"),
-	MsSettingsNotifications:    UriScheme("ms-settings-notifications"),
-	MsSettingsPower:            UriScheme("ms-settings-power"),
-	MsSettingsPrivacy:          UriScheme("ms-settings-privacy"),
-	MsSettingsProximity:        UriScheme("ms-settings-proximity"),
-	MsSettingsScreenrotation:   UriScheme("ms-settings-screenrotation"),
-	MsSettingsWifi:             UriScheme("ms-settings-wifi"),
-	MsSettingsWorkplace:        UriScheme("ms-settings-workplace"),
+	Mshelp:                     UriScheme("ms-help"),
+	Mssettings:                 UriScheme("ms-settings"),
+	Mssettingsairplanemode:     UriScheme("ms-settings-airplanemode"),
+	Mssettingsbluetooth:        UriScheme("ms-settings-bluetooth"),
+	Mssettingscamera:           UriScheme("ms-settings-camera"),
+	Mssettingscellular:         UriScheme("ms-settings-cellular"),
+	Mssettingscloudstorage:     UriScheme("ms-settings-cloudstorage"),
+	Mssettingsemailandaccounts: UriScheme("ms-settings-emailandaccounts"),
+	Mssettingslanguage:         UriScheme("ms-settings-language"),
+	Mssettingslocation:         UriScheme("ms-settings-location"),
+	Mssettingslock:             UriScheme("ms-settings-lock"),
+	Mssettingsnfctransactions:  UriScheme("ms-settings-nfctransactions"),
+	Mssettingsnotifications:    UriScheme("ms-settings-notifications"),
+	Mssettingspower:            UriScheme("ms-settings-power"),
+	Mssettingsprivacy:          UriScheme("ms-settings-privacy"),
+	Mssettingsproximity:        UriScheme("ms-settings-proximity"),
+	Mssettingsscreenrotation:   UriScheme("ms-settings-screenrotation"),
+	Mssettingswifi:             UriScheme("ms-settings-wifi"),
+	Mssettingsworkplace:        UriScheme("ms-settings-workplace"),
 	Msnim:                      UriScheme("msnim"),
 	Msrp:                       UriScheme("msrp"),
 	Msrps:                      UriScheme("msrps"),
@@ -332,8 +332,8 @@ var UriSchemes = uriSchemes{
 	Sms:                        UriScheme("sms"),
 	Snews:                      UriScheme("snews"),
 	Snmp:                       UriScheme("snmp"),
-	SoapBeep:                   UriScheme("soap.beep"),
-	SoapBeeps:                  UriScheme("soap.beeps"),
+	Soapbeep:                   UriScheme("soap-beep"),
+	Soapbeeps:                  UriScheme("soap-beeps"),
 	Soldat:                     UriScheme("soldat"),
 	Spotify:                    UriScheme("spotify"),
 	Ssh:                        UriScheme("ssh"),
@@ -360,7 +360,7 @@ var UriSchemes = uriSchemes{
 	Vemmi:                      UriScheme("vemmi"),
 	Ventrilo:                   UriScheme("ventrilo"),
 	Videotex:                   UriScheme("videotex"),
-	ViewSource:                 UriScheme("view-source"),
+	Viewsource:                 UriScheme("view-source"),
 	Vnc:                        UriScheme("vnc"),
 	Wais:                       UriScheme("wais"),
 	Webcal:                     UriScheme("webcal"),
@@ -369,30 +369,30 @@ var UriSchemes = uriSchemes{
 	Wtai:                       UriScheme("wtai"),
 	Wyciwyg:                    UriScheme("wyciwyg"),
 	Xcon:                       UriScheme("xcon"),
-	XconUserid:                 UriScheme("xcon-userid"),
+	Xconuserid:                 UriScheme("xcon-userid"),
 	Xfire:                      UriScheme("xfire"),
-	XmlrpcBeep:                 UriScheme("xmlrpc.beep"),
-	XmlrpcBeeps:                UriScheme("xmlrpc.beeps"),
+	Xmlrpcbeep:                 UriScheme("xmlrpc-beep"),
+	Xmlrpcbeeps:                UriScheme("xmlrpc-beeps"),
 	Xmpp:                       UriScheme("xmpp"),
 	Xri:                        UriScheme("xri"),
 	Ymsgr:                      UriScheme("ymsgr"),
-	Z3950:                      UriScheme("z39.50"),
-	Z3950r:                     UriScheme("z39.50r"),
-	Z3950s:                     UriScheme("z39.50s"),
+	Z3950:                      UriScheme("z39-50"),
+	Z3950r:                     UriScheme("z39-50r"),
+	Z3950s:                     UriScheme("z39-50s"),
 	Admin:                      UriScheme("admin"),
 	App:                        UriScheme("app"),
 	Javascript:                 UriScheme("javascript"),
 	Jdbc:                       UriScheme("jdbc"),
 	Msteams:                    UriScheme("msteams"),
-	MsAccess:                   UriScheme("ms-access"),
-	MsExcel:                    UriScheme("ms-excel"),
-	MsInfopath:                 UriScheme("ms-infopath"),
-	MsPowerpoint:               UriScheme("ms-powerpoint"),
-	MsProject:                  UriScheme("ms-project"),
-	MsPublisher:                UriScheme("ms-publisher"),
-	MsSpd:                      UriScheme("ms-spd"),
-	MsVisio:                    UriScheme("ms-visio"),
-	MsWord:                     UriScheme("ms-word"),
+	Msaccess:                   UriScheme("ms-access"),
+	Msexcel:                    UriScheme("ms-excel"),
+	Msinfopath:                 UriScheme("ms-infopath"),
+	Mspowerpoint:               UriScheme("ms-powerpoint"),
+	Msproject:                  UriScheme("ms-project"),
+	Mspublisher:                UriScheme("ms-publisher"),
+	Msspd:                      UriScheme("ms-spd"),
+	Msvisio:                    UriScheme("ms-visio"),
+	Msword:                     UriScheme("ms-word"),
 	Odbc:                       UriScheme("odbc"),
 	Rdar:                       UriScheme("rdar"),
 	Trueconf:                   UriScheme("trueconf"),
@@ -428,8 +428,8 @@ type uriSchemes struct {
 	Callto                     UriScheme
 	Cap                        UriScheme
 	Chrome                     UriScheme
-	ChromeExtension            UriScheme
-	ComEventbriteAttendee      UriScheme
+	Chromeextension            UriScheme
+	Comeventbriteattendee      UriScheme
 	Cid                        UriScheme
 	Coaps                      UriScheme
 	Conten                     UriScheme
@@ -439,8 +439,8 @@ type uriSchemes struct {
 	Data                       UriScheme
 	Dav                        UriScheme
 	Dict                       UriScheme
-	DlnaPlaysingle             UriScheme
-	DlnaPlaycontainer          UriScheme
+	Dlnaplaysingle             UriScheme
+	Dlnaplaycontainer          UriScheme
 	Dns                        UriScheme
 	Dntp                       UriScheme
 	Doi                        UriScheme
@@ -483,10 +483,10 @@ type uriSchemes struct {
 	Irc6                       UriScheme
 	Ircs                       UriScheme
 	Iris                       UriScheme
-	IrisBeep                   UriScheme
-	IrisXpc                    UriScheme
-	IrisXpcs                   UriScheme
-	IrisLws                    UriScheme
+	Irisbeep                   UriScheme
+	Irisxpc                    UriScheme
+	Irisxpcs                   UriScheme
+	Irislws                    UriScheme
 	Itms                       UriScheme
 	Jabber                     UriScheme
 	Jar                        UriScheme
@@ -504,25 +504,25 @@ type uriSchemes struct {
 	Mid                        UriScheme
 	Mms                        UriScheme
 	Modem                      UriScheme
-	MsHelp                     UriScheme
-	MsSettings                 UriScheme
-	MsSettingsAirplanemode     UriScheme
-	MsSettingsBluetooth        UriScheme
-	MsSettingsCamera           UriScheme
-	MsSettingsCellular         UriScheme
-	MsSettingsCloudstorage     UriScheme
-	MsSettingsEmailandaccounts UriScheme
-	MsSettingsLanguage         UriScheme
-	MsSettingsLocation         UriScheme
-	MsSettingsLock             UriScheme
-	MsSettingsNfctransactions  UriScheme
-	MsSettingsNotifications    UriScheme
-	MsSettingsPower            UriScheme
-	MsSettingsPrivacy          UriScheme
-	MsSettingsProximity        UriScheme
-	MsSettingsScreenrotation   UriScheme
-	MsSettingsWifi             UriScheme
-	MsSettingsWorkplace        UriScheme
+	Mshelp                     UriScheme
+	Mssettings                 UriScheme
+	Mssettingsairplanemode     UriScheme
+	Mssettingsbluetooth        UriScheme
+	Mssettingscamera           UriScheme
+	Mssettingscellular         UriScheme
+	Mssettingscloudstorage     UriScheme
+	Mssettingsemailandaccounts UriScheme
+	Mssettingslanguage         UriScheme
+	Mssettingslocation         UriScheme
+	Mssettingslock             UriScheme
+	Mssettingsnfctransactions  UriScheme
+	Mssettingsnotifications    UriScheme
+	Mssettingspower            UriScheme
+	Mssettingsprivacy          UriScheme
+	Mssettingsproximity        UriScheme
+	Mssettingsscreenrotation   UriScheme
+	Mssettingswifi             UriScheme
+	Mssettingsworkplace        UriScheme
 	Msnim                      UriScheme
 	Msrp                       UriScheme
 	Msrps                      UriScheme
@@ -576,8 +576,8 @@ type uriSchemes struct {
 	Sms                        UriScheme
 	Snews                      UriScheme
 	Snmp                       UriScheme
-	SoapBeep                   UriScheme
-	SoapBeeps                  UriScheme
+	Soapbeep                   UriScheme
+	Soapbeeps                  UriScheme
 	Soldat                     UriScheme
 	Spotify                    UriScheme
 	Ssh                        UriScheme
@@ -604,7 +604,7 @@ type uriSchemes struct {
 	Vemmi                      UriScheme
 	Ventrilo                   UriScheme
 	Videotex                   UriScheme
-	ViewSource                 UriScheme
+	Viewsource                 UriScheme
 	Vnc                        UriScheme
 	Wais                       UriScheme
 	Webcal                     UriScheme
@@ -613,10 +613,10 @@ type uriSchemes struct {
 	Wtai                       UriScheme
 	Wyciwyg                    UriScheme
 	Xcon                       UriScheme
-	XconUserid                 UriScheme
+	Xconuserid                 UriScheme
 	Xfire                      UriScheme
-	XmlrpcBeep                 UriScheme
-	XmlrpcBeeps                UriScheme
+	Xmlrpcbeep                 UriScheme
+	Xmlrpcbeeps                UriScheme
 	Xmpp                       UriScheme
 	Xri                        UriScheme
 	Ymsgr                      UriScheme
@@ -628,15 +628,15 @@ type uriSchemes struct {
 	Javascript                 UriScheme
 	Jdbc                       UriScheme
 	Msteams                    UriScheme
-	MsAccess                   UriScheme
-	MsExcel                    UriScheme
-	MsInfopath                 UriScheme
-	MsPowerpoint               UriScheme
-	MsProject                  UriScheme
-	MsPublisher                UriScheme
-	MsSpd                      UriScheme
-	MsVisio                    UriScheme
-	MsWord                     UriScheme
+	Msaccess                   UriScheme
+	Msexcel                    UriScheme
+	Msinfopath                 UriScheme
+	Mspowerpoint               UriScheme
+	Msproject                  UriScheme
+	Mspublisher                UriScheme
+	Msspd                      UriScheme
+	Msvisio                    UriScheme
+	Msword                     UriScheme
 	Odbc                       UriScheme
 	Rdar                       UriScheme
 	Trueconf                   UriScheme
@@ -669,8 +669,8 @@ func (t uriSchemes) Values() []UriScheme {
 		UriSchemes.Callto,
 		UriSchemes.Cap,
 		UriSchemes.Chrome,
-		UriSchemes.ChromeExtension,
-		UriSchemes.ComEventbriteAttendee,
+		UriSchemes.Chromeextension,
+		UriSchemes.Comeventbriteattendee,
 		UriSchemes.Cid,
 		UriSchemes.Coaps,
 		UriSchemes.Conten,
@@ -680,8 +680,8 @@ func (t uriSchemes) Values() []UriScheme {
 		UriSchemes.Data,
 		UriSchemes.Dav,
 		UriSchemes.Dict,
-		UriSchemes.DlnaPlaysingle,
-		UriSchemes.DlnaPlaycontainer,
+		UriSchemes.Dlnaplaysingle,
+		UriSchemes.Dlnaplaycontainer,
 		UriSchemes.Dns,
 		UriSchemes.Dntp,
 		UriSchemes.Doi,
@@ -724,10 +724,10 @@ func (t uriSchemes) Values() []UriScheme {
 		UriSchemes.Irc6,
 		UriSchemes.Ircs,
 		UriSchemes.Iris,
-		UriSchemes.IrisBeep,
-		UriSchemes.IrisXpc,
-		UriSchemes.IrisXpcs,
-		UriSchemes.IrisLws,
+		UriSchemes.Irisbeep,
+		UriSchemes.Irisxpc,
+		UriSchemes.Irisxpcs,
+		UriSchemes.Irislws,
 		UriSchemes.Itms,
 		UriSchemes.Jabber,
 		UriSchemes.Jar,
@@ -745,25 +745,25 @@ func (t uriSchemes) Values() []UriScheme {
 		UriSchemes.Mid,
 		UriSchemes.Mms,
 		UriSchemes.Modem,
-		UriSchemes.MsHelp,
-		UriSchemes.MsSettings,
-		UriSchemes.MsSettingsAirplanemode,
-		UriSchemes.MsSettingsBluetooth,
-		UriSchemes.MsSettingsCamera,
-		UriSchemes.MsSettingsCellular,
-		UriSchemes.MsSettingsCloudstorage,
-		UriSchemes.MsSettingsEmailandaccounts,
-		UriSchemes.MsSettingsLanguage,
-		UriSchemes.MsSettingsLocation,
-		UriSchemes.MsSettingsLock,
-		UriSchemes.MsSettingsNfctransactions,
-		UriSchemes.MsSettingsNotifications,
-		UriSchemes.MsSettingsPower,
-		UriSchemes.MsSettingsPrivacy,
-		UriSchemes.MsSettingsProximity,
-		UriSchemes.MsSettingsScreenrotation,
-		UriSchemes.MsSettingsWifi,
-		UriSchemes.MsSettingsWorkplace,
+		UriSchemes.Mshelp,
+		UriSchemes.Mssettings,
+		UriSchemes.Mssettingsairplanemode,
+		UriSchemes.Mssettingsbluetooth,
+		UriSchemes.Mssettingscamera,
+		UriSchemes.Mssettingscellular,
+		UriSchemes.Mssettingscloudstorage,
+		UriSchemes.Mssettingsemailandaccounts,
+		UriSchemes.Mssettingslanguage,
+		UriSchemes.Mssettingslocation,
+		UriSchemes.Mssettingslock,
+		UriSchemes.Mssettingsnfctransactions,
+		UriSchemes.Mssettingsnotifications,
+		UriSchemes.Mssettingspower,
+		UriSchemes.Mssettingsprivacy,
+		UriSchemes.Mssettingsproximity,
+		UriSchemes.Mssettingsscreenrotation,
+		UriSchemes.Mssettingswifi,
+		UriSchemes.Mssettingsworkplace,
 		UriSchemes.Msnim,
 		UriSchemes.Msrp,
 		UriSchemes.Msrps,
@@ -817,8 +817,8 @@ func (t uriSchemes) Values() []UriScheme {
 		UriSchemes.Sms,
 		UriSchemes.Snews,
 		UriSchemes.Snmp,
-		UriSchemes.SoapBeep,
-		UriSchemes.SoapBeeps,
+		UriSchemes.Soapbeep,
+		UriSchemes.Soapbeeps,
 		UriSchemes.Soldat,
 		UriSchemes.Spotify,
 		UriSchemes.Ssh,
@@ -845,7 +845,7 @@ func (t uriSchemes) Values() []UriScheme {
 		UriSchemes.Vemmi,
 		UriSchemes.Ventrilo,
 		UriSchemes.Videotex,
-		UriSchemes.ViewSource,
+		UriSchemes.Viewsource,
 		UriSchemes.Vnc,
 		UriSchemes.Wais,
 		UriSchemes.Webcal,
@@ -854,10 +854,10 @@ func (t uriSchemes) Values() []UriScheme {
 		UriSchemes.Wtai,
 		UriSchemes.Wyciwyg,
 		UriSchemes.Xcon,
-		UriSchemes.XconUserid,
+		UriSchemes.Xconuserid,
 		UriSchemes.Xfire,
-		UriSchemes.XmlrpcBeep,
-		UriSchemes.XmlrpcBeeps,
+		UriSchemes.Xmlrpcbeep,
+		UriSchemes.Xmlrpcbeeps,
 		UriSchemes.Xmpp,
 		UriSchemes.Xri,
 		UriSchemes.Ymsgr,
@@ -869,15 +869,15 @@ func (t uriSchemes) Values() []UriScheme {
 		UriSchemes.Javascript,
 		UriSchemes.Jdbc,
 		UriSchemes.Msteams,
-		UriSchemes.MsAccess,
-		UriSchemes.MsExcel,
-		UriSchemes.MsInfopath,
-		UriSchemes.MsPowerpoint,
-		UriSchemes.MsProject,
-		UriSchemes.MsPublisher,
-		UriSchemes.MsSpd,
-		UriSchemes.MsVisio,
-		UriSchemes.MsWord,
+		UriSchemes.Msaccess,
+		UriSchemes.Msexcel,
+		UriSchemes.Msinfopath,
+		UriSchemes.Mspowerpoint,
+		UriSchemes.Msproject,
+		UriSchemes.Mspublisher,
+		UriSchemes.Msspd,
+		UriSchemes.Msvisio,
+		UriSchemes.Msword,
 		UriSchemes.Odbc,
 		UriSchemes.Rdar,
 		UriSchemes.Trueconf,
@@ -963,10 +963,10 @@ func init() {
 		UriSchemes.Callto:                     {"callto", "Callto"},
 		UriSchemes.Cap:                        {"cap", "Cap"},
 		UriSchemes.Chrome:                     {"chrome", "Chrome"},
-		UriSchemes.ChromeExtension:            {"chrome-extension", "ChromeExtension"},
+		UriSchemes.Chromeextension:            {"chrome-extension", "Chromeextension"},
 		UriSchemes.Cid:                        {"cid", "Cid"},
 		UriSchemes.Coaps:                      {"coaps", "Coaps"},
-		UriSchemes.ComEventbriteAttendee:      {"com-eventbrite-attendee", "ComEventbriteAttendee"},
+		UriSchemes.Comeventbriteattendee:      {"com-eventbrite-attendee", "Comeventbriteattendee"},
 		UriSchemes.Conten:                     {"conten", "Conten"},
 		UriSchemes.Crid:                       {"crid", "Crid"},
 		UriSchemes.Cvs:                        {"cvs", "Cvs"},
@@ -974,8 +974,8 @@ func init() {
 		UriSchemes.Data:                       {"data", "Data"},
 		UriSchemes.Dav:                        {"dav", "Dav"},
 		UriSchemes.Dict:                       {"dict", "Dict"},
-		UriSchemes.DlnaPlaycontainer:          {"dlna-playcontainer", "DlnaPlaycontainer"},
-		UriSchemes.DlnaPlaysingle:             {"dlna-playsingle", "DlnaPlaysingle"},
+		UriSchemes.Dlnaplaycontainer:          {"dlna-playcontainer", "Dlnaplaycontainer"},
+		UriSchemes.Dlnaplaysingle:             {"dlna-playsingle", "Dlnaplaysingle"},
 		UriSchemes.Dns:                        {"dns", "Dns"},
 		UriSchemes.Dntp:                       {"dntp", "Dntp"},
 		UriSchemes.Doi:                        {"doi", "Doi"},
@@ -1018,10 +1018,10 @@ func init() {
 		UriSchemes.Irc6:                       {"irc6", "Irc6"},
 		UriSchemes.Ircs:                       {"ircs", "Ircs"},
 		UriSchemes.Iris:                       {"iris", "Iris"},
-		UriSchemes.IrisBeep:                   {"iris.beep", "IrisBeep"},
-		UriSchemes.IrisLws:                    {"iris.lws", "IrisLws"},
-		UriSchemes.IrisXpc:                    {"iris.xpc", "IrisXpc"},
-		UriSchemes.IrisXpcs:                   {"iris.xpcs", "IrisXpcs"},
+		UriSchemes.Irisbeep:                   {"iris-beep", "Irisbeep"},
+		UriSchemes.Irislws:                    {"iris-lws", "Irislws"},
+		UriSchemes.Irisxpc:                    {"iris-xpc", "Irisxpc"},
+		UriSchemes.Irisxpcs:                   {"iris-xpcs", "Irisxpcs"},
 		UriSchemes.Itms:                       {"itms", "Itms"},
 		UriSchemes.Jabber:                     {"jabber", "Jabber"},
 		UriSchemes.Jar:                        {"jar", "Jar"},
@@ -1041,38 +1041,38 @@ func init() {
 		UriSchemes.Mid:                        {"mid", "Mid"},
 		UriSchemes.Mms:                        {"mms", "Mms"},
 		UriSchemes.Modem:                      {"modem", "Modem"},
-		UriSchemes.MsAccess:                   {"ms-access", "MsAccess"},
-		UriSchemes.MsExcel:                    {"ms-excel", "MsExcel"},
-		UriSchemes.MsHelp:                     {"ms-help", "MsHelp"},
-		UriSchemes.MsInfopath:                 {"ms-infopath", "MsInfopath"},
-		UriSchemes.MsPowerpoint:               {"ms-powerpoint", "MsPowerpoint"},
-		UriSchemes.MsProject:                  {"ms-project", "MsProject"},
-		UriSchemes.MsPublisher:                {"ms-publisher", "MsPublisher"},
-		UriSchemes.MsSettings:                 {"ms-settings", "MsSettings"},
-		UriSchemes.MsSettingsAirplanemode:     {"ms-settings-airplanemode", "MsSettingsAirplanemode"},
-		UriSchemes.MsSettingsBluetooth:        {"ms-settings-bluetooth", "MsSettingsBluetooth"},
-		UriSchemes.MsSettingsCamera:           {"ms-settings-camera", "MsSettingsCamera"},
-		UriSchemes.MsSettingsCellular:         {"ms-settings-cellular", "MsSettingsCellular"},
-		UriSchemes.MsSettingsCloudstorage:     {"ms-settings-cloudstorage", "MsSettingsCloudstorage"},
-		UriSchemes.MsSettingsEmailandaccounts: {"ms-settings-emailandaccounts", "MsSettingsEmailandaccounts"},
-		UriSchemes.MsSettingsLanguage:         {"ms-settings-language", "MsSettingsLanguage"},
-		UriSchemes.MsSettingsLocation:         {"ms-settings-location", "MsSettingsLocation"},
-		UriSchemes.MsSettingsLock:             {"ms-settings-lock", "MsSettingsLock"},
-		UriSchemes.MsSettingsNfctransactions:  {"ms-settings-nfctransactions", "MsSettingsNfctransactions"},
-		UriSchemes.MsSettingsNotifications:    {"ms-settings-notifications", "MsSettingsNotifications"},
-		UriSchemes.MsSettingsPower:            {"ms-settings-power", "MsSettingsPower"},
-		UriSchemes.MsSettingsPrivacy:          {"ms-settings-privacy", "MsSettingsPrivacy"},
-		UriSchemes.MsSettingsProximity:        {"ms-settings-proximity", "MsSettingsProximity"},
-		UriSchemes.MsSettingsScreenrotation:   {"ms-settings-screenrotation", "MsSettingsScreenrotation"},
-		UriSchemes.MsSettingsWifi:             {"ms-settings-wifi", "MsSettingsWifi"},
-		UriSchemes.MsSettingsWorkplace:        {"ms-settings-workplace", "MsSettingsWorkplace"},
-		UriSchemes.MsSpd:                      {"ms-spd", "MsSpd"},
-		UriSchemes.MsVisio:                    {"ms-visio", "MsVisio"},
-		UriSchemes.MsWord:                     {"ms-word", "MsWord"},
+		UriSchemes.Msaccess:                   {"ms-access", "Msaccess"},
+		UriSchemes.Msexcel:                    {"ms-excel", "Msexcel"},
+		UriSchemes.Mshelp:                     {"ms-help", "Mshelp"},
+		UriSchemes.Msinfopath:                 {"ms-infopath", "Msinfopath"},
 		UriSchemes.Msnim:                      {"msnim", "Msnim"},
+		UriSchemes.Mspowerpoint:               {"ms-powerpoint", "Mspowerpoint"},
+		UriSchemes.Msproject:                  {"ms-project", "Msproject"},
+		UriSchemes.Mspublisher:                {"ms-publisher", "Mspublisher"},
 		UriSchemes.Msrp:                       {"msrp", "Msrp"},
 		UriSchemes.Msrps:                      {"msrps", "Msrps"},
+		UriSchemes.Mssettings:                 {"ms-settings", "Mssettings"},
+		UriSchemes.Mssettingsairplanemode:     {"ms-settings-airplanemode", "Mssettingsairplanemode"},
+		UriSchemes.Mssettingsbluetooth:        {"ms-settings-bluetooth", "Mssettingsbluetooth"},
+		UriSchemes.Mssettingscamera:           {"ms-settings-camera", "Mssettingscamera"},
+		UriSchemes.Mssettingscellular:         {"ms-settings-cellular", "Mssettingscellular"},
+		UriSchemes.Mssettingscloudstorage:     {"ms-settings-cloudstorage", "Mssettingscloudstorage"},
+		UriSchemes.Mssettingsemailandaccounts: {"ms-settings-emailandaccounts", "Mssettingsemailandaccounts"},
+		UriSchemes.Mssettingslanguage:         {"ms-settings-language", "Mssettingslanguage"},
+		UriSchemes.Mssettingslocation:         {"ms-settings-location", "Mssettingslocation"},
+		UriSchemes.Mssettingslock:             {"ms-settings-lock", "Mssettingslock"},
+		UriSchemes.Mssettingsnfctransactions:  {"ms-settings-nfctransactions", "Mssettingsnfctransactions"},
+		UriSchemes.Mssettingsnotifications:    {"ms-settings-notifications", "Mssettingsnotifications"},
+		UriSchemes.Mssettingspower:            {"ms-settings-power", "Mssettingspower"},
+		UriSchemes.Mssettingsprivacy:          {"ms-settings-privacy", "Mssettingsprivacy"},
+		UriSchemes.Mssettingsproximity:        {"ms-settings-proximity", "Mssettingsproximity"},
+		UriSchemes.Mssettingsscreenrotation:   {"ms-settings-screenrotation", "Mssettingsscreenrotation"},
+		UriSchemes.Mssettingswifi:             {"ms-settings-wifi", "Mssettingswifi"},
+		UriSchemes.Mssettingsworkplace:        {"ms-settings-workplace", "Mssettingsworkplace"},
+		UriSchemes.Msspd:                      {"ms-spd", "Msspd"},
 		UriSchemes.Msteams:                    {"msteams", "Msteams"},
+		UriSchemes.Msvisio:                    {"ms-visio", "Msvisio"},
+		UriSchemes.Msword:                     {"ms-word", "Msword"},
 		UriSchemes.Mtqp:                       {"mtqp", "Mtqp"},
 		UriSchemes.Mumble:                     {"mumble", "Mumble"},
 		UriSchemes.Mupdate:                    {"mupdate", "Mupdate"},
@@ -1126,8 +1126,8 @@ func init() {
 		UriSchemes.Sms:                        {"sms", "Sms"},
 		UriSchemes.Snews:                      {"snews", "Snews"},
 		UriSchemes.Snmp:                       {"snmp", "Snmp"},
-		UriSchemes.SoapBeep:                   {"soap.beep", "SoapBeep"},
-		UriSchemes.SoapBeeps:                  {"soap.beeps", "SoapBeeps"},
+		UriSchemes.Soapbeep:                   {"soap-beep", "Soapbeep"},
+		UriSchemes.Soapbeeps:                  {"soap-beeps", "Soapbeeps"},
 		UriSchemes.Soldat:                     {"soldat", "Soldat"},
 		UriSchemes.Spotify:                    {"spotify", "Spotify"},
 		UriSchemes.Ssh:                        {"ssh", "Ssh"},
@@ -1156,7 +1156,7 @@ func init() {
 		UriSchemes.Vemmi:                      {"vemmi", "Vemmi"},
 		UriSchemes.Ventrilo:                   {"ventrilo", "Ventrilo"},
 		UriSchemes.Videotex:                   {"videotex", "Videotex"},
-		UriSchemes.ViewSource:                 {"view-source", "ViewSource"},
+		UriSchemes.Viewsource:                 {"view-source", "Viewsource"},
 		UriSchemes.Vnc:                        {"vnc", "Vnc"},
 		UriSchemes.Wais:                       {"wais", "Wais"},
 		UriSchemes.Webcal:                     {"webcal", "Webcal"},
@@ -1165,16 +1165,16 @@ func init() {
 		UriSchemes.Wtai:                       {"wtai", "Wtai"},
 		UriSchemes.Wyciwyg:                    {"wyciwyg", "Wyciwyg"},
 		UriSchemes.Xcon:                       {"xcon", "Xcon"},
-		UriSchemes.XconUserid:                 {"xcon-userid", "XconUserid"},
+		UriSchemes.Xconuserid:                 {"xcon-userid", "Xconuserid"},
 		UriSchemes.Xfire:                      {"xfire", "Xfire"},
-		UriSchemes.XmlrpcBeep:                 {"xmlrpc.beep", "XmlrpcBeep"},
-		UriSchemes.XmlrpcBeeps:                {"xmlrpc.beeps", "XmlrpcBeeps"},
+		UriSchemes.Xmlrpcbeep:                 {"xmlrpc-beep", "Xmlrpcbeep"},
+		UriSchemes.Xmlrpcbeeps:                {"xmlrpc-beeps", "Xmlrpcbeeps"},
 		UriSchemes.Xmpp:                       {"xmpp", "Xmpp"},
 		UriSchemes.Xri:                        {"xri", "Xri"},
 		UriSchemes.Ymsgr:                      {"ymsgr", "Ymsgr"},
-		UriSchemes.Z3950:                      {"z39.50", "Z3950"},
-		UriSchemes.Z3950r:                     {"z39.50r", "Z3950r"},
-		UriSchemes.Z3950s:                     {"z39.50s", "Z3950s"},
+		UriSchemes.Z3950:                      {"z39-50", "Z3950"},
+		UriSchemes.Z3950r:                     {"z39-50r", "Z3950r"},
+		UriSchemes.Z3950s:                     {"z39-50s", "Z3950s"},
 		UriSchemes.Zoommtg:                    {"zoommtg", "Zoommtg"},
 		UriSchemes.Zoomus:                     {"zoomus", "Zoomus"},
 	}

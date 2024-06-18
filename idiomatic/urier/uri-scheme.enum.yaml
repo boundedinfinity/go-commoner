@@ -1,4 +1,5 @@
 
+overwrite: true
 serialize:
     value: kebab-lower-to-pascal
 values:

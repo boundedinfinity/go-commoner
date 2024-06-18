@@ -9,7 +9,7 @@ list:
 purge:
 	find . -name '*.enum.go' -type f -delete
 
-generate: purge
+generate:
 	go generate ./...
 
 test: generate
