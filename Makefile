@@ -31,6 +31,7 @@ tag:
 	git push origin $(tag)
 
 tag-list:
+	git fetch --tags
 	git tag --list | sort -V
 
 publish: generate test
