@@ -23,7 +23,6 @@ func (t _json) Identifier(s string) (string, error) {
 	identifier := s
 
 	identifier = utfer.RemoveNewlines(identifier)
-	identifier = utfer.ReplaceSymbols(identifier, byte(utfer.SPACE))
 	identifier = caser.PhraseToKebabLower(identifier)
 
 	if utfer.OneOf(identifier[0], utfer.Utf8.Numbers()) {
