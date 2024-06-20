@@ -64,7 +64,7 @@ func (t langer) IdentifierWithTranslation(s string, translate map[string]string)
 	var err error
 
 	for from, to := range translate {
-		identifier = stringer.Replace(s, to, from)
+		identifier = stringer.Replace(identifier, to, from)
 	}
 
 	for _, langFn := range t.langFns {

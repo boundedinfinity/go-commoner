@@ -14,7 +14,7 @@ import (
 	"database/sql/driver"
 	"encoding/json"
 	"encoding/xml"
-	"fmt"
+	errorer "github.com/boundedinfinity/go-commoner/errorer"
 	"strings"
 )
 
@@ -161,7 +161,7 @@ func (t *MeasurementFormatType) Scan(value interface{}) error {
 //////////////////////////////////////////////////////////////////
 
 var MeasurementFormatTypes = measurementFormatTypes{
-	Err:          fmt.Errorf("invalid MeasurementFormatType"),
+	Err:          errorer.New("invalid MeasurementFormatType"),
 	Invalid:      MeasurementFormatType("invalid"),
 	Full:         MeasurementFormatType("full"),
 	Abbreviation: MeasurementFormatType("abbreviation"),
@@ -169,7 +169,7 @@ var MeasurementFormatTypes = measurementFormatTypes{
 
 type measurementFormatTypes struct {
 	Err          error
-	errf         func(any, ...MeasurementFormatType) error
+	errf         func(...any) error
 	parseMap     map[MeasurementFormatType][]string
 	Invalid      MeasurementFormatType
 	Full         MeasurementFormatType
@@ -183,8 +183,18 @@ func (t measurementFormatTypes) Values() []MeasurementFormatType {
 	}
 }
 
+func (t measurementFormatTypes) ToStrings(items ...MeasurementFormatType) []string {
+	var results []string
+
+	for _, item := range items {
+		results = append(results, item.String())
+	}
+
+	return results
+}
+
 func (t measurementFormatTypes) ParseFrom(v string, items ...MeasurementFormatType) (MeasurementFormatType, error) {
-	var found MeasurementFormatType
+	found := t.Invalid
 	var ok bool
 
 	for _, item := range items {
@@ -208,7 +218,8 @@ func (t measurementFormatTypes) ParseFrom(v string, items ...MeasurementFormatTy
 	}
 
 	if !ok {
-		return found, t.errf(v, items...)
+		list := strings.Join(t.ToStrings(items...), ",")
+		return found, t.errf(v, list)
 	}
 
 	return found, nil
@@ -239,20 +250,5 @@ func init() {
 		MeasurementFormatTypes.Full:         {"full", "Full"},
 	}
 
-	MeasurementFormatTypes.errf = func(v any, items ...MeasurementFormatType) error {
-		var xs []string
-
-		for _, item := range items {
-			if x, ok := MeasurementFormatTypes.parseMap[item]; ok {
-				xs = append(xs, x...)
-			}
-		}
-
-		return fmt.Errorf(
-			"%w: %v is not one of %s",
-			MeasurementFormatTypes.Err,
-			v,
-			strings.Join(xs, ","),
-		)
-	}
+	MeasurementFormatTypes.errf = MeasurementFormatTypes.Err.(*errorer.Errorer).FormatFn("%v is not one of %s")
 }

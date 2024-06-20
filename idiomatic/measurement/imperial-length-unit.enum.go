@@ -14,7 +14,7 @@ import (
 	"database/sql/driver"
 	"encoding/json"
 	"encoding/xml"
-	"fmt"
+	errorer "github.com/boundedinfinity/go-commoner/errorer"
 	"strings"
 )
 
@@ -161,7 +161,7 @@ func (t *ImperialLengthUnit) Scan(value interface{}) error {
 //////////////////////////////////////////////////////////////////
 
 var ImperialLengthUnits = imperialLengthUnits{
-	Err:          fmt.Errorf("invalid ImperialLengthUnit"),
+	Err:          errorer.New("invalid ImperialLengthUnit"),
 	Invalid:      ImperialLengthUnit("invalid"),
 	Twip:         ImperialLengthUnit("twip"),
 	Thou:         ImperialLengthUnit("thou"),
@@ -183,7 +183,7 @@ var ImperialLengthUnits = imperialLengthUnits{
 
 type imperialLengthUnits struct {
 	Err          error
-	errf         func(any, ...ImperialLengthUnit) error
+	errf         func(...any) error
 	parseMap     map[ImperialLengthUnit][]string
 	Invalid      ImperialLengthUnit
 	Twip         ImperialLengthUnit
@@ -225,8 +225,18 @@ func (t imperialLengthUnits) Values() []ImperialLengthUnit {
 	}
 }
 
+func (t imperialLengthUnits) ToStrings(items ...ImperialLengthUnit) []string {
+	var results []string
+
+	for _, item := range items {
+		results = append(results, item.String())
+	}
+
+	return results
+}
+
 func (t imperialLengthUnits) ParseFrom(v string, items ...ImperialLengthUnit) (ImperialLengthUnit, error) {
-	var found ImperialLengthUnit
+	found := t.Invalid
 	var ok bool
 
 	for _, item := range items {
@@ -250,7 +260,8 @@ func (t imperialLengthUnits) ParseFrom(v string, items ...ImperialLengthUnit) (I
 	}
 
 	if !ok {
-		return found, t.errf(v, items...)
+		list := strings.Join(t.ToStrings(items...), ",")
+		return found, t.errf(v, list)
 	}
 
 	return found, nil
@@ -295,20 +306,5 @@ func init() {
 		ImperialLengthUnits.Yard:         {"yard", "Yard"},
 	}
 
-	ImperialLengthUnits.errf = func(v any, items ...ImperialLengthUnit) error {
-		var xs []string
-
-		for _, item := range items {
-			if x, ok := ImperialLengthUnits.parseMap[item]; ok {
-				xs = append(xs, x...)
-			}
-		}
-
-		return fmt.Errorf(
-			"%w: %v is not one of %s",
-			ImperialLengthUnits.Err,
-			v,
-			strings.Join(xs, ","),
-		)
-	}
+	ImperialLengthUnits.errf = ImperialLengthUnits.Err.(*errorer.Errorer).FormatFn("%v is not one of %s")
 }

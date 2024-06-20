@@ -14,7 +14,7 @@ import (
 	"database/sql/driver"
 	"encoding/json"
 	"encoding/xml"
-	"fmt"
+	errorer "github.com/boundedinfinity/go-commoner/errorer"
 	"strings"
 )
 
@@ -161,7 +161,7 @@ func (t *MetricUnit) Scan(value interface{}) error {
 //////////////////////////////////////////////////////////////////
 
 var MetricUnits = metricUnits{
-	Err:     fmt.Errorf("invalid MetricUnit"),
+	Err:     errorer.New("invalid MetricUnit"),
 	Invalid: MetricUnit("invalid"),
 	Tera:    MetricUnit("tera"),
 	Giga:    MetricUnit("giga"),
@@ -180,7 +180,7 @@ var MetricUnits = metricUnits{
 
 type metricUnits struct {
 	Err      error
-	errf     func(any, ...MetricUnit) error
+	errf     func(...any) error
 	parseMap map[MetricUnit][]string
 	Invalid  MetricUnit
 	Tera     MetricUnit
@@ -216,8 +216,18 @@ func (t metricUnits) Values() []MetricUnit {
 	}
 }
 
+func (t metricUnits) ToStrings(items ...MetricUnit) []string {
+	var results []string
+
+	for _, item := range items {
+		results = append(results, item.String())
+	}
+
+	return results
+}
+
 func (t metricUnits) ParseFrom(v string, items ...MetricUnit) (MetricUnit, error) {
-	var found MetricUnit
+	found := t.Invalid
 	var ok bool
 
 	for _, item := range items {
@@ -241,7 +251,8 @@ func (t metricUnits) ParseFrom(v string, items ...MetricUnit) (MetricUnit, error
 	}
 
 	if !ok {
-		return found, t.errf(v, items...)
+		list := strings.Join(t.ToStrings(items...), ",")
+		return found, t.errf(v, list)
 	}
 
 	return found, nil
@@ -283,20 +294,5 @@ func init() {
 		MetricUnits.Unit:  {"unit", "Unit"},
 	}
 
-	MetricUnits.errf = func(v any, items ...MetricUnit) error {
-		var xs []string
-
-		for _, item := range items {
-			if x, ok := MetricUnits.parseMap[item]; ok {
-				xs = append(xs, x...)
-			}
-		}
-
-		return fmt.Errorf(
-			"%w: %v is not one of %s",
-			MetricUnits.Err,
-			v,
-			strings.Join(xs, ","),
-		)
-	}
+	MetricUnits.errf = MetricUnits.Err.(*errorer.Errorer).FormatFn("%v is not one of %s")
 }

@@ -14,7 +14,7 @@ import (
 	"database/sql/driver"
 	"encoding/json"
 	"encoding/xml"
-	"fmt"
+	errorer "github.com/boundedinfinity/go-commoner/errorer"
 	"strings"
 )
 
@@ -161,7 +161,7 @@ func (t *AreaUnit) Scan(value interface{}) error {
 //////////////////////////////////////////////////////////////////
 
 var AreaUnits = areaUnits{
-	Err:        fmt.Errorf("invalid AreaUnit"),
+	Err:        errorer.New("invalid AreaUnit"),
 	Invalid:    AreaUnit("invalid"),
 	SquareMile: AreaUnit("square-mile"),
 	Acre:       AreaUnit("acre"),
@@ -173,7 +173,7 @@ var AreaUnits = areaUnits{
 
 type areaUnits struct {
 	Err        error
-	errf       func(any, ...AreaUnit) error
+	errf       func(...any) error
 	parseMap   map[AreaUnit][]string
 	Invalid    AreaUnit
 	SquareMile AreaUnit
@@ -195,8 +195,18 @@ func (t areaUnits) Values() []AreaUnit {
 	}
 }
 
+func (t areaUnits) ToStrings(items ...AreaUnit) []string {
+	var results []string
+
+	for _, item := range items {
+		results = append(results, item.String())
+	}
+
+	return results
+}
+
 func (t areaUnits) ParseFrom(v string, items ...AreaUnit) (AreaUnit, error) {
-	var found AreaUnit
+	found := t.Invalid
 	var ok bool
 
 	for _, item := range items {
@@ -220,7 +230,8 @@ func (t areaUnits) ParseFrom(v string, items ...AreaUnit) (AreaUnit, error) {
 	}
 
 	if !ok {
-		return found, t.errf(v, items...)
+		list := strings.Join(t.ToStrings(items...), ",")
+		return found, t.errf(v, list)
 	}
 
 	return found, nil
@@ -255,20 +266,5 @@ func init() {
 		AreaUnits.SquareYard: {"square-yard", "SquareYard"},
 	}
 
-	AreaUnits.errf = func(v any, items ...AreaUnit) error {
-		var xs []string
-
-		for _, item := range items {
-			if x, ok := AreaUnits.parseMap[item]; ok {
-				xs = append(xs, x...)
-			}
-		}
-
-		return fmt.Errorf(
-			"%w: %v is not one of %s",
-			AreaUnits.Err,
-			v,
-			strings.Join(xs, ","),
-		)
-	}
+	AreaUnits.errf = AreaUnits.Err.(*errorer.Errorer).FormatFn("%v is not one of %s")
 }

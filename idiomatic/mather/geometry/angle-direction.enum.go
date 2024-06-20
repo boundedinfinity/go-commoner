@@ -14,7 +14,7 @@ import (
 	"database/sql/driver"
 	"encoding/json"
 	"encoding/xml"
-	"fmt"
+	errorer "github.com/boundedinfinity/go-commoner/errorer"
 	"strings"
 )
 
@@ -161,7 +161,7 @@ func (t *AngleDirection) Scan(value interface{}) error {
 //////////////////////////////////////////////////////////////////
 
 var AngleDirections = angleDirections{
-	Err:              fmt.Errorf("invalid AngleDirection"),
+	Err:              errorer.New("invalid AngleDirection"),
 	Invalid:          AngleDirection("invalid"),
 	Clockwise:        AngleDirection("clockwise"),
 	CounterClockwise: AngleDirection("counter-clockwise"),
@@ -169,7 +169,7 @@ var AngleDirections = angleDirections{
 
 type angleDirections struct {
 	Err              error
-	errf             func(any, ...AngleDirection) error
+	errf             func(...any) error
 	parseMap         map[AngleDirection][]string
 	Invalid          AngleDirection
 	Clockwise        AngleDirection
@@ -183,8 +183,18 @@ func (t angleDirections) Values() []AngleDirection {
 	}
 }
 
+func (t angleDirections) ToStrings(items ...AngleDirection) []string {
+	var results []string
+
+	for _, item := range items {
+		results = append(results, item.String())
+	}
+
+	return results
+}
+
 func (t angleDirections) ParseFrom(v string, items ...AngleDirection) (AngleDirection, error) {
-	var found AngleDirection
+	found := t.Invalid
 	var ok bool
 
 	for _, item := range items {
@@ -208,7 +218,8 @@ func (t angleDirections) ParseFrom(v string, items ...AngleDirection) (AngleDire
 	}
 
 	if !ok {
-		return found, t.errf(v, items...)
+		list := strings.Join(t.ToStrings(items...), ",")
+		return found, t.errf(v, list)
 	}
 
 	return found, nil
@@ -239,20 +250,5 @@ func init() {
 		AngleDirections.CounterClockwise: {"counter-clockwise", "CounterClockwise"},
 	}
 
-	AngleDirections.errf = func(v any, items ...AngleDirection) error {
-		var xs []string
-
-		for _, item := range items {
-			if x, ok := AngleDirections.parseMap[item]; ok {
-				xs = append(xs, x...)
-			}
-		}
-
-		return fmt.Errorf(
-			"%w: %v is not one of %s",
-			AngleDirections.Err,
-			v,
-			strings.Join(xs, ","),
-		)
-	}
+	AngleDirections.errf = AngleDirections.Err.(*errorer.Errorer).FormatFn("%v is not one of %s")
 }

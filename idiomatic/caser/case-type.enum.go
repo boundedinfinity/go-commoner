@@ -14,7 +14,7 @@ import (
 	"database/sql/driver"
 	"encoding/json"
 	"encoding/xml"
-	"fmt"
+	errorer "github.com/boundedinfinity/go-commoner/errorer"
 	"strings"
 )
 
@@ -161,7 +161,7 @@ func (t *CaseType) Scan(value interface{}) error {
 //////////////////////////////////////////////////////////////////
 
 var CaseTypes = caseTypes{
-	Err:        fmt.Errorf("invalid CaseType"),
+	Err:        errorer.New("invalid CaseType"),
 	Invalid:    CaseType("invalid"),
 	Camel:      CaseType("camel"),
 	Kebab:      CaseType("kebab"),
@@ -177,7 +177,7 @@ var CaseTypes = caseTypes{
 
 type caseTypes struct {
 	Err        error
-	errf       func(any, ...CaseType) error
+	errf       func(...any) error
 	parseMap   map[CaseType][]string
 	Invalid    CaseType
 	Camel      CaseType
@@ -207,8 +207,18 @@ func (t caseTypes) Values() []CaseType {
 	}
 }
 
+func (t caseTypes) ToStrings(items ...CaseType) []string {
+	var results []string
+
+	for _, item := range items {
+		results = append(results, item.String())
+	}
+
+	return results
+}
+
 func (t caseTypes) ParseFrom(v string, items ...CaseType) (CaseType, error) {
-	var found CaseType
+	found := t.Invalid
 	var ok bool
 
 	for _, item := range items {
@@ -232,7 +242,8 @@ func (t caseTypes) ParseFrom(v string, items ...CaseType) (CaseType, error) {
 	}
 
 	if !ok {
-		return found, t.errf(v, items...)
+		list := strings.Join(t.ToStrings(items...), ",")
+		return found, t.errf(v, list)
 	}
 
 	return found, nil
@@ -271,20 +282,5 @@ func init() {
 		CaseTypes.Unknown:    {"unknown", "Unknown"},
 	}
 
-	CaseTypes.errf = func(v any, items ...CaseType) error {
-		var xs []string
-
-		for _, item := range items {
-			if x, ok := CaseTypes.parseMap[item]; ok {
-				xs = append(xs, x...)
-			}
-		}
-
-		return fmt.Errorf(
-			"%w: %v is not one of %s",
-			CaseTypes.Err,
-			v,
-			strings.Join(xs, ","),
-		)
-	}
+	CaseTypes.errf = CaseTypes.Err.(*errorer.Errorer).FormatFn("%v is not one of %s")
 }

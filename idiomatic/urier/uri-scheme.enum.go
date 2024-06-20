@@ -14,7 +14,7 @@ import (
 	"database/sql/driver"
 	"encoding/json"
 	"encoding/xml"
-	"fmt"
+	errorer "github.com/boundedinfinity/go-commoner/errorer"
 	"strings"
 )
 
@@ -161,7 +161,7 @@ func (t *UriScheme) Scan(value interface{}) error {
 //////////////////////////////////////////////////////////////////
 
 var UriSchemes = uriSchemes{
-	Err:                        fmt.Errorf("invalid UriScheme"),
+	Err:                        errorer.New("invalid UriScheme"),
 	Invalid:                    UriScheme("invalid"),
 	Aaa:                        UriScheme("aaa"),
 	Aaas:                       UriScheme("aaas"),
@@ -404,7 +404,7 @@ var UriSchemes = uriSchemes{
 
 type uriSchemes struct {
 	Err                        error
-	errf                       func(any, ...UriScheme) error
+	errf                       func(...any) error
 	parseMap                   map[UriScheme][]string
 	Invalid                    UriScheme
 	Aaa                        UriScheme
@@ -888,8 +888,18 @@ func (t uriSchemes) Values() []UriScheme {
 	}
 }
 
+func (t uriSchemes) ToStrings(items ...UriScheme) []string {
+	var results []string
+
+	for _, item := range items {
+		results = append(results, item.String())
+	}
+
+	return results
+}
+
 func (t uriSchemes) ParseFrom(v string, items ...UriScheme) (UriScheme, error) {
-	var found UriScheme
+	found := t.Invalid
 	var ok bool
 
 	for _, item := range items {
@@ -913,7 +923,8 @@ func (t uriSchemes) ParseFrom(v string, items ...UriScheme) (UriScheme, error) {
 	}
 
 	if !ok {
-		return found, t.errf(v, items...)
+		list := strings.Join(t.ToStrings(items...), ",")
+		return found, t.errf(v, list)
 	}
 
 	return found, nil
@@ -1179,20 +1190,5 @@ func init() {
 		UriSchemes.Zoomus:                     {"zoomus", "Zoomus"},
 	}
 
-	UriSchemes.errf = func(v any, items ...UriScheme) error {
-		var xs []string
-
-		for _, item := range items {
-			if x, ok := UriSchemes.parseMap[item]; ok {
-				xs = append(xs, x...)
-			}
-		}
-
-		return fmt.Errorf(
-			"%w: %v is not one of %s",
-			UriSchemes.Err,
-			v,
-			strings.Join(xs, ","),
-		)
-	}
+	UriSchemes.errf = UriSchemes.Err.(*errorer.Errorer).FormatFn("%v is not one of %s")
 }

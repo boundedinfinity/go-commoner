@@ -5,5 +5,5 @@ package langer
 var TypeScript *langer
 
 func init() {
-	javascript = new("typescript")
+	TypeScript = new("typescript")
 }

@@ -14,7 +14,7 @@ import (
 	"database/sql/driver"
 	"encoding/json"
 	"encoding/xml"
-	"fmt"
+	errorer "github.com/boundedinfinity/go-commoner/errorer"
 	"strings"
 )
 
@@ -161,7 +161,7 @@ func (t *ImperialMassUnit) Scan(value interface{}) error {
 //////////////////////////////////////////////////////////////////
 
 var ImperialMassUnits = imperialMassUnits{
-	Err:               fmt.Errorf("invalid ImperialMassUnit"),
+	Err:               errorer.New("invalid ImperialMassUnit"),
 	Invalid:           ImperialMassUnit("invalid"),
 	Grain:             ImperialMassUnit("grain"),
 	PennyWeight:       ImperialMassUnit("penny-weight"),
@@ -183,7 +183,7 @@ var ImperialMassUnits = imperialMassUnits{
 
 type imperialMassUnits struct {
 	Err               error
-	errf              func(any, ...ImperialMassUnit) error
+	errf              func(...any) error
 	parseMap          map[ImperialMassUnit][]string
 	Invalid           ImperialMassUnit
 	Grain             ImperialMassUnit
@@ -225,8 +225,18 @@ func (t imperialMassUnits) Values() []ImperialMassUnit {
 	}
 }
 
+func (t imperialMassUnits) ToStrings(items ...ImperialMassUnit) []string {
+	var results []string
+
+	for _, item := range items {
+		results = append(results, item.String())
+	}
+
+	return results
+}
+
 func (t imperialMassUnits) ParseFrom(v string, items ...ImperialMassUnit) (ImperialMassUnit, error) {
-	var found ImperialMassUnit
+	found := t.Invalid
 	var ok bool
 
 	for _, item := range items {
@@ -250,7 +260,8 @@ func (t imperialMassUnits) ParseFrom(v string, items ...ImperialMassUnit) (Imper
 	}
 
 	if !ok {
-		return found, t.errf(v, items...)
+		list := strings.Join(t.ToStrings(items...), ",")
+		return found, t.errf(v, list)
 	}
 
 	return found, nil
@@ -295,20 +306,5 @@ func init() {
 		ImperialMassUnits.Ton:               {"ton", "Ton"},
 	}
 
-	ImperialMassUnits.errf = func(v any, items ...ImperialMassUnit) error {
-		var xs []string
-
-		for _, item := range items {
-			if x, ok := ImperialMassUnits.parseMap[item]; ok {
-				xs = append(xs, x...)
-			}
-		}
-
-		return fmt.Errorf(
-			"%w: %v is not one of %s",
-			ImperialMassUnits.Err,
-			v,
-			strings.Join(xs, ","),
-		)
-	}
+	ImperialMassUnits.errf = ImperialMassUnits.Err.(*errorer.Errorer).FormatFn("%v is not one of %s")
 }

@@ -1,7 +1,7 @@
 package langer
 
-var javascript *langer
+var Javascript *langer
 
 func init() {
-	javascript = new("javascript")
+	Javascript = new("javascript")
 }

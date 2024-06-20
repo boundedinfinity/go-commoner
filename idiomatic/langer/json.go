@@ -9,7 +9,7 @@ import (
 var Json *langer
 
 func init() {
-	javascript = new("json").
+	Json = new("json").
 		WithLang(
 			func(identifier string) (string, error) {
 				identifier = utfer.RemoveNewlines(identifier)

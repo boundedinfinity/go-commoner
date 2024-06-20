@@ -14,7 +14,7 @@ import (
 	"database/sql/driver"
 	"encoding/json"
 	"encoding/xml"
-	"fmt"
+	errorer "github.com/boundedinfinity/go-commoner/errorer"
 	"strings"
 )
 
@@ -161,7 +161,7 @@ func (t *MeasurementSystem) Scan(value interface{}) error {
 //////////////////////////////////////////////////////////////////
 
 var MeasurementSystems = measurementSystems{
-	Err:      fmt.Errorf("invalid MeasurementSystem"),
+	Err:      errorer.New("invalid MeasurementSystem"),
 	Invalid:  MeasurementSystem("invalid"),
 	Metric:   MeasurementSystem("metric"),
 	Imperial: MeasurementSystem("imperial"),
@@ -170,7 +170,7 @@ var MeasurementSystems = measurementSystems{
 
 type measurementSystems struct {
 	Err      error
-	errf     func(any, ...MeasurementSystem) error
+	errf     func(...any) error
 	parseMap map[MeasurementSystem][]string
 	Invalid  MeasurementSystem
 	Metric   MeasurementSystem
@@ -186,8 +186,18 @@ func (t measurementSystems) Values() []MeasurementSystem {
 	}
 }
 
+func (t measurementSystems) ToStrings(items ...MeasurementSystem) []string {
+	var results []string
+
+	for _, item := range items {
+		results = append(results, item.String())
+	}
+
+	return results
+}
+
 func (t measurementSystems) ParseFrom(v string, items ...MeasurementSystem) (MeasurementSystem, error) {
-	var found MeasurementSystem
+	found := t.Invalid
 	var ok bool
 
 	for _, item := range items {
@@ -211,7 +221,8 @@ func (t measurementSystems) ParseFrom(v string, items ...MeasurementSystem) (Mea
 	}
 
 	if !ok {
-		return found, t.errf(v, items...)
+		list := strings.Join(t.ToStrings(items...), ",")
+		return found, t.errf(v, list)
 	}
 
 	return found, nil
@@ -243,20 +254,5 @@ func init() {
 		MeasurementSystems.Unitless: {"unitless", "Unitless"},
 	}
 
-	MeasurementSystems.errf = func(v any, items ...MeasurementSystem) error {
-		var xs []string
-
-		for _, item := range items {
-			if x, ok := MeasurementSystems.parseMap[item]; ok {
-				xs = append(xs, x...)
-			}
-		}
-
-		return fmt.Errorf(
-			"%w: %v is not one of %s",
-			MeasurementSystems.Err,
-			v,
-			strings.Join(xs, ","),
-		)
-	}
+	MeasurementSystems.errf = MeasurementSystems.Err.(*errorer.Errorer).FormatFn("%v is not one of %s")
 }

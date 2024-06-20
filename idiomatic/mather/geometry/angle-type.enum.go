@@ -14,7 +14,7 @@ import (
 	"database/sql/driver"
 	"encoding/json"
 	"encoding/xml"
-	"fmt"
+	errorer "github.com/boundedinfinity/go-commoner/errorer"
 	"strings"
 )
 
@@ -161,7 +161,7 @@ func (t *AngleType) Scan(value interface{}) error {
 //////////////////////////////////////////////////////////////////
 
 var AngleTypes = angleTypes{
-	Err:     fmt.Errorf("invalid AngleType"),
+	Err:     errorer.New("invalid AngleType"),
 	Invalid: AngleType("invalid"),
 	Degrees: AngleType("degrees"),
 	Radians: AngleType("radians"),
@@ -169,7 +169,7 @@ var AngleTypes = angleTypes{
 
 type angleTypes struct {
 	Err      error
-	errf     func(any, ...AngleType) error
+	errf     func(...any) error
 	parseMap map[AngleType][]string
 	Invalid  AngleType
 	Degrees  AngleType
@@ -183,8 +183,18 @@ func (t angleTypes) Values() []AngleType {
 	}
 }
 
+func (t angleTypes) ToStrings(items ...AngleType) []string {
+	var results []string
+
+	for _, item := range items {
+		results = append(results, item.String())
+	}
+
+	return results
+}
+
 func (t angleTypes) ParseFrom(v string, items ...AngleType) (AngleType, error) {
-	var found AngleType
+	found := t.Invalid
 	var ok bool
 
 	for _, item := range items {
@@ -208,7 +218,8 @@ func (t angleTypes) ParseFrom(v string, items ...AngleType) (AngleType, error) {
 	}
 
 	if !ok {
-		return found, t.errf(v, items...)
+		list := strings.Join(t.ToStrings(items...), ",")
+		return found, t.errf(v, list)
 	}
 
 	return found, nil
@@ -239,20 +250,5 @@ func init() {
 		AngleTypes.Radians: {"radians", "Radians"},
 	}
 
-	AngleTypes.errf = func(v any, items ...AngleType) error {
-		var xs []string
-
-		for _, item := range items {
-			if x, ok := AngleTypes.parseMap[item]; ok {
-				xs = append(xs, x...)
-			}
-		}
-
-		return fmt.Errorf(
-			"%w: %v is not one of %s",
-			AngleTypes.Err,
-			v,
-			strings.Join(xs, ","),
-		)
-	}
+	AngleTypes.errf = AngleTypes.Err.(*errorer.Errorer).FormatFn("%v is not one of %s")
 }
