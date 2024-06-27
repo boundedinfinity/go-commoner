@@ -43,7 +43,7 @@ func (t dirs) JoinErr(dir string, elems ...string) (string, error) {
 		return "", ErrNotDirv(dir)
 	}
 
-	return Join[string](append([]string{dir}, elems...)...), nil
+	return Paths.Join(append([]string{dir}, elems...)...), nil
 }
 
 func (t dirs) Join(dir string, elems ...string) string {

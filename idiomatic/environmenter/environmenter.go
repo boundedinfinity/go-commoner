@@ -91,7 +91,7 @@ func (t Environmenter) generateEnvPaths() []string {
 
 	for _, dir := range t.envFileDirs {
 		for _, name := range t.envFileNames {
-			paths = append(paths, pather.Join(dir, name))
+			paths = append(paths, pather.Paths.Join(dir, name))
 		}
 	}
 

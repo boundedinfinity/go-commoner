@@ -13,11 +13,11 @@ var Paths = paths{}
 type paths struct{}
 
 func (t paths) Base(path string) string {
-	return filepath.Base(string(path))
+	return filepath.Base(path)
 }
 
 func (t paths) Dir(path string) string {
-	return filepath.Dir(string(path))
+	return filepath.Dir(path)
 }
 
 func (t paths) IsAbs(path string) bool {
@@ -79,6 +79,10 @@ func (t paths) Remove(path string) bool {
 	}
 
 	return ok
+}
+
+func (t paths) Join(paths ...string) string {
+	return filepath.Join(paths...)
 }
 
 func (t paths) RemoveErr(path string) (bool, error) {

@@ -2,9 +2,11 @@ package langer
 
 import (
 	"github.com/boundedinfinity/go-commoner/errorer"
+	"github.com/boundedinfinity/go-commoner/idiomatic/caser"
 	"github.com/boundedinfinity/go-commoner/idiomatic/mapper"
 	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
 	"github.com/boundedinfinity/go-commoner/idiomatic/stringer"
+	"github.com/boundedinfinity/go-commoner/idiomatic/utfer"
 )
 
 func new(name string) *langer {
@@ -14,8 +16,18 @@ func new(name string) *langer {
 	}
 }
 
+func (t *langer) WithCantStartWithNumber(value bool) *langer {
+	t.canStartWithNumber = value
+	return t
+}
+
 func (t *langer) WithKeywords(keywords ...string) *langer {
 	t.keywords = append(t.keywords, keywords...)
+	return t
+}
+
+func (t *langer) ResetKeywords(keywords ...string) *langer {
+	t.keywords = keywords
 	return t
 }
 
@@ -24,8 +36,8 @@ func (t *langer) WithTranslations(translations map[string]string) *langer {
 	return t
 }
 
-func (t *langer) WithLang(langFn ...func(s string) (string, error)) *langer {
-	t.langFns = append(t.langFns, langFn...)
+func (t *langer) WithTransformer(langFn ...func(s string) (string, error)) *langer {
+	t.transformers = append(t.transformers, langFn...)
 	return t
 }
 
@@ -33,12 +45,19 @@ type langer struct {
 	name                          string
 	keywords                      []string
 	translations                  map[string]string
-	langFns                       []func(s string) (string, error)
+	transformers                  []func(s string) (string, error)
+	caserConversion               string
+	canStartWithNumber            bool
 	ErrIdentifierInvalidIsKeyword *errorer.Errorer
 }
 
 func (t langer) IsKeyword(s string) bool {
 	return slicer.Contains(s, t.keywords...)
+}
+
+func (t *langer) WithCaserConversion(value string) *langer {
+	t.caserConversion = value
+	return t
 }
 
 func (t langer) MustIdentifier(s string) string {
@@ -62,19 +81,38 @@ func (t langer) Identifier(s string) (string, error) {
 func (t langer) IdentifierWithTranslation(s string, translate map[string]string) (string, error) {
 	identifier := s
 	var err error
+	caserConversion := t.caserConversion
+
+	identifier = utfer.RemoveNewlines(identifier)
+	identifier = stringer.TrimSpace(identifier)
+
+	if caserConversion == "" {
+		caserConversion = "phrase-to-pascal"
+	}
 
 	for from, to := range translate {
 		identifier = stringer.Replace(identifier, to, from)
 	}
 
-	for _, langFn := range t.langFns {
-		if identifier, err = langFn(identifier); err != nil {
+	for _, transformer := range t.transformers {
+		if identifier, err = transformer(identifier); err != nil {
 			return identifier, err
 		}
 	}
 
+	identifier, err = caser.ConvertAs(identifier, caserConversion)
+	if err != nil {
+		return identifier, err
+	}
+
 	if t.IsKeyword(identifier) {
 		err = t.ErrIdentifierInvalidIsKeyword.WithValue(identifier)
+	}
+
+	if !t.canStartWithNumber {
+		if utfer.OneOf(identifier[0], utfer.Utf8.Numbers()) {
+			identifier = "_" + identifier
+		}
 	}
 
 	return identifier, err
