@@ -19,8 +19,17 @@ var (
 
 	default_envFileDirs = []string{
 		"$HOME",
-		"$HOME/.config",
+		"$XDG_CONFIG_HOME",
 		".",
+	}
+
+	// https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
+	default_defaults = map[string]EnvironmenterContext{
+		"XDG_CONFIG_HOME": {Value: "$HOME/.config", Source: "defaults"},
+		"XDG_DATA_HOME":   {Value: "$HOME/.local/share", Source: "defaults"},
+		"XDG_STATE_HOME":  {Value: "$HOME/.local/state", Source: "defaults"},
+		"XDG_CACHE_HOME":  {Value: "$HOME/.cache", Source: "defaults"},
+		"XDG_RUNTIME_DIR": {Value: "/var/run/$EUID", Source: "defaults"},
 	}
 
 	default_envFileNames = []string{
@@ -40,6 +49,7 @@ func New() *Environmenter {
 		includeEnvFile:     true,
 		environment:        map[string]EnvironmenterContext{},
 		overrides:          map[string]EnvironmenterContext{},
+		defaults:           map[string]EnvironmenterContext{},
 	}
 
 	t.
@@ -55,6 +65,7 @@ type Environmenter struct {
 	environment        map[string]EnvironmenterContext
 	patterns           []string
 	overrides          map[string]EnvironmenterContext
+	defaults           map[string]EnvironmenterContext
 	sep                string
 	includeEnvironment bool
 	includeEnvFile     bool
