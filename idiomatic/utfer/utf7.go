@@ -358,7 +358,7 @@ func (t utf7) Parse(v byte) (UtfChar, error) {
 }
 
 func (t utf7) Is(s byte) bool {
-	return slicer.ContainsFn(func(_ int, v UtfChar) bool {
+	return slicer.AnyOfFn(func(_ int, v UtfChar) bool {
 		return byte(v) == s
 	}, t.All()...)
 }
@@ -412,25 +412,25 @@ func (t utf7) Newlines() []UtfChar {
 }
 
 func (t utf7) IsUpperCase(v byte) bool {
-	return slicer.Contains(UtfChar(v), t.UpperCase()...)
+	return slicer.AnyOf(UtfChar(v), t.UpperCase()...)
 }
 
 func (t utf7) IsLowerCase(v byte) bool {
-	return slicer.Contains(UtfChar(v), t.LowerCase()...)
+	return slicer.AnyOf(UtfChar(v), t.LowerCase()...)
 }
 
 func (t utf7) IsLetter(v byte) bool {
-	return slicer.Contains(UtfChar(v), t.Letters()...)
+	return slicer.AnyOf(UtfChar(v), t.Letters()...)
 }
 
 func (t utf7) IsNumber(v byte) bool {
-	return slicer.Contains(UtfChar(v), t.Numbers()...)
+	return slicer.AnyOf(UtfChar(v), t.Numbers()...)
 }
 
 func (t utf7) IsSpace(v byte) bool {
-	return slicer.Contains(UtfChar(v), t.Spaces()...)
+	return slicer.AnyOf(UtfChar(v), t.Spaces()...)
 }
 
 func (t utf7) IsSymbol(v byte) bool {
-	return slicer.Contains(UtfChar(v), t.Symbols()...)
+	return slicer.AnyOf(UtfChar(v), t.Symbols()...)
 }

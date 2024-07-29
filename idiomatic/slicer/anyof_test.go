@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_Contains(t *testing.T) {
+func Test_AnyOf(t *testing.T) {
 	testCases := []struct {
 		name     string
 		match    string
@@ -30,7 +30,7 @@ func Test_Contains(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
-			actual := slicer.Contains(tc.match, tc.input...)
+			actual := slicer.AnyOf(tc.match, tc.input...)
 			assert.Equal(tt, tc.expected, actual)
 		})
 	}

@@ -5,21 +5,21 @@ package slicer
 //      - https://lodash.com/docs/4.17.15#includes
 // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Contains[T] test if the match value is equal to any of the elements in elems
-func Contains[T comparable](match T, elems ...T) bool {
+// AnyOf[T] test if the match value is equal to any of the elements in elems
+func AnyOf[T comparable](match T, elems ...T) bool {
 	fn := func(_ int, elem T) bool {
 		return match == elem
 	}
 
-	return ContainsFn(fn, elems...)
+	return AnyOfFn(fn, elems...)
 }
 
-// Contains[T] test if the value returned from fn is true for any of the elements in elems
+// AnyOfFn[T] test if the value returned from fn is true for any of the elements in elems
 //
 // The fn(int, T) bool functions takes:
 //   - int is the index of the current element
 //   - T is the current element
-func ContainsFn[T any](fn func(int, T) bool, elems ...T) bool {
+func AnyOfFn[T any](fn func(int, T) bool, elems ...T) bool {
 	if fn == nil {
 		return false
 	}
@@ -28,18 +28,18 @@ func ContainsFn[T any](fn func(int, T) bool, elems ...T) bool {
 		return fn(i, elem), nil
 	}
 
-	found, _ := ContainsFnErr(fn2, elems...)
+	found, _ := AnyOfFnErr(fn2, elems...)
 	return found
 }
 
-// Contains[T] test if the value returned from fn is true for any of the elements in elems
+// AnyOfFnErr[T] test if the value returned from fn is true for any of the elements in elems
 //
 // The fn(int, T) bool functions takes:
 //   - int is the index of the current element
 //   - T is the current element
 //
 // If the fn function returns an error, processing through elems is stopped and the error is returned.
-func ContainsFnErr[T any](fn func(int, T) (bool, error), elems ...T) (bool, error) {
+func AnyOfFnErr[T any](fn func(int, T) (bool, error), elems ...T) (bool, error) {
 	var found bool
 	var err error
 

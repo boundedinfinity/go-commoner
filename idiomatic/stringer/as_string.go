@@ -6,13 +6,13 @@ import (
 	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
 )
 
-func AsString(elem fmt.Stringer) string {
-	return elem.String()
+func AsString[T any](v T) string {
+	return fmt.Sprintf("%v", v)
 }
 
-func AsStrings(elems ...fmt.Stringer) []string {
+func AsStrings[T any](elems ...T) []string {
 	return slicer.Map(
-		func(_ int, elem fmt.Stringer) string { return elem.String() },
+		func(_ int, elem T) string { return fmt.Sprintf("%v", elem) },
 		elems...,
 	)
 }

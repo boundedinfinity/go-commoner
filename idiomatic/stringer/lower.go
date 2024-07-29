@@ -2,25 +2,27 @@ package stringer
 
 import "strings"
 
-func ToLower[T ~string](s T) string {
+func Lowercase[T ~string](s T) string {
 	return strings.ToLower(string(s))
 }
 
-func Lowercase[T ~string](s T) string {
-	return ToLower(s)
+func LowercaseAll[T ~string](elems ...T) []string {
+	var results []string
+
+	for _, elem := range elems {
+		results = append(results, Lowercase(elem))
+	}
+
+	return results
 }
 
-func ToLowerFirst[T ~string](s T) string {
+func LowercaseFirst[T ~string](s T) string {
 	if len(s) <= 1 {
-		return ToLower(s)
+		return Lowercase(s)
 	}
 
 	f := string(s[0])
 	r := string(s[1:])
 
-	return ToLower(f) + r
-}
-
-func LowercaseFirst[T ~string](s T) string {
-	return ToLowerFirst(s)
+	return Lowercase(f) + r
 }
