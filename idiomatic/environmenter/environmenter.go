@@ -11,20 +11,20 @@ import (
 )
 
 var (
-	default_patterns = []string{
+	_DEFAULT_PATTERNS = []string{
 		"$%v",
 		"${%v}",
 		"${env:%v}",
 	}
 
-	default_envFileDirs = []string{
+	_DEFAULT_ENV_FILE_DIRS = []string{
 		"$HOME",
 		"$XDG_CONFIG_HOME",
 		".",
 	}
 
 	// https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
-	default_defaults = map[string]EnvironmenterContext{
+	_DEFAULT_XDG_DIRS = map[string]EnvironmenterContext{
 		"XDG_CONFIG_HOME": {Value: "$HOME/.config", Source: "defaults"},
 		"XDG_DATA_HOME":   {Value: "$HOME/.local/share", Source: "defaults"},
 		"XDG_STATE_HOME":  {Value: "$HOME/.local/state", Source: "defaults"},
@@ -32,7 +32,7 @@ var (
 		"XDG_RUNTIME_DIR": {Value: "/var/run/$EUID", Source: "defaults"},
 	}
 
-	default_envFileNames = []string{
+	_DEFAULT_ENV_FILENAMES = []string{
 		".env",
 		"env",
 	}
@@ -53,10 +53,10 @@ func New() *Environmenter {
 	}
 
 	t.
-		WithPatterns(default_patterns...).
+		WithPatterns(_DEFAULT_PATTERNS...).
 		WithSep("=").
-		WithEnvFileDirs(default_envFileDirs...).
-		WithEnvFileNames(default_envFileNames...)
+		WithEnvFileDirs(_DEFAULT_ENV_FILE_DIRS...).
+		WithEnvFileNames(_DEFAULT_ENV_FILENAMES...)
 
 	return t
 }
@@ -226,16 +226,6 @@ func (t *Environmenter) Substitue(elem string) string {
 	return replaced
 }
 
-func (t *Environmenter) SubstitueAll(elems ...string) []string {
-	var replaced []string
-
-	for _, elem := range elems {
-		replaced = append(replaced, t.Substitue(elem))
-	}
-
-	return replaced
-}
-
 func (t *Environmenter) SubstitueOk(elem string) (string, bool) {
 	replaced := elem
 
@@ -249,9 +239,25 @@ func (t *Environmenter) SubstitueOk(elem string) (string, bool) {
 	return replaced, replaced != elem
 }
 
+func (t *Environmenter) SubstitueAll(elems ...string) []string {
+	var replaced []string
+
+	for _, elem := range elems {
+		replaced = append(replaced, t.Substitue(elem))
+	}
+
+	return replaced
+}
+
 // Get returns the value of the environment variable for the given name.  If no value is found,
 // returns an empty string.
-func (t *Environmenter) Get(name string) (EnvironmenterContext, bool) {
+func (t *Environmenter) Get(name string) EnvironmenterContext {
+	return t.environment[name]
+}
+
+// GetOk returns the value of the environment variable for the given name.  If no value is found,
+// returns an empty string.
+func (t *Environmenter) GetOk(name string) (EnvironmenterContext, bool) {
 	val, ok := t.environment[name]
 	return val, ok
 }
@@ -266,22 +272,10 @@ func (t *Environmenter) GetAll(names ...string) map[string]EnvironmenterContext 
 			continue
 		}
 
-		if found, ok := t.Get(name); ok {
+		if found, ok := t.GetOk(name); ok {
 			environment[name] = found
 		}
 	}
 
 	return environment
-}
-
-func SubstitueOk(elem string) (string, bool) {
-	return New().SubstitueOk(elem)
-}
-
-func Substitue(elem string) string {
-	return New().Substitue(elem)
-}
-
-func SubAll(elems ...string) []string {
-	return New().SubstitueAll(elems...)
 }
