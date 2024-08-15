@@ -30,7 +30,7 @@ func Test_Times(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
-			actual := slicer.Times(tc.count, tc.input...)
+			actual := slicer.Duplicate(tc.count, tc.input...)
 			assert.Equal(tt, tc.expected, actual)
 		})
 	}

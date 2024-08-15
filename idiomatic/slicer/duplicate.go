@@ -9,7 +9,3 @@ func Duplicate[T any](count int, elems ...T) []T {
 
 	return results
 }
-
-func Times[T any](count int, elems ...T) []T {
-	return Duplicate(count, elems...)
-}
