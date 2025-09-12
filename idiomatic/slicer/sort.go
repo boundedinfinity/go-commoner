@@ -8,7 +8,7 @@ import (
 
 func Sort[T constraints.Ordered](elems ...T) []T {
 	fn := func(elem T) T { return elem }
-	return SortFn(fn, elems...)
+	return SortBy(fn, elems...)
 }
 
 type builtInFnSort[T any, O constraints.Ordered] struct {
@@ -28,18 +28,19 @@ func (t builtInFnSort[T, O]) Swap(i, j int) {
 	t.elems[i], t.elems[j] = t.elems[j], t.elems[i]
 }
 
-func SortFn[T any, O constraints.Ordered](fn func(T) O, elems ...T) []T {
-	copied := []T{}
+func SortBy[T any, O constraints.Ordered](fn func(T) O, elems ...T) []T {
+	sorted := []T{}
 
 	if fn == nil {
-		return copied
+		return sorted
 	}
 
-	copied = append(copied, elems...)
+	sorted = append(sorted, elems...)
 
 	sort.Sort(builtInFnSort[T, O]{
-		elems: copied,
+		elems: sorted,
 		fn:    fn,
 	})
-	return copied
+
+	return sorted
 }

@@ -52,7 +52,7 @@ func Test_Find(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
-			actual, ok := slicer.FindFn(tc.fn, tc.input...)
+			actual, ok := slicer.FindByI(tc.fn, tc.input...)
 			assert.Equal(tt, tc.expected, actual)
 			assert.Equal(tt, tc.ok, ok)
 		})

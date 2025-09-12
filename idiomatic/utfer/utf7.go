@@ -346,9 +346,10 @@ func (t utf7) Range(start, end UtfChar) []UtfChar {
 }
 
 func (t utf7) Parse(v byte) (UtfChar, error) {
-	f, ok := slicer.FindFn(func(_ int, x UtfChar) bool {
-		return UtfChar(v) == x
-	}, t.All()...)
+	f, ok := slicer.FindBy(
+		func(x UtfChar) bool { return UtfChar(v) == x },
+		t.All()...,
+	)
 
 	if !ok {
 		return f, ErrUtf7Invalidv(v)
@@ -358,9 +359,10 @@ func (t utf7) Parse(v byte) (UtfChar, error) {
 }
 
 func (t utf7) Is(s byte) bool {
-	return slicer.AnyOfFn(func(_ int, v UtfChar) bool {
-		return byte(v) == s
-	}, t.All()...)
+	return slicer.AnyOfBy(
+		func(v UtfChar) bool { return byte(v) == s },
+		t.All()...,
+	)
 }
 
 func (t utf7) All() []UtfChar {

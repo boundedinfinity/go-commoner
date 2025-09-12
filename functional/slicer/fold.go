@@ -5,26 +5,18 @@ import (
 	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
 )
 
-func Fold[I any, O any](initial O, fn func(int, O, I) O, elems ...I) O {
-	return slicer.Fold(fn, initial, elems...)
+func FoldI[I any, O any](initial O, fn func(int, O, I) O, elems ...I) O {
+	return slicer.FoldI(fn, initial, elems...)
 }
 
-func FoldErr[I any, O any](initial O, fn func(int, O, I) (O, error), elems ...I) trier.Try[O] {
-	return trier.CompleteErr(slicer.FoldErr(fn, initial, elems...))
-}
-
-func FoldLeft[I any, O any](initial O, fn func(int, O, I) O, elems ...I) O {
-	return slicer.FoldLeft(fn, initial, elems...)
-}
-
-func FoldLeftErr[I any, O any](initial O, fn func(int, O, I) (O, error), elems ...I) trier.Try[O] {
-	return trier.CompleteErr(slicer.FoldLeftErr(fn, initial, elems...))
+func FoldErrI[I any, O any](initial O, fn func(int, O, I) (O, error), elems ...I) trier.Try[O] {
+	return trier.CompleteErr(slicer.FoldErrI(fn, initial, elems...))
 }
 
 func FoldRight[I any, O any](initial O, fn func(int, O, I) O, elems ...I) O {
-	return slicer.FoldRight(fn, initial, elems...)
+	return slicer.FoldRightI(fn, initial, elems...)
 }
 
-func FoldRightErr[I any, O any](initial O, fn func(int, O, I) (O, error), elems ...I) trier.Try[O] {
-	return trier.CompleteErr(slicer.FoldRightErr(fn, initial, elems...))
+func FoldRightErrI[I any, O any](initial O, fn func(int, O, I) (O, error), elems ...I) trier.Try[O] {
+	return trier.CompleteErr(slicer.FoldRightErrI(fn, initial, elems...))
 }

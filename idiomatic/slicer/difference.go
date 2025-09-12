@@ -1,60 +1,71 @@
 package slicer
 
 func Difference[T comparable](as, bs []T) []T {
-	fn := func(_ int, t T) T { return t }
-	return DifferenceFn(fn, as, bs)
-}
+	var results []T
+	bm := map[T]bool{}
 
-func DifferenceFn[T any, C comparable](fn func(int, T) C, as, bs []T) []T {
-	if fn == nil {
-		return []T{}
+	for _, b := range bs {
+		bm[b] = true
 	}
 
-	fn2 := func(i int, t T) (C, error) {
-		return fn(i, t), nil
+	for _, a := range as {
+		if ok := bm[a]; !ok {
+			results = append(results, a)
+		}
 	}
 
-	results, _ := DifferenceFnErr(fn2, as, bs)
 	return results
 }
 
-func DifferenceFnErr[T any, C comparable](fn func(int, T) (C, error), as, bs []T) ([]T, error) {
-	results := []T{}
+func DifferenceBy[T any, C comparable](fn func(T) C, as, bs []T) []T {
+	var results []T
+
+	if fn == nil {
+		return results
+	}
+
+	bm := map[C]T{}
+
+	for _, b := range bs {
+		bm[fn(b)] = b
+	}
+
+	for _, a := range as {
+		if _, ok := bm[fn(a)]; !ok {
+			results = append(results, a)
+		}
+	}
+
+	return results
+}
+
+func DifferenceByErr[T any, C comparable](fn func(T) (C, error), as, bs []T) ([]T, error) {
+	var results []T
 	var err error
+	var c C
 
 	if fn == nil {
 		return results, err
 	}
 
-	for ai, a := range as {
-		ac, ferr := fn(ai, a)
+	bm := map[C]T{}
 
-		if ferr != nil {
-			err = ferr
+	for _, b := range bs {
+		if c, err = fn(b); err != nil {
 			break
+		} else {
+			bm[c] = b
 		}
 
-		var found bool
+	}
 
-		for _, b := range bs {
-			bc, ferr := fn(ai, b)
-
-			if ferr != nil {
-				err = ferr
+	if err == nil {
+		for _, a := range as {
+			if _, err = fn(a); err != nil {
 				break
+			} else {
+				results = append(results, a)
 			}
-
-			if ac == bc {
-				found = true
-			}
-		}
-
-		if err != nil {
-			break
-		}
-
-		if !found {
-			results = append(results, a)
 		}
 	}
 

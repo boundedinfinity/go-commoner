@@ -42,7 +42,7 @@ func Test_Fold_SameType(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
-			actual := slicer.Fold(tc.fn, tc.initial, tc.input...)
+			actual := slicer.FoldI(tc.fn, tc.initial, tc.input...)
 			assert.Equal(tt, tc.expected, actual)
 		})
 	}
@@ -82,7 +82,7 @@ func Test_Fold_DiffType(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
-			actual := slicer.Fold(tc.fn, tc.initial, tc.input...)
+			actual := slicer.FoldI(tc.fn, tc.initial, tc.input...)
 			assert.Equal(tt, tc.expected, actual)
 		})
 	}
@@ -122,7 +122,7 @@ func Test_FoldRight_DiffType(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
-			actual := slicer.FoldRight(tc.fn, tc.initial, tc.input...)
+			actual := slicer.FoldRightI(tc.fn, tc.initial, tc.input...)
 			assert.Equal(tt, tc.expected, actual)
 		})
 	}

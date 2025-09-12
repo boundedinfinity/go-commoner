@@ -12,7 +12,7 @@ func IsEmpty[T ~string](s T) bool {
 }
 
 func FindNonEmpty[T ~string](elems ...T) (T, bool) {
-	return slicer.FindFn(func(_ int, elem T) bool {
+	return slicer.FindBy(func(elem T) bool {
 		return !IsEmpty(elem)
 	}, elems...)
 }

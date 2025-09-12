@@ -5,59 +5,101 @@ package slicer
 //      - https://lodash.com/docs/4.17.15#includes
 // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// AnyOf[T] test if the match value is equal to any of the elements in elems
-func AnyOf[T comparable](match T, elems ...T) bool {
-	fn := func(_ int, elem T) bool {
-		return match == elem
+// AnyOf test if the target value is equal to any of the elements in elems.
+//
+// Returns true on the first element that matches.
+func AnyOf[T comparable](target T, elems ...T) bool {
+	var ok bool
+
+	for _, elem := range elems {
+		if target == elem {
+			ok = true
+			break
+		}
 	}
 
-	return AnyOfFn(fn, elems...)
+	return ok
 }
 
-// AnyOfFn[T] test if the value returned from fn is true for any of the elements in elems
+// AnyOfBy test if the value returned from fn is true for any of the elements in elems
 //
-// The fn(int, T) bool functions takes:
-//   - int is the index of the current element
+// The by(T) bool functions takes:
 //   - T is the current element
-func AnyOfFn[T any](fn func(int, T) bool, elems ...T) bool {
-	if fn == nil {
-		return false
+//
+// and returns true if the the value of by(T) matches.
+//
+// Returns true on the first element that matches.
+func AnyOfBy[T any](by func(T) bool, elems ...T) bool {
+	var ok bool
+
+	for _, elem := range elems {
+		if ok = by(elem); ok {
+			break
+		}
 	}
 
-	fn2 := func(i int, elem T) (bool, error) {
-		return fn(i, elem), nil
-	}
-
-	found, _ := AnyOfFnErr(fn2, elems...)
-	return found
+	return ok
 }
 
-// AnyOfFnErr[T] test if the value returned from fn is true for any of the elements in elems
+// AnyOfByI test if the value returned from fn is true for any of the elements in elems
 //
-// The fn(int, T) bool functions takes:
+// The by(int, T) bool functions takes:
 //   - int is the index of the current element
 //   - T is the current element
 //
-// If the fn function returns an error, processing through elems is stopped and the error is returned.
-func AnyOfFnErr[T any](fn func(int, T) (bool, error), elems ...T) (bool, error) {
-	var found bool
-	var err error
-
-	if fn == nil {
-		return found, err
-	}
+// Returns true on the first element that matches.
+func AnyOfByI[T any](by func(int, T) bool, elems ...T) bool {
+	var ok bool
 
 	for i, elem := range elems {
-		found, err = fn(i, elem)
-
-		if err != nil {
-			break
-		}
-
-		if found {
+		if ok = by(i, elem); ok {
 			break
 		}
 	}
 
-	return found, err
+	return ok
+}
+
+// AnyOfByErr test if the value returned from fn is true for any of the elements in elems
+//
+// The by(int, T) bool functions takes:
+//   - int is the index of the current element
+//   - T is the current element
+//
+// Returns true on the first element that matches.
+//
+// If the fn function returns an error, processing through elems is stopped and the error is returned.
+func AnyOfByErr[T any](by func(T) (bool, error), elems ...T) (bool, error) {
+	var ok bool
+	var err error
+
+	for _, elem := range elems {
+		if ok, err = by(elem); ok || err != nil {
+			break
+		}
+	}
+
+	return ok, err
+}
+
+// AnyOfByErrI test if the value returned from fn is true for any of the elements in elems
+//
+// The by(int, T) bool functions takes:
+//   - int is the index of the current element
+//   - T is the current element
+//
+// Returns true on the first element that matches.
+//
+// If the fn function returns an error, processing through elems is stopped and the error is returned.
+func AnyOfByErrI[T any](by func(int, T) (bool, error), elems ...T) (bool, error) {
+	var ok bool
+	var err error
+
+	for i, elem := range elems {
+		if ok, err = by(i, elem); ok || err != nil {
+			break
+		}
+	}
+
+	return ok, err
 }

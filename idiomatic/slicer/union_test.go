@@ -28,7 +28,7 @@ func Test_UnionFn(t *testing.T) {
 	c := thing{"C", "X"}
 
 	expectedStr := []thing{a, b, c}
-	actualStr := slicer.UniqFn(func(_ int, x thing) string { return x.S }, a, a, b, b, c, c)
+	actualStr := slicer.UniqByI(func(_ int, x thing) string { return x.S }, a, a, b, b, c, c)
 	assert.ElementsMatch(t, expectedStr, actualStr)
 
 }

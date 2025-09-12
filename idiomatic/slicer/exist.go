@@ -1,36 +1,76 @@
 package slicer
 
-func Exist[T comparable](s T, elems ...T) bool {
-	fn := func(_ int, t T) bool {
-		return t == s
+func Exist[T comparable](target T, elems ...T) bool {
+	for _, elem := range elems {
+		if elem == target {
+			return true
+		}
 	}
 
-	return ExistFn(fn, elems...)
+	return false
 }
 
-func ExistFn[T any](fn func(int, T) bool, elems ...T) bool {
-	if fn == nil {
+func ExistBy[T any](by func(T) bool, elems ...T) bool {
+	if by == nil {
 		return false
 	}
 
-	fn2 := func(i int, t T) (bool, error) {
-		return fn(i, t), nil
+	for _, elem := range elems {
+		if by(elem) {
+			return true
+		}
 	}
 
-	found, _ := ExistFnErr(fn2, elems...)
-	return found
+	return false
 }
 
-func ExistFnErr[T any](fn func(int, T) (bool, error), elems ...T) (bool, error) {
+func ExistByI[T any](by func(int, T) bool, elems ...T) bool {
+	if by == nil {
+		return false
+	}
+
+	for i, elem := range elems {
+		if by(i, elem) {
+			return true
+		}
+	}
+
+	return false
+}
+
+func ExistByErr[T any](by func(T) (bool, error), elems ...T) (bool, error) {
 	var ok bool
 	var err error
 
-	if fn == nil {
+	if by == nil {
+		return ok, err
+	}
+
+	for _, elem := range elems {
+		ok, err = by(elem)
+
+		if ok {
+			break
+		}
+
+		if err != nil {
+			break
+		}
+	}
+
+	return ok, err
+}
+
+func ExistByErrI[T any](by func(int, T) (bool, error), elems ...T) (bool, error) {
+	var ok bool
+	var err error
+
+	if by == nil {
 		return ok, err
 	}
 
 	for i, elem := range elems {
-		ok, err = fn(i, elem)
+		ok, err = by(i, elem)
 
 		if ok {
 			break

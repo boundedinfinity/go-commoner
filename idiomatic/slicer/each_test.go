@@ -17,7 +17,7 @@ func Test_Each(t *testing.T) {
 	input := []Type1{{thing: "a"}, {thing: "b"}}
 	actual := []Type1{}
 
-	slicer.Each(func(_ int, t1 Type1) {
+	slicer.Each(func(t1 Type1) {
 		actual = append(actual, Type1{
 			thing: stringer.Capitalize(t1.thing),
 		})

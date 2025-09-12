@@ -75,7 +75,7 @@ type Environmenter struct {
 
 func (t *Environmenter) Process() error {
 	if t.includeEnvironment {
-		mapper.MergeInto(t.environment, t.parseLines("environment", os.Environ()...))
+		mapper.Merge(t.environment, t.parseLines("environment", os.Environ()...))
 	}
 
 	if t.includeEnvironment {
@@ -87,12 +87,12 @@ func (t *Environmenter) Process() error {
 					return err
 				}
 
-				mapper.MergeInto(t.environment, t.parseData(path, string(data)))
+				mapper.Merge(t.environment, t.parseData(path, string(data)))
 			}
 		}
 	}
 
-	mapper.MergeInto(t.environment, t.overrides)
+	mapper.Merge(t.environment, t.overrides)
 
 	return nil
 }
@@ -159,7 +159,7 @@ func (t *Environmenter) WithSep(splitChar string) *Environmenter {
 //
 // KEY=VALUE
 func (t *Environmenter) WithData(source, data string) *Environmenter {
-	mapper.MergeInto(t.overrides, t.parseData(source, data))
+	mapper.Merge(t.overrides, t.parseData(source, data))
 	return t
 }
 
@@ -167,7 +167,7 @@ func (t *Environmenter) WithData(source, data string) *Environmenter {
 //
 // KEY=VALUE
 func (t *Environmenter) WithLines(source string, lines ...string) *Environmenter {
-	mapper.MergeInto(t.overrides, t.parseLines(source, lines...))
+	mapper.Merge(t.overrides, t.parseLines(source, lines...))
 	return t
 }
 
@@ -175,7 +175,7 @@ func (t *Environmenter) WithLines(source string, lines ...string) *Environmenter
 //
 // KEY=VALUE
 func (t *Environmenter) WithMap(source string, environment map[string]string) *Environmenter {
-	mapper.MergeInto(t.overrides, t.convertMap(source, environment))
+	mapper.Merge(t.overrides, t.convertMap(source, environment))
 	return t
 }
 

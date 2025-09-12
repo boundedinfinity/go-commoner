@@ -32,7 +32,7 @@ func (t *langer) ResetKeywords(keywords ...string) *langer {
 }
 
 func (t *langer) WithTranslations(translations map[string]string) *langer {
-	mapper.MergeInto(t.translations, translations)
+	mapper.Merge(t.translations, translations)
 	return t
 }
 

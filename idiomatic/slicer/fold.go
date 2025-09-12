@@ -1,57 +1,101 @@
 package slicer
 
-func Fold[T any, R any](fn func(int, R, T) R, initial R, elems ...T) R {
-	return FoldLeft(fn, initial, elems...)
-}
+func Fold[T any, R any](fn func(R, T) R, initial R, elems ...T) R {
+	acc := initial
 
-func FoldErr[T any, R any](fn func(int, R, T) (R, error), initial R, elems ...T) (R, error) {
-	return FoldLeftErr(fn, initial, elems...)
-}
-
-func FoldLeft[T any, R any](fn func(int, R, T) R, initial R, elems ...T) R {
-	fn2 := func(i int, accumulator R, elem T) (R, error) {
-		return fn(i, accumulator, elem), nil
+	for _, elem := range elems {
+		acc = fn(acc, elem)
 	}
 
-	accumalater, _ := FoldLeftErr(fn2, initial, elems...)
-	return accumalater
+	return acc
 }
 
-func FoldLeftErr[T any, R any](fn func(int, R, T) (R, error), initial R, elems ...T) (R, error) {
-	accumulator := initial
-	var err error
+func FoldI[T any, R any](fn func(int, R, T) R, initial R, elems ...T) R {
+	acc := initial
 
 	for i, elem := range elems {
-		accumulator, err = fn(i, accumulator, elem)
-
-		if err != nil {
-			return accumulator, err
-		}
+		acc = fn(i, acc, elem)
 	}
 
-	return accumulator, nil
+	return acc
 }
 
-func FoldRight[T any, R any](fn func(int, R, T) R, initial R, elems ...T) R {
-	fn2 := func(i int, accumulator R, elem T) (R, error) {
-		return fn(i, accumulator, elem), nil
-	}
-
-	accumulator, _ := FoldRightErr(fn2, initial, elems...)
-	return accumulator
-}
-
-func FoldRightErr[T any, R any](fn func(int, R, T) (R, error), initial R, elems ...T) (R, error) {
-	accumulator := initial
+func FoldErr[T any, R any](fn func(R, T) (R, error), initial R, elems ...T) (R, error) {
+	acc := initial
 	var err error
 
-	for i := len(elems) - 1; i >= 0; i-- {
-		accumulator, err = fn(i, accumulator, elems[i])
+	for _, elem := range elems {
+		acc, err = fn(acc, elem)
 
 		if err != nil {
 			break
 		}
 	}
 
-	return accumulator, err
+	return acc, err
+}
+
+func FoldErrI[T any, R any](fn func(int, R, T) (R, error), initial R, elems ...T) (R, error) {
+	acc := initial
+	var err error
+
+	for i, elem := range elems {
+		acc, err = fn(i, acc, elem)
+
+		if err != nil {
+			break
+		}
+	}
+
+	return acc, err
+}
+
+func FoldRight[T any, R any](fn func(R, T) R, initial R, elems ...T) R {
+	acc := initial
+
+	for i := len(elems) - 1; i >= 0; i-- {
+		acc = fn(acc, elems[i])
+	}
+
+	return acc
+}
+
+func FoldRightI[T any, R any](fn func(int, R, T) R, initial R, elems ...T) R {
+	acc := initial
+
+	for i := len(elems) - 1; i >= 0; i-- {
+		acc = fn(i, acc, elems[i])
+	}
+
+	return acc
+}
+
+func FoldRightErr[T any, R any](fn func(R, T) (R, error), initial R, elems ...T) (R, error) {
+	acc := initial
+	var err error
+
+	for i := len(elems) - 1; i >= 0; i-- {
+		acc, err = fn(acc, elems[i])
+
+		if err != nil {
+			break
+		}
+	}
+
+	return acc, err
+}
+
+func FoldRightErrI[T any, R any](fn func(int, R, T) (R, error), initial R, elems ...T) (R, error) {
+	acc := initial
+	var err error
+
+	for i := len(elems) - 1; i >= 0; i-- {
+		acc, err = fn(i, acc, elems[i])
+
+		if err != nil {
+			break
+		}
+	}
+
+	return acc, err
 }

@@ -6,40 +6,69 @@ type CountDuplicatesResult[T any] struct {
 }
 
 func CountDuplicates[T comparable](elems ...T) []CountDuplicatesResult[T] {
-	fn := func(elem T) T {
-		return elem
+	m := make(map[T]*CountDuplicatesResult[T])
+
+	for _, elem := range elems {
+		if _, ok := m[elem]; !ok {
+			m[elem] = &CountDuplicatesResult[T]{
+				Count: 1,
+				Item:  elem,
+			}
+		} else {
+			m[elem].Count++
+		}
 	}
 
-	return CountDuplicatesFn(fn, elems...)
-}
+	results := make([]CountDuplicatesResult[T], 0)
 
-func CountDuplicatesFn[T any, C comparable](fn func(T) C, elems ...T) []CountDuplicatesResult[T] {
-	if fn == nil {
-		return []CountDuplicatesResult[T]{}
+	for _, elem := range m {
+		results = append(results, *elem)
 	}
-
-	fn2 := func(elem T) (C, error) {
-		k := fn(elem)
-		return k, nil
-	}
-
-	results, _ := CountDuplicatesFnErr(fn2, elems...)
 
 	return results
 }
 
-func CountDuplicatesFnErr[T any, C comparable](fn func(T) (C, error), elems ...T) ([]CountDuplicatesResult[T], error) {
+func CountDuplicatesBy[T any, C comparable](by func(T) C, elems ...T) []CountDuplicatesResult[T] {
+	results := make([]CountDuplicatesResult[T], 0)
+
+	if by == nil {
+		return results
+	}
+
+	m := make(map[C]*CountDuplicatesResult[T])
+
+	for _, elem := range elems {
+		c := by(elem)
+
+		if _, ok := m[c]; !ok {
+			m[c] = &CountDuplicatesResult[T]{
+				Count: 1,
+				Item:  elem,
+			}
+		} else {
+			m[c].Count++
+		}
+	}
+
+	for _, elem := range m {
+		results = append(results, *elem)
+	}
+
+	return results
+}
+
+func CountDuplicatesByErr[T any, C comparable](by func(T) (C, error), elems ...T) ([]CountDuplicatesResult[T], error) {
 	m := make(map[C]*CountDuplicatesResult[T])
 	var err error
 	var key C
 	var results []CountDuplicatesResult[T]
 
-	if fn == nil {
+	if by == nil {
 		return results, err
 	}
 
 	for _, elem := range elems {
-		if key, err = fn(elem); err != nil {
+		if key, err = by(elem); err != nil {
 			break
 		}
 

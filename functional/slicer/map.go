@@ -6,7 +6,7 @@ import (
 	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
 )
 
-func Map[T any, U any](fn func(int, T) U, elems optioner.Option[[]T]) optioner.Option[[]U] {
+func Map[T any, U any](fn func(T) U, elems optioner.Option[[]T]) optioner.Option[[]U] {
 	if elems.Defined() {
 		return optioner.OfSlice(slicer.Map(fn, elems.Get()...))
 	}
@@ -14,7 +14,7 @@ func Map[T any, U any](fn func(int, T) U, elems optioner.Option[[]T]) optioner.O
 	return optioner.None[[]U]()
 }
 
-func MapErr[T any, U any](fn func(int, T) (U, error), elems optioner.Option[[]T]) trier.Try[optioner.Option[[]U]] {
+func MapErr[T any, U any](fn func(T) (U, error), elems optioner.Option[[]T]) trier.Try[optioner.Option[[]U]] {
 	if elems.Defined() {
 		results, err := slicer.MapErr(fn, elems.Get()...)
 

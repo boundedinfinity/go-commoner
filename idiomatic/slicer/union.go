@@ -16,5 +16,5 @@ func UnionFn[T any, C comparable](fn func(int, T) C, as []T, bs []T) ([]T, error
 func UnionFnErr[T any, C comparable](fn func(int, T) (C, error), as []T, bs []T) ([]T, error) {
 	results := append([]T{}, as...)
 	results = append(results, bs...)
-	return UniqFnErr(fn, results...)
+	return UniqByErrI(fn, results...)
 }

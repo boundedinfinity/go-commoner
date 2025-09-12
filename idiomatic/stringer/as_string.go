@@ -12,7 +12,7 @@ func AsString[T any](v T) string {
 
 func AsStrings[T any](elems ...T) []string {
 	return slicer.Map(
-		func(_ int, elem T) string { return fmt.Sprintf("%v", elem) },
+		func(elem T) string { return fmt.Sprintf("%v", elem) },
 		elems...,
 	)
 }

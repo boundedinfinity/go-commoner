@@ -35,7 +35,7 @@ func Test_Map(t *testing.T) {
 				return Thing2{bItem: t1.aItem}
 			}
 
-			actual := slicer.Map(fn, tc.input...)
+			actual := slicer.MapI(fn, tc.input...)
 			assert.ElementsMatch(t, tc.expected, actual)
 		})
 	}
@@ -76,7 +76,7 @@ func Test_MapErr_NoErr(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
-			actual, err := slicer.MapErr(tc.fn, tc.input...)
+			actual, err := slicer.MapErrI(tc.fn, tc.input...)
 			assert.Equal(tt, tc.expected, actual)
 			assert.Equal(tt, tc.err, err)
 		})

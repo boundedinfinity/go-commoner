@@ -1,21 +1,77 @@
 package slicer
 
 func Uniq[C comparable](elems ...C) []C {
-	fn2 := func(_ int, elem C) C { return elem }
-	return UniqFn(fn2, elems...)
-}
+	m := map[C]int{}
 
-func UniqFn[T any, C comparable](fn func(int, T) C, elems ...T) []T {
-	fn2 := func(i int, elem T) (C, error) {
-		return fn(i, elem), nil
+	for i, elem := range elems {
+		m[elem] = i
 	}
 
-	results, _ := UniqFnErr(fn2, elems...)
+	var results []C
+
+	for elem := range m {
+		results = append(results, elem)
+	}
 
 	return results
 }
 
-func UniqFnErr[T any, C comparable](fn func(int, T) (C, error), elems ...T) ([]T, error) {
+func UniqBy[T any, C comparable](fn func(T) C, elems ...T) []T {
+	m := map[C]T{}
+
+	for _, elem := range elems {
+		m[fn(elem)] = elem
+	}
+
+	var results []T
+
+	for _, elem := range m {
+		results = append(results, elem)
+	}
+
+	return results
+}
+
+func UniqByI[T any, C comparable](fn func(int, T) C, elems ...T) []T {
+	m := map[C]T{}
+
+	for i, elem := range elems {
+		m[fn(i, elem)] = elem
+	}
+
+	var results []T
+
+	for _, elem := range m {
+		results = append(results, elem)
+	}
+
+	return results
+}
+
+func UniqByErr[T any, C comparable](fn func(T) (C, error), elems ...T) ([]T, error) {
+	results := []T{}
+	m := map[C]T{}
+
+	for _, elem := range elems {
+		c, err := fn(elem)
+
+		if err != nil {
+			return results, err
+		}
+
+		if _, ok := m[c]; !ok {
+			m[c] = elem
+		}
+	}
+
+	for _, elem := range m {
+		results = append(results, elem)
+	}
+
+	return results, nil
+}
+
+func UniqByErrI[T any, C comparable](fn func(int, T) (C, error), elems ...T) ([]T, error) {
 	results := []T{}
 	m := map[C]T{}
 
@@ -31,8 +87,8 @@ func UniqFnErr[T any, C comparable](fn func(int, T) (C, error), elems ...T) ([]T
 		}
 	}
 
-	for _, v := range m {
-		results = append(results, v)
+	for _, elem := range m {
+		results = append(results, elem)
 	}
 
 	return results, nil

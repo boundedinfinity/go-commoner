@@ -16,9 +16,7 @@ func Range(start, end UtfChar) []UtfChar {
 }
 
 func ToStrings(cs []UtfChar) []string {
-	return slicer.Map(func(_ int, c UtfChar) string {
-		return string(c)
-	}, cs...)
+	return slicer.Map(func(c UtfChar) string { return string(c) }, cs...)
 }
 
 func OneOf[T ~byte](v T, elems []UtfChar) bool {

@@ -65,7 +65,7 @@ func Test_DeduplicateFn(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
 			fn := func(_ int, elem Thing) string { return elem.K }
-			actual := slicer.DeduplicateFn(fn, tc.input...)
+			actual := slicer.DeduplicateByI(fn, tc.input...)
 			assert.Equal(tt, tc.expected, actual)
 		})
 	}

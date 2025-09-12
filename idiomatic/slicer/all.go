@@ -1,42 +1,100 @@
 package slicer
 
-// All[T] test if the match value is equal to all elements in elems
-func All[T comparable](match T, elems ...T) bool {
-	fn := func(_ int, elem T) bool { return match == elem }
-	return AllFn(fn, elems...)
+// All test if the target value is equal to all elements in elems
+func All[T comparable](target T, elems ...T) bool {
+	for _, elem := range elems {
+		if elem == target {
+			return true
+		}
+	}
+
+	return false
 }
 
-// All[T] test if the result of fn(int, T) evaluates to true for all elements in elems
+// AllBy test if the result of by(T) evaluates to true for all elements in elems
 //
-// The fn(int, T) bool functions takes:
-//   - int is the index of the current element
-//   - T is the current element
-func AllFn[T any](fn func(int, T) bool, elems ...T) bool {
-	if fn == nil {
+// The fn(T) bool functions takes:
+//   - T is the current element in elems
+func AllBy[T any](by func(T) bool, elems ...T) bool {
+	if by == nil {
 		return false
 	}
 
-	fn2 := func(i int, elem T) (bool, error) {
-		return fn(i, elem), nil
+	for _, elem := range elems {
+		if by(elem) {
+			return true
+		}
 	}
 
-	all, _ := AllFnErr(fn2, elems...)
-	return all
+	return false
 }
 
-// All[T] test if the result of fn(int, T) evaluates to true for all elements in elems
+// AllByI test if the result of fn(int, T) evaluates to true for all elements in elems
+//
+// The by(int, T) bool functions takes:
+//   - int is the index of the current element
+//   - T is the current element in elems
+func AllByI[T any](by func(int, T) bool, elems ...T) bool {
+	if by == nil {
+		return false
+	}
+
+	for i, elem := range elems {
+		if by(i, elem) {
+			return true
+		}
+	}
+
+	return false
+}
+
+// AllByErr test if the result of by(T) err evaluates to true for all elements in elems
+//
+// The by(int, T) bool functions takes:
+//   - T is the current element
+//
+// If the by function returns an error, processing through elems is stopped and the error is returned.
+func AllByErr[T any](by func(T) (bool, error), elems ...T) (bool, error) {
+	if by == nil {
+		return false, nil
+	}
+
+	all := true
+	var err error
+
+	for _, elem := range elems {
+		all, err = by(elem)
+
+		if err != nil {
+			all = false
+			break
+		}
+
+		if !all {
+			break
+		}
+	}
+
+	return all, err
+}
+
+// AllByErrI test if the result of fn(int, T) evaluates to true for all elements in elems
 //
 // The fn(int, T) bool functions takes:
 //   - int is the index of the current element
 //   - T is the current element
 //
 // If the fn function returns an error, processing through elems is stopped and the error is returned.
-func AllFnErr[T any](fn func(int, T) (bool, error), elems ...T) (bool, error) {
+func AllByErrI[T any](by func(int, T) (bool, error), elems ...T) (bool, error) {
+	if by == nil {
+		return false, nil
+	}
+
 	all := true
 	var err error
 
 	for i, elem := range elems {
-		all, err = fn(i, elem)
+		all, err = by(i, elem)
 
 		if err != nil {
 			all = false

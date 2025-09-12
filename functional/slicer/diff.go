@@ -10,10 +10,10 @@ func Diff[T comparable](as, bs []T) optioner.Option[[]T] {
 	return optioner.OfSlice(slicer.Difference(as, bs))
 }
 
-func DiffFn[T any](as, bs []T, fn func(int, T) bool) optioner.Option[[]T] {
-	return optioner.OfSlice(slicer.DifferenceFn(fn, as, bs))
+func DiffBy[T any](as, bs []T, fn func(T) bool) optioner.Option[[]T] {
+	return optioner.OfSlice(slicer.DifferenceBy(fn, as, bs))
 }
 
-func DiffFnErr[T any](as, bs []T, fn func(int, T) (bool, error)) trier.Try[optioner.Option[[]T]] {
-	return trier.CompleteSlice(slicer.DifferenceFnErr(fn, as, bs))
+func DiffByErr[T any](as, bs []T, fn func(T) (bool, error)) trier.Try[optioner.Option[[]T]] {
+	return trier.CompleteSlice(slicer.DifferenceByErr(fn, as, bs))
 }

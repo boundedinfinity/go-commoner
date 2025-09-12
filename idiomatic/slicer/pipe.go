@@ -19,7 +19,7 @@ func (p *Pipe[T]) List(elems ...T) []T {
 	output := append([]T{}, elems...)
 
 	for _, fn := range p.fns {
-		output = Map(fn, output...)
+		output = MapI(fn, output...)
 	}
 
 	return output
@@ -56,7 +56,7 @@ func (p *PipeErr[T]) List(elems ...T) ([]T, error) {
 	var err error
 
 	for _, fn := range p.fns {
-		output, err = MapErr(fn, output...)
+		output, err = MapErrI(fn, output...)
 
 		if err != nil {
 			return output, err

@@ -32,7 +32,7 @@ func ContainsNone[T ~string, S ~string](s S, elems ...T) bool {
 
 func ContainsAnyIgnoreCase[T ~string, S ~string](s S, elems ...T) bool {
 	lowers := slicer.Map(
-		func(_ int, elem T) string { return Lowercase(elem) },
+		func(elem T) string { return Lowercase(elem) },
 		elems...,
 	)
 	return ContainsAny(Lowercase(s), lowers...)

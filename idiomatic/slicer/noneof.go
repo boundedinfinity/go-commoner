@@ -16,7 +16,7 @@ func NoneOf[T comparable](match T, elems ...T) bool {
 //   - int is the index of the current element
 //   - T is the current element
 func NoneOfFn[T any](fn func(int, T) bool, elems ...T) bool {
-	return !AnyOfFn(fn, elems...)
+	return !AnyOfByI(fn, elems...)
 }
 
 // NoneOfFnErr[T] test if the value returned from fn is true for any of the elements in elems
@@ -27,6 +27,6 @@ func NoneOfFn[T any](fn func(int, T) bool, elems ...T) bool {
 //
 // If the fn function returns an error, processing through elems is stopped and the error is returned.
 func NoneOfFnErr[T any](fn func(int, T) (bool, error), elems ...T) (bool, error) {
-	found, err := AnyOfFnErr(fn, elems...)
+	found, err := AnyOfByErrI(fn, elems...)
 	return !found, err
 }

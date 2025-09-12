@@ -1,28 +1,58 @@
 package slicer
 
-func Find[T comparable](match T, elems ...T) (T, bool) {
-	fn := func(_ int, elem T) bool {
-		return elem == match
+func Find[T comparable](target T, elems ...T) (T, bool) {
+	for _, elem := range elems {
+		if target == elem {
+			return target, true
+		}
 	}
 
-	return FindFn(fn, elems...)
+	var zero T
+	return zero, false
 }
 
-func FindFn[T any](fn func(int, T) bool, elems ...T) (T, bool) {
-	if fn == nil {
-		var zero T
-		return zero, false
+func FindBy[T any](by func(T) bool, elems ...T) (T, bool) {
+	for _, elem := range elems {
+		if by(elem) {
+			return elem, true
+		}
 	}
 
-	fn2 := func(i int, elem T) (bool, error) {
-		return fn(i, elem), nil
-	}
-
-	found, ok, _ := FindFnErr(fn2, elems...)
-	return found, ok
+	var zero T
+	return zero, false
 }
 
-func FindFnErr[T any](fn func(int, T) (bool, error), elems ...T) (T, bool, error) {
+func FindByI[T any](by func(int, T) bool, elems ...T) (T, bool) {
+	for i, elem := range elems {
+		if by(i, elem) {
+			return elem, true
+		}
+	}
+
+	var zero T
+	return zero, false
+}
+
+func FindByErr[T any](by func(T) (bool, error), elems ...T) (T, bool, error) {
+	var found T
+	var ok bool
+	var err error
+
+	if by == nil {
+		return found, ok, err
+	}
+
+	for _, elem := range elems {
+		if ok, err = by(elem); ok || err != nil {
+			found = elem
+			break
+		}
+	}
+
+	return found, ok, err
+}
+
+func FindByErrI[T any](fn func(int, T) (bool, error), elems ...T) (T, bool, error) {
 	var found T
 	var ok bool
 	var err error
