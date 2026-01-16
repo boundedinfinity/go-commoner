@@ -47,18 +47,18 @@ type Area interface {
 	Size()
 }
 
-type SquareArea struct {
-	Side Length `json:"size,omitempty"`
+type SquareArea[T ~int] struct {
+	Side Length[T] `json:"size,omitempty"`
 }
 
-func (t SquareArea) Size() {
+func (t SquareArea[T]) Size() {
 
 }
 
-var _ Area = &SquareArea{}
+var _ Area = &SquareArea[int]{}
 
-type RectangleArea struct {
-	Side1 Length   `json:"side-1,omitempty"`
-	Side2 Length   `json:"side-2,omitempty"`
-	Unit  AreaUnit `json:"unit,omitempty"`
+type RectangleArea[T ~int] struct {
+	Side1 Length[T] `json:"side-1,omitempty"`
+	Side2 Length[T] `json:"side-2,omitempty"`
+	Unit  AreaUnit  `json:"unit,omitempty"`
 }

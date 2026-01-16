@@ -3,18 +3,17 @@ package mather
 import (
 	"fmt"
 
-	"github.com/boundedinfinity/go-commoner/idiomatic/mather/types"
 	"golang.org/x/exp/constraints"
 )
 
 // https://en.wikipedia.org/wiki/Euclidean_algorithm
 // https://www.youtube.com/watch?v=yHwneN6zJmU&t=641
 
-func GreatestCommonFactor[T types.Numbers](a T, b T) T {
+func GreatestCommonFactor[T constraints.Integer](a T, b T) T {
 	if b == 0 {
 		return a
 	} else {
-		return GreatestCommonFactor[T](b, Mod(a, b))
+		return GreatestCommonFactor(b, Mod(a, b))
 	}
 }
 

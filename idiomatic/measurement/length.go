@@ -2,8 +2,8 @@ package measurement
 
 import "github.com/boundedinfinity/go-commoner/idiomatic/mather/rational"
 
-func Parse(s string) (Length, error) {
-	var length Length
+func Parse[T ~int](s string) (Length[T], error) {
+	var length Length[T]
 
 	// var unit rational.Rational
 
@@ -12,26 +12,26 @@ func Parse(s string) (Length, error) {
 	return length, nil
 }
 
-type Length struct {
-	Number rational.Rational     `json:"unit,omelempty"`
+type Length[T ~int] struct {
+	Number rational.Rational[T]  `json:"unit,omelempty"`
 	System MeasurementSystem     `json:"system,omitempty"`
 	Format MeasurementFormatType `json:"format,omitempty"`
 }
 
-func (t Length) Unit() {
+func (t Length[T]) Unit() {
 
 }
 
-func (t Length) Metric() Length {
+func (t Length[T]) Metric() Length[T] {
 	switch t.System {
 	case MeasurementSystems.Imperial:
 
-		return Length{}
+		return Length[T]{}
 	default:
 		return t
 	}
 }
 
-func (t Length) Imperial() Length {
-	return Length{}
+func (t Length[T]) Imperial() Length[T] {
+	return Length[T]{}
 }

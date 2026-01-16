@@ -1,7 +1,5 @@
 package measurement
 
-import "github.com/boundedinfinity/go-commoner/idiomatic/mather/rational"
-
 var (
 	metricUnitsCf   map[MetricUnit]float64
 	metricUnitsAbbr map[MetricUnit][]string
@@ -40,9 +38,9 @@ func init() {
 	}
 }
 
-func (t metricUnits) Convert(number rational.Rational, from, to MetricUnit) rational.Rational {
-	return rational.FromFloat(t.convert(number.Float(), from, to))
-}
+// func (t metricUnits) Convert(number rational.Rational, from, to MetricUnit) rational.Rational {
+// 	return rational.FromFloat(t.convert(number.Float(), from, to))
+// }
 
 func (t metricUnits) convert(number float64, from, to MetricUnit) float64 {
 	var float float64

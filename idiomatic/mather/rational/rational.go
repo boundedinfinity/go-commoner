@@ -7,45 +7,41 @@ import (
 	"golang.org/x/exp/constraints"
 )
 
-var (
-	zero_rational = Rational{}
-)
-
 // ----------------------------------------------------------------------------------------------------
 // Constructors
 // ----------------------------------------------------------------------------------------------------
 
-func New(whole, numerator, denominator int) Rational {
-	return Rational{
+func New[T ~int](whole, numerator, denominator T) Rational[T] {
+	return Rational[T]{
 		Whole:    whole,
-		Fraction: fraction.New(numerator, denominator),
+		Fraction: fraction.New[T](numerator, denominator),
 	}
 }
 
-func FromString[T ~string](s T) (Rational, error) {
+func FromString[T ~int, S ~string](s S) (Rational[T], error) {
 	n, err := strconv.ParseFloat(string(s), 64)
 
 	if err != nil {
-		return Rational{}, err
+		return Rational[T]{}, err
 	}
 
-	return FromFloat(n), nil
+	return FromFloat[T](n), nil
 }
 
 // ----------------------------------------------------------------------------------------------------
 // Type
 // ----------------------------------------------------------------------------------------------------
 
-type Rational struct {
-	Whole    int
-	Fraction fraction.Fraction
+type Rational[T ~int] struct {
+	Whole    T
+	Fraction fraction.Fraction[T]
 }
 
-func (t Rational) String() string {
+func (t Rational[T]) String() string {
 	var result string
 
 	if t.Whole != 0 {
-		result = strconv.Itoa(t.Whole)
+		result = strconv.Itoa(int(t.Whole))
 	}
 
 	if !t.Fraction.IsZero() {
@@ -59,53 +55,49 @@ func (t Rational) String() string {
 	return result
 }
 
-func (t Rational) IsZero() bool {
-	return IsZero(t)
-}
-
-func (t Rational) Copy() Rational {
-	return Rational{
+func (t Rational[T]) Copy() Rational[T] {
+	return Rational[T]{
 		Whole:    t.Whole,
 		Fraction: t.Fraction.Copy(),
 	}
 }
 
-func (t Rational) Float() float64 {
+func (t Rational[T]) Float() float64 {
 	return float64(t.Whole) + t.Fraction.Float()
 }
 
-func (t Rational) Reduce() Rational {
-	return Rational{
+func (t Rational[T]) Reduce() Rational[T] {
+	return Rational[T]{
 		Whole:    t.Whole,
 		Fraction: t.Fraction.Reduce(),
 	}
 }
 
-func (t Rational) Mixed() Rational {
+func (t Rational[T]) Mixed() Rational[T] {
 	if t.Fraction.Numerator < t.Fraction.Denominator {
 		return t.Copy()
 	}
 
-	whole := t.Fraction.Numerator / t.Fraction.Denominator
+	whole := T(t.Fraction.Numerator / t.Fraction.Denominator)
 	numerator := t.Fraction.Numerator % t.Fraction.Denominator
 
-	return Rational{
+	return Rational[T]{
 		Whole: t.Whole + whole,
-		Fraction: fraction.Fraction{
+		Fraction: fraction.Fraction[T]{
 			Numerator:   numerator,
 			Denominator: t.Fraction.Denominator,
 		},
 	}
 }
 
-func (t Rational) Improper() Rational {
+func (t Rational[T]) Improper() Rational[T] {
 	if t.Whole == 0 {
 		return t.Copy()
 	}
 
-	return Rational{
+	return Rational[T]{
 		Whole: 0,
-		Fraction: fraction.Fraction{
+		Fraction: fraction.Fraction[T]{
 			Numerator:   t.Fraction.Denominator*t.Whole + t.Fraction.Numerator,
 			Denominator: t.Fraction.Denominator,
 		},
@@ -116,24 +108,25 @@ func (t Rational) Improper() Rational {
 // Helpers
 // ----------------------------------------------------------------------------------------------------
 
-func IsZero(elem Rational) bool {
-	return elem == zero_rational
+func IsZero[T ~int](elem Rational[T]) bool {
+	var zero Rational[T]
+	return elem == zero
 }
 
-func MustString[T ~string](s T) Rational {
+func MustString[T ~int, S ~string](s S) Rational[T] {
 	n, err := strconv.ParseFloat(string(s), 64)
 
 	if err != nil {
 		panic(err)
 	}
 
-	return FromFloat(n)
+	return FromFloat[T](n)
 }
 
-func FromFloat[T constraints.Float](n T) Rational {
-	return Rational{
-		Whole:    Whole(n),
-		Fraction: fraction.FromFloat(n),
+func FromFloat[T ~int, F constraints.Float](n F) Rational[T] {
+	return Rational[T]{
+		Whole:    T(n),
+		Fraction: fraction.FromFloat[T](n),
 	}
 }
 
@@ -145,6 +138,6 @@ func FractionComponent[T constraints.Float](x T) int {
 	return fraction.Component(x)
 }
 
-func Fraction[T constraints.Float](x T) fraction.Fraction {
-	return fraction.FromFloat(x)
+func Fraction[T ~int, F constraints.Float](x F) fraction.Fraction[T] {
+	return fraction.FromFloat[T](x)
 }

@@ -3,6 +3,7 @@ package fraction
 import (
 	"fmt"
 	"strconv"
+	"strings"
 
 	"github.com/boundedinfinity/go-commoner/idiomatic/mather"
 	"github.com/boundedinfinity/go-commoner/idiomatic/mather/internal"
@@ -10,29 +11,39 @@ import (
 	"golang.org/x/exp/constraints"
 )
 
-var (
-	zero_fraction = Fraction{}
-)
-
 // ----------------------------------------------------------------------------------------------------
 // Constructors
 // ----------------------------------------------------------------------------------------------------
 
-func New(numerator, denominator int) Fraction {
-	return Fraction{
+func New[T ~int](numerator, denominator T) Fraction[T] {
+	return Fraction[T]{
 		Numerator:   numerator,
 		Denominator: denominator,
 	}
 }
 
-func FromFloat[T constraints.Float](n T) Fraction {
-	numerator := Component(n)
-	magnitude := Magnitude(n)
-	denominator := mather.Pow10[int, int](magnitude)
+// FromFloat creates a Fraction from a floating point number.
+func FromFloat[T ~int, F constraints.Float](n F) Fraction[T] {
+	nStr := fmt.Sprintf("%f", n)
+	nStr = stringer.TrimRight(nStr, "0")
+	splitOnDecimal := stringer.Split(nStr, ".")
+	var size int
 
-	return Fraction{
-		Numerator:   numerator,
-		Denominator: denominator,
+	if len(splitOnDecimal) > 0 {
+		size = len(splitOnDecimal[1])
+	}
+
+	denominator, err := strconv.Atoi("1" + strings.Repeat("0", size))
+
+	if err != nil {
+		panic(err)
+	}
+
+	var numerator int = int(n * F(denominator))
+
+	return Fraction[T]{
+		Numerator:   T(numerator),
+		Denominator: T(denominator),
 	}
 }
 
@@ -40,49 +51,60 @@ func FromFloat[T constraints.Float](n T) Fraction {
 // Type
 // ----------------------------------------------------------------------------------------------------
 
-type Fraction struct {
-	Numerator   int
-	Denominator int
+type Fraction[T ~int] struct {
+	Numerator   T
+	Denominator T
 }
 
-func (t Fraction) String() string {
-	return fmt.Sprintf("%v/%v", t.Numerator, t.Denominator)
+func (t Fraction[T]) String() string {
+	return fmt.Sprintf("%d/%d", t.Numerator, t.Denominator)
 }
 
-func (t Fraction) Float() float64 {
-	fn := func(n, d float64) float64 {
-		return n / d
-	}
-
-	return internal.DoubleToSingle[int, float64](t.Numerator, t.Denominator, fn)
+func (t Fraction[T]) Float() float64 {
+	fn := func(n, d float64) float64 { return n / d }
+	return internal.DoubleToSingle[T, float64](t.Numerator, t.Denominator, fn)
 }
 
-func (t Fraction) Copy() Fraction {
-	return Fraction{
+func (t Fraction[T]) Copy() Fraction[T] {
+	return Fraction[T]{
 		Numerator:   t.Numerator,
 		Denominator: t.Denominator,
 	}
 }
 
-func (t Fraction) Reduce() Fraction {
+func (t Fraction[T]) Reduce() Fraction[T] {
 	gcd := mather.GreatestCommonFactor(t.Numerator, t.Denominator)
 
-	return Fraction{
+	return Fraction[T]{
 		Numerator:   t.Numerator / gcd,
 		Denominator: t.Denominator / gcd,
 	}
 }
 
-func (t Fraction) IsZero() bool {
+func (t Fraction[T]) IsZero() bool {
 	return IsZero(t)
+}
+
+func (t Fraction[T]) Enumerate(l, h T) []Fraction[T] {
+	var items []Fraction[T]
+	item := t.Reduce()
+	l = mather.Max(l, item.Denominator)
+
+	for i := l; i <= h; i <<= 1 {
+		items = append(items, item)
+		item = New[T](item.Numerator*2, item.Denominator*2)
+	}
+
+	return items
 }
 
 // ----------------------------------------------------------------------------------------------------
 // Helpers
 // ----------------------------------------------------------------------------------------------------
 
-func IsZero(elem Fraction) bool {
-	return elem == zero_fraction
+func IsZero[T ~int](elem Fraction[T]) bool {
+	var zero Fraction[T]
+	return elem == zero
 }
 
 func Component[T constraints.Float](n T) int {

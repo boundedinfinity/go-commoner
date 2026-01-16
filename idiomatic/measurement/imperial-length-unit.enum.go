@@ -14,8 +14,9 @@ import (
 	"database/sql/driver"
 	"encoding/json"
 	"encoding/xml"
-	errorer "github.com/boundedinfinity/go-commoner/errorer"
 	"strings"
+
+	errorer "github.com/boundedinfinity/go-commoner/errorer"
 )
 
 //////////////////////////////////////////////////////////////////

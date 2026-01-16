@@ -1,7 +1,5 @@
 package measurement
 
-import "github.com/boundedinfinity/go-commoner/idiomatic/mather/rational"
-
 var (
 	imperialMassUnitsCf   map[ImperialMassUnit]float64
 	imperialMassUnitsAbbr map[ImperialMassUnit][]string
@@ -48,9 +46,9 @@ func init() {
 	}
 }
 
-func (t imperialMassUnits) Convert(number rational.Rational, from, to ImperialMassUnit) rational.Rational {
-	return rational.FromFloat(t.convert(number.Float(), from, to))
-}
+// func (t imperialMassUnits) Convert(number rational.Rational, from, to ImperialMassUnit) rational.Rational {
+// 	return rational.FromFloat(t.convert(number.Float(), from, to))
+// }
 
 func (t imperialMassUnits) convert(number float64, from, to ImperialMassUnit) float64 {
 	float := number
@@ -64,18 +62,18 @@ func (t imperialMassUnits) convert(number float64, from, to ImperialMassUnit) fl
 	return float
 }
 
-func (t imperialMassUnits) Pounds(unit float64) Mass {
-	return Mass{
-		Value:  rational.FromFloat(unit),
-		System: unitToSystem[ImperialMassUnits.Pound],
-		Unit:   ImperialMassUnits.Pound,
-	}
-}
+// func (t imperialMassUnits) Pounds(unit float64) Mass {
+// 	return Mass{
+// 		Value:  rational.FromFloat(unit),
+// 		System: unitToSystem[ImperialMassUnits.Pound],
+// 		Unit:   ImperialMassUnits.Pound,
+// 	}
+// }
 
-func (t imperialMassUnits) Tons(unit float64) Mass {
-	return Mass{
-		Value:  rational.FromFloat(unit),
-		System: unitToSystem[ImperialMassUnits.Ton],
-		Unit:   ImperialMassUnits.Ton,
-	}
-}
+// func (t imperialMassUnits) Tons(unit float64) Mass {
+// 	return Mass{
+// 		Value:  rational.FromFloat(unit),
+// 		System: unitToSystem[ImperialMassUnits.Ton],
+// 		Unit:   ImperialMassUnits.Ton,
+// 	}
+// }
