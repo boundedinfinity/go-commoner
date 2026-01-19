@@ -4,7 +4,7 @@ import (
 	"strconv"
 
 	"github.com/boundedinfinity/go-commoner/idiomatic/mather/fraction"
-	"golang.org/x/exp/constraints"
+	"github.com/boundedinfinity/go-commoner/idiomatic/mather/types"
 )
 
 // ----------------------------------------------------------------------------------------------------
@@ -123,21 +123,21 @@ func MustString[T ~int, S ~string](s S) Rational[T] {
 	return FromFloat[T](n)
 }
 
-func FromFloat[T ~int, F constraints.Float](n F) Rational[T] {
+func FromFloat[T ~int, F types.Float](n F) Rational[T] {
 	return Rational[T]{
 		Whole:    T(n),
 		Fraction: fraction.FromFloat[T](n),
 	}
 }
 
-func Whole[T constraints.Float](x T) int {
+func Whole[T types.Float](x T) int {
 	return int(x)
 }
 
-func FractionComponent[T constraints.Float](x T) int {
+func FractionComponent[T types.Float](x T) int {
 	return fraction.Component(x)
 }
 
-func Fraction[T ~int, F constraints.Float](x F) fraction.Fraction[T] {
+func Fraction[T ~int, F types.Float](x F) fraction.Fraction[T] {
 	return fraction.FromFloat[T](x)
 }

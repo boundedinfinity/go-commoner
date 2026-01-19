@@ -2,6 +2,10 @@ package types
 
 import "golang.org/x/exp/constraints"
 
-type Numbers interface {
-	constraints.Float | constraints.Integer
+type Float constraints.Float
+type Integer constraints.Integer
+type Ordered constraints.Ordered
+
+type Number interface {
+	Integer | Float
 }

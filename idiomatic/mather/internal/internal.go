@@ -2,27 +2,38 @@ package internal
 
 import "github.com/boundedinfinity/go-commoner/idiomatic/mather/types"
 
-func ZeroToSingle[I types.Numbers](fn func() float64) I {
-	return I(fn())
+// ZeroToSingle converts the returned value of fn() float64 to the types.Number
+func ZeroToSingle[O types.Number](fn func() float64) O {
+	return O(fn())
 }
 
-func SingleToSingle[I types.Numbers, O types.Numbers](x I, fn func(float64) float64) O {
+// SingleToSingle converts x of type I to a float64 to pass as a parameter to fn(float64) float64,
+// then converts the returned value to type O
+func SingleToSingle[I types.Number, O types.Number](x I, fn func(float64) float64) O {
 	return O(fn(float64(x)))
 }
 
-func DoubleToSingle[I types.Numbers, O types.Numbers](a, b I, fn func(float64, float64) float64) O {
+// DoubleToSingle converts a and b of type I to a float64 to pass as a parameters to fn(float64, float64) float64,
+// then converts the returned value to type O
+func DoubleToSingle[I types.Number, O types.Number](a, b I, fn func(float64, float64) float64) O {
 	return O(fn(float64(a), float64(b)))
 }
 
-func TripleToSingle[T types.Numbers](a, b, c T, fn func(float64, float64, float64) float64) T {
+// DoubleToSingle converts a, b and c of type I to a float64 to pass as a parameters to
+// fn(float64, float64, float64) float64, then converts the returned value to type O
+func TripleToSingle[T types.Number](a, b, c T, fn func(float64, float64, float64) float64) T {
 	return T(fn(float64(a), float64(b), float64(c)))
 }
 
-func QuadrupleToSingle[T types.Numbers](a, b, c, d T, fn func(float64, float64, float64, float64) float64) T {
+// QuadrupleToSingle converts a, b, c and d of type I to a float64 to pass as a parameters to
+// fn(float64, float64, float64, float64) float64, then converts the returned value to type O
+func QuadrupleToSingle[T types.Number](a, b, c, d T, fn func(float64, float64, float64, float64) float64) T {
 	return T(fn(float64(a), float64(b), float64(c), float64(d)))
 }
 
-func SingleToDouble[I types.Numbers, O types.Numbers](x I, fn func(float64) (float64, float64)) (O, O) {
+// SingleToDouble converts x of type I to a float64 to pass as a parameter to fn(float64) (float64, float64),
+// then converts the 2 return values to type O
+func SingleToDouble[I types.Number, O types.Number](x I, fn func(float64) (float64, float64)) (O, O) {
 	a, b := fn(float64(x))
 	return O(a), O(b)
 }

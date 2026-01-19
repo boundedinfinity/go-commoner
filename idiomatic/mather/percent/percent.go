@@ -2,10 +2,10 @@ package percent
 
 import (
 	"github.com/boundedinfinity/go-commoner/idiomatic/mather/fraction"
-	"golang.org/x/exp/constraints"
+	"github.com/boundedinfinity/go-commoner/idiomatic/mather/types"
 )
 
-func FromFloat[T ~int, F constraints.Float](v F) Percent[T] {
+func FromFloat[T ~int, F types.Float](v F) Percent[T] {
 	return Percent[T]{
 		fraction: fraction.FromFloat[T](v),
 	}
@@ -13,8 +13,13 @@ func FromFloat[T ~int, F constraints.Float](v F) Percent[T] {
 
 type Percent[T ~int] struct {
 	fraction fraction.Fraction[T]
+	size     int
 }
 
 func (this Percent[T]) Percentage() float64 {
 	return this.fraction.Float()
+}
+
+func (this Percent[T]) Decimal() float64 {
+	return this.fraction.Float() / 100
 }

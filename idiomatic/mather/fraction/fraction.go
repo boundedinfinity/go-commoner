@@ -3,12 +3,11 @@ package fraction
 import (
 	"fmt"
 	"strconv"
-	"strings"
 
 	"github.com/boundedinfinity/go-commoner/idiomatic/mather"
 	"github.com/boundedinfinity/go-commoner/idiomatic/mather/internal"
+	"github.com/boundedinfinity/go-commoner/idiomatic/mather/types"
 	"github.com/boundedinfinity/go-commoner/idiomatic/stringer"
-	"golang.org/x/exp/constraints"
 )
 
 // ----------------------------------------------------------------------------------------------------
@@ -23,23 +22,9 @@ func New[T ~int](numerator, denominator T) Fraction[T] {
 }
 
 // FromFloat creates a Fraction from a floating point number.
-func FromFloat[T ~int, F constraints.Float](n F) Fraction[T] {
-	nStr := fmt.Sprintf("%f", n)
-	nStr = stringer.TrimRight(nStr, "0")
-	splitOnDecimal := stringer.Split(nStr, ".")
-	var size int
-
-	if len(splitOnDecimal) > 0 {
-		size = len(splitOnDecimal[1])
-	}
-
-	denominator, err := strconv.Atoi("1" + strings.Repeat("0", size))
-
-	if err != nil {
-		panic(err)
-	}
-
-	var numerator int = int(n * F(denominator))
+func FromFloat[T ~int, F types.Float](n F) Fraction[T] {
+	denominator := mather.PlaceOfDigitsAfterDecimal(n)
+	numerator := n * F(denominator)
 
 	return Fraction[T]{
 		Numerator:   T(numerator),
@@ -92,7 +77,7 @@ func (t Fraction[T]) Enumerate(l, h T) []Fraction[T] {
 
 	for i := l; i <= h; i <<= 1 {
 		items = append(items, item)
-		item = New[T](item.Numerator*2, item.Denominator*2)
+		item = New(item.Numerator*2, item.Denominator*2)
 	}
 
 	return items
@@ -107,7 +92,7 @@ func IsZero[T ~int](elem Fraction[T]) bool {
 	return elem == zero
 }
 
-func Component[T constraints.Float](n T) int {
+func Component[T types.Float](n T) int {
 	s := fmt.Sprintf("%v", n)
 	comps := stringer.Split(s, ".")
 	var i int
@@ -128,7 +113,7 @@ func Component[T constraints.Float](n T) int {
 	return i
 }
 
-func Magnitude[T constraints.Float](n T) int {
+func Magnitude[T types.Float](n T) int {
 	s := fmt.Sprintf("%v", n)
 	comps := stringer.Split(s, ".")
 	var size int

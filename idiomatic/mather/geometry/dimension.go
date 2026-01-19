@@ -2,12 +2,12 @@ package geometry
 
 import "github.com/boundedinfinity/go-commoner/idiomatic/mather/types"
 
-type Dimension2d[T types.Numbers] struct {
+type Dimension2d[T types.Number] struct {
 	Height T
 	Width  T
 }
 
-func NewDimension2d[T types.Numbers](height, width T) Dimension2d[T] {
+func NewDimension2d[T types.Number](height, width T) Dimension2d[T] {
 	return Dimension2d[T]{
 		Height: height,
 		Width:  width,

@@ -3,6 +3,7 @@ package geometry
 import (
 	"github.com/boundedinfinity/go-commoner/idiomatic/mather"
 	"github.com/boundedinfinity/go-commoner/idiomatic/mather/internal"
+	"github.com/boundedinfinity/go-commoner/idiomatic/mather/trigonometry"
 )
 
 func NewCircle[T geometryNumber](center CartesianCoordinate[T], radius T) Circle[T] {
@@ -39,10 +40,10 @@ func (t Circle[T]) PointOnCircumference(angle Angle[T]) CartesianCoordinate[T] {
 
 	return CartesianCoordinate[T]{
 		X: internal.TripleToSingle[T](t.Radius, theta, t.Center.X, func(radius, theta, x float64) float64 {
-			return radius*mather.Cos(theta) + x
+			return radius*trigonometry.Cosine(theta) + x
 		}),
 		Y: internal.TripleToSingle[T](t.Radius, theta, t.Center.Y, func(radius, theta, y float64) float64 {
-			return radius*mather.Sin(theta) + y
+			return radius*trigonometry.Sine(theta) + y
 		}),
 	}
 }

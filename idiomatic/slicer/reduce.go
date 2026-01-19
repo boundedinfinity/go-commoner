@@ -1,32 +1,42 @@
 package slicer
 
-import "errors"
-
-var (
-	ErrReduceExit = errors.New("reduce exit")
+import (
+	"errors"
+	"fmt"
 )
 
-func Reduce[T any, R any](fn func(int, R, T) R, initial R, elems ...T) R {
-	fn2 := func(i int, result R, elem T) (R, error) {
-		return fn(i, result, elem), nil
+var (
+	ErrReduceExitEarly = errors.New("reduce exit")
+	ErrReduceFailure   = errors.New("reduce error")
+	errReduceFailureFn = func(i int, format string, a ...any) error {
+		message := fmt.Sprintf(format, a...)
+		return fmt.Errorf("%w at index %d: %s", ErrReduceExitEarly, i, message)
+	}
+)
+
+func Reduce[E any, A any](fn func(int, A, E) A, initial A, elems ...E) A {
+	fn2 := func(i int, acc A, elem E) (A, error) {
+		return fn(i, acc, elem), nil
 	}
 
 	result, _ := ReduceErr(fn2, initial, elems...)
 	return result
 }
 
-func ReduceErr[T any, R any](fn func(int, R, T) (R, error), initial R, elems ...T) (R, error) {
+func ReduceErr[E any, A any](fn func(int, A, E) (A, error), initial A, elems ...E) (A, error) {
 	result := initial
 	var err error
 
 	for i, elem := range elems {
 		result, err = fn(i, result, elem)
 
-		if err != nil {
-			if errors.Is(err, ErrReduceExit) {
-				err = nil
-			}
+		if errors.Is(err, ErrReduceExitEarly) {
+			err = nil
+			break
+		}
 
+		if err != nil {
+			err = errReduceFailureFn(i, err.Error())
 			break
 		}
 	}

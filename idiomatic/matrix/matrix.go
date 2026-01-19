@@ -1,15 +1,13 @@
 package matrix
 
-import (
-	"golang.org/x/exp/constraints"
-)
+import "github.com/boundedinfinity/go-commoner/idiomatic/mather/types"
 
-type Matrix[T constraints.Integer, V any] struct {
+type Matrix[T types.Integer, V any] struct {
 	MatrixDescriptor[T]
 	matrix [][]V
 }
 
-func FromDescriptor[T constraints.Integer, V any](descriptor MatrixDescriptor[T], initial V) *Matrix[T, V] {
+func FromDescriptor[T types.Integer, V any](descriptor MatrixDescriptor[T], initial V) *Matrix[T, V] {
 	matrix := Matrix[T, V]{
 		matrix: make([][]V, descriptor.Rows),
 	}
@@ -19,7 +17,7 @@ func FromDescriptor[T constraints.Integer, V any](descriptor MatrixDescriptor[T]
 	return &matrix
 }
 
-func FromSlice[T constraints.Integer, V any](slice [][]V) *Matrix[T, V] {
+func FromSlice[T types.Integer, V any](slice [][]V) *Matrix[T, V] {
 	var zero V
 	matrix := FromDescriptor[T, V](SliceToDescriptor[T, V](slice), zero)
 

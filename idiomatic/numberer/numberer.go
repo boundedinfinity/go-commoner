@@ -1,30 +1,18 @@
 package numberer
 
-import "golang.org/x/exp/constraints"
+import (
+	"github.com/boundedinfinity/go-commoner/idiomatic/mather/types"
+)
 
-type number interface {
-	constraints.Integer | constraints.Float
+func Range[T types.Number](start, end T) []T {
+	return SteppedRange(start, end, 1)
 }
 
-func Range[T number](start, end T) []T {
+func SteppedRange[T types.Number](start, end, step T) []T {
 	var elems []T
 
-	for i := start; i <= end; i++ {
+	for i := start; i <= end; i += step {
 		elems = append(elems, i)
-	}
-
-	return elems
-}
-
-func RangeStep[T number](start, end, step T) []T {
-	var elems []T
-	s := T(0)
-
-	for i := start; i <= end; i++ {
-		if i == s {
-			elems = append(elems, i)
-			s += step
-		}
 	}
 
 	return elems

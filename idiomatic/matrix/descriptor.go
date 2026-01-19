@@ -2,10 +2,10 @@ package matrix
 
 import (
 	"github.com/boundedinfinity/go-commoner/idiomatic/mather"
-	"golang.org/x/exp/constraints"
+	"github.com/boundedinfinity/go-commoner/idiomatic/mather/types"
 )
 
-func SliceToDescriptor[T constraints.Integer, V any](slice [][]V) MatrixDescriptor[T] {
+func SliceToDescriptor[T types.Integer, V any](slice [][]V) MatrixDescriptor[T] {
 	descriptor := MatrixDescriptor[T]{
 		Rows: T(len(slice)),
 	}
@@ -17,7 +17,7 @@ func SliceToDescriptor[T constraints.Integer, V any](slice [][]V) MatrixDescript
 	return descriptor
 }
 
-type MatrixDescriptor[T constraints.Integer] struct {
+type MatrixDescriptor[T types.Integer] struct {
 	Rows T
 	Cols T
 }
