@@ -1,8 +1,8 @@
 package geometry
 
 import (
+	"github.com/boundedinfinity/go-commoner/idiomatic/internal"
 	"github.com/boundedinfinity/go-commoner/idiomatic/mather"
-	"github.com/boundedinfinity/go-commoner/idiomatic/mather/internal"
 )
 
 func NewLineSegmentXY[T geometryNumber](x1, y1, x2, y2 T) LineSegment[T] {

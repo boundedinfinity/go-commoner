@@ -1,13 +1,13 @@
 package matrix
 
-import "github.com/boundedinfinity/go-commoner/idiomatic/mather/types"
+import "github.com/boundedinfinity/go-commoner/idiomatic"
 
-type Matrix[T types.Integer, V any] struct {
+type Matrix[T idiomatic.Integer, V any] struct {
 	MatrixDescriptor[T]
 	matrix [][]V
 }
 
-func FromDescriptor[T types.Integer, V any](descriptor MatrixDescriptor[T], initial V) *Matrix[T, V] {
+func FromDescriptor[T idiomatic.Integer, V any](descriptor MatrixDescriptor[T], initial V) *Matrix[T, V] {
 	matrix := Matrix[T, V]{
 		matrix: make([][]V, descriptor.Rows),
 	}
@@ -17,7 +17,7 @@ func FromDescriptor[T types.Integer, V any](descriptor MatrixDescriptor[T], init
 	return &matrix
 }
 
-func FromSlice[T types.Integer, V any](slice [][]V) *Matrix[T, V] {
+func FromSlice[T idiomatic.Integer, V any](slice [][]V) *Matrix[T, V] {
 	var zero V
 	matrix := FromDescriptor[T, V](SliceToDescriptor[T, V](slice), zero)
 

@@ -1,21 +1,21 @@
 package mather
 
 import (
-	"github.com/boundedinfinity/go-commoner/idiomatic/mather/types"
+	"github.com/boundedinfinity/go-commoner/idiomatic"
 	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
 )
 
-func Sum[N types.Number](numbers ...N) N {
+func Sum[N idiomatic.Number](numbers ...N) N {
 	fn := func(_ int, a N, v N) N { return a + v }
 	return slicer.Reduce(fn, 0, numbers...)
 }
 
-func SumFn[E any, N types.Number](fn func(E) N, numbers ...E) N {
+func SumFn[E any, N idiomatic.Number](fn func(E) N, numbers ...E) N {
 	wrap := func(_ int, a N, e E) N { return a + fn(e) }
 	return slicer.Reduce(wrap, 0, numbers...)
 }
 
-func Mean[N types.Number](numbers ...N) N {
+func Mean[N idiomatic.Number](numbers ...N) N {
 	l := len(numbers)
 
 	if l == 0 {
@@ -28,7 +28,7 @@ func Mean[N types.Number](numbers ...N) N {
 	return mean
 }
 
-func MeanFn[E any, N types.Number](fn func(E) N, numbers ...E) N {
+func MeanFn[E any, N idiomatic.Number](fn func(E) N, numbers ...E) N {
 	l := len(numbers)
 
 	if l == 0 {
@@ -41,19 +41,19 @@ func MeanFn[E any, N types.Number](fn func(E) N, numbers ...E) N {
 	return mean
 }
 
-func Median[N types.Number](numbers ...N) N {
+func Median[N idiomatic.Number](numbers ...N) N {
 	sorted := slicer.Sort(numbers...)
 	i := Ceil(len(sorted) / 2)
 	return numbers[i]
 }
 
-func MedianFn[E any, O types.Ordered, N types.Number](fn func(E) O, numbers ...E) E {
+func MedianFn[E any, O idiomatic.Ordered, N idiomatic.Number](fn func(E) O, numbers ...E) E {
 	sorted := slicer.SortBy(fn, numbers...)
 	i := Ceil(len(sorted) / 2)
 	return numbers[i]
 }
 
-func MinOf[V types.Number](numbers ...V) V {
+func MinOf[V idiomatic.Number](numbers ...V) V {
 	fn := func(_ int, a V, v V) V {
 		if v < a {
 			return v
@@ -66,7 +66,7 @@ func MinOf[V types.Number](numbers ...V) V {
 	return slicer.Reduce(fn, head, numbers...)
 }
 
-func MaxOf[V types.Number](numbers ...V) V {
+func MaxOf[V idiomatic.Number](numbers ...V) V {
 	fn := func(_ int, a V, v V) V {
 		if v > a {
 			return v

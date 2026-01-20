@@ -1,11 +1,11 @@
 package matrix
 
 import (
+	"github.com/boundedinfinity/go-commoner/idiomatic"
 	"github.com/boundedinfinity/go-commoner/idiomatic/mather"
-	"github.com/boundedinfinity/go-commoner/idiomatic/mather/types"
 )
 
-func SliceToDescriptor[T types.Integer, V any](slice [][]V) MatrixDescriptor[T] {
+func SliceToDescriptor[T idiomatic.Integer, V any](slice [][]V) MatrixDescriptor[T] {
 	descriptor := MatrixDescriptor[T]{
 		Rows: T(len(slice)),
 	}
@@ -17,7 +17,7 @@ func SliceToDescriptor[T types.Integer, V any](slice [][]V) MatrixDescriptor[T] 
 	return descriptor
 }
 
-type MatrixDescriptor[T types.Integer] struct {
+type MatrixDescriptor[T idiomatic.Integer] struct {
 	Rows T
 	Cols T
 }

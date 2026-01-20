@@ -1,8 +1,8 @@
 package geometry
 
 import (
+	"github.com/boundedinfinity/go-commoner/idiomatic/internal"
 	"github.com/boundedinfinity/go-commoner/idiomatic/mather"
-	"github.com/boundedinfinity/go-commoner/idiomatic/mather/internal"
 	"github.com/boundedinfinity/go-commoner/idiomatic/mather/trigonometry"
 )
 

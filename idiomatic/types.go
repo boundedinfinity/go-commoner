@@ -1,4 +1,4 @@
-package types
+package idiomatic
 
 import "golang.org/x/exp/constraints"
 

@@ -3,15 +3,15 @@ package slicer
 import (
 	"sort"
 
-	"github.com/boundedinfinity/go-commoner/idiomatic/mather/types"
+	"github.com/boundedinfinity/go-commoner/idiomatic"
 )
 
-func Sort[T types.Ordered](elems ...T) []T {
+func Sort[T idiomatic.Ordered](elems ...T) []T {
 	fn := func(elem T) T { return elem }
 	return SortBy(fn, elems...)
 }
 
-type builtInFnSort[T any, O types.Ordered] struct {
+type builtInFnSort[T any, O idiomatic.Ordered] struct {
 	elems []T
 	fn    func(T) O
 }
@@ -28,7 +28,7 @@ func (t builtInFnSort[T, O]) Swap(i, j int) {
 	t.elems[i], t.elems[j] = t.elems[j], t.elems[i]
 }
 
-func SortBy[T any, O types.Ordered](fn func(T) O, elems ...T) []T {
+func SortBy[T any, O idiomatic.Ordered](fn func(T) O, elems ...T) []T {
 	sorted := []T{}
 
 	if fn == nil {

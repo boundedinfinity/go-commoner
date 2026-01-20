@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strconv"
 
+	"github.com/boundedinfinity/go-commoner/idiomatic"
+	"github.com/boundedinfinity/go-commoner/idiomatic/internal"
 	"github.com/boundedinfinity/go-commoner/idiomatic/mather"
-	"github.com/boundedinfinity/go-commoner/idiomatic/mather/internal"
-	"github.com/boundedinfinity/go-commoner/idiomatic/mather/types"
 	"github.com/boundedinfinity/go-commoner/idiomatic/stringer"
 )
 
@@ -22,8 +22,8 @@ func New[T ~int](numerator, denominator T) Fraction[T] {
 }
 
 // FromFloat creates a Fraction from a floating point number.
-func FromFloat[T ~int, F types.Float](n F) Fraction[T] {
-	denominator := mather.PlaceOfDigitsAfterDecimal(n)
+func FromFloat[T ~int, F idiomatic.Float](n F) Fraction[T] {
+	denominator := mather.FractionalPartPlace(n)
 	numerator := n * F(denominator)
 
 	return Fraction[T]{
@@ -92,7 +92,7 @@ func IsZero[T ~int](elem Fraction[T]) bool {
 	return elem == zero
 }
 
-func Component[T types.Float](n T) int {
+func Component[T idiomatic.Float](n T) int {
 	s := fmt.Sprintf("%v", n)
 	comps := stringer.Split(s, ".")
 	var i int
@@ -113,7 +113,7 @@ func Component[T types.Float](n T) int {
 	return i
 }
 
-func Magnitude[T types.Float](n T) int {
+func Magnitude[T idiomatic.Float](n T) int {
 	s := fmt.Sprintf("%v", n)
 	comps := stringer.Split(s, ".")
 	var size int

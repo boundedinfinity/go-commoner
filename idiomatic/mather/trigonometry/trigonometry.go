@@ -3,26 +3,26 @@ package trigonometry
 import (
 	"math"
 
-	"github.com/boundedinfinity/go-commoner/idiomatic/mather/internal"
-	"github.com/boundedinfinity/go-commoner/idiomatic/mather/types"
+	"github.com/boundedinfinity/go-commoner/idiomatic"
+	"github.com/boundedinfinity/go-commoner/idiomatic/internal"
 )
 
 // https://byjus.com/degree-and-radian-measure-formula/
-func DegreeToRadian[T types.Number](x T) T {
+func DegreeToRadian[T idiomatic.Number](x T) T {
 	return internal.SingleToSingle[T, T](x, func(n float64) float64 {
 		return n * math.Pi / 180
 	})
 }
 
 // https://byjus.com/degree-and-radian-measure-formula/
-func RadianToDegree[T types.Number](x T) T {
+func RadianToDegree[T idiomatic.Number](x T) T {
 	return internal.SingleToSingle[T, T](x, func(n float64) float64 {
 		return n * 180 / math.Pi
 	})
 }
 
 // https://byjus.com/degree-and-radian-measure-formula/
-func ArcLengthRadiusToRadian[T types.Number](arcLength, radius T) T {
+func ArcLengthRadiusToRadian[T idiomatic.Number](arcLength, radius T) T {
 	return internal.DoubleToSingle[T, T](arcLength, radius, func(a, b float64) float64 {
 		return a / b
 	})
@@ -33,7 +33,7 @@ func ArcLengthRadiusToRadian[T types.Number](arcLength, radius T) T {
 // Special case is:
 //
 //	Acos(x) = NaN if x < -1 or x > 1
-func ArcCosine[N types.Number](x N) N {
+func ArcCosine[N idiomatic.Number](x N) N {
 	return internal.SingleToSingle[N, N](x, math.Acos)
 }
 
@@ -44,7 +44,7 @@ func ArcCosine[N types.Number](x N) N {
 //	InverseHyperbolicCosine(+Inf) = +Inf
 //	InverseHyperbolicCosine(x) = NaN if x < 1
 //	InverseHyperbolicCosine(NaN) = NaN
-func InverseHyperbolicCosine[N types.Number](x N) N {
+func InverseHyperbolicCosine[N idiomatic.Number](x N) N {
 	return internal.SingleToSingle[N, N](x, math.Acosh)
 }
 
@@ -54,7 +54,7 @@ func InverseHyperbolicCosine[N types.Number](x N) N {
 //
 //	ArcSine(±0) = ±0
 //	ArcSine(x) = NaN if x < -1 or x > 1
-func ArcSine[N types.Number](x N) N {
+func ArcSine[N idiomatic.Number](x N) N {
 	return internal.SingleToSingle[N, N](x, math.Asin)
 }
 
@@ -65,7 +65,7 @@ func ArcSine[N types.Number](x N) N {
 //	InverseHyperbolicSine(±0) = ±0
 //	InverseHyperbolicSine(±Inf) = ±Inf
 //	InverseHyperbolicSine(NaN) = NaN
-func InverseHyperbolicSine[N types.Number](x N) N {
+func InverseHyperbolicSine[N idiomatic.Number](x N) N {
 	return internal.SingleToSingle[N, N](x, math.Asinh)
 }
 
@@ -75,7 +75,7 @@ func InverseHyperbolicSine[N types.Number](x N) N {
 //
 //	ArcTangent(±0) = ±0
 //	ArcTangent(±Inf) = ±Pi/2
-func ArcTangent[N types.Number](x N) N {
+func ArcTangent[N idiomatic.Number](x N) N {
 	return internal.SingleToSingle[N, N](x, math.Atan)
 }
 
@@ -102,7 +102,7 @@ func ArcTangent[N types.Number](x N) N {
 //	ArcTangent2(y<0, -Inf) = -Pi
 //	ArcTangent2(+Inf, x) = +Pi/2
 //	ArcTangent2(-Inf, x) = -Pi/2
-func ArcTangent2[N types.Number](y, x N) N {
+func ArcTangent2[N idiomatic.Number](y, x N) N {
 	return internal.DoubleToSingle[N, N](y, x, math.Atan2)
 }
 
@@ -115,7 +115,7 @@ func ArcTangent2[N types.Number](y, x N) N {
 //	InverseHyperbolicTangent(-1) = -Inf
 //	InverseHyperbolicTangent(x) = NaN if x < -1 or x > 1
 //	InverseHyperbolicTangent(NaN) = NaN
-func InverseHyperbolicTangent[N types.Number](x N) N {
+func InverseHyperbolicTangent[N idiomatic.Number](x N) N {
 	return internal.SingleToSingle[N, N](x, math.Atanh)
 }
 
@@ -125,7 +125,7 @@ func InverseHyperbolicTangent[N types.Number](x N) N {
 //
 //	Cosine(±Inf) = NaN
 //	Cosine(NaN) = NaN
-func Cosine[N types.Number](x N) N {
+func Cosine[N idiomatic.Number](x N) N {
 	return internal.SingleToSingle[N, N](x, math.Cos)
 }
 
@@ -136,7 +136,7 @@ func Cosine[N types.Number](x N) N {
 //	HyperbolicCosine(±0) = 1
 //	HyperbolicCosine(±Inf) = +Inf
 //	HyperbolicCosine(NaN) = NaN
-func HyperbolicCosine[N types.Number](x N) N {
+func HyperbolicCosine[N idiomatic.Number](x N) N {
 	return internal.SingleToSingle[N, N](x, math.Cosh)
 }
 
@@ -147,7 +147,7 @@ func HyperbolicCosine[N types.Number](x N) N {
 //	Sine(±0) = ±0
 //	Sine(±Inf) = NaN
 //	Sine(NaN) = NaN
-func Sine[N types.Number](x N) N {
+func Sine[N idiomatic.Number](x N) N {
 	return internal.SingleToSingle[N, N](x, math.Sin)
 }
 
@@ -158,7 +158,7 @@ func Sine[N types.Number](x N) N {
 //	Sincos(±0) = ±0, 1
 //	Sincos(±Inf) = NaN, NaN
 //	Sincos(NaN) = NaN, NaN
-func Sincos[N types.Number](x N) (sin, cos N) {
+func Sincos[N idiomatic.Number](x N) (sin, cos N) {
 	return internal.SingleToDouble[N, N](x, math.Sincos)
 }
 
@@ -169,7 +169,7 @@ func Sincos[N types.Number](x N) (sin, cos N) {
 //	HyperbolicSine(±0) = ±0
 //	HyperbolicSine(±Inf) = ±Inf
 //	HyperbolicSine(NaN) = NaN
-func HyperbolicSine[N types.Number](x N) N {
+func HyperbolicSine[N idiomatic.Number](x N) N {
 	return internal.SingleToSingle[N, N](x, math.Sinh)
 }
 
@@ -180,7 +180,7 @@ func HyperbolicSine[N types.Number](x N) N {
 //	Tangent(±0) = ±0
 //	Tangent(±Inf) = NaN
 //	Tangent(NaN) = NaN
-func Tangent[N types.Number](x N) N {
+func Tangent[N idiomatic.Number](x N) N {
 	return internal.SingleToSingle[N, N](x, math.Tan)
 }
 
@@ -191,6 +191,6 @@ func Tangent[N types.Number](x N) N {
 //	HyperbolicTan(±0) = ±0
 //	HyperbolicTan(±Inf) = ±1
 //	HyperbolicTan(NaN) = NaN
-func HyperbolicTan[N types.Number](x N) N {
+func HyperbolicTan[N idiomatic.Number](x N) N {
 	return internal.SingleToSingle[N, N](x, math.Tanh)
 }
