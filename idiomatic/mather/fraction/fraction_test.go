@@ -8,14 +8,16 @@ import (
 )
 
 func Test_Fraction_String(t *testing.T) {
+	type TestInt int
+
 	testCases := []struct {
 		name     string
-		input    fraction.Fraction[int]
+		input    fraction.Fraction[TestInt]
 		expected string
 	}{
 		{
 			name:     "1/2",
-			input:    fraction.New(1, 2),
+			input:    fraction.New[TestInt](1, 2),
 			expected: "1/2",
 		},
 	}

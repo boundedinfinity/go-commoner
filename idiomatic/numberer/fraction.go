@@ -62,7 +62,7 @@ func (this CommonFraction) ToCommon() CommonFraction {
 }
 
 func (this CommonFraction) Reduce() CommonFraction {
-	gcd := mather.GreatestCommonFactor(this.Numerator, this.Denominator)
+	gcd := GreatestCommonFactor(this.Numerator, this.Denominator)
 
 	return CommonFraction{
 		Numerator:   this.Numerator / gcd,

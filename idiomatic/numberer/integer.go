@@ -7,10 +7,12 @@ import (
 	"github.com/boundedinfinity/go-commoner/idiomatic/mather"
 )
 
-// https://en.wikipedia.org/wiki/Euclidean_algorithm
-// https://www.youtube.com/watch?v=yHwneN6zJmU&t=641
-
+// GreatestCommonFactor calculates the greatest common factor using the Euclidean algorithm.
+//
+// Reference: https://en.wikipedia.org/wiki/Euclidean_algorithm
 func GreatestCommonFactor[T idiomatic.Integer](a T, b T) T {
+	// https://www.youtube.com/watch?v=yHwneN6zJmU&t=641
+
 	if b == 0 {
 		return a
 	} else {

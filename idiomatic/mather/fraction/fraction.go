@@ -5,8 +5,8 @@ import (
 	"strconv"
 
 	"github.com/boundedinfinity/go-commoner/idiomatic"
-	"github.com/boundedinfinity/go-commoner/idiomatic/internal"
 	"github.com/boundedinfinity/go-commoner/idiomatic/mather"
+	"github.com/boundedinfinity/go-commoner/idiomatic/numberer"
 	"github.com/boundedinfinity/go-commoner/idiomatic/stringer"
 )
 
@@ -46,8 +46,7 @@ func (t Fraction[T]) String() string {
 }
 
 func (t Fraction[T]) Float() float64 {
-	fn := func(n, d float64) float64 { return n / d }
-	return internal.DoubleToSingle[T, float64](t.Numerator, t.Denominator, fn)
+	return float64(t.Numerator / t.Denominator)
 }
 
 func (t Fraction[T]) Copy() Fraction[T] {
@@ -58,7 +57,7 @@ func (t Fraction[T]) Copy() Fraction[T] {
 }
 
 func (t Fraction[T]) Reduce() Fraction[T] {
-	gcd := mather.GreatestCommonFactor(t.Numerator, t.Denominator)
+	gcd := numberer.GreatestCommonFactor(t.Numerator, t.Denominator)
 
 	return Fraction[T]{
 		Numerator:   t.Numerator / gcd,

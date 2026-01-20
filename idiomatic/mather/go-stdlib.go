@@ -14,91 +14,91 @@ import (
 //	Abs(±Inf) = +Inf
 //	Abs(NaN) = NaN
 func Abs[T idiomatic.Number](x T) T {
-	return internal.SingleToSingle[T, T](x, math.Abs)
+	return T(math.Abs(float64(x)))
 }
 
 func Cbrt[T idiomatic.Number](x T) T {
-	return internal.SingleToSingle[T, T](x, math.Cbrt)
+	return T(math.Cbrt(float64(x)))
 }
 
 func Ceil[T idiomatic.Number](x T) T {
-	return internal.SingleToSingle[T, T](x, math.Ceil)
+	return T(math.Ceil(float64(x)))
 }
 
 func Copysign[T idiomatic.Number](f, sign T) T {
-	return internal.DoubleToSingle[T, T](f, sign, math.Copysign)
+	return T(math.Copysign(float64(f), float64(sign)))
 }
 
 func Dim[T idiomatic.Number](x, y T) T {
-	return internal.DoubleToSingle[T, T](x, y, math.Dim)
+	return T(math.Dim(float64(x), float64(y)))
 }
 
 func Erf[T idiomatic.Number](x T) T {
-	return internal.SingleToSingle[T, T](x, math.Erf)
+	return T(math.Erf(float64(x)))
 }
 
 func Erfc[T idiomatic.Number](x T) T {
-	return internal.SingleToSingle[T, T](x, math.Erfc)
+	return T(math.Erfc(float64(x)))
 }
 
 func Erfcinv[T idiomatic.Number](x T) T {
-	return internal.SingleToSingle[T, T](x, math.Erfcinv)
+	return T(math.Erfcinv(float64(x)))
 }
 
 func Erfinv[T idiomatic.Number](x T) T {
-	return internal.SingleToSingle[T, T](x, math.Erfinv)
+	return T(math.Erfinv(float64(x)))
 }
 
 func Exp[T idiomatic.Number](x T) T {
-	return internal.SingleToSingle[T, T](x, math.Exp)
+	return T(math.Exp(float64(x)))
 }
 
 func Exp2[T idiomatic.Number](x T) T {
-	return internal.SingleToSingle[T, T](x, math.Exp2)
+	return T(math.Exp2(float64(x)))
 }
 
 func Expm1[T idiomatic.Number](x T) T {
-	return internal.SingleToSingle[T, T](x, math.Expm1)
+	return T(math.Expm1(float64(x)))
 }
 
 func FMA[T idiomatic.Number](x, y, z T) T {
-	return internal.TripleToSingle(x, y, z, math.FMA)
+	return T(math.FMA(float64(x), float64(y), float64(z)))
 }
 
 func Floor[T idiomatic.Number](x T) T {
-	return internal.SingleToSingle[T, T](x, math.Floor)
+	return T(math.Floor(float64(x)))
 }
 
 func Gamma[T idiomatic.Number](x T) T {
-	return internal.SingleToSingle[T, T](x, math.Gamma)
+	return T(math.Gamma(float64(x)))
 }
 
 func Hypot[T idiomatic.Number](p, q T) T {
-	return internal.DoubleToSingle[T, T](p, q, math.Hypot)
+	return T(math.Hypot(float64(p), float64(q)))
 }
 
-func Ilogb(x float64) int {
-	return math.Ilogb(x)
+func Ilogb[F idiomatic.Number, I idiomatic.Integer](x float64) I {
+	return I(math.Ilogb(float64(x)))
 }
 
-func Inf(x int) float64 {
-	return math.Inf(x)
+func Inf[F idiomatic.Number, I idiomatic.Integer](x I) F {
+	return F(math.Inf(int(x)))
 }
 
-func IsInf(f float64, sign int) bool {
-	return math.IsInf(f, sign)
+func IsInf[F idiomatic.Number, I idiomatic.Integer](f F, sign I) bool {
+	return math.IsInf(float64(f), int(sign))
 }
 
-func IsNaN(x float64) bool {
-	return math.IsNaN(x)
+func IsNaN[F idiomatic.Number](x F) bool {
+	return math.IsNaN(float64(x))
 }
 
 func J0[T idiomatic.Number](x T) T {
-	return internal.SingleToSingle[T, T](x, math.J0)
+	return T(math.J0(float64(x)))
 }
 
 func J1[T idiomatic.Number](x T) T {
-	return internal.SingleToSingle[T, T](x, math.J1)
+	return T(math.J1(float64(x)))
 }
 
 func Jn(n int, x float64) float64 {
@@ -114,23 +114,23 @@ func Lgamma(x float64) (lgamma float64, sign int) {
 }
 
 func Log[T idiomatic.Number](x T) T {
-	return internal.SingleToSingle[T, T](x, math.Log)
+	return T(math.Log(float64(x)))
 }
 
 func Log10[T idiomatic.Number](x T) T {
-	return internal.SingleToSingle[T, T](x, math.Log10)
+	return T(math.Log10(float64(x)))
 }
 
 func Log1p[T idiomatic.Number](x T) T {
-	return internal.SingleToSingle[T, T](x, math.Log1p)
+	return T(math.Log1p(float64(x)))
 }
 
 func Log2[T idiomatic.Number](x T) T {
-	return internal.SingleToSingle[T, T](x, math.Log2)
+	return T(math.Log2(float64(x)))
 }
 
 func Logb[T idiomatic.Number](x T) T {
-	return internal.SingleToSingle[T, T](x, math.Logb)
+	return T(math.Logb(float64(x)))
 }
 
 func Max[T idiomatic.Number](x, y T) T {
@@ -153,8 +153,8 @@ func Mod[T idiomatic.Number](x, y T) T {
 	return internal.DoubleToSingle[T, T](x, y, math.Mod)
 }
 
-func Modf[I idiomatic.Number, O idiomatic.Number](x I) (O, O) {
-	return internal.SingleToDouble[I, O](x, math.Modf)
+func Modf[I idiomatic.Number](x I) (float64, float64) {
+	return math.Modf(float64(x))
 }
 
 func NaN() float64 {
