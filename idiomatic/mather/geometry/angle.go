@@ -3,10 +3,14 @@ package geometry
 import (
 	gomath "math"
 
-	"github.com/boundedinfinity/go-commoner/idiomatic/internal"
+	"github.com/boundedinfinity/go-commoner/idiomatic"
 )
 
-type Angle[T geometryNumber] struct {
+type AngleNumber interface {
+	~int | ~int16 | ~int32 | ~int64 | ~uint | ~uint16 | ~uint32 | ~uint64 | ~uintptr | ~float32 | ~float64
+}
+
+type Angle[T AngleNumber] struct {
 	Magnitude T
 	Type      AngleType
 	Direction AngleDirection
@@ -38,14 +42,10 @@ func (t Angle[T]) ToDegree() Angle[T] {
 	}
 }
 
-func DegreeToRadian[T geometryNumber](angle T) T {
-	return internal.SingleToSingle[T, T](angle, func(n float64) float64 {
-		return n * gomath.Pi / 180
-	})
+func DegreeToRadian[T idiomatic.Number](angle T) T {
+	return T(float64(angle) * gomath.Pi / 180)
 }
 
-func RadianToDegree[T geometryNumber](angle T) T {
-	return internal.SingleToSingle[T, T](angle, func(n float64) float64 {
-		return n * 180 / gomath.Pi
-	})
+func RadianToDegree[T idiomatic.Number](angle T) T {
+	return T(float64(angle) * 180 / gomath.Pi)
 }

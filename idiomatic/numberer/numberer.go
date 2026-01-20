@@ -1,5 +1,13 @@
 package numberer
 
+// type Float constraints.Float
+// type Integer constraints.Integer
+// type Ordered constraints.Ordered
+
+// type Number interface {
+// 	Integer | Float | Fraction
+// }
+
 type Numberer interface {
 	ToFraction() Fraction
 }

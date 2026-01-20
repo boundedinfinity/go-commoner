@@ -4,7 +4,6 @@ import (
 	"math"
 
 	"github.com/boundedinfinity/go-commoner/idiomatic"
-	"github.com/boundedinfinity/go-commoner/idiomatic/internal"
 )
 
 // Abs returns the absolute value of x.
@@ -13,15 +12,15 @@ import (
 //
 //	Abs(±Inf) = +Inf
 //	Abs(NaN) = NaN
-func Abs[T idiomatic.Number](x T) T {
-	return T(math.Abs(float64(x)))
+func Abs[N idiomatic.Number](x N) N {
+	return N(math.Abs(float64(x)))
 }
 
 func Cbrt[T idiomatic.Number](x T) T {
 	return T(math.Cbrt(float64(x)))
 }
 
-func Ceil[T idiomatic.Number](x T) T {
+func Ceil[T idiomatic.Float](x T) T {
 	return T(math.Ceil(float64(x)))
 }
 
@@ -65,7 +64,7 @@ func FMA[T idiomatic.Number](x, y, z T) T {
 	return T(math.FMA(float64(x), float64(y), float64(z)))
 }
 
-func Floor[T idiomatic.Number](x T) T {
+func Floor[T ~float32 | ~float64](x T) T {
 	return T(math.Floor(float64(x)))
 }
 
@@ -101,12 +100,12 @@ func J1[T idiomatic.Number](x T) T {
 	return T(math.J1(float64(x)))
 }
 
-func Jn(n int, x float64) float64 {
-	return math.Jn(n, x)
+func Jn[F idiomatic.Float, I idiomatic.Integer](n I, x F) float64 {
+	return math.Jn(int(n), float64(x))
 }
 
-func Ldexp(n float64, x int) float64 {
-	return math.Ldexp(n, x)
+func Ldexp[F idiomatic.Float, I idiomatic.Integer](n F, x I) float64 {
+	return math.Ldexp(float64(n), int(x))
 }
 
 func Lgamma(x float64) (lgamma float64, sign int) {
@@ -134,7 +133,7 @@ func Logb[T idiomatic.Number](x T) T {
 }
 
 func Max[T idiomatic.Number](x, y T) T {
-	return internal.DoubleToSingle[T, T](x, y, math.Max)
+	return T(math.Max(float64(x), float64(y)))
 }
 
 // func MaxAll[T idiomatic.Numbers](xs ...T) T {
@@ -142,7 +141,7 @@ func Max[T idiomatic.Number](x, y T) T {
 // }
 
 func Min[T idiomatic.Number](x, y T) T {
-	return internal.DoubleToSingle[T, T](x, y, math.Min)
+	return T(math.Min(float64(x), float64(y)))
 }
 
 // func MinAll[T idiomatic.Numbers](xs ...T) T {
@@ -150,7 +149,7 @@ func Min[T idiomatic.Number](x, y T) T {
 // }
 
 func Mod[T idiomatic.Number](x, y T) T {
-	return internal.DoubleToSingle[T, T](x, y, math.Mod)
+	return T(math.Mod(float64(x), float64(y)))
 }
 
 func Modf[I idiomatic.Number](x I) (float64, float64) {
@@ -162,15 +161,15 @@ func NaN() float64 {
 }
 
 func Nextafter[T idiomatic.Number](x, y T) T {
-	return internal.DoubleToSingle[T, T](x, y, math.Nextafter)
+	return T(math.Nextafter(float64(x), float64(y)))
 }
 
 func Nextafter32[T idiomatic.Number](x, y T) T {
-	return internal.DoubleToSingle[T, T](x, y, math.Nextafter)
+	return T(math.Nextafter32(float32(x), float32(y)))
 }
 
 func Pow[T idiomatic.Number](x, y T) T {
-	return internal.DoubleToSingle[T, T](x, y, math.Pow)
+	return T(math.Pow(float64(x), float64(y)))
 }
 
 func Square[T idiomatic.Number](n T) T {
@@ -186,33 +185,50 @@ func Pow10[T idiomatic.Integer, U idiomatic.Number](n T) U {
 }
 
 func Remainder[T idiomatic.Number](x, y T) T {
-	return internal.DoubleToSingle[T, T](x, y, math.Remainder)
+	return T(math.Remainder(float64(x), float64(y)))
 }
 
 func Round[T idiomatic.Number](x T) T {
-	return internal.SingleToSingle[T, T](x, math.Round)
+	return T(math.Round(float64(x)))
 }
 
 func RoundToEven[T idiomatic.Number](x T) T {
-	return internal.SingleToSingle[T, T](x, math.RoundToEven)
+	return T(math.RoundToEven(float64(x)))
 }
 
 func Sqrt[T idiomatic.Number](x T) T {
-	return internal.SingleToSingle[T, T](x, math.Sqrt)
+	return T(math.Sqrt(float64(x)))
 }
 
 func Trunc[T idiomatic.Number](x T) T {
-	return internal.SingleToSingle[T, T](x, math.Trunc)
+	return T(math.Trunc(float64(x)))
 }
 
 func Y0[T idiomatic.Number](x T) T {
-	return internal.SingleToSingle[T, T](x, math.Y0)
+	return T(math.Y0(float64(x)))
 }
 
+// Y1 returns the order-one Bessel function of the second kind.
+//
+// Special cases are:
+//
+//	Y1(+Inf) = 0
+//	Y1(0) = -Inf
+//	Y1(x < 0) = NaN
+//	Y1(NaN) = NaN
 func Y1[T idiomatic.Number](x T) T {
-	return internal.SingleToSingle[T, T](x, math.Y1)
+	return T(math.Y1(float64(x)))
 }
 
+// Yn returns the order-n Bessel function of the second kind.
+//
+// Special cases are:
+//
+//	Yn(n, +Inf) = 0
+//	Yn(n ≥ 0, 0) = -Inf
+//	Yn(n < 0, 0) = +Inf if n is odd, -Inf if n is even
+//	Yn(n, x < 0) = NaN
+//	Yn(n, NaN) = NaN
 func Yn(n int, x float64) float64 {
 	return math.Yn(n, x)
 }

@@ -1,49 +1,41 @@
 package geometry
 
 import (
-	"github.com/boundedinfinity/go-commoner/idiomatic/internal"
+	"github.com/boundedinfinity/go-commoner/idiomatic"
+
 	"github.com/boundedinfinity/go-commoner/idiomatic/mather"
 )
 
-func NewLineSegmentXY[T geometryNumber](x1, y1, x2, y2 T) LineSegment[T] {
+func NewLineSegmentXY[T idiomatic.Number](x1, y1, x2, y2 T) LineSegment[T] {
 	return NewLineSegmentCoords[T](
 		CartesianCoordinate[T]{X: x1, Y: y2},
 		CartesianCoordinate[T]{X: x2, Y: y2},
 	)
 }
 
-func NewLineSegmentCoords[T geometryNumber](start, end CartesianCoordinate[T]) LineSegment[T] {
+func NewLineSegmentCoords[T idiomatic.Number](start, end CartesianCoordinate[T]) LineSegment[T] {
 	return LineSegment[T]{
 		Start: start,
 		End:   end,
 	}
 }
 
-type LineSegment[T geometryNumber] struct {
+type LineSegment[T idiomatic.Number] struct {
 	Start CartesianCoordinate[T]
 	End   CartesianCoordinate[T]
 }
 
 func (t LineSegment[T]) Length() T {
-	fn := func(x1, y1, x2, y2 float64) float64 {
-		return mather.Sqrt(mather.Square((x2 - x1)) + mather.Square((y2 - y1)))
-	}
+	xSqrd := mather.Square(t.End.X - t.Start.X)
+	ySqrd := mather.Square(t.End.Y - t.Start.Y)
 
-	return internal.QuadrupleToSingle(
-		t.Start.X, t.Start.Y,
-		t.End.X, t.End.Y,
-		fn,
-	)
+	return mather.Sqrt(xSqrd + ySqrd)
 }
 
 func (t LineSegment[T]) PointAtPercent(percentage T) CartesianCoordinate[T] {
-	fn := func(p1, p2, percentage float64) float64 {
-		return p1 + p2*percentage/100
-	}
-
 	return CartesianCoordinate[T]{
-		X: internal.TripleToSingle(t.Start.X, t.End.X, percentage, fn),
-		Y: internal.TripleToSingle(t.Start.Y, t.End.Y, percentage, fn),
+		X: t.Start.X + t.End.X*percentage/100,
+		Y: t.Start.Y + t.End.Y*percentage/100,
 	}
 }
 
@@ -52,11 +44,7 @@ func (t LineSegment[T]) Midpoint() CartesianCoordinate[T] {
 }
 
 func (t LineSegment[T]) Slope() T {
-	fn := func(x1, y1, x2, y2 float64) float64 {
-		return (y2 - y1) / (x2 - x1)
-	}
-
-	return internal.QuadrupleToSingle(t.Start.X, t.Start.Y, t.End.X, t.End.Y, fn)
+	return (t.Start.X - t.Start.Y) / (t.End.X - t.End.Y)
 }
 
 func (t LineSegment[T]) SlopeIntercept() SlopeInterceptLine[T] {

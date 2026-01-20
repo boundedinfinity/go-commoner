@@ -1,88 +1,84 @@
 package geometry
 
 import (
-	"github.com/boundedinfinity/go-commoner/idiomatic/internal"
+	"github.com/boundedinfinity/go-commoner/idiomatic"
 )
 
-func NewRectangle[T geometryNumber](topLeft CartesianCoordinate[T], dimensions Dimension2d[T]) Rectangle[T] {
-	return Rectangle[T]{
+func NewRectangle[T idiomatic.Number, A AngleNumber](topLeft CartesianCoordinate[T], dimensions Dimension2d[T]) Rectangle[T, A] {
+	return Rectangle[T, A]{
 		TopLeft:    topLeft,
 		Dimensions: dimensions,
 	}
 }
 
-func NewRectangleXYHW[T geometryNumber](x, y, height, width T) Rectangle[T] {
-	return NewRectangle[T](
+func NewRectangleXYHW[T idiomatic.Number, A AngleNumber](x, y, height, width T) Rectangle[T, A] {
+	return NewRectangle[T, A](
 		CartesianCoordinate[T]{X: x, Y: y},
 		Dimension2d[T]{Height: height, Width: width},
 	)
 }
 
-type Rectangle[T geometryNumber] struct {
+type Rectangle[T idiomatic.Number, A AngleNumber] struct {
 	TopLeft    CartesianCoordinate[T]
 	Dimensions Dimension2d[T]
 }
 
-func (t Rectangle[T]) Area() T {
+func (t Rectangle[T, A]) Area() T {
 	return t.Dimensions.Height * t.Dimensions.Width
 }
 
-func (t Rectangle[T]) Perimeter() T {
-	fn := func(height, width float64) float64 {
-		return 2 * (height + width)
-	}
-
-	return internal.DoubleToSingle[T, T](t.Dimensions.Height, t.Dimensions.Width, fn)
+func (t Rectangle[T, A]) Perimeter() T {
+	return 2 * (t.Dimensions.Height + t.Dimensions.Width)
 }
 
-func (t Rectangle[T]) BottomLeft() CartesianCoordinate[T] {
+func (t Rectangle[T, A]) BottomLeft() CartesianCoordinate[T] {
 	return CartesianCoordinate[T]{
 		X: t.TopLeft.X,
 		Y: t.TopLeft.Y + t.Dimensions.Height,
 	}
 }
 
-func (t Rectangle[T]) TopRight() CartesianCoordinate[T] {
+func (t Rectangle[T, A]) TopRight() CartesianCoordinate[T] {
 	return CartesianCoordinate[T]{
 		X: t.TopLeft.X + t.Dimensions.Width,
 		Y: t.TopLeft.Y,
 	}
 }
 
-func (t Rectangle[T]) BottomRight() CartesianCoordinate[T] {
+func (t Rectangle[T, A]) BottomRight() CartesianCoordinate[T] {
 	return CartesianCoordinate[T]{
 		X: t.TopLeft.X + t.Dimensions.Width,
 		Y: t.TopLeft.Y + t.Dimensions.Height,
 	}
 }
 
-func (t Rectangle[T]) TopMidpoint() CartesianCoordinate[T] {
+func (t Rectangle[T, A]) TopMidpoint() CartesianCoordinate[T] {
 	return NewLineSegmentCoords(t.TopLeft, t.BottomRight()).Midpoint()
 }
 
-func (t Rectangle[T]) RightMidpoint() CartesianCoordinate[T] {
+func (t Rectangle[T, A]) RightMidpoint() CartesianCoordinate[T] {
 	return NewLineSegmentCoords(t.TopRight(), t.BottomRight()).Midpoint()
 }
 
-func (t Rectangle[T]) BottomMidpoint() CartesianCoordinate[T] {
+func (t Rectangle[T, A]) BottomMidpoint() CartesianCoordinate[T] {
 	return NewLineSegmentCoords(t.BottomLeft(), t.BottomRight()).Midpoint()
 }
 
-func (t Rectangle[T]) LeftMidpoint() CartesianCoordinate[T] {
+func (t Rectangle[T, A]) LeftMidpoint() CartesianCoordinate[T] {
 	return NewLineSegmentCoords(t.TopLeft, t.BottomLeft()).Midpoint()
 }
 
-func (t Rectangle[T]) Center() CartesianCoordinate[T] {
+func (t Rectangle[T, A]) Center() CartesianCoordinate[T] {
 	return NewLineSegmentCoords(t.TopMidpoint(), t.BottomMidpoint()).Midpoint()
 }
 
-func (t Rectangle[T]) PointOnPeremiter(angle Angle[T]) CartesianCoordinate[T] {
-	center := t.Center()
-	centerToTopLeft := NewLineSegmentCoords(center, t.TopLeft)
-	circle := NewCircle(center, centerToTopLeft.Length())
-	circlePoint := circle.PointOnCircumference(angle)
-	circleLine := NewLineSegmentCoords(center, circlePoint)
-	topLine := NewLineSegmentCoords(t.TopLeft, t.TopRight())
+// func (t Rectangle[T, A]) PointOnPeremiter(angle Angle[A]) CartesianCoordinate[T] {
+// 	center := t.Center()
+// 	centerToTopLeft := NewLineSegmentCoords(center, t.TopLeft)
+// 	circle := NewCircle[T, A](center, centerToTopLeft.Length())
+// 	circlePoint := circle.PointOnCircumference[A](angle)
+// 	circleLine := NewLineSegmentCoords(center, circlePoint)
+// 	topLine := NewLineSegmentCoords(t.TopLeft, t.TopRight())
 
-	return topLine.IntersectAt(circleLine)
-}
+// 	return topLine.IntersectAt(circleLine)
+// }

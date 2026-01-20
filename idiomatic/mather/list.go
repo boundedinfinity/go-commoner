@@ -43,27 +43,33 @@ func MeanFn[E any, N idiomatic.Number](fn func(E) N, numbers ...E) N {
 
 func Median[N idiomatic.Number](numbers ...N) N {
 	sorted := slicer.Sort(numbers...)
-	i := Ceil(len(sorted) / 2)
+	i := len(sorted) / 2
 	return numbers[i]
 }
 
 func MedianFn[E any, O idiomatic.Ordered, N idiomatic.Number](fn func(E) O, numbers ...E) E {
 	sorted := slicer.SortBy(fn, numbers...)
-	i := Ceil(len(sorted) / 2)
+	i := len(sorted) / 2
 	return numbers[i]
 }
 
-func MinOf[V idiomatic.Number](numbers ...V) V {
-	fn := func(_ int, a V, v V) V {
-		if v < a {
-			return v
-		} else {
-			return a
+func MinOf[N idiomatic.Number](numbers ...N) (N, bool) {
+	var min N
+	var ok bool
+	size := len(numbers)
+
+	if size > 0 {
+		min = numbers[0]
+		ok = true
+
+		for i := 1; i < size; i++ {
+			if min > numbers[i] {
+				min = numbers[i]
+			}
 		}
 	}
 
-	head, _ := slicer.Head(numbers...)
-	return slicer.Reduce(fn, head, numbers...)
+	return min, ok
 }
 
 func MaxOf[V idiomatic.Number](numbers ...V) V {

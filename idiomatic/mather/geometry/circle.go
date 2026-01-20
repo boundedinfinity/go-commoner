@@ -1,23 +1,22 @@
 package geometry
 
 import (
-	"github.com/boundedinfinity/go-commoner/idiomatic/internal"
 	"github.com/boundedinfinity/go-commoner/idiomatic/mather"
 	"github.com/boundedinfinity/go-commoner/idiomatic/mather/trigonometry"
 )
 
-func NewCircle[T geometryNumber](center CartesianCoordinate[T], radius T) Circle[T] {
+func NewCircle[T AngleNumber](center CartesianCoordinate[T], radius T) Circle[T] {
 	return Circle[T]{
 		Center: center,
 		Radius: radius,
 	}
 }
 
-func NewCircleXY[T geometryNumber](x, y, radius T) Circle[T] {
+func NewCircleXY[T AngleNumber](x, y, radius T) Circle[T] {
 	return NewCircle[T](CartesianCoordinate[T]{X: x, Y: y}, radius)
 }
 
-type Circle[T geometryNumber] struct {
+type Circle[T AngleNumber] struct {
 	Center CartesianCoordinate[T]
 	Radius T
 }
@@ -29,22 +28,16 @@ func (t Circle[T]) Diameter() T {
 func (t Circle[T]) PointOnCircumference(angle Angle[T]) CartesianCoordinate[T] {
 	var theta T
 
-	fn := func(theta float64) float64 { return 360 - theta }
-
 	switch angle.Direction {
 	case AngleDirections.CounterClockwise:
-		theta = internal.SingleToSingle[T, T](theta, fn)
+		theta = T(360) - theta
 	default:
 		theta = angle.Magnitude
 	}
 
 	return CartesianCoordinate[T]{
-		X: internal.TripleToSingle[T](t.Radius, theta, t.Center.X, func(radius, theta, x float64) float64 {
-			return radius*trigonometry.Cosine(theta) + x
-		}),
-		Y: internal.TripleToSingle[T](t.Radius, theta, t.Center.Y, func(radius, theta, y float64) float64 {
-			return radius*trigonometry.Sine(theta) + y
-		}),
+		X: t.Radius*trigonometry.Cosine(theta) + t.Center.X,
+		Y: t.Radius*trigonometry.Sine(theta) + t.Center.Y,
 	}
 }
 
