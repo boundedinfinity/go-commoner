@@ -29,24 +29,31 @@ func Copysign[T idiomatic.Number](f, sign T) T {
 }
 
 func Dim[T idiomatic.Number](x, y T) T {
+	// Calculate the positive difference
+	// [fdim() Function in C - GeeksforGeeks](https://www.geeksforgeeks.org/c/fdim-function-in-c/)
+	// [fdim(3) - Linux manual page](https://man7.org/linux/man-pages/man3/fdim.3.html)
 	return T(math.Dim(float64(x), float64(y)))
 }
 
-func Erf[T idiomatic.Number](x T) T {
-	return T(math.Erf(float64(x)))
-}
+// func Erf[T idiomatic.Number](x T) T {
+// 	// [Error function - Wikipedia](https://en.wikipedia.org/wiki/Error_function)
+// 	return T(math.Erf(float64(x)))
+// }
 
-func Erfc[T idiomatic.Number](x T) T {
-	return T(math.Erfc(float64(x)))
-}
+// func Erfc[T idiomatic.Number](x T) T {
+// 	// [Error function - Wikipedia : Complementary error function](https://en.wikipedia.org/wiki/Error_function#Complementary_error_function)
+// 	return T(math.Erfc(float64(x)))
+// }
 
-func Erfcinv[T idiomatic.Number](x T) T {
-	return T(math.Erfcinv(float64(x)))
-}
+// func Erfcinv[T idiomatic.Number](x T) T {
+// 	// [Error function - Wikipedia](https://en.wikipedia.org/wiki/Error_function)
+// 	return T(math.Erfcinv(float64(x)))
+// }
 
-func Erfinv[T idiomatic.Number](x T) T {
-	return T(math.Erfinv(float64(x)))
-}
+// func Erfinv[T idiomatic.Number](x T) T {
+// 	// [Error function - Wikipedia](https://en.wikipedia.org/wiki/Error_function)
+// 	return T(math.Erfinv(float64(x)))
+// }
 
 func Exp[T idiomatic.Number](x T) T {
 	return T(math.Exp(float64(x)))
@@ -56,23 +63,24 @@ func Exp2[T idiomatic.Number](x T) T {
 	return T(math.Exp2(float64(x)))
 }
 
-func Expm1[T idiomatic.Number](x T) T {
-	return T(math.Expm1(float64(x)))
-}
+// func Expm1[T idiomatic.Number](x T) T {
+// 	return T(math.Expm1(float64(x)))
+// }
 
-func FMA[T idiomatic.Number](x, y, z T) T {
-	return T(math.FMA(float64(x), float64(y), float64(z)))
-}
+// func FMA[T idiomatic.Number](x, y, z T) T {
+// 	return T(math.FMA(float64(x), float64(y), float64(z)))
+// }
 
 func Floor[T ~float32 | ~float64](x T) T {
 	return T(math.Floor(float64(x)))
 }
 
-func Gamma[T idiomatic.Number](x T) T {
-	return T(math.Gamma(float64(x)))
-}
+// func Gamma[T idiomatic.Number](x T) T {
+// 	return T(math.Gamma(float64(x)))
+// }
 
 func Hypot[T idiomatic.Number](p, q T) T {
+	// calculate the hypotenuse with sides p and q.
 	return T(math.Hypot(float64(p), float64(q)))
 }
 
@@ -92,17 +100,17 @@ func IsNaN[F idiomatic.Number](x F) bool {
 	return math.IsNaN(float64(x))
 }
 
-func J0[T idiomatic.Number](x T) T {
-	return T(math.J0(float64(x)))
-}
+// func J0[T idiomatic.Number](x T) T {
+// 	return T(math.J0(float64(x)))
+// }
 
-func J1[T idiomatic.Number](x T) T {
-	return T(math.J1(float64(x)))
-}
+// func J1[T idiomatic.Number](x T) T {
+// 	return T(math.J1(float64(x)))
+// }
 
-func Jn[F idiomatic.Float, I idiomatic.Integer](n I, x F) float64 {
-	return math.Jn(int(n), float64(x))
-}
+// func Jn[F idiomatic.Float, I idiomatic.Integer](n I, x F) float64 {
+// 	return math.Jn(int(n), float64(x))
+// }
 
 func Ldexp[F idiomatic.Float, I idiomatic.Integer](n F, x I) float64 {
 	return math.Ldexp(float64(n), int(x))
