@@ -1,6 +1,8 @@
 package slicer
 
-import "fmt"
+import (
+	"iter"
+)
 
 // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // References
@@ -20,23 +22,29 @@ import "fmt"
 //	fmt.Println(chunks)
 //	// [[1 2] [3 4] [5]]
 func Chunk[T any](size int, elems ...T) [][]T {
-	var output [][]T
-	var buffer []T
+	var chunks [][]T
 
-	for _, elem := range elems {
-		buffer = append(buffer, elem)
+	for chunk := range ChunkIter(size, elems...) {
+		chunks = append(chunks, chunk)
+	}
 
-		if len(buffer) >= size {
-			output = append(output, buffer)
-			buffer = []T{}
+	return chunks
+}
+
+func ChunkIter[T any](size int, elems ...T) iter.Seq[[]T] {
+	return func(yield func([]T) bool) {
+		var chunk []T
+
+		for _, elem := range elems {
+			if len(chunk) >= size {
+				if !yield(chunk) {
+					return
+				}
+
+				chunk = []T{}
+			}
+
+			chunk = append(chunk, elem)
 		}
 	}
-
-	if len(buffer) > 0 {
-		output = append(output, buffer)
-	}
-
-	fmt.Println(output)
-
-	return output
 }

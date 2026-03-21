@@ -11,7 +11,7 @@ func Test_Min(t *testing.T) {
 	expected := 1
 
 	input := []int{1, 2, 3, 4, 5}
-	actual := mather.MinOf(input...)
+	actual, _ := mather.MinOf(input...)
 
 	assert.Equal(t, expected, actual)
 }
