@@ -3,12 +3,12 @@ package slicer
 // All test if the target value is equal to all elements in elems
 func All[T comparable](target T, elems ...T) bool {
 	for _, elem := range elems {
-		if elem == target {
-			return true
+		if elem != target {
+			return false
 		}
 	}
 
-	return false
+	return true
 }
 
 // AllBy test if the result of by(T) evaluates to true for all elements in elems
@@ -21,12 +21,12 @@ func AllBy[T any](by func(T) bool, elems ...T) bool {
 	}
 
 	for _, elem := range elems {
-		if by(elem) {
-			return true
+		if !by(elem) {
+			return false
 		}
 	}
 
-	return false
+	return true
 }
 
 // AllByI test if the result of fn(int, T) evaluates to true for all elements in elems

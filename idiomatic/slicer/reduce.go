@@ -36,7 +36,7 @@ func ReduceErr[E any, A any](fn func(int, A, E) (A, error), initial A, elems ...
 		}
 
 		if err != nil {
-			err = errReduceFailureFn(i, err.Error())
+			err = errReduceFailureFn(i, "%s", err.Error())
 			break
 		}
 	}

@@ -16,9 +16,6 @@ import (
 //
 // The first slice contains the elements for which the fn function returns a true value.  The second slice contains the
 // elements for which the fn function returns a false value.
-//
-// for which the fn function returns a true value.  The second slice contains the elems for which
-// the fn fucntion returns a false value.
 func Partition[T any](fn func(int, T) bool, elems ...T) ([]T, []T) {
 	fn2 := func(i int, elem T) (bool, error) {
 		k := fn(i, elem)
