@@ -26,7 +26,7 @@ func IntersectionFnErr[T any, C comparable](fn func(T) (C, error), as []T, bs []
 		return results, err
 	}
 
-	am, err := GroupErr(fn2, uas...)
+	am, err := GroupErr(fn, uas...)
 	if err != nil {
 		return results, err
 	}
@@ -36,7 +36,7 @@ func IntersectionFnErr[T any, C comparable](fn func(T) (C, error), as []T, bs []
 		return results, err
 	}
 
-	bm, err := GroupErr(fn2, ubs...)
+	bm, err := GroupErr(fn, ubs...)
 	if err != nil {
 		return results, err
 	}

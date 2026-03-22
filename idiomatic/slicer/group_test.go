@@ -44,7 +44,7 @@ func Test_Group(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
-			actual := slicer.Group(tc.fn, tc.input...)
+			actual := slicer.GroupI(tc.fn, tc.input...)
 			assert.Equal(tt, tc.expected, actual)
 		})
 	}

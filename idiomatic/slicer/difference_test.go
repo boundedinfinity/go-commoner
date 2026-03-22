@@ -108,7 +108,7 @@ func Test_DifferenceFn(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
 			fn := func(elem Thing) string { return elem.K }
-			actual := slicer.DifferenceBy(fn, tc.input1, tc.input2)
+			actual := slicer.DifferenceFn(fn, tc.input1, tc.input2)
 			assert.Equal(tt, tc.expected, actual)
 		})
 	}

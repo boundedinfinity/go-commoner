@@ -12,15 +12,15 @@ func Filter[T comparable](t T, elems ...T) []T {
 	return result
 }
 
-func FilterBy[T any](by func(T) bool, elems ...T) []T {
-	if by == nil {
+func FilterFn[T any](fn func(T) bool, elems ...T) []T {
+	if fn == nil {
 		return []T{}
 	}
 
 	var result []T
 
 	for _, elem := range elems {
-		if by(elem) {
+		if fn(elem) {
 			result = append(result, elem)
 		}
 	}
@@ -28,15 +28,15 @@ func FilterBy[T any](by func(T) bool, elems ...T) []T {
 	return result
 }
 
-func FilterByI[T any](by func(int, T) bool, elems ...T) []T {
-	if by == nil {
+func FilterFnI[T any](fn func(int, T) bool, elems ...T) []T {
+	if fn == nil {
 		return []T{}
 	}
 
 	var result []T
 
 	for i, elem := range elems {
-		if by(i, elem) {
+		if fn(i, elem) {
 			result = append(result, elem)
 		}
 	}
@@ -44,15 +44,15 @@ func FilterByI[T any](by func(int, T) bool, elems ...T) []T {
 	return result
 }
 
-func FilterByErr[T any](by func(T) (bool, error), elems ...T) ([]T, error) {
+func FilterFnErr[T any](fn func(T) (bool, error), elems ...T) ([]T, error) {
 	var result []T
 
-	if by == nil {
+	if fn == nil {
 		return result, nil
 	}
 
 	for _, elem := range elems {
-		ok, err := by(elem)
+		ok, err := fn(elem)
 
 		if err != nil {
 			return result, err
@@ -66,15 +66,15 @@ func FilterByErr[T any](by func(T) (bool, error), elems ...T) ([]T, error) {
 	return result, nil
 }
 
-func FilterByErrI[T any](by func(int, T) (bool, error), elems ...T) ([]T, error) {
+func FilterFnErrI[T any](fn func(int, T) (bool, error), elems ...T) ([]T, error) {
 	var result []T
 
-	if by == nil {
+	if fn == nil {
 		return result, nil
 	}
 
 	for i, elem := range elems {
-		ok, err := by(i, elem)
+		ok, err := fn(i, elem)
 
 		if err != nil {
 			return result, err

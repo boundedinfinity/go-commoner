@@ -12,15 +12,15 @@ func Exclude[T comparable](t T, elems ...T) []T {
 	return result
 }
 
-func ExcludeBy[T any](by func(T) bool, elems ...T) []T {
-	if by == nil {
+func ExcludeFn[T any](fn func(T) bool, elems ...T) []T {
+	if fn == nil {
 		return []T{}
 	}
 
 	var result []T
 
 	for _, elem := range elems {
-		if !by(elem) {
+		if !fn(elem) {
 			result = append(result, elem)
 		}
 	}
@@ -28,15 +28,15 @@ func ExcludeBy[T any](by func(T) bool, elems ...T) []T {
 	return result
 }
 
-func ExcludeByI[T any](by func(int, T) bool, elems ...T) []T {
-	if by == nil {
+func ExcludeFnI[T any](fn func(int, T) bool, elems ...T) []T {
+	if fn == nil {
 		return []T{}
 	}
 
 	var result []T
 
 	for i, elem := range elems {
-		if !by(i, elem) {
+		if !fn(i, elem) {
 			result = append(result, elem)
 		}
 	}
@@ -44,15 +44,15 @@ func ExcludeByI[T any](by func(int, T) bool, elems ...T) []T {
 	return result
 }
 
-func ExcludeByErrI[T any](by func(int, T) (bool, error), elems ...T) ([]T, error) {
+func ExcludeFnErrI[T any](fn func(int, T) (bool, error), elems ...T) ([]T, error) {
 	var result []T
 
-	if by == nil {
+	if fn == nil {
 		return result, nil
 	}
 
 	for i, elem := range elems {
-		ok, err := by(i, elem)
+		ok, err := fn(i, elem)
 
 		if err != nil {
 			return result, err

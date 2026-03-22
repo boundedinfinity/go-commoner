@@ -23,7 +23,7 @@ func Deduplicate[T comparable](elems ...T) []T {
 //   - int is the index of the current element
 //   - T is the current element
 //   - K the comparable type to deduplicate
-func DeduplicateBy[T any, C comparable](fn func(T) C, elems ...T) []T {
+func DeduplicateFn[T any, C comparable](fn func(T) C, elems ...T) []T {
 	var results []T
 
 	if fn == nil {
@@ -50,7 +50,7 @@ func DeduplicateBy[T any, C comparable](fn func(T) C, elems ...T) []T {
 //   - int is the index of the current element
 //   - T is the current element
 //   - K the comparable type to deduplicate
-func DeduplicateByI[T any, C comparable](fn func(int, T) C, elems ...T) []T {
+func DeduplicateFnI[T any, C comparable](fn func(int, T) C, elems ...T) []T {
 	var results []T
 
 	if fn == nil {
@@ -79,7 +79,7 @@ func DeduplicateByI[T any, C comparable](fn func(int, T) C, elems ...T) []T {
 //   - K the comparable type to deduplicate
 //
 // If the fn function returns an error, processing through elems is stopped and the error is returned.
-func DeduplicateByErr[T any, C comparable](fn func(T) (C, error), elems ...T) ([]T, error) {
+func DeduplicateFnErr[T any, C comparable](fn func(T) (C, error), elems ...T) ([]T, error) {
 	var results []T
 
 	if fn == nil {
@@ -115,7 +115,7 @@ func DeduplicateByErr[T any, C comparable](fn func(T) (C, error), elems ...T) ([
 //   - K the comparable type to deduplicate
 //
 // If the fn function returns an error, processing through elems is stopped and the error is returned.
-func DeduplicateByErrI[T any, C comparable](fn func(int, T) (C, error), elems ...T) ([]T, error) {
+func DeduplicateFnErrI[T any, C comparable](fn func(int, T) (C, error), elems ...T) ([]T, error) {
 	var results []T
 
 	if fn == nil {

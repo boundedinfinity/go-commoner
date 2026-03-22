@@ -30,7 +30,7 @@ func Test_AnyOf(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
-			actual := slicer.AnyOf(tc.match, tc.input...)
+			actual := slicer.Contains(tc.match, tc.input...)
 			assert.Equal(tt, tc.expected, actual)
 		})
 	}

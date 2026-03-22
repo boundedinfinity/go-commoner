@@ -63,7 +63,7 @@ func TrimRunesLeft[T ~string](s T, set ...rune) T {
 
 func containsRune(set []rune) func(rune) bool {
 	return func(r rune) bool {
-		return slicer.AnyOf(r, set...)
+		return slicer.Contains(r, set...)
 	}
 }
 

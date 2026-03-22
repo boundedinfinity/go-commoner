@@ -52,7 +52,7 @@ func EqualsBy[T any, C comparable](fn func(T) C, as, bs []T) bool {
 	return true
 }
 
-func EqualsByI[T any, C comparable](fn func(int, T) C, as, bs []T) bool {
+func EqualsFnI[T any, C comparable](fn func(int, T) C, as, bs []T) bool {
 	if len(as) != len(bs) {
 		return false
 	}

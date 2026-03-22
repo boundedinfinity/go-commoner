@@ -9,7 +9,7 @@ func AnyOf[S ~string, E ~string](s S, elems ...E) bool {
 		temp = append(temp, string(elem))
 	}
 
-	return slicer.AnyOf(string(s), temp...)
+	return slicer.Contains(string(s), temp...)
 }
 
 func AnyOfIgnoreCase[S ~string, E ~string](s S, elems ...E) bool {

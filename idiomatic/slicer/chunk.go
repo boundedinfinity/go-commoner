@@ -24,14 +24,14 @@ import (
 func Chunk[T any](size int, elems ...T) [][]T {
 	var chunks [][]T
 
-	for chunk := range ChunkIter(size, elems...) {
+	for chunk := range chunkIter(size, elems...) {
 		chunks = append(chunks, chunk)
 	}
 
 	return chunks
 }
 
-func ChunkIter[T any](size int, elems ...T) iter.Seq[[]T] {
+func chunkIter[T any](size int, elems ...T) iter.Seq[[]T] {
 	return func(yield func([]T) bool) {
 		var chunk []T
 

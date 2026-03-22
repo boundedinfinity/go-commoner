@@ -7,5 +7,5 @@ func IsZero[T ~string](s T) bool {
 }
 
 func FindNonZero[T ~string](elems ...T) (T, bool) {
-	return slicer.FindBy(func(elem T) bool { return !IsZero(elem) }, elems...)
+	return slicer.FindFn(func(elem T) bool { return !IsZero(elem) }, elems...)
 }

@@ -1,27 +1,20 @@
 package slicer
 
+import "slices"
+
 // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // References
 //      - https://lodash.com/docs/4.17.15#includes
 // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// AnyOf test if the target value is equal to any of the elements in elems.
+// Contains test if the target value is equal to any of the elements in elems.
 //
 // Returns true on the first element that matches.
-func AnyOf[T comparable](target T, elems ...T) bool {
-	var ok bool
-
-	for _, elem := range elems {
-		if target == elem {
-			ok = true
-			break
-		}
-	}
-
-	return ok
+func Contains[T comparable](target T, elems ...T) bool {
+	return slices.Contains(elems, target)
 }
 
-// AnyOfBy test if the value returned from fn is true for any of the elements in elems
+// ContainsFn test if the value returned from fn is true for any of the elements in elems
 //
 // The by(T) bool functions takes:
 //   - T is the current element
@@ -29,11 +22,11 @@ func AnyOf[T comparable](target T, elems ...T) bool {
 // and returns true if the the value of by(T) matches.
 //
 // Returns true on the first element that matches.
-func AnyOfBy[T any](by func(T) bool, elems ...T) bool {
+func ContainsFn[T any](fn func(T) bool, elems ...T) bool {
 	var ok bool
 
 	for _, elem := range elems {
-		if ok = by(elem); ok {
+		if ok = fn(elem); ok {
 			break
 		}
 	}
@@ -41,18 +34,18 @@ func AnyOfBy[T any](by func(T) bool, elems ...T) bool {
 	return ok
 }
 
-// AnyOfByI test if the value returned from fn is true for any of the elements in elems
+// CcontainsFnI test if the value returned from fn is true for any of the elements in elems
 //
 // The by(int, T) bool functions takes:
 //   - int is the index of the current element
 //   - T is the current element
 //
 // Returns true on the first element that matches.
-func AnyOfByI[T any](by func(int, T) bool, elems ...T) bool {
+func CcontainsFnI[T any](fn func(int, T) bool, elems ...T) bool {
 	var ok bool
 
 	for i, elem := range elems {
-		if ok = by(i, elem); ok {
+		if ok = fn(i, elem); ok {
 			break
 		}
 	}
@@ -60,7 +53,7 @@ func AnyOfByI[T any](by func(int, T) bool, elems ...T) bool {
 	return ok
 }
 
-// AnyOfByErr test if the value returned from fn is true for any of the elements in elems
+// ContainsFnErr test if the value returned from fn is true for any of the elements in elems
 //
 // The by(int, T) bool functions takes:
 //   - int is the index of the current element
@@ -69,12 +62,12 @@ func AnyOfByI[T any](by func(int, T) bool, elems ...T) bool {
 // Returns true on the first element that matches.
 //
 // If the fn function returns an error, processing through elems is stopped and the error is returned.
-func AnyOfByErr[T any](by func(T) (bool, error), elems ...T) (bool, error) {
+func ContainsFnErr[T any](fn func(T) (bool, error), elems ...T) (bool, error) {
 	var ok bool
 	var err error
 
 	for _, elem := range elems {
-		if ok, err = by(elem); ok || err != nil {
+		if ok, err = fn(elem); ok || err != nil {
 			break
 		}
 	}
@@ -82,7 +75,7 @@ func AnyOfByErr[T any](by func(T) (bool, error), elems ...T) (bool, error) {
 	return ok, err
 }
 
-// AnyOfByErrI test if the value returned from fn is true for any of the elements in elems
+// ContainsFnErrI test if the value returned from fn is true for any of the elements in elems
 //
 // The by(int, T) bool functions takes:
 //   - int is the index of the current element
@@ -91,12 +84,12 @@ func AnyOfByErr[T any](by func(T) (bool, error), elems ...T) (bool, error) {
 // Returns true on the first element that matches.
 //
 // If the fn function returns an error, processing through elems is stopped and the error is returned.
-func AnyOfByErrI[T any](by func(int, T) (bool, error), elems ...T) (bool, error) {
+func ContainsFnErrI[T any](fn func(int, T) (bool, error), elems ...T) (bool, error) {
 	var ok bool
 	var err error
 
 	for i, elem := range elems {
-		if ok, err = by(i, elem); ok || err != nil {
+		if ok, err = fn(i, elem); ok || err != nil {
 			break
 		}
 	}

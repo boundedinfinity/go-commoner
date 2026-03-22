@@ -52,7 +52,7 @@ type langer struct {
 }
 
 func (t langer) IsKeyword(s string) bool {
-	return slicer.AnyOf(s, t.keywords...)
+	return slicer.Contains(s, t.keywords...)
 }
 
 func (t *langer) WithCaserConversion(value string) *langer {

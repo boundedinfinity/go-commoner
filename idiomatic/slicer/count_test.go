@@ -8,13 +8,13 @@ import (
 )
 
 func Test_DupCount(t *testing.T) {
-	expected := []slicer.CountDuplicatesResult[int]{
+	expected := []slicer.CountResult[int]{
 		{Count: 2, Item: 1},
 		{Count: 2, Item: 2},
 		{Count: 2, Item: 3},
 	}
 	input := []int{1, 1, 2, 2, 3, 3}
-	actual := slicer.CountDuplicates(input...)
+	actual := slicer.Count(input...)
 
 	assert.ElementsMatch(t, expected, actual)
 }
@@ -29,7 +29,7 @@ func Test_DupCountFn(t *testing.T) {
 	thing2 := Thing{K: "y", V: 200}
 	thing3 := Thing{K: "z", V: 300}
 
-	expected := []slicer.CountDuplicatesResult[Thing]{
+	expected := []slicer.CountResult[Thing]{
 		{Item: thing1, Count: 2},
 		{Item: thing2, Count: 2},
 		{Item: thing3, Count: 2},
@@ -37,7 +37,7 @@ func Test_DupCountFn(t *testing.T) {
 
 	input := []Thing{thing1, thing2, thing3, thing1, thing2, thing3}
 
-	actual := slicer.CountDuplicatesBy(func(elem Thing) string {
+	actual := slicer.CountFn(func(elem Thing) string {
 		return elem.K
 	}, input...)
 
