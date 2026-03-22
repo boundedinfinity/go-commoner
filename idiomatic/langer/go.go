@@ -2,6 +2,7 @@ package langer
 
 import (
 	"github.com/boundedinfinity/go-commoner/idiomatic/caser"
+	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
 	"github.com/boundedinfinity/go-commoner/idiomatic/stringer"
 	"github.com/boundedinfinity/go-commoner/idiomatic/utfer"
 )
@@ -18,7 +19,7 @@ func init() {
 			"const", "fallthrough", "if", "range", "type", "continue", "for",
 			"import", "return", "var",
 		).StartsWith(
-		"_", "a",
+		stringer.AsStrings(slicer.Flatten(utfer.Utf8.LowerCase())...)...,
 	).Transformers(
 		wrapStringWithErr(utfer.RemoveNewlines),
 		wrapStringWithErr(stringer.TrimSpace),

@@ -37,11 +37,11 @@ func (t *UtfChar) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (t UtfChar) MarshalYAML() (interface{}, error) {
+func (t UtfChar) MarshalYAML() (any, error) {
 	return byte(t), nil
 }
 
-func (t *UtfChar) UnmarshalYAML(unmarshal func(interface{}) error) error {
+func (t *UtfChar) UnmarshalYAML(unmarshal func(any) error) error {
 	var v byte
 
 	if err := unmarshal(&v); err != nil {
