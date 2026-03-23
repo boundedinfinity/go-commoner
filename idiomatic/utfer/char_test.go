@@ -8,6 +8,6 @@ import (
 )
 
 func Test_HtmlNumber(t *testing.T) {
-	assert.Equal(t, "&#00;", utfer.NULL.HtmlNumber())
-	assert.Equal(t, "&#65;", utfer.UPPERCASE_A.HtmlNumber())
+	assert.Equal(t, "&#00;", utfer.NULL.HtmlEntity())
+	assert.Equal(t, "&#65;", utfer.UPPERCASE_A.HtmlEntity())
 }

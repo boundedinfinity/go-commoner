@@ -7,7 +7,7 @@ import (
 
 type UtfChar byte
 
-func (t UtfChar) HtmlNumber() string {
+func (t UtfChar) HtmlEntity() string {
 	return fmt.Sprintf("&#%02d;", t)
 }
 
