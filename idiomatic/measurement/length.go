@@ -13,7 +13,7 @@ func Parse[T ~int](s string) (Length[T], error) {
 }
 
 type Length[T ~int] struct {
-	Number rational.Rational[T]  `json:"unit,omelempty"`
+	Number rational.Rational[T]  `json:"unit,omitempty"`
 	System MeasurementSystem     `json:"system,omitempty"`
 	Format MeasurementFormatType `json:"format,omitempty"`
 }

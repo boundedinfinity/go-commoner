@@ -2,34 +2,7 @@ package utfer
 
 import (
 	"strings"
-
-	"github.com/boundedinfinity/go-commoner/idiomatic/numberer"
-	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
 )
-
-func InRange(c, start, end UtfChar) bool {
-	return c > start && c < end
-}
-
-func Range(start, end UtfChar) []UtfChar {
-	return numberer.Range(start, end)
-}
-
-func ToStrings(cs []UtfChar) []string {
-	return slicer.Map(func(c UtfChar) string { return string(c) }, cs...)
-}
-
-func OneOf[T ~byte](v T, elems []UtfChar) bool {
-	b := UtfChar(v)
-
-	for _, elem := range elems {
-		if elem == b {
-			return true
-		}
-	}
-
-	return false
-}
 
 func Replace[T ~string](s T, new UtfChar, olds ...UtfChar) string {
 	var result strings.Builder
