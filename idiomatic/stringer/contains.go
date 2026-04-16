@@ -2,8 +2,6 @@ package stringer
 
 import (
 	"strings"
-
-	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
 )
 
 func Contains[T ~string, S ~string](s S, substr T) bool {
@@ -11,14 +9,14 @@ func Contains[T ~string, S ~string](s S, substr T) bool {
 }
 
 func ContainsIgnoreCase[T ~string, S ~string](s S, substr T) bool {
-	return strings.EqualFold(string(s), string(substr))
+	return Contains(ToLower(s), ToLower(substr))
 }
 
-func ContainsAny[T ~string, S ~string](s S, elems ...T) bool {
-	normal := string(s)
+func ContainsAny[T, S ~string](s S, substrs ...T) bool {
+	native := string(s)
 
-	for _, elem := range elems {
-		if strings.Contains(normal, string(elem)) {
+	for _, substr := range substrs {
+		if strings.Contains(native, string(substr)) {
 			return true
 		}
 	}
@@ -26,18 +24,14 @@ func ContainsAny[T ~string, S ~string](s S, elems ...T) bool {
 	return false
 }
 
-func ContainsNone[T ~string, S ~string](s S, elems ...T) bool {
-	return !ContainsAny(s, elems...)
+func ContainsAnyIgnoreCase[T ~string, S ~string](s S, substrs ...T) bool {
+	return ContainsAny(ToLower(s), TransformAllFunc(substrs, ToLower)...)
 }
 
-func ContainsAnyIgnoreCase[T ~string, S ~string](s S, elems ...T) bool {
-	lowers := slicer.Map(
-		func(elem T) string { return ToLower(elem) },
-		elems...,
-	)
-	return ContainsAny(ToLower(s), lowers...)
+func ContainsNone[T ~string, S ~string](s S, substrs ...T) bool {
+	return !ContainsAny(s, substrs...)
 }
 
-func ContainsNoneIgnoreCase[T ~string, S ~string](s S, elems ...T) bool {
-	return !ContainsAnyIgnoreCase(s, elems...)
+func ContainsNoneIgnoreCase[T ~string, S ~string](s S, substrs ...T) bool {
+	return !ContainsAnyIgnoreCase(s, substrs...)
 }
