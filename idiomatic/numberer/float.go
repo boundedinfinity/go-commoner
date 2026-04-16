@@ -43,3 +43,7 @@ func (this *FloatNumber) Reciprocal() Number {
 func (this *FloatNumber) ToMixed() Number {
 	panic("unimplemented")
 }
+
+func (this *FloatNumber) ToImproper() Number {
+	panic("unimplemented")
+}

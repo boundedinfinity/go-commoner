@@ -13,5 +13,5 @@ func AnyOf[S ~string, E ~string](s S, elems ...E) bool {
 }
 
 func AnyOfIgnoreCase[S ~string, E ~string](s S, elems ...E) bool {
-	return AnyOf(Lowercase(s), LowercaseAll(elems...)...)
+	return AnyOf(ToLower(s), ToLowerAll(elems...)...)
 }

@@ -61,7 +61,7 @@ func Test_ContainsFnErr(t *testing.T) {
 			name:     "does not contain a",
 			match:    func(_ int, s string) (bool, error) { return false, errors.New("failed") },
 			input:    []string{"b", "c", "d", "e"},
-			expected: trier.Failure[bool](errors.New("failed")),
+			expected: trier.Error[bool](errors.New("failed")),
 		},
 	}
 

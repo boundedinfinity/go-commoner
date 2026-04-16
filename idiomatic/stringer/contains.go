@@ -7,18 +7,18 @@ import (
 )
 
 func Contains[T ~string, S ~string](s S, substr T) bool {
-	return ContainsAny(s, substr)
+	return strings.Contains(string(s), string(substr))
 }
 
 func ContainsIgnoreCase[T ~string, S ~string](s S, substr T) bool {
-	return ContainsAnyIgnoreCase(Lowercase(s), Lowercase(substr))
+	return strings.EqualFold(string(s), string(substr))
 }
 
 func ContainsAny[T ~string, S ~string](s S, elems ...T) bool {
-	ns := string(s)
+	normal := string(s)
 
 	for _, elem := range elems {
-		if strings.Contains(ns, string(elem)) {
+		if strings.Contains(normal, string(elem)) {
 			return true
 		}
 	}
@@ -32,10 +32,10 @@ func ContainsNone[T ~string, S ~string](s S, elems ...T) bool {
 
 func ContainsAnyIgnoreCase[T ~string, S ~string](s S, elems ...T) bool {
 	lowers := slicer.Map(
-		func(elem T) string { return Lowercase(elem) },
+		func(elem T) string { return ToLower(elem) },
 		elems...,
 	)
-	return ContainsAny(Lowercase(s), lowers...)
+	return ContainsAny(ToLower(s), lowers...)
 }
 
 func ContainsNoneIgnoreCase[T ~string, S ~string](s S, elems ...T) bool {

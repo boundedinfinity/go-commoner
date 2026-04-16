@@ -8,8 +8,8 @@ import (
 )
 
 var (
-	ErrNotDir  = errorer.Errorf("not a directory")
-	ErrNotDirv = ErrNotDir.ValueFn()
+	ErrNotDir  = errorer.New("not a directory")
+	errNotDirv = errorer.Func(ErrNotDir)
 )
 
 type DirConfig struct {
@@ -40,7 +40,7 @@ func (t dirs) JoinErr(dir string, elems ...string) (string, error) {
 	}
 
 	if !ok {
-		return "", ErrNotDirv(dir)
+		return "", errNotDirv(dir)
 	}
 
 	return Paths.Join(append([]string{dir}, elems...)...), nil
@@ -81,7 +81,7 @@ func (t dirs) EnsureErr(path string) (bool, error) {
 		}
 
 		if !dir {
-			return false, ErrNotDirv(path)
+			return false, errNotDirv(path)
 		}
 	} else {
 		if err := os.MkdirAll(path, t.config.Perm); err != nil {

@@ -18,9 +18,9 @@ func AllByI[T any](fn func(int, T) bool, vs ...T) bool {
 }
 
 func AllByErr[T any](fn func(T) (bool, error), vs ...T) trier.Try[bool] {
-	return trier.CompleteErr(slicer.AllFnErr(fn, vs...))
+	return trier.Complete(slicer.AllFnErr(fn, vs...))
 }
 
 func AllByErrI[T any](fn func(int, T) (bool, error), vs ...T) trier.Try[bool] {
-	return trier.CompleteErr(slicer.AllFnErrI(fn, vs...))
+	return trier.Complete(slicer.AllFnErrI(fn, vs...))
 }

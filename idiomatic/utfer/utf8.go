@@ -7,8 +7,8 @@ import (
 )
 
 var (
-	ErrUtf8Invalid  = errorer.New("invalid utf-8 character")
-	ErrUtf8Invalidv = ErrUtf8Invalid.ValueFn()
+	ErrUtf8Invalid   = errorer.New("invalid utf-8 character")
+	errUtf8InvalidFn = errorer.Func(ErrUtf8Invalid)
 )
 
 var Utf8 = utf8{
@@ -96,7 +96,7 @@ func (t utf8) Parse(v byte) (UtfChar, error) {
 	)
 
 	if !ok {
-		return f, ErrUtf8Invalidv(v)
+		return f, errUtf8InvalidFn("%v", v)
 	}
 
 	return f, nil

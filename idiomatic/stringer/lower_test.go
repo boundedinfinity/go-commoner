@@ -7,36 +7,90 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_Lowercase_Normal_String(t *testing.T) {
-	input := "StrinG"
-	expected := "string"
-	actual := stringer.Lowercase(input)
+func Test_ToLower_normal_string(t *testing.T) {
+	testCases := []struct {
+		name     string
+		input    string
+		expected string
+	}{
+		{
+			name:     "case 1",
+			input:    "STRING",
+			expected: "string",
+		},
+	}
 
-	assert.Equal(t, expected, actual)
+	for _, tc := range testCases {
+		t.Run(tc.name, func(tt *testing.T) {
+			actual := stringer.ToLower(tc.input)
+			assert.Equal(tt, tc.expected, actual)
+		})
+	}
 }
 
-func Test_Lowercase_Typed_String(t *testing.T) {
+func Test_ToLower_typed_string(t *testing.T) {
 	type MyString string
-	var input MyString = "StrinG"
-	var expected string = "string"
-	actual := stringer.Lowercase(input)
 
-	assert.Equal(t, expected, actual)
+	testCases := []struct {
+		name     string
+		input    MyString
+		expected string
+	}{
+		{
+			name:     "case 1",
+			input:    MyString("STRING"),
+			expected: "string",
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(tt *testing.T) {
+			actual := stringer.ToLower(tc.input)
+			assert.Equal(tt, tc.expected, actual)
+		})
+	}
 }
 
-func Test_LowercaseFirst_Normal_String(t *testing.T) {
-	input := "STRING"
-	expected := "sTRING"
-	actual := stringer.LowercaseFirst(input)
+func Test_ToLowerFirst_normal_string(t *testing.T) {
+	testCases := []struct {
+		name     string
+		input    string
+		expected string
+	}{
+		{
+			name:     "case 1",
+			input:    "STRING",
+			expected: "sTRING",
+		},
+	}
 
-	assert.Equal(t, expected, actual)
+	for _, tc := range testCases {
+		t.Run(tc.name, func(tt *testing.T) {
+			actual := stringer.ToLowerFirst(tc.input)
+			assert.Equal(tt, tc.expected, actual)
+		})
+	}
 }
 
-func Test_LowercaseFirst_Typed_String(t *testing.T) {
+func Test_ToLowerFirst_typed_string(t *testing.T) {
 	type MyString string
-	var input MyString = "STRING"
-	var expected string = "sTRING"
-	actual := stringer.LowercaseFirst(input)
 
-	assert.Equal(t, expected, actual)
+	testCases := []struct {
+		name     string
+		input    MyString
+		expected string
+	}{
+		{
+			name:     "case 1",
+			input:    MyString("STRING"),
+			expected: "sTRING",
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(tt *testing.T) {
+			actual := stringer.ToLowerFirst(tc.input)
+			assert.Equal(tt, tc.expected, actual)
+		})
+	}
 }

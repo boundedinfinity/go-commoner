@@ -8,8 +8,8 @@ import (
 )
 
 var (
-	ErrNotFile  = errorer.Errorf("not a file")
-	ErrNotFilev = ErrNotFile.ValueFn()
+	ErrNotFile  = errorer.New("not a file")
+	errNotFilev = errorer.Func(ErrNotFile)
 )
 
 type FileConfig struct {
@@ -101,7 +101,7 @@ func (t files) EnsureErr(path string) (bool, error) {
 		}
 
 		if !dir {
-			return false, ErrNotDirv(path)
+			return false, errNotFilev(path)
 		}
 	} else {
 		if err := os.MkdirAll(path, t.config.Perm); err != nil {

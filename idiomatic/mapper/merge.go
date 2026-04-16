@@ -1,11 +1,7 @@
 package mapper
 
-func Merge[K comparable, V any](dst map[K]V, src map[K]V) {
-	if dst == nil {
-		return
-	}
+import "maps"
 
-	for k, v := range src {
-		dst[k] = v
-	}
+func Merge[K comparable, V any](dst, src map[K]V) {
+	maps.Copy(dst, src)
 }

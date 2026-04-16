@@ -18,14 +18,14 @@ func Test_trier_constructors(t *testing.T) {
 	}{
 		{
 			name:              "Complete constructor, non-nil error",
-			actual:            trier.CompleteErr(1, assert.AnError),
+			actual:            trier.Complete(1, assert.AnError),
 			expectedResult:    1,
 			expectedErr:       assert.AnError,
 			expectedSucceeded: false,
 		},
 		{
 			name:              "Complete constructor, nil error",
-			actual:            trier.CompleteErr(1, nil),
+			actual:            trier.Complete(1, nil),
 			expectedResult:    1,
 			expectedErr:       nil,
 			expectedSucceeded: true,
@@ -39,7 +39,7 @@ func Test_trier_constructors(t *testing.T) {
 		},
 		{
 			name:              "Failure constructor",
-			actual:            trier.Failure[int](assert.AnError),
+			actual:            trier.Error[int](assert.AnError),
 			expectedResult:    0,
 			expectedErr:       assert.AnError,
 			expectedSucceeded: false,
@@ -70,8 +70,8 @@ func Test_trier_lift_constructors(t *testing.T) {
 		expectedErr       error
 	}{
 		{
-			name:              "CompleteOfZero constructor, with value, nil error",
-			actual:            trier.CompleteZero(1, nil),
+			name:              "Zero constructor, with value, nil error",
+			actual:            trier.Zero(1, nil),
 			expectedResult:    optioner.Some(1),
 			expectedErr:       nil,
 			expectedSucceeded: true,

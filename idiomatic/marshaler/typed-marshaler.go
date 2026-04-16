@@ -13,11 +13,11 @@ import (
 // https://medium.com/@nate510/dynamic-json-umarshalling-in-go-88095561d6a0
 
 var (
-	ErrTypedMarshalerTypeMissing            = errorer.New("type missing")
-	ErrTypedMarshalerTypeNotRegistered      = errorer.New("type not registered")
-	ErrTypedMarshalerTypeNotRegisteredv     = ErrTypedMarshalerTypeNotRegistered.ValueFn()
-	ErrTypedMarshalerTypeAlreadyRegistered  = errorer.New("type already registered")
-	ErrTypedMarshalerTypeAlreadyRegisteredv = ErrTypedMarshalerTypeAlreadyRegistered.ValueFn()
+	ErrTypedMarshalerTypeMissing             = errorer.New("type missing")
+	ErrTypedMarshalerTypeNotRegistered       = errorer.New("type not registered")
+	errTypedMarshalerTypeNotRegisteredFn     = errorer.Func(ErrTypedMarshalerTypeNotRegistered)
+	ErrTypedMarshalerTypeAlreadyRegistered   = errorer.New("type already registered")
+	errTypedMarshalerTypeAlreadyRegisteredFn = errorer.Func(ErrTypedMarshalerTypeAlreadyRegistered)
 )
 
 type TypeNamer interface {
@@ -67,7 +67,7 @@ func (t *TypedMarshaler) register(namer TypeNamer) error {
 	}
 
 	if _, ok := t.types[name]; ok {
-		return ErrTypedMarshalerTypeAlreadyRegisteredv(name)
+		return errTypedMarshalerTypeAlreadyRegisteredFn("%v", name)
 	}
 
 	t.types[name] = typedInfo{
@@ -86,7 +86,7 @@ func (t TypedMarshaler) Marshal(namer TypeNamer) ([]byte, error) {
 	}
 
 	if _, ok := t.types[name]; !ok {
-		return nil, ErrTypedMarshalerTypeNotRegisteredv(name)
+		return nil, errTypedMarshalerTypeNotRegisteredFn("%v", name)
 	}
 
 	typed := typedMarshaler{
@@ -112,7 +112,7 @@ func (t TypedMarshaler) Unmarshal(data []byte) (any, error) {
 	info, ok := t.types[discriminator.Type]
 
 	if !ok {
-		return nil, ErrTypedMarshalerTypeNotRegisteredv(discriminator.Type)
+		return nil, errTypedMarshalerTypeNotRegisteredFn("%v", discriminator.Type)
 	}
 
 	rf := reflect.New(info.typ)

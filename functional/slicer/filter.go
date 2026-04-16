@@ -10,5 +10,5 @@ func Filter[T any](fn func(T) bool, elems ...T) []T {
 }
 
 func FilterErr[T any](fn func(T) (bool, error), elems ...T) trier.Try[[]T] {
-	return trier.CompleteErr(slicer.FilterFnErr(fn, elems...))
+	return trier.Complete(slicer.FilterFnErr(fn, elems...))
 }

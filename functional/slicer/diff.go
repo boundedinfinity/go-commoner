@@ -15,5 +15,5 @@ func DiffBy[T any](as, bs []T, fn func(T) bool) optioner.Option[[]T] {
 }
 
 func DiffByErr[T any](as, bs []T, fn func(T) (bool, error)) trier.Try[optioner.Option[[]T]] {
-	return trier.CompleteSlice(slicer.DifferenceFnErr(fn, as, bs))
+	return trier.Slice(slicer.DifferenceFnErr(fn, as, bs))
 }

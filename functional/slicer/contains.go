@@ -18,9 +18,9 @@ func ContainsByI[T any](fn func(int, T) bool, elems ...T) bool {
 }
 
 func ContainsByErr[T any](fn func(T) (bool, error), elems ...T) trier.Try[bool] {
-	return trier.CompleteErr(slicer.ContainsFnErr(fn, elems...))
+	return trier.Complete(slicer.ContainsFnErr(fn, elems...))
 }
 
 func ContainsByErrI[T any](fn func(int, T) (bool, error), elems ...T) trier.Try[bool] {
-	return trier.CompleteErr(slicer.ContainsFnErrI(fn, elems...))
+	return trier.Complete(slicer.ContainsFnErrI(fn, elems...))
 }

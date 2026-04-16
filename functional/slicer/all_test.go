@@ -90,7 +90,7 @@ func Test_AllFnErr(t *testing.T) {
 			name:     "a to all a's and b's",
 			match:    func(_ int, elem string) (bool, error) { return false, errors.New("failed") },
 			list:     []string{"a", "b", "a", "a"},
-			expected: trier.Failure[bool](errors.New("failed")),
+			expected: trier.Error[bool](errors.New("failed")),
 		},
 	}
 

@@ -11,7 +11,7 @@ func (t Mapper[K, V]) Keys() []K {
 }
 
 func (t Mapper[K, V]) KeysFiltered(fn func(K) bool) []K {
-	return KeysFiltered(t, fn)
+	return KeysFunc(t, fn)
 }
 
 func (t Mapper[K, V]) Values() []V {

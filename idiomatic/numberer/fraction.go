@@ -1,100 +1,109 @@
 package numberer
 
-import "fmt"
+import (
+	"fmt"
 
-func Mixed(whole int, numerator int, denominator int) Number {
-	return &MixedNumber{
-		Whole: whole,
-		Fraction: FractionalNumber{
-			Numerator:   numerator,
-			Denominator: denominator,
-		},
+	"github.com/boundedinfinity/go-commoner/idiomatic/mather"
+)
+
+func Fraction(numerator, denominator int) Number {
+	return &FractionNumber{
+		Numerator:   numerator,
+		Denominator: denominator,
 	}
 }
 
-var _ Number = &MixedNumber{}
+var _ Number = &FractionNumber{}
 
-type MixedNumber struct {
-	Whole    int
-	Fraction FractionalNumber
+type FractionNumber struct {
+	Numerator   int
+	Denominator int
 }
 
 // ToFloat implements [Number].
-func (this *MixedNumber) ToFloat() Number {
+func (this *FractionNumber) ToFloat() Number {
 	panic("unimplemented")
 }
 
-func (this MixedNumber) String() string {
-	if this.Whole == 0 {
-		return this.Fraction.String()
-	}
-
-	return fmt.Sprintf("%d %v", this.Whole, this.Fraction)
+func (this FractionNumber) String() string {
+	return fmt.Sprintf("%d/%d", this.Numerator, this.Denominator)
 }
 
-func (this MixedNumber) IsZero() bool {
-	return this.Whole == 0 && this.Fraction.IsZero()
-}
-
-func (this MixedNumber) Copy() MixedNumber {
-	return MixedNumber{
-		Whole:    this.Whole,
-		Fraction: this.Fraction.Copy(),
+func (this FractionNumber) Copy() FractionNumber {
+	return FractionNumber{
+		Numerator:   this.Numerator,
+		Denominator: this.Denominator,
 	}
 }
 
-func (this *MixedNumber) ToFraction() Number {
-	return &FractionalNumber{
-		Numerator:   this.Whole*this.Fraction.Denominator + this.Fraction.Numerator,
-		Denominator: this.Fraction.Denominator,
+func (this FractionNumber) ToFraction() Number {
+	return &this
+}
+
+func (this FractionNumber) ToNormal() Number {
+	return &this
+}
+
+func (this FractionNumber) ToMixed() Number {
+	if this.IsProper() {
+		return &MixedNumber{Fraction: this.Copy()}
+	} else {
+		return &MixedNumber{
+			Whole: this.Numerator / this.Denominator,
+			Fraction: FractionNumber{
+				Numerator:   this.Numerator % this.Denominator,
+				Denominator: this.Denominator,
+			},
+		}
 	}
 }
 
-func (this *MixedNumber) ToMixed() Number {
-	return this
-}
+func (this FractionNumber) Reduce() FractionNumber {
+	gcd := GreatestCommonFactor(this.Numerator, this.Denominator)
 
-func (this MixedNumber) IsImproper() bool {
-	if this.Whole == 0 {
-		return this.Fraction.IsImproper()
-	}
-	return true
-}
-
-func (this MixedNumber) IsProper() bool {
-	if this.Whole == 0 {
-		return this.Fraction.IsProper()
-	}
-	return false
-}
-
-func (this MixedNumber) Reduce() MixedNumber {
-	return MixedNumber{
-		Whole:    this.Whole,
-		Fraction: this.Fraction.Reduce(),
+	return FractionNumber{
+		Numerator:   this.Numerator / gcd,
+		Denominator: this.Denominator / gcd,
 	}
 }
 
-func (t MixedNumber) Enumerate(l, h int) []MixedNumber {
-	var items []MixedNumber
-	fractions := t.Fraction.Enumerate(l, h)
+func (this FractionNumber) IsZero() bool {
+	var zero FractionNumber
+	return this == zero
+}
 
-	for _, fraction := range fractions {
-		items = append(items, MixedNumber{
-			Whole:    t.Whole,
-			Fraction: fraction,
-		})
+func (this *FractionNumber) IsImproper() bool {
+	return this.Numerator > this.Denominator
+}
+
+func (this *FractionNumber) IsProper() bool {
+	return this.Denominator > this.Numerator
+}
+
+func (this *FractionNumber) Reciprocal() Number {
+	return &FractionNumber{
+		Numerator:   this.Denominator,
+		Denominator: this.Numerator,
+	}
+}
+
+func (t FractionNumber) Enumerate(l, h int) []FractionNumber {
+	var items []FractionNumber
+	item := t.Reduce()
+	l = mather.Max(l, item.Denominator)
+
+	for i := l; i <= h; i <<= 1 {
+		items = append(items, item)
+		item = *Fraction(item.Numerator*2, item.Denominator*2).(*FractionNumber)
 	}
 
 	return items
 }
 
-func (this MixedNumber) Reciprocal() Number {
-	fraction := this.ToFraction().(*FractionalNumber)
-	return fraction.Reciprocal()
+func (this FractionNumber) Float() float64 {
+	return float64(this.Numerator) / float64(this.Denominator)
 }
 
-func (this MixedNumber) Float() float64 {
-	fraction := this.ToFraction().(*FractionalNumber)
-	return float64(fraction.Numerator) / float64(fraction.Denominator)
+func (this *FractionNumber) ToImproper() Number {
+	return this
 }

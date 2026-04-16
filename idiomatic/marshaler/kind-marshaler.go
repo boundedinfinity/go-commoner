@@ -12,11 +12,11 @@ import (
 // https://medium.com/@nate510/dynamic-json-umarshalling-in-go-88095561d6a0
 
 var (
-	ErrKindMarshalerTypeMissing            = errorer.New("type missing")
-	ErrKindMarshalerTypeNotRegistered      = errorer.New("type not registered")
-	ErrKindMarshalerTypeNotRegisteredv     = ErrKindMarshalerTypeNotRegistered.ValueFn()
-	ErrKindMarshalerTypeAlreadyRegistered  = errorer.New("type already registered")
-	ErrKindMarshalerTypeAlreadyRegisteredv = ErrKindMarshalerTypeAlreadyRegistered.ValueFn()
+	ErrKindMarshalerTypeMissing             = errorer.New("type missing")
+	ErrKindMarshalerTypeNotRegistered       = errorer.New("type not registered")
+	errKindMarshalerTypeNotRegisteredFn     = errorer.Func(ErrKindMarshalerTypeNotRegistered)
+	ErrKindMarshalerTypeAlreadyRegistered   = errorer.New("type already registered")
+	errKindMarshalerTypeAlreadyRegisteredFn = errorer.Func(ErrKindMarshalerTypeAlreadyRegistered)
 )
 
 func NewKind[D any](val D, fn func(D) string) *KindMarshaler[D] {
@@ -53,7 +53,7 @@ func (t *KindMarshaler[D]) RegisterType(discriminator string, typ reflect.Type) 
 	}
 
 	if _, ok := t.lookup[discriminator]; ok {
-		return ErrKindMarshalerTypeAlreadyRegisteredv(discriminator)
+		return errKindMarshalerTypeAlreadyRegisteredFn("%v", discriminator)
 	}
 
 	t.lookup[discriminator] = kindInfo{
@@ -88,7 +88,7 @@ func (t KindMarshaler[D]) Unmarshal(data []byte) (any, error) {
 	info, ok := t.lookup[discriminator]
 
 	if !ok {
-		return nil, ErrKindMarshalerTypeNotRegisteredv(discriminator)
+		return nil, errKindMarshalerTypeNotRegisteredFn("%v", discriminator)
 	}
 
 	vv := reflect.New(info.typ)

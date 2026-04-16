@@ -7,10 +7,10 @@ type Item[K comparable, V any] struct {
 
 func Items[K comparable, V any](m map[K]V) []Item[K, V] {
 	fn := func(_ K, _ V) bool { return true }
-	return ItemsFiltered(m, fn)
+	return ItemsFunc(m, fn)
 }
 
-func ItemsFiltered[K comparable, V any](m map[K]V, fn func(K, V) bool) []Item[K, V] {
+func ItemsFunc[K comparable, V any](m map[K]V, fn func(K, V) bool) []Item[K, V] {
 	var elems []Item[K, V]
 
 	for k, v := range m {

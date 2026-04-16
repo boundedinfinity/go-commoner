@@ -2,17 +2,27 @@ package stringer
 
 import "strings"
 
-func Uppercase[T ~string](s T) string {
+func ToUpper[T ~string](s T) string {
 	return strings.ToUpper(string(s))
 }
 
-func UppercaseFirst[T ~string](s T) string {
-	if len(s) <= 1 {
-		return Uppercase(s)
+func ToUpperAll[T ~string](elems ...T) []string {
+	results := make([]string, len(elems))
+
+	for i := range elems {
+		results[i] = strings.ToUpper(string(elems[i]))
 	}
 
-	f := string(s[0])
-	r := string(s[1:])
+	return results
+}
 
-	return Uppercase(f) + r
+func ToUpperFirst[T ~string](s T) string {
+	switch len(s) {
+	case 0:
+		return ""
+	case 1:
+		return strings.ToUpper(string(s))
+	default:
+		return strings.ToUpper(string(s[0])) + string(s[1:])
+	}
 }
