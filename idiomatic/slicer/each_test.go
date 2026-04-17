@@ -13,17 +13,33 @@ func Test_Each(t *testing.T) {
 		thing string
 	}
 
-	expected := []Type1{{thing: "A"}, {thing: "B"}}
-	input := []Type1{{thing: "a"}, {thing: "b"}}
-	actual := []Type1{}
+	testCases := []struct {
+		name     string
+		input    []Type1
+		expected []Type1
+		ok       bool
+	}{
+		{
+			name:     "should find",
+			input:    []Type1{{thing: "a"}, {thing: "b"}},
+			expected: []Type1{{thing: "A"}, {thing: "B"}},
+			ok:       true,
+		},
+	}
 
-	slicer.Each(func(t1 Type1) {
-		actual = append(actual, Type1{
-			thing: stringer.Capitalize(t1.thing),
+	for _, tc := range testCases {
+		t.Run(tc.name, func(tt *testing.T) {
+			actual := []Type1{}
+
+			slicer.Each(func(t1 Type1) {
+				actual = append(actual, Type1{
+					thing: stringer.ToCapital(t1.thing),
+				})
+			}, tc.input...)
+
+			assert.ElementsMatch(t, tc.expected, actual)
 		})
-	}, input...)
-
-	assert.ElementsMatch(t, expected, actual)
+	}
 }
 
 // func Test_EachErr_NoErr(t *testing.T) {

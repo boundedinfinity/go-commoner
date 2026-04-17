@@ -59,7 +59,7 @@ func TransformAllFuncErr[T ~string](items []T, fns ...func(string) (string, erro
 		for j, fn := range fns {
 			if fn != nil {
 				if native, err = fn(native); err != nil {
-					err = errTransformFn("item[%d] : fns[%d] : %w", i, j, err)
+					err = errTransformFn("items[%d] : fns[%d] : %w", i, j, err)
 					break
 				}
 			}
