@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_TabToSpace(t *testing.T) {
+func Test_Stringer_TabToSpace(t *testing.T) {
 	testCases := []struct {
 		name     string
 		input    string

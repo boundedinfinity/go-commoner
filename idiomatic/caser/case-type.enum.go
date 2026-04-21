@@ -14,8 +14,9 @@ import (
 	"database/sql/driver"
 	"encoding/json"
 	"encoding/xml"
-	errorer "github.com/boundedinfinity/go-commoner/errorer"
 	"strings"
+
+	errorer "github.com/boundedinfinity/go-commoner/errorer"
 )
 
 //////////////////////////////////////////////////////////////////
@@ -24,36 +25,24 @@ import (
 ///                                                              /
 //////////////////////////////////////////////////////////////////
 
-type CaseType string
+type Case string
 
-//////////////////////////////////////////////////////////////////
-///                                                              /
-///                    Stringer implemenation                    /
-///                                                              /
-//////////////////////////////////////////////////////////////////
-
-func (t CaseType) String() string {
+func (t Case) String() string {
 	return string(t)
 }
 
-//////////////////////////////////////////////////////////////////
-///                                                              /
-///             JSON marshal/unmarshal implemenation             /
-///                                                              /
-//////////////////////////////////////////////////////////////////
-
-func (t CaseType) MarshalJSON() ([]byte, error) {
+func (t Case) MarshalJSON() ([]byte, error) {
 	return json.Marshal(string(t))
 }
 
-func (t *CaseType) UnmarshalJSON(data []byte) error {
+func (t *Case) UnmarshalJSON(data []byte) error {
 	var s string
 
 	if err := json.Unmarshal(data, &s); err != nil {
 		return err
 	}
 
-	found, err := CaseTypes.Parse(s)
+	found, err := Cases.Parse(s)
 
 	if err != nil {
 		return err
@@ -63,24 +52,18 @@ func (t *CaseType) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-//////////////////////////////////////////////////////////////////
-///                                                              /
-///             YAML marshal/unmarshal implemenation             /
-///                                                              /
-//////////////////////////////////////////////////////////////////
-
-func (t CaseType) MarshalYAML() (interface{}, error) {
+func (t Case) MarshalYAML() (interface{}, error) {
 	return string(t), nil
 }
 
-func (t *CaseType) UnmarshalYAML(unmarshal func(interface{}) error) error {
+func (t *Case) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	var s string
 
 	if err := unmarshal(&s); err != nil {
 		return err
 	}
 
-	found, err := CaseTypes.Parse(s)
+	found, err := Cases.Parse(s)
 
 	if err != nil {
 		return err
@@ -90,24 +73,18 @@ func (t *CaseType) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	return nil
 }
 
-//////////////////////////////////////////////////////////////////
-///                                                              /
-///              XML marshal/unmarshal implemenation             /
-///                                                              /
-//////////////////////////////////////////////////////////////////
-
-func (t CaseType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+func (t Case) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return e.EncodeElement(string(t), start)
 }
 
-func (t *CaseType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+func (t *Case) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	var s string
 
 	if err := d.DecodeElement(&s, &start); err != nil {
 		return err
 	}
 
-	found, err := CaseTypes.Parse(s)
+	found, err := Cases.Parse(s)
 
 	if err != nil {
 		return err
@@ -117,19 +94,13 @@ func (t *CaseType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	return nil
 }
 
-//////////////////////////////////////////////////////////////////
-///                                                              /
-///              SQL marshal/unmarshal implemenation             /
-///                                                              /
-//////////////////////////////////////////////////////////////////
-
-func (t CaseType) Value() (driver.Value, error) {
+func (t Case) Value() (driver.Value, error) {
 	return string(t), nil
 }
 
-func (t *CaseType) Scan(value interface{}) error {
+func (t *Case) Scan(value interface{}) error {
 	if value == nil {
-		return CaseTypes.errf(value)
+		return Cases.errf(value)
 	}
 
 	dv, err := driver.String.ConvertValue(value)
@@ -141,10 +112,10 @@ func (t *CaseType) Scan(value interface{}) error {
 	s, ok := dv.(string)
 
 	if !ok {
-		return CaseTypes.errf(value)
+		return Cases.errf(value)
 	}
 
-	found, err := CaseTypes.Parse(s)
+	found, err := Cases.Parse(s)
 
 	if err != nil {
 		return err
@@ -160,54 +131,54 @@ func (t *CaseType) Scan(value interface{}) error {
 ///                                                              /
 //////////////////////////////////////////////////////////////////
 
-var CaseTypes = caseTypes{
+var Cases = cases{
 	Err:        errorer.New("invalid CaseType"),
-	Invalid:    CaseType("invalid"),
-	Camel:      CaseType("camel"),
-	Kebab:      CaseType("kebab"),
-	KebabLower: CaseType("kebab-lower"),
-	KebabUpper: CaseType("kebab-upper"),
-	Pascal:     CaseType("pascal"),
-	Phrase:     CaseType("phrase"),
-	Snake:      CaseType("snake"),
-	SnakeLower: CaseType("snake-lower"),
-	SnakeUpper: CaseType("snake-upper"),
-	Unknown:    CaseType("unknown"),
+	Invalid:    Case("invalid"),
+	Camel:      Case("camel"),
+	Kebab:      Case("kebab"),
+	KebabLower: Case("kebab-lower"),
+	KebabUpper: Case("kebab-upper"),
+	Pascal:     Case("pascal"),
+	Phrase:     Case("phrase"),
+	Snake:      Case("snake"),
+	SnakeLower: Case("snake-lower"),
+	SnakeUpper: Case("snake-upper"),
+	Unknown:    Case("unknown"),
 }
 
-type caseTypes struct {
+type cases struct {
 	Err        error
 	errf       func(...any) error
-	parseMap   map[CaseType][]string
-	Invalid    CaseType
-	Camel      CaseType
-	Kebab      CaseType
-	KebabLower CaseType
-	KebabUpper CaseType
-	Pascal     CaseType
-	Phrase     CaseType
-	Snake      CaseType
-	SnakeLower CaseType
-	SnakeUpper CaseType
-	Unknown    CaseType
+	parseMap   map[Case][]string
+	Invalid    Case
+	Camel      Case
+	Kebab      Case
+	KebabLower Case
+	KebabUpper Case
+	Pascal     Case
+	Phrase     Case
+	Snake      Case
+	SnakeLower Case
+	SnakeUpper Case
+	Unknown    Case
 }
 
-func (t caseTypes) Values() []CaseType {
-	return []CaseType{
-		CaseTypes.Camel,
-		CaseTypes.Kebab,
-		CaseTypes.KebabLower,
-		CaseTypes.KebabUpper,
-		CaseTypes.Pascal,
-		CaseTypes.Phrase,
-		CaseTypes.Snake,
-		CaseTypes.SnakeLower,
-		CaseTypes.SnakeUpper,
-		CaseTypes.Unknown,
+func (t cases) Values() []Case {
+	return []Case{
+		Cases.Camel,
+		Cases.Kebab,
+		Cases.KebabLower,
+		Cases.KebabUpper,
+		Cases.Pascal,
+		Cases.Phrase,
+		Cases.Snake,
+		Cases.SnakeLower,
+		Cases.SnakeUpper,
+		Cases.Unknown,
 	}
 }
 
-func (t caseTypes) ToStrings(items ...CaseType) []string {
+func (t cases) ToStrings(items ...Case) []string {
 	var results []string
 
 	for _, item := range items {
@@ -217,7 +188,7 @@ func (t caseTypes) ToStrings(items ...CaseType) []string {
 	return results
 }
 
-func (t caseTypes) ParseFrom(v string, items ...CaseType) (CaseType, error) {
+func (t cases) ParseFrom(v string, items ...Case) (Case, error) {
 	found := t.Invalid
 	var ok bool
 
@@ -249,16 +220,16 @@ func (t caseTypes) ParseFrom(v string, items ...CaseType) (CaseType, error) {
 	return found, nil
 }
 
-func (t caseTypes) Parse(v string) (CaseType, error) {
+func (t cases) Parse(v string) (Case, error) {
 	return t.ParseFrom(v, t.Values()...)
 }
 
-func (t caseTypes) IsFrom(v string, items ...CaseType) bool {
+func (t cases) IsFrom(v string, items ...Case) bool {
 	_, err := t.ParseFrom(v, items...)
 	return err == nil
 }
 
-func (t caseTypes) Is(v string) bool {
+func (t cases) Is(v string) bool {
 	return t.IsFrom(v, t.Values()...)
 }
 
@@ -268,19 +239,22 @@ func (t caseTypes) Is(v string) bool {
 ///                                                              /
 //////////////////////////////////////////////////////////////////
 
-func init() {
-	CaseTypes.parseMap = map[CaseType][]string{
-		CaseTypes.Camel:      {"camel", "Camel"},
-		CaseTypes.Kebab:      {"kebab", "Kebab"},
-		CaseTypes.KebabLower: {"kebab-lower", "KebabLower"},
-		CaseTypes.KebabUpper: {"kebab-upper", "KebabUpper"},
-		CaseTypes.Pascal:     {"pascal", "Pascal"},
-		CaseTypes.Phrase:     {"phrase", "Phrase"},
-		CaseTypes.Snake:      {"snake", "Snake"},
-		CaseTypes.SnakeLower: {"snake-lower", "SnakeLower"},
-		CaseTypes.SnakeUpper: {"snake-upper", "SnakeUpper"},
-		CaseTypes.Unknown:    {"unknown", "Unknown"},
-	}
+var (
+	ErrCaser   = errorer.New("caser error")
+	errCaserFn = errorer.Func(ErrCaser)
+)
 
-	CaseTypes.errf = CaseTypes.Err.(*errorer.Errorer).FormatFn("%v is not one of %s")
+func init() {
+	Cases.parseMap = map[Case][]string{
+		Cases.Camel:      {"camel", "Camel"},
+		Cases.Kebab:      {"kebab", "Kebab"},
+		Cases.KebabLower: {"kebab-lower", "KebabLower"},
+		Cases.KebabUpper: {"kebab-upper", "KebabUpper"},
+		Cases.Pascal:     {"pascal", "Pascal"},
+		Cases.Phrase:     {"phrase", "Phrase"},
+		Cases.Snake:      {"snake", "Snake"},
+		Cases.SnakeLower: {"snake-lower", "SnakeLower"},
+		Cases.SnakeUpper: {"snake-upper", "SnakeUpper"},
+		Cases.Unknown:    {"unknown", "Unknown"},
+	}
 }

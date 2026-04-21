@@ -19,3 +19,14 @@ tag:
 publish:
 	just commit m={{ m }}
 	just tag tag={{ m }}
+
+
+test:
+	go test ./...
+
+bootstrap:
+	go install golang.org/x/perf/cmd/benchstat@latest
+	go mod tidy
+
+bench:
+	go test -bench idiomatic/stringer/... -count 5 | tee new.txt

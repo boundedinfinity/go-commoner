@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_ToTitle_normal_string(t *testing.T) {
+func Test_Stringer_ToTitle_normal_string(t *testing.T) {
 	testCases := []struct {
 		name     string
 		input    string
@@ -28,7 +28,7 @@ func Test_ToTitle_normal_string(t *testing.T) {
 	}
 }
 
-func Test_ToTitle_typed_string(t *testing.T) {
+func Test_Stringer_ToTitle_typed_string(t *testing.T) {
 	type MyString string
 
 	testCases := []struct {
@@ -51,7 +51,7 @@ func Test_ToTitle_typed_string(t *testing.T) {
 	}
 }
 
-func Test_ToTitleFirst_normal_string(t *testing.T) {
+func Test_Stringer_ToTitleFirst_normal_string(t *testing.T) {
 	testCases := []struct {
 		name     string
 		input    string
@@ -72,7 +72,7 @@ func Test_ToTitleFirst_normal_string(t *testing.T) {
 	}
 }
 
-func Test_ToTitleFirst_typed_string(t *testing.T) {
+func Test_Stringer_ToTitleFirst_typed_string(t *testing.T) {
 	type MyString string
 
 	testCases := []struct {

@@ -10,13 +10,13 @@ import (
 func ConverterCombinations() []string {
 	outputs := []string{}
 
-	for _, c1 := range CaseTypes.Values() {
-		for _, c2 := range CaseTypes.Values() {
+	for _, c1 := range Cases.Values() {
+		for _, c2 := range Cases.Values() {
 			if c1 == c2 {
 				continue
 			}
 
-			if c1 == CaseTypes.Unknown || c2 == CaseTypes.Unknown {
+			if c1 == Cases.Unknown || c2 == Cases.Unknown {
 				continue
 			}
 
@@ -46,14 +46,14 @@ func Converter[V ~string](convert string) (func(V) string, error) {
 	}
 
 	fromStr := stringer.TrimSpace(comps[0])
-	from, err := CaseTypes.Parse(fromStr)
+	from, err := Cases.Parse(fromStr)
 
 	if err != nil {
 		return nil, err
 	}
 
 	toStr := stringer.TrimSpace(comps[1])
-	to, err := CaseTypes.Parse(toStr)
+	to, err := Cases.Parse(toStr)
 
 	if err != nil {
 		return nil, err
@@ -86,22 +86,22 @@ func ConvertAs[V ~string](v V, convert string) (string, error) {
 	return fn(v), nil
 }
 
-func Convert[V ~string](v V, from, to CaseType) string {
+func Convert[V ~string](v V, from, to Case) string {
 	var splitFn func(string) []string
 	var mapFn *slicer.Pipe[string]
 	var joinFn func([]string) string
 	var o string
 
 	switch from {
-	case CaseTypes.Camel:
+	case Cases.Camel:
 		splitFn = splitOnCapitalOrNumber
-	case CaseTypes.Pascal:
+	case Cases.Pascal:
 		splitFn = splitOnCapitalOrNumber
-	case CaseTypes.Snake, CaseTypes.SnakeLower, CaseTypes.SnakeUpper:
+	case Cases.Snake, Cases.SnakeLower, Cases.SnakeUpper:
 		splitFn = splitOnUnderscore
-	case CaseTypes.Kebab, CaseTypes.KebabLower, CaseTypes.KebabUpper:
+	case Cases.Kebab, Cases.KebabLower, Cases.KebabUpper:
 		splitFn = splitOnDash
-	case CaseTypes.Phrase:
+	case Cases.Phrase:
 		splitFn = splitOnSpace
 	default:
 		o = string(v)
@@ -114,25 +114,25 @@ func Convert[V ~string](v V, from, to CaseType) string {
 	}
 
 	switch to {
-	case CaseTypes.Camel:
-		mapFn = slicer.NewPipe[string]().Then(wrap(stringer.ToLower[string])).Then(wrap(stringer.Title[string]))
+	case Cases.Camel:
+		mapFn = slicer.NewPipe[string]().Then(wrap(stringer.ToLower[string])).Then(wrap(stringer.ToCapital[string]))
 		joinFn = joinWithNoSpace
-	case CaseTypes.Phrase:
-		mapFn = slicer.NewPipe[string]().Then(wrap(stringer.ToLower[string])).Then(wrap(stringer.Title[string]))
+	case Cases.Phrase:
+		mapFn = slicer.NewPipe[string]().Then(wrap(stringer.ToLower[string])).Then(wrap(stringer.ToCapital[string]))
 		joinFn = joinWithSpace
-	case CaseTypes.Snake, CaseTypes.SnakeLower:
+	case Cases.Snake, Cases.SnakeLower:
 		mapFn = slicer.NewPipe[string]().Then(wrap(stringer.ToLower[string]))
 		joinFn = joinWithUnderscore
-	case CaseTypes.SnakeUpper:
+	case Cases.SnakeUpper:
 		mapFn = slicer.NewPipe[string]().Then(wrap(stringer.ToUpper[string]))
 		joinFn = joinWithUnderscore
-	case CaseTypes.Pascal:
-		mapFn = slicer.NewPipe[string]().Then(wrap(stringer.ToLower[string])).Then(wrap(stringer.Title[string]))
+	case Cases.Pascal:
+		mapFn = slicer.NewPipe[string]().Then(wrap(stringer.ToLower[string])).Then(wrap(stringer.ToCapital[string]))
 		joinFn = joinWithNoSpace
-	case CaseTypes.Kebab, CaseTypes.KebabLower:
+	case Cases.Kebab, Cases.KebabLower:
 		mapFn = slicer.NewPipe[string]().Then(wrap(stringer.ToLower[string]))
 		joinFn = joinWithDash
-	case CaseTypes.KebabUpper:
+	case Cases.KebabUpper:
 		mapFn = slicer.NewPipe[string]().Then(wrap(stringer.ToUpper[string]))
 		joinFn = joinWithDash
 	default:
@@ -143,7 +143,7 @@ func Convert[V ~string](v V, from, to CaseType) string {
 		o = splitMapJoin(string(v), splitFn, mapFn, joinFn)
 
 		switch to {
-		case CaseTypes.Camel:
+		case Cases.Camel:
 			o = stringer.ToLowerFirst(o)
 		}
 	}
@@ -154,153 +154,153 @@ func Convert[V ~string](v V, from, to CaseType) string {
 // Camel to ...
 
 func CamelToPhrase[V ~string](v V) string {
-	return Convert(v, CaseTypes.Camel, CaseTypes.Phrase)
+	return Convert(v, Cases.Camel, Cases.Phrase)
 }
 
 func CamelToSnake[V ~string](v V) string {
-	return Convert(v, CaseTypes.Camel, CaseTypes.Snake)
+	return Convert(v, Cases.Camel, Cases.Snake)
 }
 
 func CamelToSnakeLower[V ~string](v V) string {
-	return Convert(v, CaseTypes.Camel, CaseTypes.SnakeLower)
+	return Convert(v, Cases.Camel, Cases.SnakeLower)
 }
 
 func CamelToSnakeUppser[V ~string](v V) string {
-	return Convert(v, CaseTypes.Camel, CaseTypes.SnakeUpper)
+	return Convert(v, Cases.Camel, Cases.SnakeUpper)
 }
 
 func CamelToPascal[V ~string](v V) string {
-	return Convert(v, CaseTypes.Camel, CaseTypes.Pascal)
+	return Convert(v, Cases.Camel, Cases.Pascal)
 }
 
 func CamelToKebab[V ~string](v V) string {
-	return Convert(v, CaseTypes.Camel, CaseTypes.Kebab)
+	return Convert(v, Cases.Camel, Cases.Kebab)
 }
 
 func CamelToKebabLower[V ~string](v V) string {
-	return Convert(v, CaseTypes.Camel, CaseTypes.KebabLower)
+	return Convert(v, Cases.Camel, Cases.KebabLower)
 }
 
 func CamelToKebabUpper[V ~string](v V) string {
-	return Convert(v, CaseTypes.Camel, CaseTypes.KebabUpper)
+	return Convert(v, Cases.Camel, Cases.KebabUpper)
 }
 
 // Pascal to ...
 
 func PascalToPhrase[V ~string](v V) string {
-	return Convert(v, CaseTypes.Pascal, CaseTypes.Phrase)
+	return Convert(v, Cases.Pascal, Cases.Phrase)
 }
 
 func PascalToCamel[V ~string](v V) string {
-	return Convert(v, CaseTypes.Pascal, CaseTypes.Camel)
+	return Convert(v, Cases.Pascal, Cases.Camel)
 }
 
 func PascalToSnake[V ~string](v V) string {
-	return Convert(v, CaseTypes.Pascal, CaseTypes.Snake)
+	return Convert(v, Cases.Pascal, Cases.Snake)
 }
 
 func PascalToSnakeLower[V ~string](v V) string {
-	return Convert(v, CaseTypes.Pascal, CaseTypes.SnakeLower)
+	return Convert(v, Cases.Pascal, Cases.SnakeLower)
 }
 
 func PascalToSnakeUpper[V ~string](v V) string {
-	return Convert(v, CaseTypes.Pascal, CaseTypes.SnakeUpper)
+	return Convert(v, Cases.Pascal, Cases.SnakeUpper)
 }
 
 func PascalToKebab[V ~string](v V) string {
-	return Convert(v, CaseTypes.Pascal, CaseTypes.Kebab)
+	return Convert(v, Cases.Pascal, Cases.Kebab)
 }
 
 func PascalToKebabLower[V ~string](v V) string {
-	return Convert(v, CaseTypes.Pascal, CaseTypes.KebabLower)
+	return Convert(v, Cases.Pascal, Cases.KebabLower)
 }
 
 func PascalToKebabUpper[V ~string](v V) string {
-	return Convert(v, CaseTypes.Pascal, CaseTypes.KebabUpper)
+	return Convert(v, Cases.Pascal, Cases.KebabUpper)
 }
 
 // Snake to ...
 
 func SnakeToPhrase[V ~string](v V) string {
-	return Convert(v, CaseTypes.Snake, CaseTypes.Phrase)
+	return Convert(v, Cases.Snake, Cases.Phrase)
 }
 
 func SnakeToCamel[V ~string](v V) string {
-	return Convert(v, CaseTypes.Snake, CaseTypes.Camel)
+	return Convert(v, Cases.Snake, Cases.Camel)
 }
 
 func SnakeToPascal[V ~string](v V) string {
-	return Convert(v, CaseTypes.Snake, CaseTypes.Pascal)
+	return Convert(v, Cases.Snake, Cases.Pascal)
 }
 
 func SnakeToKebab[V ~string](v V) string {
-	return Convert(v, CaseTypes.Snake, CaseTypes.Kebab)
+	return Convert(v, Cases.Snake, Cases.Kebab)
 }
 
 func SnakeToKebabLower[V ~string](v V) string {
-	return Convert(v, CaseTypes.Snake, CaseTypes.KebabLower)
+	return Convert(v, Cases.Snake, Cases.KebabLower)
 }
 
 func SnakeToKebabUpper[V ~string](v V) string {
-	return Convert(v, CaseTypes.Snake, CaseTypes.KebabUpper)
+	return Convert(v, Cases.Snake, Cases.KebabUpper)
 }
 
 // Kebab to ...
 
 func KebabToPhrase[V ~string](v V) string {
-	return Convert(v, CaseTypes.Kebab, CaseTypes.Phrase)
+	return Convert(v, Cases.Kebab, Cases.Phrase)
 }
 
 func KebabToSnake[V ~string](v V) string {
-	return Convert(v, CaseTypes.Kebab, CaseTypes.Snake)
+	return Convert(v, Cases.Kebab, Cases.Snake)
 }
 
 func KebabToSnakeLower[V ~string](v V) string {
-	return Convert(v, CaseTypes.Kebab, CaseTypes.SnakeLower)
+	return Convert(v, Cases.Kebab, Cases.SnakeLower)
 }
 
 func KebabToSnakeUpper[V ~string](v V) string {
-	return Convert(v, CaseTypes.Kebab, CaseTypes.SnakeUpper)
+	return Convert(v, Cases.Kebab, Cases.SnakeUpper)
 }
 
 func KebabToCamel[V ~string](v V) string {
-	return Convert(v, CaseTypes.Kebab, CaseTypes.Camel)
+	return Convert(v, Cases.Kebab, Cases.Camel)
 }
 
 func KebabToPascal[V ~string](v V) string {
-	return Convert(v, CaseTypes.Kebab, CaseTypes.Pascal)
+	return Convert(v, Cases.Kebab, Cases.Pascal)
 }
 
 // Phrase to ...
 
 func PhraseToCamel[V ~string](v V) string {
-	return Convert(v, CaseTypes.Phrase, CaseTypes.Camel)
+	return Convert(v, Cases.Phrase, Cases.Camel)
 }
 
 func PhraseToPascal[V ~string](v V) string {
-	return Convert(v, CaseTypes.Phrase, CaseTypes.Pascal)
+	return Convert(v, Cases.Phrase, Cases.Pascal)
 }
 
 func PhraseToSnake[V ~string](v V) string {
-	return Convert(v, CaseTypes.Phrase, CaseTypes.Snake)
+	return Convert(v, Cases.Phrase, Cases.Snake)
 }
 
 func PhraseToSnakeLower[V ~string](v V) string {
-	return Convert(v, CaseTypes.Phrase, CaseTypes.SnakeLower)
+	return Convert(v, Cases.Phrase, Cases.SnakeLower)
 }
 
 func PhraseToSnakeUpper[V ~string](v V) string {
-	return Convert(v, CaseTypes.Phrase, CaseTypes.SnakeUpper)
+	return Convert(v, Cases.Phrase, Cases.SnakeUpper)
 }
 
 func PhraseToKebab[V ~string](v V) string {
-	return Convert(v, CaseTypes.Phrase, CaseTypes.Kebab)
+	return Convert(v, Cases.Phrase, Cases.Kebab)
 }
 
 func PhraseToKebabLower[V ~string](v V) string {
-	return Convert(v, CaseTypes.Phrase, CaseTypes.KebabLower)
+	return Convert(v, Cases.Phrase, Cases.KebabLower)
 }
 
 func PhraseToKebabUpper[V ~string](v V) string {
-	return Convert(v, CaseTypes.Phrase, CaseTypes.KebabUpper)
+	return Convert(v, Cases.Phrase, Cases.KebabUpper)
 }

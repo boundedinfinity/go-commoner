@@ -6,16 +6,19 @@ func Split[T ~string](s T, sep string) []string {
 	return strings.Split(string(s), sep)
 }
 
-func SplitAny[T ~string](s T, elems ...string) []string {
-	return SplitFn(s, func(x string) bool {
-		for _, elem := range elems {
-			if elem == string(x) {
-				return true
-			}
-		}
+func SplitAny[T ~string](s T, substrs ...string) []string {
+	var results []string
+	normal := string(s)
+	var i int
 
-		return false
-	})
+	for _, substr := range substrs {
+		if i = strings.Index(normal, substr); i > -1 {
+			results = append(results, string(s[:i]))
+			s = s[i+len(substr):]
+		}
+	}
+
+	return results
 }
 
 func SplitFn[T ~string](s T, fn func(string) bool) []string {

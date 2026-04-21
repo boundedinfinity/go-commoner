@@ -1,11 +1,13 @@
 package stringer
 
 func Reverse[T ~string](s T) string {
-	var rs []byte
+	r1 := []rune(s)
+	l := len(r1) - 1
+	r2 := make([]rune, l+1)
 
-	for i := len(s) - 1; i >= 0; i-- {
-		rs = append(rs, s[i])
+	for i := range r1 {
+		r2[i] = r1[l-i]
 	}
 
-	return string(rs)
+	return string(r2)
 }
