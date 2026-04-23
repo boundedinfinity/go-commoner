@@ -3,7 +3,7 @@ package caser
 import (
 	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
 	"github.com/boundedinfinity/go-commoner/idiomatic/stringer"
-	"github.com/boundedinfinity/go-commoner/idiomatic/utfer"
+	"github.com/boundedinfinity/go-commoner/idiomatic/stringer/utfer"
 )
 
 func splitMapJoin(v string, splitFn func(v string) []string, mapFn *slicer.Pipe[string], joinFn func([]string) string) string {

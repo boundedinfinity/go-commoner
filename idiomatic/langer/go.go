@@ -4,7 +4,7 @@ import (
 	"github.com/boundedinfinity/go-commoner/idiomatic/caser"
 	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
 	"github.com/boundedinfinity/go-commoner/idiomatic/stringer"
-	"github.com/boundedinfinity/go-commoner/idiomatic/utfer"
+	"github.com/boundedinfinity/go-commoner/idiomatic/stringer/utfer"
 )
 
 // https://go.dev/ref/spec#Identifiers

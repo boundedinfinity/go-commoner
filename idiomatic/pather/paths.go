@@ -49,7 +49,7 @@ func (t paths) Abs(path string) string {
 }
 
 func (t paths) EndsWith(path, suffix string) bool {
-	return stringer.HasSuffx(path, suffix)
+	return stringer.HasSuffix(path, suffix)
 }
 
 func (t paths) Exists(path string) bool {

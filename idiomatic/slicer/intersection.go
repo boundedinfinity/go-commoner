@@ -21,7 +21,7 @@ func IntersectionFnErr[T any, C comparable](fn func(T) (C, error), as []T, bs []
 
 	results := []T{}
 
-	uas, err := UniqByErrI(fn2, as...)
+	uas, err := UniqueByErrI(fn2, as...)
 	if err != nil {
 		return results, err
 	}
@@ -31,7 +31,7 @@ func IntersectionFnErr[T any, C comparable](fn func(T) (C, error), as []T, bs []
 		return results, err
 	}
 
-	ubs, err := UniqByErrI(fn2, bs...)
+	ubs, err := UniqueByErrI(fn2, bs...)
 	if err != nil {
 		return results, err
 	}

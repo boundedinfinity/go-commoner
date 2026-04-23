@@ -9,11 +9,11 @@ import (
 
 func Test_Uniq(t *testing.T) {
 	expectedStr := []string{"a", "b", "c"}
-	actualStr := slicer.Uniq("a", "a", "b", "b", "c", "c")
+	actualStr := slicer.Unique("a", "a", "b", "b", "c", "c")
 	assert.ElementsMatch(t, expectedStr, actualStr)
 
 	expectedInt := []int{1, 2, 3}
-	actualInt := slicer.Uniq(1, 1, 2, 2, 3, 3)
+	actualInt := slicer.Unique(1, 1, 2, 2, 3, 3)
 	assert.ElementsMatch(t, expectedInt, actualInt)
 }
 
@@ -28,7 +28,7 @@ func Test_UniqFn(t *testing.T) {
 	c := thing{"C", "X"}
 
 	expectedStr := []thing{a, b, c}
-	actualStr := slicer.UniqByI(func(_ int, x thing) string { return x.S }, a, a, b, b, c, c)
+	actualStr := slicer.UniqueByI(func(_ int, x thing) string { return x.S }, a, a, b, b, c, c)
 	assert.ElementsMatch(t, expectedStr, actualStr)
 
 }

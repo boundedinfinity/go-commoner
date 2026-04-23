@@ -1,8 +1,0 @@
-overwrite: true
-values:
-    -   name: Square Mile
-    -   name: Acre
-    -   name: Rood
-    -   name: Square Yard
-    -   name: Square Foot
-    -   name: Square Inch
