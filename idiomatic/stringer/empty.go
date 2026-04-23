@@ -3,7 +3,7 @@ package stringer
 import "github.com/boundedinfinity/go-commoner/idiomatic/slicer"
 
 func IsDefined[T ~string](s T) bool {
-	return !IsEmpty[T](s)
+	return !IsEmpty(s)
 }
 
 func IsEmpty[T ~string](s T) bool {

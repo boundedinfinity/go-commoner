@@ -2,9 +2,9 @@ package stringer
 
 import "strings"
 
-func HasSuffx[T ~string, U ~string | ~byte](s T, prefixes ...U) bool {
-	for _, prefix := range prefixes {
-		if strings.HasSuffix(string(s), string(prefix)) {
+func HasSuffix[T ~string, U ~string | ~byte](s T, suffixes ...U) bool {
+	for _, suffix := range suffixes {
+		if strings.HasSuffix(string(s), string(suffix)) {
 			return true
 		}
 	}
@@ -13,5 +13,5 @@ func HasSuffx[T ~string, U ~string | ~byte](s T, prefixes ...U) bool {
 }
 
 func EndsWith[T ~string, U ~string | ~byte](s T, suffixes ...U) bool {
-	return HasSuffx(s, suffixes...)
+	return HasSuffix(s, suffixes...)
 }
