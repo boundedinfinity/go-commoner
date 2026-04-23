@@ -26,3 +26,17 @@ func ToLowerFirst[T ~string](s T) string {
 		return strings.ToLower(string(s[0])) + string(s[1:])
 	}
 }
+
+func SliceToLower[S ~string](s []S) []string {
+	output := make([]string, len(s))
+
+	for i, elem := range s {
+		output[i] = strings.ToLower(string(elem))
+	}
+
+	return output
+}
+
+func IsLower[S ~string](s S) bool {
+	return string(s) == strings.ToLower(string(s))
+}

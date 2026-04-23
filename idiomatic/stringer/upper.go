@@ -26,3 +26,17 @@ func ToUpperFirst[T ~string](s T) string {
 		return strings.ToUpper(string(s[0])) + string(s[1:])
 	}
 }
+
+func SliceToUpper[S ~string](s []S) []string {
+	output := make([]string, len(s))
+
+	for i, elem := range s {
+		output[i] = strings.ToUpper(string(elem))
+	}
+
+	return output
+}
+
+func IsUpper[S ~string](s S) bool {
+	return string(s) == strings.ToUpper(string(s))
+}

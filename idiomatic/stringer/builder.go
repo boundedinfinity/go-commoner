@@ -5,14 +5,22 @@ import (
 	"strings"
 )
 
-type Builder[T ~string] struct {
-	strings.Builder
+type Builder struct {
+	builder strings.Builder
 }
 
-func (t *Builder[T]) WriteString(s T) (int, error) {
-	return t.Builder.WriteString(string(s))
+func (this *Builder) WriteStringf(format string, a ...any) {
+	this.builder.WriteString(fmt.Sprintf(format, a...))
 }
 
-func (t *Builder[T]) WriteStringf(format string, a ...any) (int, error) {
-	return t.Builder.WriteString(fmt.Sprintf(format, a...))
+func (this *Builder) WriteString(s string) {
+	this.builder.WriteString(s)
+}
+
+func (this *Builder) WriteRune(r rune) {
+	this.builder.WriteRune(r)
+}
+
+func (this Builder) String() string {
+	return this.builder.String()
 }

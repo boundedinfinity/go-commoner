@@ -26,3 +26,17 @@ func ToTitleFirst[T ~string](s T) string {
 		return strings.ToTitle(string(s[0])) + string(s[1:])
 	}
 }
+
+func SliceToTitle[S ~string](s []S) []string {
+	output := make([]string, len(s))
+
+	for i, elem := range s {
+		output[i] = strings.ToTitle(string(elem))
+	}
+
+	return output
+}
+
+func IsTitle[S ~string](s S) bool {
+	return string(s) == strings.ToTitle(string(s))
+}

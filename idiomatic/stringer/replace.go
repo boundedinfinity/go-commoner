@@ -13,3 +13,7 @@ func Replace[T ~string](s T, new string, olds ...string) string {
 
 	return result
 }
+
+func ReplaceAll[S, O, N ~string](s S, old O, new N) string {
+	return strings.ReplaceAll(string(s), string(old), string(new))
+}

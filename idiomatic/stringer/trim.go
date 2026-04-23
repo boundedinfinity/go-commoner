@@ -7,19 +7,16 @@ import (
 	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
 )
 
-func TrimSpace[T ~string](s T) T {
-	trimmed := s
-	trimmed = TrimSpaceLeft(trimmed)
-	trimmed = TrimSpaceRight(trimmed)
-	return trimmed
+func TrimSpace[T ~string](s T) string {
+	return strings.TrimSpace(string(s))
 }
 
-func TrimSpaceRight[T ~string](s T) T {
-	return TrimFuncRight(s, unicode.IsSpace)
+func TrimSpaceRight[T ~string](s T) string {
+	return strings.TrimRightFunc(string(s), unicode.IsSpace)
 }
 
-func TrimSpaceLeft[T ~string](s T) T {
-	return TrimFuncLeft(s, unicode.IsSpace)
+func TrimSpaceLeft[T ~string](s T) string {
+	return strings.TrimLeftFunc(string(s), unicode.IsSpace)
 }
 
 func Trim[T ~string](s T, set string) T {

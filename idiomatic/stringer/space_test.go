@@ -7,6 +7,47 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func Test_stringer_compact_space(t *testing.T) {
+	tcs := []struct {
+		name     string
+		input    string
+		expected string
+	}{
+		{
+			name:     "A__B",
+			input:    "A  B",
+			expected: "A B",
+		},
+		{
+			name:     "_A__B_",
+			input:    " A  B ",
+			expected: " A B ",
+		},
+		{
+			name:     "____A__B__C____",
+			input:    "    A  B  C    ",
+			expected: "    A B C    ",
+		},
+		{
+			name:     "<empty>",
+			input:    "",
+			expected: "",
+		},
+		{
+			name:     "___",
+			input:    "   ",
+			expected: " ",
+		},
+	}
+
+	for _, tc := range tcs {
+		t.Run(tc.name, func(tt *testing.T) {
+			actual := stringer.CompactSpace(tc.input)
+			assert.Equal(t, tc.expected, actual)
+		})
+	}
+}
+
 func Test_FirstNonSpace(t *testing.T) {
 	testCases := []struct {
 		name     string

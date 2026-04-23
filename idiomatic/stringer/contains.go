@@ -1,6 +1,7 @@
 package stringer
 
 import (
+	"regexp"
 	"strings"
 )
 
@@ -38,4 +39,14 @@ func ContainsNone[T ~string, S ~string](s S, substrs ...T) bool {
 
 func ContainsNoneIgnoreCase[T ~string, S ~string](s S, substrs ...T) bool {
 	return !ContainsAnyIgnoreCase(s, substrs...)
+}
+
+func ContainsRegexp[S, N ~string](s S, regex regexp.Regexp, new N) string {
+	output := string(s)
+
+	for _, found := range regex.FindAllString(string(s), -1) {
+		output = ReplaceAll(output, found, new)
+	}
+
+	return output
 }
