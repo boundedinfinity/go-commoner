@@ -2,7 +2,7 @@ package utfer
 
 import (
 	"github.com/boundedinfinity/go-commoner/errorer"
-	"github.com/boundedinfinity/go-commoner/idiomatic/numberer"
+	"github.com/boundedinfinity/go-commoner/idiomatic/mather"
 	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
 )
 
@@ -86,7 +86,7 @@ type utf8 struct {
 }
 
 func (t utf8) Range(start, end UtfChar) []UtfChar {
-	return numberer.Range(start, end)
+	return mather.Range(start, end)
 }
 
 func (t utf8) Parse(v byte) (UtfChar, error) {

@@ -14,8 +14,9 @@ import (
 	"database/sql/driver"
 	"encoding/json"
 	"encoding/xml"
-	errorer "github.com/boundedinfinity/go-commoner/errorer"
 	"strings"
+
+	errorer "github.com/boundedinfinity/go-commoner/errorer"
 )
 
 //////////////////////////////////////////////////////////////////
@@ -1190,5 +1191,5 @@ func init() {
 		UriSchemes.Zoomus:                     {"zoomus", "Zoomus"},
 	}
 
-	UriSchemes.errf = UriSchemes.Err.(*errorer.Errorer).FormatFn("%v is not one of %s")
+	// UriSchemes.errf = UriSchemes.Err.(*errorer.Errorer).FormatFn("%v is not one of %s")
 }
