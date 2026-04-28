@@ -103,14 +103,14 @@ func (t utf8) Parse(v byte) (UtfChar, error) {
 }
 
 func (t utf8) Is(s byte) bool {
-	return slicer.ContainsFn(
+	return slicer.ContainsFunc(
 		func(v UtfChar) bool { return byte(v) == s },
 		t.All()...,
 	)
 }
 
 func (t utf8) IsExtend(s byte) bool {
-	return slicer.ContainsFn(
+	return slicer.ContainsFunc(
 		func(v UtfChar) bool { return byte(v) == s },
 		t.ExtendedCharacters()...,
 	)

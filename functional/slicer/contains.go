@@ -10,7 +10,7 @@ func Contains[T comparable](v T, elems ...T) bool {
 }
 
 func ContainsBy[T any](fn func(T) bool, elems ...T) bool {
-	return slicer.ContainsFn(fn, elems...)
+	return slicer.ContainsFunc(fn, elems...)
 }
 
 func ContainsByI[T any](fn func(int, T) bool, elems ...T) bool {

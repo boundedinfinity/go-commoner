@@ -12,7 +12,7 @@ func Filter[T comparable](t T, elems ...T) []T {
 	return result
 }
 
-func FilterFn[T any](fn func(T) bool, elems ...T) []T {
+func FilterFunc[T any](fn func(T) bool, elems ...T) []T {
 	if fn == nil {
 		return []T{}
 	}
@@ -28,7 +28,7 @@ func FilterFn[T any](fn func(T) bool, elems ...T) []T {
 	return result
 }
 
-func FilterFnI[T any](fn func(int, T) bool, elems ...T) []T {
+func FilterFuncI[T any](fn func(int, T) bool, elems ...T) []T {
 	if fn == nil {
 		return []T{}
 	}
@@ -44,7 +44,7 @@ func FilterFnI[T any](fn func(int, T) bool, elems ...T) []T {
 	return result
 }
 
-func FilterFnErr[T any](fn func(T) (bool, error), elems ...T) ([]T, error) {
+func FilterFuncErr[T any](fn func(T) (bool, error), elems ...T) ([]T, error) {
 	var result []T
 
 	if fn == nil {
@@ -66,7 +66,7 @@ func FilterFnErr[T any](fn func(T) (bool, error), elems ...T) ([]T, error) {
 	return result, nil
 }
 
-func FilterFnErrI[T any](fn func(int, T) (bool, error), elems ...T) ([]T, error) {
+func FilterFuncErrI[T any](fn func(int, T) (bool, error), elems ...T) ([]T, error) {
 	var result []T
 
 	if fn == nil {

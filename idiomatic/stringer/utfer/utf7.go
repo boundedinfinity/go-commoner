@@ -35,7 +35,7 @@ func (t utf7) Parse(v byte) (UtfChar, error) {
 }
 
 func (t utf7) Is(s byte) bool {
-	return slicer.ContainsFn(
+	return slicer.ContainsFunc(
 		func(v UtfChar) bool { return byte(v) == s },
 		t.All()...,
 	)

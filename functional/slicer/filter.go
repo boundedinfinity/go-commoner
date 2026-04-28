@@ -6,7 +6,7 @@ import (
 )
 
 func Filter[T any](fn func(T) bool, elems ...T) []T {
-	return slicer.FilterFn(fn, elems...)
+	return slicer.FilterFunc(fn, elems...)
 }
 
 func FilterErr[T any](fn func(T) (bool, error), elems ...T) trier.Try[[]T] {

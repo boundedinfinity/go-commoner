@@ -41,7 +41,7 @@ func Test_Filter(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
-			actual := slicer.FilterFnI(tc.fn, tc.input...)
+			actual := slicer.FilterFuncI(tc.fn, tc.input...)
 			assert.ElementsMatch(t, tc.expected, actual)
 		})
 	}

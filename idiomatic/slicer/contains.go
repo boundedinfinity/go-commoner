@@ -14,7 +14,7 @@ func Contains[T comparable](target T, elems ...T) bool {
 	return slices.Contains(elems, target)
 }
 
-// ContainsFn test if the value returned from fn is true for any of the elements in elems
+// ContainsFunc test if the value returned from fn is true for any of the elements in elems
 //
 // The by(T) bool functions takes:
 //   - T is the current element
@@ -22,7 +22,7 @@ func Contains[T comparable](target T, elems ...T) bool {
 // and returns true if the the value of by(T) matches.
 //
 // Returns true on the first element that matches.
-func ContainsFn[T any](fn func(T) bool, elems ...T) bool {
+func ContainsFunc[T any](fn func(T) bool, elems ...T) bool {
 	var ok bool
 
 	for _, elem := range elems {
@@ -34,14 +34,14 @@ func ContainsFn[T any](fn func(T) bool, elems ...T) bool {
 	return ok
 }
 
-// CcontainsFnI test if the value returned from fn is true for any of the elements in elems
+// ContainsFuncI test if the value returned from fn is true for any of the elements in elems
 //
 // The by(int, T) bool functions takes:
 //   - int is the index of the current element
 //   - T is the current element
 //
 // Returns true on the first element that matches.
-func CcontainsFnI[T any](fn func(int, T) bool, elems ...T) bool {
+func ContainsFuncI[T any](fn func(int, T) bool, elems ...T) bool {
 	var ok bool
 
 	for i, elem := range elems {
@@ -53,7 +53,7 @@ func CcontainsFnI[T any](fn func(int, T) bool, elems ...T) bool {
 	return ok
 }
 
-// ContainsFnErr test if the value returned from fn is true for any of the elements in elems
+// ContainsFuncErr test if the value returned from fn is true for any of the elements in elems
 //
 // The by(int, T) bool functions takes:
 //   - int is the index of the current element
@@ -62,7 +62,7 @@ func CcontainsFnI[T any](fn func(int, T) bool, elems ...T) bool {
 // Returns true on the first element that matches.
 //
 // If the fn function returns an error, processing through elems is stopped and the error is returned.
-func ContainsFnErr[T any](fn func(T) (bool, error), elems ...T) (bool, error) {
+func ContainsFuncErr[T any](fn func(T) (bool, error), elems ...T) (bool, error) {
 	var ok bool
 	var err error
 
@@ -75,7 +75,7 @@ func ContainsFnErr[T any](fn func(T) (bool, error), elems ...T) (bool, error) {
 	return ok, err
 }
 
-// ContainsFnErrI test if the value returned from fn is true for any of the elements in elems
+// ContainsFuncErrI test if the value returned from fn is true for any of the elements in elems
 //
 // The by(int, T) bool functions takes:
 //   - int is the index of the current element
@@ -84,7 +84,7 @@ func ContainsFnErr[T any](fn func(T) (bool, error), elems ...T) (bool, error) {
 // Returns true on the first element that matches.
 //
 // If the fn function returns an error, processing through elems is stopped and the error is returned.
-func ContainsFnErrI[T any](fn func(int, T) (bool, error), elems ...T) (bool, error) {
+func ContainsFuncErrI[T any](fn func(int, T) (bool, error), elems ...T) (bool, error) {
 	var ok bool
 	var err error
 
