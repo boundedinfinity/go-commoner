@@ -31,7 +31,7 @@ func Test_Each(t *testing.T) {
 		t.Run(tc.name, func(tt *testing.T) {
 			actual := []Type1{}
 
-			slicer.Each(func(t1 Type1) {
+			slicer.EachFunc(func(t1 Type1) {
 				actual = append(actual, Type1{
 					thing: stringer.ToCapital(t1.thing),
 				})

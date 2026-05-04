@@ -11,11 +11,11 @@ func All[T comparable](target T, elems ...T) bool {
 	return true
 }
 
-// AllFn test if the result of by(T) evaluates to true for all elements in elems
+// AllFunc test if the result of by(T) evaluates to true for all elements in elems
 //
 // The fn(T) bool functions takes:
 //   - T is the current element in elems
-func AllFn[T any](fn func(T) bool, elems ...T) bool {
+func AllFunc[T any](fn func(T) bool, elems ...T) bool {
 	if fn == nil {
 		return false
 	}
@@ -29,12 +29,12 @@ func AllFn[T any](fn func(T) bool, elems ...T) bool {
 	return true
 }
 
-// AllFnI test if the result of fn(int, T) evaluates to true for all elements in elems
+// AllFuncI test if the result of fn(int, T) evaluates to true for all elements in elems
 //
-// The by(int, T) bool functions takes:
+// The fn(int, T) bool functions takes:
 //   - int is the index of the current element
 //   - T is the current element in elems
-func AllFnI[T any](fn func(int, T) bool, elems ...T) bool {
+func AllFuncI[T any](fn func(int, T) bool, elems ...T) bool {
 	if fn == nil {
 		return false
 	}
@@ -48,13 +48,13 @@ func AllFnI[T any](fn func(int, T) bool, elems ...T) bool {
 	return false
 }
 
-// AllFnErr test if the result of by(T) err evaluates to true for all elements in elems
+// AllFuncErr test if the result of fn(T) err evaluates to true for all elements in elems
 //
-// The by(int, T) bool functions takes:
+// The fn(T) bool functions takes:
 //   - T is the current element
 //
-// If the by function returns an error, processing through elems is stopped and the error is returned.
-func AllFnErr[T any](fn func(T) (bool, error), elems ...T) (bool, error) {
+// If the fn function returns an error, processing through elems is stopped and the error is returned.
+func AllFuncErr[T any](fn func(T) (bool, error), elems ...T) (bool, error) {
 	if fn == nil {
 		return false, nil
 	}
@@ -78,14 +78,14 @@ func AllFnErr[T any](fn func(T) (bool, error), elems ...T) (bool, error) {
 	return all, err
 }
 
-// AllFnErrI test if the result of fn(int, T) evaluates to true for all elements in elems
+// AllFuncErrI test if the result of fn(int, T) evaluates to true for all elements in elems
 //
 // The fn(int, T) bool functions takes:
 //   - int is the index of the current element
 //   - T is the current element
 //
 // If the fn function returns an error, processing through elems is stopped and the error is returned.
-func AllFnErrI[T any](fn func(int, T) (bool, error), elems ...T) (bool, error) {
+func AllFuncErrI[T any](fn func(int, T) (bool, error), elems ...T) (bool, error) {
 	if fn == nil {
 		return false, nil
 	}

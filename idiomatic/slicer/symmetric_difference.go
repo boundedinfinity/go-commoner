@@ -14,7 +14,7 @@ func SymmetricDifference[T comparable](as, bs []T) []T {
 }
 
 func SymmetricDifferenceFn[T any, C comparable](fn func(T) C, as, bs []T) []T {
-	count := CountFn(fn, append(as, bs...)...)
+	count := CountFunc(fn, append(as, bs...)...)
 	var found []T
 
 	for _, r := range count {
@@ -26,8 +26,8 @@ func SymmetricDifferenceFn[T any, C comparable](fn func(T) C, as, bs []T) []T {
 	return found
 }
 
-func SymmetricDifferenceFnI[T any, C comparable](fn func(int, T) C, as, bs []T) []T {
-	count := CountFnI(fn, append(as, bs...)...)
+func SymmetricDifferenceFuncI[T any, C comparable](fn func(int, T) C, as, bs []T) []T {
+	count := CountFuncI(fn, append(as, bs...)...)
 	var found []T
 
 	for _, r := range count {
@@ -39,9 +39,9 @@ func SymmetricDifferenceFnI[T any, C comparable](fn func(int, T) C, as, bs []T) 
 	return found
 }
 
-func SymmetricDifferenceFnErr[T any, C comparable](fn func(T) (C, error), as, bs []T) ([]T, error) {
+func SymmetricDifferenceFuncErr[T any, C comparable](fn func(T) (C, error), as, bs []T) ([]T, error) {
 	var found []T
-	count, err := CountFnErr(fn, append(as, bs...)...)
+	count, err := CountFuncErr(fn, append(as, bs...)...)
 
 	if err != nil {
 		return found, err
@@ -56,9 +56,9 @@ func SymmetricDifferenceFnErr[T any, C comparable](fn func(T) (C, error), as, bs
 	return found, nil
 }
 
-func SymmetricDifferenceFnErrI[T any, C comparable](fn func(int, T) (C, error), as, bs []T) ([]T, error) {
+func SymmetricDifferenceFuncErrI[T any, C comparable](fn func(int, T) (C, error), as, bs []T) ([]T, error) {
 	var found []T
-	count, err := CountFnErrI(fn, append(as, bs...)...)
+	count, err := CountFuncErrI(fn, append(as, bs...)...)
 
 	if err != nil {
 		return found, err

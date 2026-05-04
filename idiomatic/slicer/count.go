@@ -28,7 +28,7 @@ func Count[T comparable](elems ...T) []CountResult[T] {
 	return results
 }
 
-func CountFn[T any, C comparable](fn func(T) C, elems ...T) []CountResult[T] {
+func CountFunc[T any, C comparable](fn func(T) C, elems ...T) []CountResult[T] {
 	results := make([]CountResult[T], 0)
 
 	if fn == nil {
@@ -57,7 +57,7 @@ func CountFn[T any, C comparable](fn func(T) C, elems ...T) []CountResult[T] {
 	return results
 }
 
-func CountFnI[T any, C comparable](fn func(int, T) C, elems ...T) []CountResult[T] {
+func CountFuncI[T any, C comparable](fn func(int, T) C, elems ...T) []CountResult[T] {
 	results := make([]CountResult[T], 0)
 
 	if fn == nil {
@@ -86,7 +86,7 @@ func CountFnI[T any, C comparable](fn func(int, T) C, elems ...T) []CountResult[
 	return results
 }
 
-func CountFnErr[T any, C comparable](fn func(T) (C, error), elems ...T) ([]CountResult[T], error) {
+func CountFuncErr[T any, C comparable](fn func(T) (C, error), elems ...T) ([]CountResult[T], error) {
 	m := make(map[C]*CountResult[T])
 	var err error
 	var key C
@@ -122,7 +122,7 @@ func CountFnErr[T any, C comparable](fn func(T) (C, error), elems ...T) ([]Count
 	return results, nil
 }
 
-func CountFnErrI[T any, C comparable](fn func(int, T) (C, error), elems ...T) ([]CountResult[T], error) {
+func CountFuncErrI[T any, C comparable](fn func(int, T) (C, error), elems ...T) ([]CountResult[T], error) {
 	m := make(map[C]*CountResult[T])
 	var err error
 	var key C

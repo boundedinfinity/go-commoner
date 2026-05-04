@@ -42,7 +42,7 @@ func Test_Difference(t *testing.T) {
 	}
 }
 
-func Test_DifferenceFn(t *testing.T) {
+func Test_DifferenceFunc(t *testing.T) {
 	type Thing struct {
 		K string
 		V int
@@ -108,7 +108,7 @@ func Test_DifferenceFn(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
 			fn := func(elem Thing) string { return elem.K }
-			actual := slicer.DifferenceFn(fn, tc.input1, tc.input2)
+			actual := slicer.DifferenceFunc(fn, tc.input1, tc.input2)
 			assert.Equal(tt, tc.expected, actual)
 		})
 	}

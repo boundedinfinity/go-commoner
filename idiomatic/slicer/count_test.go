@@ -37,7 +37,7 @@ func Test_DupCountFn(t *testing.T) {
 
 	input := []Thing{thing1, thing2, thing3, thing1, thing2, thing3}
 
-	actual := slicer.CountFn(func(elem Thing) string {
+	actual := slicer.CountFunc(func(elem Thing) string {
 		return elem.K
 	}, input...)
 

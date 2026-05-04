@@ -14,13 +14,13 @@ func ContainsBy[T any](fn func(T) bool, elems ...T) bool {
 }
 
 func ContainsByI[T any](fn func(int, T) bool, elems ...T) bool {
-	return slicer.CcontainsFnI(fn, elems...)
+	return slicer.ContainsFuncI(fn, elems...)
 }
 
 func ContainsByErr[T any](fn func(T) (bool, error), elems ...T) trier.Try[bool] {
-	return trier.Complete(slicer.ContainsFnErr(fn, elems...))
+	return trier.Complete(slicer.ContainsFuncErr(fn, elems...))
 }
 
 func ContainsByErrI[T any](fn func(int, T) (bool, error), elems ...T) trier.Try[bool] {
-	return trier.Complete(slicer.ContainsFnErrI(fn, elems...))
+	return trier.Complete(slicer.ContainsFuncErrI(fn, elems...))
 }

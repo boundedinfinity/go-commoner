@@ -17,7 +17,7 @@ func Difference[T comparable](as, bs []T) []T {
 	return results
 }
 
-func DifferenceFn[T any, C comparable](fn func(T) C, as, bs []T) []T {
+func DifferenceFunc[T any, C comparable](fn func(T) C, as, bs []T) []T {
 	var results []T
 
 	if fn == nil {
@@ -39,7 +39,7 @@ func DifferenceFn[T any, C comparable](fn func(T) C, as, bs []T) []T {
 	return results
 }
 
-func DifferenceFnErr[T any, C comparable](fn func(T) (C, error), as, bs []T) ([]T, error) {
+func DifferenceFuncErr[T any, C comparable](fn func(T) (C, error), as, bs []T) ([]T, error) {
 	var results []T
 	var err error
 	var c C

@@ -10,17 +10,17 @@ func All[T comparable](x T, vs ...T) bool {
 }
 
 func AllBy[T any](fn func(T) bool, vs ...T) bool {
-	return slicer.AllFn(fn, vs...)
+	return slicer.AllFunc(fn, vs...)
 }
 
 func AllByI[T any](fn func(int, T) bool, vs ...T) bool {
-	return slicer.AllFnI(fn, vs...)
+	return slicer.AllFuncI(fn, vs...)
 }
 
 func AllByErr[T any](fn func(T) (bool, error), vs ...T) trier.Try[bool] {
-	return trier.Complete(slicer.AllFnErr(fn, vs...))
+	return trier.Complete(slicer.AllFuncErr(fn, vs...))
 }
 
 func AllByErrI[T any](fn func(int, T) (bool, error), vs ...T) trier.Try[bool] {
-	return trier.Complete(slicer.AllFnErrI(fn, vs...))
+	return trier.Complete(slicer.AllFuncErrI(fn, vs...))
 }

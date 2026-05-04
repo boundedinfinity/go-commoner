@@ -16,14 +16,14 @@ func Deduplicate[T comparable](elems ...T) []T {
 	return results
 }
 
-// DeduplicateFn[T, K] creates a copy of elems with duplicates removed based on the result of the
+// DeduplicateFunc[T, K] creates a copy of elems with duplicates removed based on the result of the
 // fn(int, T) function
 //
 // The fn(int, T) K functions takes:
 //   - int is the index of the current element
 //   - T is the current element
 //   - K the comparable type to deduplicate
-func DeduplicateFn[T any, C comparable](fn func(T) C, elems ...T) []T {
+func DeduplicateFunc[T any, C comparable](fn func(T) C, elems ...T) []T {
 	var results []T
 
 	if fn == nil {
@@ -50,7 +50,7 @@ func DeduplicateFn[T any, C comparable](fn func(T) C, elems ...T) []T {
 //   - int is the index of the current element
 //   - T is the current element
 //   - K the comparable type to deduplicate
-func DeduplicateFnI[T any, C comparable](fn func(int, T) C, elems ...T) []T {
+func DeduplicateFuncI[T any, C comparable](fn func(int, T) C, elems ...T) []T {
 	var results []T
 
 	if fn == nil {
@@ -70,7 +70,7 @@ func DeduplicateFnI[T any, C comparable](fn func(int, T) C, elems ...T) []T {
 	return results
 }
 
-// DedupFn[T, K] creates a copy of elems with duplicates removed based on the result of the
+// DeduplicateFuncErr[T, K] creates a copy of elems with duplicates removed based on the result of the
 // fn(int, T) function
 //
 // The fn(int, T) K functions takes:
@@ -79,7 +79,7 @@ func DeduplicateFnI[T any, C comparable](fn func(int, T) C, elems ...T) []T {
 //   - K the comparable type to deduplicate
 //
 // If the fn function returns an error, processing through elems is stopped and the error is returned.
-func DeduplicateFnErr[T any, C comparable](fn func(T) (C, error), elems ...T) ([]T, error) {
+func DeduplicateFuncErr[T any, C comparable](fn func(T) (C, error), elems ...T) ([]T, error) {
 	var results []T
 
 	if fn == nil {
@@ -106,7 +106,7 @@ func DeduplicateFnErr[T any, C comparable](fn func(T) (C, error), elems ...T) ([
 	return results, err
 }
 
-// DedupFn[T, K] creates a copy of elems with duplicates removed based on the result of the
+// DeduplicateFuncErrI[T, K] creates a copy of elems with duplicates removed based on the result of the
 // fn(int, T) function
 //
 // The fn(int, T) K functions takes:
@@ -115,7 +115,7 @@ func DeduplicateFnErr[T any, C comparable](fn func(T) (C, error), elems ...T) ([
 //   - K the comparable type to deduplicate
 //
 // If the fn function returns an error, processing through elems is stopped and the error is returned.
-func DeduplicateFnErrI[T any, C comparable](fn func(int, T) (C, error), elems ...T) ([]T, error) {
+func DeduplicateFuncErrI[T any, C comparable](fn func(int, T) (C, error), elems ...T) ([]T, error) {
 	var results []T
 
 	if fn == nil {

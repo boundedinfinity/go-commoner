@@ -36,7 +36,7 @@ func Test_All(t *testing.T) {
 	}
 }
 
-func Test_AllFn(t *testing.T) {
+func Test_AllFuncI(t *testing.T) {
 	testCases := []struct {
 		name     string
 		match    func(int, string) bool
@@ -59,7 +59,7 @@ func Test_AllFn(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
-			actual := slicer.AllFnI(tc.match, tc.list...)
+			actual := slicer.AllFuncI(tc.match, tc.list...)
 			assert.Equal(tt, tc.expected, actual)
 		})
 	}

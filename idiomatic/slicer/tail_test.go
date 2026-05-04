@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_Tail(t *testing.T) {
+func Test_TailOk(t *testing.T) {
 	testCases := []struct {
 		name     string
 		input    []int
@@ -26,11 +26,17 @@ func Test_Tail(t *testing.T) {
 			expected: []int{},
 			ok:       false,
 		},
+		{
+			name:     "case 3",
+			input:    []int{1},
+			expected: []int{},
+			ok:       false,
+		},
 	}
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
-			actual, ok := slicer.Tail(tc.input...)
+			actual, ok := slicer.TailOk(tc.input...)
 			assert.Equal(tt, tc.expected, actual)
 			assert.Equal(tt, tc.ok, ok)
 		})

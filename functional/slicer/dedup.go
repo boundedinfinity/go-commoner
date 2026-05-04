@@ -10,9 +10,9 @@ func Dedup[T comparable](elems ...T) []T {
 }
 
 func DedupFn[T any, C comparable](fn func(T) C, elems ...T) []T {
-	return slicer.DeduplicateFn(fn, elems...)
+	return slicer.DeduplicateFunc(fn, elems...)
 }
 
 func DedupFnErr[T any, C comparable](fn func(T) (C, error), elems ...T) trier.Try[[]T] {
-	return trier.Complete(slicer.DeduplicateFnErr(fn, elems...))
+	return trier.Complete(slicer.DeduplicateFuncErr(fn, elems...))
 }
