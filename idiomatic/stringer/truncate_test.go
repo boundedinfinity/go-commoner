@@ -37,7 +37,7 @@ func Test_Truncate_End(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
-			actual := stringer.TruncateEnd(tc.input, tc.length)
+			actual := stringer.TruncateEndEllipse(tc.input, tc.length)
 			assert.Equal(tt, string(tc.expected), string(actual))
 		})
 	}
@@ -61,7 +61,7 @@ func Test_Truncate_Begin(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
-			actual := stringer.TruncateBegin(tc.input, tc.length)
+			actual := stringer.TruncateBeginEllipse(tc.input, tc.length)
 			assert.Equal(tt, string(tc.expected), string(actual))
 		})
 	}

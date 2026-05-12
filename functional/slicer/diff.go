@@ -11,9 +11,9 @@ func Diff[T comparable](as, bs []T) optioner.Option[[]T] {
 }
 
 func DiffBy[T any](as, bs []T, fn func(T) bool) optioner.Option[[]T] {
-	return optioner.OfSlice(slicer.DifferenceFn(fn, as, bs))
+	return optioner.OfSlice(slicer.DifferenceFunc(fn, as, bs))
 }
 
 func DiffByErr[T any](as, bs []T, fn func(T) (bool, error)) trier.Try[optioner.Option[[]T]] {
-	return trier.Slice(slicer.DifferenceFnErr(fn, as, bs))
+	return trier.Slice(slicer.DifferenceFuncErr(fn, as, bs))
 }
