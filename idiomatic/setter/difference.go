@@ -1,4 +1,4 @@
-package slicer
+package setter
 
 func Difference[T comparable](as, bs []T) []T {
 	var results []T

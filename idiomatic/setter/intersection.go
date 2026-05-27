@@ -1,4 +1,8 @@
-package slicer
+package setter
+
+import (
+	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
+)
 
 func Intersection[T comparable](as []T, bs []T) []T {
 	fn2 := func(elem T) T { return elem }
@@ -21,22 +25,22 @@ func IntersectionFnErr[T any, C comparable](fn func(T) (C, error), as []T, bs []
 
 	results := []T{}
 
-	uas, err := UniqueByErrI(fn2, as...)
+	uas, err := slicer.UniqueByErrI(fn2, as...)
 	if err != nil {
 		return results, err
 	}
 
-	am, err := GroupErr(fn, uas...)
+	am, err := slicer.GroupErr(fn, uas...)
 	if err != nil {
 		return results, err
 	}
 
-	ubs, err := UniqueByErrI(fn2, bs...)
+	ubs, err := slicer.UniqueByErrI(fn2, bs...)
 	if err != nil {
 		return results, err
 	}
 
-	bm, err := GroupErr(fn, ubs...)
+	bm, err := slicer.GroupErr(fn, ubs...)
 	if err != nil {
 		return results, err
 	}

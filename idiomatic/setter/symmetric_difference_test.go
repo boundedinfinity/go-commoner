@@ -1,9 +1,9 @@
-package slicer_test
+package setter_test
 
 import (
 	"testing"
 
-	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
+	"github.com/boundedinfinity/go-commoner/idiomatic/setter"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -36,7 +36,7 @@ func Test_SymmetricDifference(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
-			actual := slicer.SymmetricDifference(tc.input1, tc.input2)
+			actual := setter.SymmetricDifference(tc.input1, tc.input2)
 			assert.ElementsMatch(t, tc.expected, actual)
 		})
 	}
@@ -113,7 +113,7 @@ func Test_SymmetricDifferenceFn(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
 			fn := func(_ int, elem Thing) string { return elem.K }
-			actual := slicer.SymmetricDifferenceFuncI(fn, tc.input1, tc.input2)
+			actual := setter.SymmetricDifferenceFuncI(fn, tc.input1, tc.input2)
 			assert.ElementsMatch(t, tc.expected, actual)
 		})
 	}

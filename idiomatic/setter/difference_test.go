@@ -1,9 +1,9 @@
-package slicer_test
+package setter_test
 
 import (
 	"testing"
 
-	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
+	"github.com/boundedinfinity/go-commoner/idiomatic/setter"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -36,7 +36,7 @@ func Test_Difference(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
-			actual := slicer.Difference(tc.input1, tc.input2)
+			actual := setter.Difference(tc.input1, tc.input2)
 			assert.Equal(tt, tc.expected, actual)
 		})
 	}
@@ -108,7 +108,7 @@ func Test_DifferenceFunc(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
 			fn := func(elem Thing) string { return elem.K }
-			actual := slicer.DifferenceFunc(fn, tc.input1, tc.input2)
+			actual := setter.DifferenceFunc(fn, tc.input1, tc.input2)
 			assert.Equal(tt, tc.expected, actual)
 		})
 	}

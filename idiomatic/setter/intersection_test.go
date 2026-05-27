@@ -1,9 +1,9 @@
-package slicer_test
+package setter_test
 
 import (
 	"testing"
 
-	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
+	"github.com/boundedinfinity/go-commoner/idiomatic/setter"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -30,7 +30,7 @@ func Test_Intersection(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(tt *testing.T) {
-			actual := slicer.Intersection(tc.input1, tc.input2)
+			actual := setter.Intersection(tc.input1, tc.input2)
 			assert.ElementsMatch(t, tc.expected, actual)
 		})
 	}

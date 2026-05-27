@@ -16,25 +16,25 @@ func Test_Reject(t *testing.T) {
 	testCases := []struct {
 		name     string
 		input    []thing
-		fn       func(i int, t thing) bool
+		fn       func(t thing) bool
 		expected []thing
 	}{
 		{
 			name:     "group by a",
 			input:    []thing{{a: "A", b: 10}, {a: "A", b: 20}, {a: "B", b: 30}},
-			fn:       func(_ int, t thing) bool { return t.a == "A" },
+			fn:       func(t thing) bool { return t.a == "A" },
 			expected: []thing{{a: "B", b: 30}},
 		},
 		{
 			name:     "empty input",
 			input:    []thing{},
-			fn:       func(_ int, t thing) bool { return t.a == "A" },
+			fn:       func(t thing) bool { return t.a == "A" },
 			expected: []thing{},
 		},
 		{
 			name:     "nil input",
 			input:    nil,
-			fn:       func(_ int, t thing) bool { return t.a == "A" },
+			fn:       func(t thing) bool { return t.a == "A" },
 			expected: []thing{},
 		},
 	}

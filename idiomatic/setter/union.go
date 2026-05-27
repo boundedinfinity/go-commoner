@@ -1,4 +1,8 @@
-package slicer
+package setter
+
+import (
+	"github.com/boundedinfinity/go-commoner/idiomatic/slicer"
+)
 
 func Union[T comparable](as []T, bs []T) ([]T, error) {
 	fn2 := func(_ int, elem T) T { return elem }
@@ -16,5 +20,5 @@ func UnionFn[T any, C comparable](fn func(int, T) C, as []T, bs []T) ([]T, error
 func UnionFnErr[T any, C comparable](fn func(int, T) (C, error), as []T, bs []T) ([]T, error) {
 	results := append([]T{}, as...)
 	results = append(results, bs...)
-	return UniqueByErrI(fn, results...)
+	return slicer.UniqueByErrI(fn, results...)
 }

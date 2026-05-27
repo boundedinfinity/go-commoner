@@ -1,4 +1,4 @@
-package slicer_test
+package setter_test
 
 import (
 	"testing"
